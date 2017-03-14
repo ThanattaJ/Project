@@ -8,7 +8,7 @@ package BikeRapair;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-public class Time {
+public class Timer {
     //private String total;
     private String timeLeft;
     private int totalSeconds;   
