@@ -18,45 +18,54 @@ import java.util.Scanner;
 public class Repair {
     private String problem;
     private String detail;
-    private Timer timer;
+    private Timer time = new Timer();
     private String ans;
     private int hours;
     private int minute;
     private int secound;
+    private String timeDetail;
+    private Notification notic = new Notification();
+    
+    public String increaseTimeRepair(int hr,int min,int sec){//เมธอดเพิ่มเวลาเมื่อช่างซ่อมซ่อมไม่เสร็จ
+        String a="";
+        String increaseTime = "Increase Time : "+hr+":"+min+":"+sec; //เวลาที่ช่างซ่อมต้องการเพิ่ม
+        time.increaseTime(hr, min, sec);// เรียก method increaseTime ของ Class Timer เพื่อเพิ่มเวลาที่ช่างซ่อมต้องการจะซ่อม
+        a = time.showDetail(); //เวลาที่ช่างซ่อมจะซ่อมเสร็จ
+        String output = notic.notiRepairIncreseTime(timeDetail, increaseTime, a); //เรียก Notic
+        timeDetail= a;
+        return output;
+    }
+    
+    public String increaseTimeRepair(String newProblem,String newDetail,int hr,int min,int sec){//เมธอดเพิ่มปัญหาที่ช่างซ่อมพบเจอใหม่ พร้อมกับประเมินเวลาที่จะซ่อมเสร็จด้วย
+        String temp ="";
+        String increaseTime = "Increase Time : "+hr+":"+min+":"+sec;
+        time.increaseTime(hr, min, sec);
+        String detail = "RepairProblem: "+newProblem+"\n"
+                +"RepairDetail: "+newDetail+"\n"
+                +increaseTime;
+        temp = time.showDetail();   
+        String output = notic.notiRepairIncreseTime(timeDetail,detail, temp);
+        timeDetail= temp;
+        return output;
+    }
     
     public String time(){
         GregorianCalendar gc = new GregorianCalendar();
-        int realHour=gc.get(Calendar.HOUR)+hours+12;
-        int realMinute=gc.get(Calendar.MINUTE)+minute;
-        int realSecound=gc.get(Calendar.SECOND)+secound;
+        int realHour=gc.get(Calendar.HOUR)+hours+12; //เวลาเป็นชั่วโมงจริงของวันนี้บวกกับชั่วโมงที่ช่างซ่อมประเมินว่าจะซ่อมเสร็จ
+        int realMinute=gc.get(Calendar.MINUTE)+minute; // เวลาเป็นนาทีของวันนี้บวกกับนาทีที่ช่างซ่อมประเมินว่าจะซ่อมเสร็จ
+        int realSecound=gc.get(Calendar.SECOND)+secound;// เวลาเป็นวินาทีของวันนี้บวกกับวินาทีที่ช่างซ่อมประเมินว่าจะซ่อมเสร็จ
         Timer t = new Timer(gc.get(Calendar.DATE),gc.get(Calendar.MONTH)+1,gc.get(Calendar.YEAR), 
-                realHour,realMinute,realSecound);
+                realHour,realMinute,realSecound); //ส่งค่าผ่าน Constructor ไปให้ Class Timer กำหนดวัน เดือน ปี เป็นของวันที่ปัจจุบัน
         t.differentTime();
-        return t.showDetail();
+        this.timeDetail=t.showDetail();
+        return this.timeDetail;
     }
    
-    
-    public void plusDay(int h,int m,int s){
-        this.hours+=h;
-        if(this.minute>=60){
-            int tem= this.minute%60;
-            this.minute = tem;
-            this.hours+=1;
-        }else{
-            this.minute+=m;
-        }
-        
-        if(this.secound>=60){
-            int tem = this.secound%60;
-            this.secound=tem;
-            this.minute+=1;
-        }else{
-            this.secound+=s;
-        }
-    }
-    
-    public String showTime(){
-        return this.hours+":"+this.minute+":"+this.secound;
+    public void plusDay(int h,int m,int s){ //เมธอดคำนวณชั่วโมง นาที วินาที ไม่ให้มันเกินตามความเป็นจริง
+          this.hours+=h;
+          this.minute+=m;
+          this.secound+=s;
+          time.differentTime();
     }
     
     
@@ -100,14 +109,6 @@ public class Repair {
    
     public Repair() {
     }
-
-    public Timer getTimer() {
-        return timer;
-    }
-
-    public void setTimer(Timer timer) {
-        this.timer = timer;
-    }
     
     
     public Repair(String detail) {
@@ -117,7 +118,7 @@ public class Repair {
     public Repair(String problem, String detail,Timer t) {
         this.problem = problem;
         this.detail = detail;
-        this.timer = t;
+        this.time = t;
     }
     
     public String getProblem() {
@@ -168,14 +169,18 @@ public class Repair {
         this.secound = secound;
     }
     
-    
+    public String submitRepair(){
+        String a ="";
+        time.stop();
+        timeDetail=time.showDetail();
+        return a;
+    }
 
     @Override
     public String toString() {
         return ""
                 + "Problem: " + problem 
-                + "\nDetail: " + detail+"\n"
-                + "Finish time: "+showTime()+"\n";
+                + "\nDetail: " + detail+"\n";
     }
     
     
