@@ -23,29 +23,43 @@ public class Repair {
     private int hours;
     private int minute;
     private int secound;
-    private String timeDetail;
+    private String timeDetail;//เวลาที่ช่างซ่อมจะซ่อมเสร็จ
     private Notification notic = new Notification();
+    private String repair="-----------------------Bike Repair------------------------"; //ข้อมูลทั้งหมด
+    private String repairWhatAlse;
+    
+    public String submitRepair(){
+        repair += "\nProblem: "+getProblem()+ "\n" +"Detail: "+getDetail()+"\n"+repairWhatAlse+increaseDetail+timeDetail;
+        time.stop();
+        return repair;
+    }
     
     public String increaseTimeRepair(int hr,int min,int sec){//เมธอดเพิ่มเวลาเมื่อช่างซ่อมซ่อมไม่เสร็จ
-        String a="";
+        String oldTime = timeDetail;
+        plusDay(hr,min,sec);
+        String newTime="";
         String increaseTime = "Increase Time : "+hr+":"+min+":"+sec; //เวลาที่ช่างซ่อมต้องการเพิ่ม
-        time.increaseTime(hr, min, sec);// เรียก method increaseTime ของ Class Timer เพื่อเพิ่มเวลาที่ช่างซ่อมต้องการจะซ่อม
-        a = time.showDetail(); //เวลาที่ช่างซ่อมจะซ่อมเสร็จ
-        String output = notic.notiRepairIncreseTime(timeDetail, increaseTime, a); //เรียก Notic
-        timeDetail= a;
+//        time.increaseTime(hr, min, sec);// เรียก method increaseTime ของ Class Timer เพื่อเพิ่มเวลาที่ช่างซ่อมต้องการจะซ่อม
+        newTime = time(); //เวลาที่ช่างซ่อมจะซ่อมเสร็จ
+        String output = notic.notiRepairIncreseTime(oldTime, increaseTime, newTime); //เรียก Notic
+        timeDetail= newTime;
         return output;
     }
     
-    public String increaseTimeRepair(String newProblem,String newDetail,int hr,int min,int sec){//เมธอดเพิ่มปัญหาที่ช่างซ่อมพบเจอใหม่ พร้อมกับประเมินเวลาที่จะซ่อมเสร็จด้วย
-        String temp ="";
+     public String increaseTimeRepair(String newProblem,String newDetail,int hr,int min,int sec){
+//เมธอดเพิ่มปัญหาที่ช่างซ่อมพบเจอใหม่ พร้อมกับประเมินเวลาที่จะซ่อมเสร็จด้วย
+        String oldTime = timeDetail;
+        plusDay(hr,min,sec);
+        String newTime="";
         String increaseTime = "Increase Time : "+hr+":"+min+":"+sec;
-        time.increaseTime(hr, min, sec);
+        newTime = time();
         String detail = "RepairProblem: "+newProblem+"\n"
                 +"RepairDetail: "+newDetail+"\n"
-                +increaseTime;
-        temp = time.showDetail();   
-        String output = notic.notiRepairIncreseTime(timeDetail,detail, temp);
-        timeDetail= temp;
+                +increaseTime; 
+        String output = notic.notiRepairIncreseTime(oldTime,detail, newTime);
+        timeDetail= newTime;
+        increaseDetail = "Problem: "+newProblem+"\n"
+                +"Detail: "+newDetail+"\n";
         return output;
     }
     
@@ -69,8 +83,9 @@ public class Repair {
     }
     
     
-    public String whatAlse(String ans){
-       String output="----------------------------------------------\n";
+    public String whatAlse(String ans){ //เมธอดถามช่างซ่อมส่าต้องการที่จะกรอกปัญหาอีกไหม
+       String output="";
+        System.out.println("----------------------------------------------");
         if(ans.equalsIgnoreCase("Yes")){
             boolean tem = true;
             do{
@@ -78,21 +93,23 @@ public class Repair {
                 Repair rp = new Repair();
                 System.out.print("Enter your problem: ");
                 rp.setProblem(sc.nextLine());
-                output+="Problem: "+rp.getProblem()+"\n";
+                output+="Problem: "+rp.getProblem();
                 System.out.print("Enter your detail: ");
                 rp.setDetail(sc.nextLine());
-                output+="Detail: "+rp.getDetail();
+                output+="\nDetail: "+rp.getDetail()+"\n";
                 System.out.print("Enter your time(HH:mm:ss): ");
                 plusDay(sc.nextInt(),sc.nextInt(),sc.nextInt());
                 System.out.print("Any service else?: ");
                 rp.setAns(sc.next());
                 if(rp.getAns().equalsIgnoreCase("No")){
+                    System.out.println("-------------------------------------");
                     tem = false;
                     System.out.println(output);
                     break;
                 }
             }while(true);
-            output+="Showtime: "+showTime();
+            repairWhatAlse += output;
+            output+=time();
         }
         return output;
     }
@@ -108,17 +125,6 @@ public class Repair {
     }
    
     public Repair() {
-    }
-    
-    
-    public Repair(String detail) {
-        this.detail = detail;
-    }
-
-    public Repair(String problem, String detail,Timer t) {
-        this.problem = problem;
-        this.detail = detail;
-        this.time = t;
     }
     
     public String getProblem() {
@@ -169,17 +175,10 @@ public class Repair {
         this.secound = secound;
     }
     
-    public String submitRepair(){
-        String a ="";
-        time.stop();
-        timeDetail=time.showDetail();
-        return a;
-    }
 
     @Override
     public String toString() {
-        return ""
-                + "Problem: " + problem 
+        return "Problem: " + problem 
                 + "\nDetail: " + detail+"\n";
     }
     
