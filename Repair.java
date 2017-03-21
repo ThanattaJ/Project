@@ -26,7 +26,8 @@ public class Repair {
     private String timeDetail;//เวลาที่ช่างซ่อมจะซ่อมเสร็จ
     private Notification notic = new Notification();
     private String repair="-----------------------Bike Repair------------------------"; //ข้อมูลทั้งหมด
-    private String repairWhatAlse;
+    private String repairWhatAlse="";
+    private String increaseDetail="";
     
     public String submitRepair(){
         repair += "\nProblem: "+getProblem()+ "\n" +"Detail: "+getDetail()+"\n"+repairWhatAlse+increaseDetail+timeDetail;
