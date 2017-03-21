@@ -1,0 +1,92 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Support;
+
+import ConnectDB.ConnectDatabase;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+/**
+ *
+ * @author January
+ */
+public class Support {
+    private String search;
+    
+    public void searchSupport(String search){
+        String t1 = search;
+        String t2 = "\'%"+t1+"%\'";
+        try{
+            ConnectDatabase cndb = new ConnectDatabase();
+            Connection connect = ConnectDatabase.connectDb("jan", "jan042");
+            Class.forName("com.mysql.jdbc.Driver");
+            System.out.println("Database connecting");
+        
+            Statement st = connect.createStatement(); 
+            String temp = "SELECT * FROM GreenSociety.Manual WHERE manualDescription LIKE "+t2;
+            ResultSet rs = st.executeQuery(temp);
+    
+            while(rs.next()){
+                System.out.println("manualID: " + rs.getString("manualID"));
+                System.out.println("manualDescription: " + rs.getString("manualDescription"));
+                System.out.println("manualDetails: " + rs.getString("manualDetails"));
+                System.out.println("----------------------------------------------");
+            }
+            
+            try {
+		if(connect != null){
+                    connect.close();
+		}
+		}catch (SQLException e){
+                    e.printStackTrace();
+		}
+        }
+        
+        catch(ClassNotFoundException cfe){
+            System.out.println(cfe);
+        }
+        catch(Exception ex){
+            System.out.println(ex);
+        }
+        System.out.println("");
+    }
+    
+    public String contact(){
+        String detail="";
+        detail+="----------------CONTACT------------------\n"
+                +"Phone number: 012-3456789\n"
+                +"Line: @GreenSociety\n"
+                +"Facebook: GreenSocietyKMUTT";
+        return detail;
+    }
+
+    
+    public Support() {
+    }
+
+    public Support(String search) {
+        this.search = search;
+    }
+
+    public String getSearch() {
+        return search;
+    }
+
+    public void setSearch(String search) {
+        this.search = search;
+    }
+
+    @Override
+    public String toString() {
+        return "Support{" + "search=" + search + '}';
+    }
+    
+    
+}
