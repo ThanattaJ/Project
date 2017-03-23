@@ -18,13 +18,10 @@ import java.util.Scanner;
  * @author January
  */
 public class History {
-    private static long seqNo = 00000;
     private long historyId;
-    private Timer time = new Timer();
     
     
     public void HistoryByAdmin(String input){ //รับจาก ตัวแปรที่ต้องการส่งลง DB เป็น String
-        this.historyId = ++seqNo;
         Scanner sc = new Scanner(System.in);
         System.out.print("Enter itemId: ");
         String itemIdInt = sc.next();
@@ -36,7 +33,18 @@ public class History {
             ConnectDatabase cndb = new ConnectDatabase();
             Connection connect = ConnectDatabase.connectDb("jan", "jan042");
             Class.forName("com.mysql.jdbc.Driver");
-            System.out.println("Database connecting");
+            System.out.println("Database connecting....");
+            
+            Statement st = connect.createStatement(); 
+            
+            String temp3 = "SELECT * FROM GreenSociety.`Transaction` ";
+            ResultSet rs1 = st.executeQuery(temp3);
+            
+            int i=0;
+            while(rs1.next()){
+                i = rs1.getRow(); //ดึงแถวก่อนหน้ามาก่อนมา ว่าเป็นแถวที่เท่าไร
+            }
+            this.historyId=++i; //แล้วให้ historyId บวกเพิ่มทีละหนึ่ง
             
             String transId = "\'"+this.historyId+"\'";
             String itemId = "\'"+itemIdInt+"\'";
@@ -44,7 +52,7 @@ public class History {
             String action = "\'"+input+"\'";
             String officerId = "\'"+officerIdInt+"\'";
         
-            Statement st = connect.createStatement(); 
+            
             String temp ="INSERT INTO GreenSociety.`Transaction` (`transID`,`itemID`, `userID`, `action`, `officerID`) \n" +
                          "VALUES "
                     + "("+transId+","
