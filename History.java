@@ -1,28 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package History;
 
 import ConnectDB.ConnectDatabase;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.Scanner;
-
-/**
- *
- * @author January
- */
 public class History {
     private long historyId;
     
-    public void HistoryByAdmin(String input){ //รับจาก ตัวแปรที่ต้องการส่งลง DB เป็น String
+    public void HistoryByAdmin(String itemId,Timestamp date,String input){ //รับจาก ตัวแปรที่ต้องการส่งลง DB เป็น String
         Scanner sc = new Scanner(System.in);
-        System.out.print("Enter itemId: ");
-        String itemIdInt = sc.next();
         System.out.print("Enter userID: ");
         int userIdInt = sc.nextInt();
         System.out.print("Enter OfficerId: ");
@@ -44,15 +29,16 @@ public class History {
             this.historyId=++i; //แล้วให้ historyId บวกเพิ่มทีละหนึ่ง
             
             String transId = "\'"+this.historyId+"\'";
-            String itemId = "\'"+itemIdInt+"\'";
+            itemId = "\'"+itemId+"\'";
             String userId = "\'"+userIdInt+"\'";
             String action = "\'"+input+"\'";
             String officerId = "\'"+officerIdInt+"\'";
         
             
-            String temp ="INSERT INTO GreenSociety.`Transaction` (`transID`,`itemID`, `userID`, `action`, `officerID`) \n" +
+            String temp ="INSERT INTO GreenSociety.`Transaction`\n" +
                          "VALUES " //set ค่าให้กับ Database
                     + "("+transId+","
+                    +"'"+date+"',"
                     +itemId + ","
                     +userId+","
                     +action+"," 
