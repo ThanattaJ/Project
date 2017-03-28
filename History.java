@@ -6,7 +6,6 @@
 package History;
 
 import ConnectDB.ConnectDatabase;
-import Timer.Timer;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,7 +19,6 @@ import java.util.Scanner;
 public class History {
     private long historyId;
     
-    
     public void HistoryByAdmin(String input){ //รับจาก ตัวแปรที่ต้องการส่งลง DB เป็น String
         Scanner sc = new Scanner(System.in);
         System.out.print("Enter itemId: ");
@@ -33,7 +31,6 @@ public class History {
             ConnectDatabase cndb = new ConnectDatabase();
             Connection connect = ConnectDatabase.connectDb("jan", "jan042");
             Class.forName("com.mysql.jdbc.Driver");
-            System.out.println("Database connecting....");
             
             Statement st = connect.createStatement(); 
             
@@ -54,7 +51,7 @@ public class History {
         
             
             String temp ="INSERT INTO GreenSociety.`Transaction` (`transID`,`itemID`, `userID`, `action`, `officerID`) \n" +
-                         "VALUES "
+                         "VALUES " //set ค่าให้กับ Database
                     + "("+transId+","
                     +itemId + ","
                     +userId+","
@@ -62,27 +59,14 @@ public class History {
                     +officerId+")";
 
             st.executeUpdate(temp);
-            
-            String temp2 = "SELECT * FROM GreenSociety.`Transaction` LIMIT 100;";
-            ResultSet rs = st.executeQuery(temp2);
-            
-            while(rs.next()){
-                System.out.println("transID: " + rs.getInt("transID"));
-                System.out.println("dateTime: " + rs.getTimestamp("dateTime"));
-                System.out.println("itemID: " + rs.getString("itemID"));
-                System.out.println("userID: " + rs.getInt("userID"));
-                System.out.println("action: "+ rs.getString("action"));
-                System.out.println("officerID: "+ rs.getInt("officerID"));
-                System.out.println("----------------------------------------------");
-            }
-
-            try {
+                   
+          try {
 		if(connect != null){
                     connect.close();
 		}
 		}catch (SQLException e){
                     e.printStackTrace();
-		}
+		}                
         }
         
         catch(ClassNotFoundException cfe){
@@ -93,14 +77,113 @@ public class History {
         }
         
     }
-
-    public String historyRepair(String repair){
-        return repair;
+    
+    public String showActionUser(long id){ //user ใส่ไอดีตัวเองที่ต้องการรู้ประวัติการใช้งานของตัวเอง
+        String output="";
+        int statUser=0;
+        try{
+            ConnectDatabase cndb = new ConnectDatabase();
+            Connection connect = ConnectDatabase.connectDb("jan", "jan042");
+            Class.forName("com.mysql.jdbc.Driver");
+            
+            Statement st = connect.createStatement();
+            String temp4 = "select * from `Transaction` where UserId LIKE "+id;
+            ResultSet rs4 = st.executeQuery(temp4);
+            while(rs4.next()){
+                output+=("UserId: "+id+"\n");
+                output+=("dateTime: " + rs4.getTimestamp("dateTime")+"\n");
+                output+=("itemID: " + rs4.getString("itemID")+"\n");
+                output+=("action: "+ rs4.getString("action")+"\n");
+                statUser++;
+                output+=("----------------------------------------------\n");
+            }
+            output+=("userID: "+id+"\n"+"The stat of user: "+statUser+"\n");
+            
+            try {
+		if(connect != null){
+                    connect.close();
+		}
+		}catch (SQLException e){
+                    e.printStackTrace();
+		}      
+        }
+        catch(ClassNotFoundException cfe){
+            System.out.println(cfe);
+        }
+        catch(Exception ex){
+            System.out.println(ex);
+        }
+        return output;
     }
+    
+    public String statGreensociaty(){
+        String output="";
+        int statRepair=0;
+        int statBorrow=0;
+        int statReturn=0;
+        try{
+            ConnectDatabase cndb = new ConnectDatabase();
+            Connection connect = ConnectDatabase.connectDb("jan", "jan042");
+            Class.forName("com.mysql.jdbc.Driver");
+        
+            Statement st = connect.createStatement();
+            
+            String temp5 = "select * from `Transaction` where action='repair'";
+            ResultSet rs5 = st.executeQuery(temp5);
+            output+=("-------------------STATUSER---------------------\n");
+            while(rs5.next()){
+                statRepair++;
+            }
+            output+=("The stat of repir: "+statRepair+"\n");
+            output+=("-----------------------------------------------\n");
+            
+            String temp6 = "select * from `Transaction` where action='barrow'";
+            ResultSet rs6 = st.executeQuery(temp6);
+            while(rs6.next()){
+                statBorrow++;
+            }
+            output+=("The stat of borrow: "+statBorrow+"\n");
+            output+=("-----------------------------------------------\n");
+            
+            String temp7 = "select * from `Transaction` where action='barrow'";
+            ResultSet rs7 = st.executeQuery(temp6);
+            while(rs7.next()){
+                statReturn++;
+            }
+            output+=("The stat of return: "+statReturn+"\n");
+            output+=("-----------------------------------------------");
+            
+            try {
+		if(connect != null){
+                    connect.close();
+		}
+		}catch (SQLException e){
+                    e.printStackTrace();
+		}      
+        }
+        catch(ClassNotFoundException cfe){
+            System.out.println(cfe);
+        }
+        catch(Exception ex){
+            System.out.println(ex);
+        }
+        return output;
+    }
+
+    public long getHistoryId() {
+        return historyId;
+    }
+
+    public void setHistoryId(long historyId) {
+        this.historyId = historyId;
+    }
+
     
     public String toString(){
         String output = "";
         output+="historyId: "+historyId;
         return output;
     }
+    
+    
 }
