@@ -28,10 +28,14 @@ public class Repair {
     private String repair="-----------------------Bike Repair------------------------"; //ข้อมูลทั้งหมด
     private String repairWhatAlse="";
     private String increaseDetail="";
+    private History historyRp = new History();
+    private String bike="";
     
     public String submitRepair(){
+        Timestamp borrowDate = new Timestamp(time.getNowTime().getTime());
         repair += "\nProblem: "+getProblem()+ "\n" +"Detail: "+getDetail()+"\n"+repairWhatAlse+increaseDetail+timeDetail;
         time.stop();
+        historyRp.HistoryByAdmin(bike, borrowDate,"Repair");
         return repair;
     }
     
