@@ -116,7 +116,7 @@ public class History {
         return output;
     }
     
-    public String statGreensociaty(){
+    public String statGreensociety(){
         String output="";
         int statRepair=0;
         int statBorrow=0;
@@ -130,7 +130,7 @@ public class History {
             
             String temp5 = "select * from `Transaction` where action='repair'";
             ResultSet rs5 = st.executeQuery(temp5);
-            output+=("-------------------STATUSER---------------------\n");
+            output+=("-------------------STAT-GREEN-SOCIETY---------------------\n");
             while(rs5.next()){
                 statRepair++;
             }
