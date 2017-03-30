@@ -18,114 +18,93 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import javax.xml.bind.DatatypeConverter;
+import java.util.Scanner;
 
 /**
  *
  * @author January
  */
 public class Register {
-    private long id;
     private String name;
     private String surname;
-    private String password;
-    private char gender;
-    private Timestamp birthDate;
+    private String gender;
+    private Date birthDate;
     private String conDisease;
     private String email;
     private String tel;
     private String deptID;
-
+    private String password;
+    private StringBuffer sb;
+    private String position;
+    
     public Register() {
     }
 
-    public Register(String name, String surname, String password, char gender, Timestamp birthDate ,String conDisease, String email, String tel, String deptID) {
+    public Register(String name, String surname, String gender, Date birthDate, String conDisease, String email, String tel, String deptID, StringBuffer sb, String position) {
         this.name = name;
         this.surname = surname;
-        this.password = password;
         this.gender = gender;
         this.birthDate = birthDate;
         this.conDisease = conDisease;
         this.email = email;
         this.tel = tel;
         this.deptID = deptID;
+        this.sb = sb;
+        this.position = position;
     }
 
-//    public void timeStamp(int y,int m,int d){
-//        int year = y-1900;
-//        int mount = m-1;
-//        int date = d;
-//        Date bday = new Date(year, mount, date);
-//        this.currentDate = new Timestamp(bday.getTime());
-//    }
     
-    public void registerDB(){
-        
-        try{
-            ConnectDatabase cndb = new ConnectDatabase();
-            Connection connect = ConnectDatabase.connectDb("jan", "jan042");
-            Class.forName("com.mysql.jdbc.Driver");
-            System.out.println("Database connecting");
-            Statement st = connect.createStatement(); 
-            
-            String idDb = "\'"+id+"\'";
-            String nameDb = "\'"+name+"\'";
-            String surnameDb = "\'"+surname+"\'";
-            String genderDb = "\'"+gender+"\'";
-            String conDiseaseDb = "\'"+conDisease+"\'";
-            String emailDb = "\'"+email+"\'";
-            String telDb = "\'"+tel+"\'";
-            String depId = "\'"+deptID+"\'";
-            String temp = "INSERT INTO `User` (`userID`, `firstName`, `lastName`, `gender`, `birthDate`, `congenitialDisease`, `email`, `tel`, `deptID`) "
-                    + "VALUES "
-                    + "(" + idDb + ","
-                    + nameDb +"," 
-                    + surnameDb + ","
-                    + genderDb + ","
-                    + birthDate + ","
-                    + conDiseaseDb + ","
-                    + emailDb + ","
-                    + telDb +","
-                    + depId+");";
-            st.executeUpdate(temp);
-            try {
-		if(connect != null){
-                    connect.close();
-		}
-		}catch (SQLException e){
-                    e.printStackTrace();
-		}         
-        }
-        catch(ClassNotFoundException cfe){
-            System.out.println(cfe);
-        }
-        catch(Exception ex){
-            System.out.println(ex);
+    public void position(String position){
+        switch(position){
+            case "Technician": this.position="Technician" ;
+            case "Personal" : this.position="Personal";
+            case "Professor" : this.position="Professor";
+            case "Officer" : this.position="Officer";
         }
     }
     
-    public String encocdMd5(){
-        try{
-            String input = password;
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            byte[]messageDigest = md.digest(input.getBytes());
-            BigInteger number = new BigInteger(1,messageDigest);
-            String md5 = number.toString(16);
-            while(md5.length()<32){
-                md5="0"+md5;
+    public void password(String oldPass,String newPass){//พาสเวิร์ดที่ user ใส่มาสองรอบต้องเป็นตัวเดียวกัน
+        Scanner sc =new Scanner(System.in);
+        if(oldPass==newPass){
+           password = newPass;
+        }else{
+            while(oldPass!=newPass){
+                System.out.print("Password: ");
+                oldPass = sc.next();
+                System.out.print("Confirm Password: ");
+                newPass = sc.next();
             }
-            return md5;
+            password = newPass;
         }
+    }
+    
+    public void encocdMd5(){ //เอา Password มาแปลงเป็น md5
+        String input = password;
+        try{
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(input.getBytes());
+            byte[]mdhash = new byte[32];
+            mdhash = md.digest();
+            
+            String hash = DatatypeConverter.printHexBinary(mdhash).toLowerCase();
+            System.out.println("Datatype Converter: "+hash);
+            
+            sb =new StringBuffer();
+            for(int i=0;i<mdhash.length;i++){
+                sb.append(Integer.toString((mdhash[i] & 0xff)+0x100,16).substring(1));
+            }
+            System.out.println("String Buffer toString: "+ sb.toString());
+        }
+        
         catch(NoSuchAlgorithmException e){
-            return null;
+            e.printStackTrace();
         }
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
+        
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    
     }
 
     public String getName() {
@@ -144,27 +123,19 @@ public class Register {
         this.surname = surname;
     }
 
-    public char getGender() {
+    public String getGender() {
         return gender;
     }
 
-    public void setGender(char gender) {
+    public void setGender(String gender) {
         this.gender = gender;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Timestamp getBirthDate() {
+    public Date getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(Timestamp birthDate) {
+    public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
     }
 
@@ -199,6 +170,30 @@ public class Register {
     public void setDeptID(String deptID) {
         this.deptID = deptID;
     }
-    
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public StringBuffer getSb() {
+        return sb;
+    }
+
+    public void setSb(StringBuffer sb) {
+        this.sb = sb;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
     
 }
