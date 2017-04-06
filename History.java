@@ -6,20 +6,19 @@ import java.util.Scanner;
 public class History {
     private long historyId;
     
-    public void HistoryByAdmin(String itemId,Timestamp date,String input){ //รับจาก ตัวแปรที่ต้องการส่งลง DB เป็น String
+     public void HistoryByAdmin(String itemId,Timestamp nowDate,Timestamp returnDate,String input){  //รับจาก ตัวแปรที่ต้องการส่งลง DB เป็น String
         Scanner sc = new Scanner(System.in);
-        System.out.print("Enter userID: ");
+        System.out.print("Enter UserID: ");
         int userIdInt = sc.nextInt();
         System.out.print("Enter OfficerId: ");
         int officerIdInt = sc.nextInt();
         try{
-            ConnectDatabase cndb = new ConnectDatabase();
-            Connection connect = ConnectDatabase.connectDb("jan", "jan042");
+            Connection connect = Database.connectDb("jan", "jan042");
             Class.forName("com.mysql.jdbc.Driver");
             
             Statement st = connect.createStatement(); 
             
-            String temp3 = "SELECT * FROM GreenSociety.`Transaction` ";
+            String temp3 = "SELECT * FROM Transaction ";
             ResultSet rs1 = st.executeQuery(temp3);
             
             int i=0;
@@ -35,17 +34,17 @@ public class History {
             String officerId = "\'"+officerIdInt+"\'";
         
             
-            String temp ="INSERT INTO GreenSociety.`Transaction`\n" +
-                         "VALUES " //set ค่าให้กับ Database
+            String temp ="INSERT INTO Transaction VALUES "  //set ค่าให้กับ Database
                     + "("+transId+","
-                    +"'"+date+"',"
+                    +"'"+nowDate+"','"
+                    +returnDate+"',"
                     +itemId + ","
                     +userId+","
                     +action+"," 
                     +officerId+")";
 
             st.executeUpdate(temp);
-                   
+
           try {
 		if(connect != null){
                     connect.close();
