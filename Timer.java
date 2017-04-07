@@ -146,7 +146,7 @@ public class Timer {
             temp += diffDate*24;
         }
         totalHour += temp+diffHour;
-        timeLeft = "Now : "+totalHour+" Hours "+totalMin+" Minutes "+totalSeconds+" Secounds";
+        timeLeft = totalHour+" Hours "+totalMin+" Minutes "+totalSeconds+" Secounds";
     }
 	
     public void increaseTime(int hr,int min,int sec){
@@ -168,7 +168,7 @@ public class Timer {
             totalHour += 1;
             totalMin -= 60;
         }
-        timeLeft = "Now : "+totalHour+" Hours "+totalMin+" Minutes "+totalSeconds+" Secounds";
+        timeLeft = totalHour+" Hours "+totalMin+" Minutes "+totalSeconds+" Secounds";
           
     }
     
@@ -180,7 +180,7 @@ public class Timer {
         totalHour = 0;
         borrowDate = null;
         returnDate = null;
-        timeLeft =  "Now : "+totalHour+" Hours "+totalMin+" Minutes "+totalSeconds+" Secounds";
+        timeLeft =  totalHour+" Hours "+totalMin+" Minutes "+totalSeconds+" Secounds";
         //String = ''; หรือ เก็บ Totaltime = null ตามความเหมาะสม
     }
     
@@ -203,7 +203,7 @@ public class Timer {
                                 Logger.getLogger(Timer.class.getName()).log(Level.SEVERE, null, ex);
                             }
                             totalSeconds--;
-                            timeLeft = "Now : "+totalHour+" Hours "+totalMin+" Minutes "+totalSeconds+" Secounds";
+                            timeLeft = totalHour+" Hours "+totalMin+" Minutes "+totalSeconds+" Secounds";
                             if(nf.notiTime(totalHour,totalMin,totalSeconds)){
                                 Scanner sc = new Scanner(System.in);
                                 System.out.println(timeLeft + "\nDo you want to increase time? (y or n)");
