@@ -1,7 +1,7 @@
-package bike;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
+import java.util.logging.*;
 public class Timer {
     private String timeLeft ="";
     private int totalSeconds;   //ผลต่างเวลาทั้งหมด
@@ -13,6 +13,7 @@ public class Timer {
     private String returnDate;
     private String borrowDate;
     private Notification nf = new Notification();
+    private Thread thread = new Thread();
    
     public Timer() {
         borrowDate = df.format(borrowTime);
@@ -173,6 +174,7 @@ public class Timer {
     
     public void stop(){
         //จับวันที่ยืม คืน (ทุกอย่าง) = 0
+        thread.stop();
         totalMin = 0;
         totalSeconds = 0;
         totalHour = 0;
@@ -183,48 +185,63 @@ public class Timer {
     }
     
     public void start() throws InterruptedException{
-        long tmp01 = totalSeconds;
-        long tmp02 = totalMin;
-        long tmp03 = totalHour;
-        for(int i = 0;i<=tmp03;i++){
-            for(int j = 0;j<60;j++){
-                for(int k = 0;k<60;k++){
-                    Thread.sleep(1000);
-                    totalSeconds--;
-                    timeLeft = "Now : "+totalHour+" Hours "+totalMin+" Minutes "+totalSeconds+" Secounds";
-                    if(nf.notiTime(totalHour,totalMin,totalSeconds)){
-                        Scanner sc = new Scanner(System.in);
-                        System.out.println(timeLeft + "\nDo you want to increase time? (y or n)");
-                        String result = sc.nextLine();
-                        if(result.equalsIgnoreCase("y")){
-                            System.out.print("Please Enter Hour Do you want to increase : ");
-                            int h = sc.nextInt();
-                            System.out.print("Please Enter Minutes Do you want to increase : ");
-                            int m = sc.nextInt();
-                            System.out.print("Please Enter Secound Do you want to increase : ");
-                            int s = sc.nextInt();
-                            increaseTime(h, m, s);
+        long tmp = totalHour;
+        if(totalSeconds == 0 && totalMin == 0){
+            totalHour -= 1;
+            totalMin = 59;
+            totalSeconds = 60;
+        }
+        Runnable runnable = new Runnable() {
+            public void run() {
+                for(int i = 0;i<=tmp;i++){
+                    for(int j = 0;j<60;j++){
+                        for(int k = 0;k<60;k++){
+                            
+                            try {
+                                Thread.sleep(1000);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(Timer.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            totalSeconds--;
+                            timeLeft = "Now : "+totalHour+" Hours "+totalMin+" Minutes "+totalSeconds+" Secounds";
+                            if(nf.notiTime(totalHour,totalMin,totalSeconds)){
+                                Scanner sc = new Scanner(System.in);
+                                System.out.println(timeLeft + "\nDo you want to increase time? (y or n)");
+                                String result = sc.nextLine();
+                                if(result.equalsIgnoreCase("y")){
+                                    System.out.print("Please Enter Hour Do you want to increase : ");
+                                    int h = sc.nextInt();
+                                    System.out.print("Please Enter Minutes Do you want to increase : ");
+                                    int m = sc.nextInt();
+                                    System.out.print("Please Enter Secound Do you want to increase : ");
+                                    int s = sc.nextInt();
+                                    increaseTime(h, m, s);
+                                }
+                            }
+                            System.out.println(timeLeft);
+                            if(totalSeconds == 0){
+                                break;
+                            }
                         }
+                        totalMin--;
+
+                        if(totalMin==-1){
+                            totalMin = 0;
+                            break;
+                        }
+                        totalSeconds = 60;
                     }
-                    System.out.println(timeLeft);
-                    if(totalSeconds == 0){
+                    totalHour--;
+                    if(totalHour == -1){
+                        totalHour = 0;
                         break;
                     }
+                    totalMin = 59;
                 }
-                totalMin--;
-                
-                if(totalMin==-1){
-                    totalMin = 0;
-                    break;
-                }
-                totalSeconds = 60;
             }
-            totalHour--;
-            if(totalHour == -1){
-                totalHour = 0;
-                break;
-            }
-        }
+        };
+        thread = new Thread(runnable);
+        thread.start();
     }
 
     public int getTotalSeconds() {
