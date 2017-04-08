@@ -191,6 +191,10 @@ public class Timer {
             totalMin = 59;
             totalSeconds = 60;
         }
+        if(totalSeconds == 0){
+            totalMin -= 1;
+            totalSeconds = 60;
+        }
         Runnable runnable = new Runnable() {
             public void run() {
                 for(int i = 0;i<=tmp;i++){
