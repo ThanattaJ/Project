@@ -188,7 +188,7 @@ public class Timer {
         //String = ''; หรือ เก็บ Totaltime = null ตามความเหมาะสม
     }
     
-    public void start() throws InterruptedException{
+    public void start(Object obj) throws InterruptedException{
         long tmp = totalHour;
         if(totalSeconds == 0 && totalMin == 0){
             totalHour -= 1;
@@ -212,7 +212,7 @@ public class Timer {
                             }
                             totalSeconds--;
                             timeLeft = totalHour+" Hours "+totalMin+" Minutes "+totalSeconds+" Secounds";
-                            if(nf.notiTime(totalHour,totalMin,totalSeconds)){
+                            if(nf.notiTime(obj,totalHour,totalMin,totalSeconds)){
                                     bu = new BikeUser();
                                     bu.notiTime();
                             }
