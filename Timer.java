@@ -1,5 +1,5 @@
-package bike;
 import bike_gui.BikeUser;
+import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.*;
@@ -16,6 +16,7 @@ public class Timer {
     private Notification nf = new Notification();
     private Thread thread = new Thread();
     private BikeUser bu;
+    private String[] hisBorrow = new String[5];
    
     public Timer() {
         borrowDate = df.format(borrowTime);
@@ -152,8 +153,9 @@ public class Timer {
     }
 	
     public void increaseTime(int hr,int min,int sec){
-        Date temp = new Date(returnTime.getYear(), returnTime.getMonth(),returnTime.getDate(),returnTime.getHours()+hr,returnTime.getMinutes()+min,returnTime.getSeconds()+sec);
-        returnDate = df.format(temp);
+        returnTime = new Date(returnTime.getYear(), returnTime.getMonth(),returnTime.getDate(),returnTime.getHours()+hr,returnTime.getMinutes()+min,returnTime.getSeconds()+sec);
+        returnDate = df.format(returnTime);
+        
         
         //เพิ่มใน total hour min second
         totalHour = totalHour+hr;
@@ -211,7 +213,8 @@ public class Timer {
                             totalSeconds--;
                             timeLeft = totalHour+" Hours "+totalMin+" Minutes "+totalSeconds+" Secounds";
                             if(nf.notiTime(totalHour,totalMin,totalSeconds)){
-                                bu.notiTime();
+                                    bu = new BikeUser();
+                                    bu.notiTime();
                             }
                             System.out.println(timeLeft);
                             if(totalSeconds == 0){
@@ -238,7 +241,49 @@ public class Timer {
         thread = new Thread(runnable);
         thread.start();
     }
+    
+     public int showStartAndEndTime(){
+        String startBorrow = "";
+        String stopBorrow = "";
+        int i = 0;
+        Date date= new Date();
+        Connection con = null;
+        try{
+            con = Database.connectDb("win", "win016");
+        
+            Statement st = con.createStatement(); 
+            String sql = "SELECT dateTime,return_dateTime FROM Transaction WHERE userID='12345' and action='Borrow' ORDER BY dateTime DESC LIMIT 5";
+            ResultSet rs = st.executeQuery(sql);
+            while(rs.next()){
+                date = rs.getTimestamp("dateTime");
+                startBorrow = date.getDate()+" / "+(date.getMonth()+1)+" / "+(date.getYear()+1900)+"  "+date.getHours()+" : "+date.getMinutes();
+                
+                date = rs.getTimestamp("return_DateTime");
+                stopBorrow = date.getDate()+" / "+(date.getMonth()+1)+" / "+(date.getYear()+1900)+"  "+date.getHours()+" : "+date.getMinutes();
+                
+                hisBorrow[i] = "Start:    "+startBorrow+"     "+"End:    "+stopBorrow;
+                i++;
+            }
+        }catch(SQLException se){
+            se.printStackTrace();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        
+        try {
+            if(con != null){
+                con.close();
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return i;
+    }
 
+    public String[] getHisBorrow() {
+        return hisBorrow;
+    }
+    
     public int getTotalSeconds() {
         return totalSeconds;
     }
