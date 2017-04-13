@@ -19,6 +19,7 @@ import java.sql.Statement;
  */
 public class Support {
     private String search;
+    private String output=""; 
     
     public void searchSupport(String search){
         String t1 = search;
@@ -58,16 +59,19 @@ public class Support {
         System.out.println("");
     }
     
-    public String contact(){
+     public String contact(){
         String detail="";
-        detail+="----------------CONTACT------------------\n"
+        detail+="Address:\n"
+                +"Keas 69 Str.\n"
+                +"12345, Chalandri \n"
+                +"Athens\n"
+                +"Greece\n"
                 +"Phone number: 012-3456789\n"
                 +"Line: @GreenSociety\n"
                 +"Facebook: GreenSocietyKMUTT";
         return detail;
     }
 
-    
     public Support() {
     }
 
@@ -82,6 +86,14 @@ public class Support {
     public void setSearch(String search) {
         this.search = search;
     }
+
+   public String getOutput() {
+        return output;
+    }
+
+    public void setOutput(String output) {
+        this.output = output;
+    }	
 
     @Override
     public String toString() {
