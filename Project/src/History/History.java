@@ -3,10 +3,60 @@ package History;
 import ConnectDB.ConnectDatabase;
 import java.sql.*;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Scanner;
 public class History {
     private long historyId;
     private long transID;
+    
+    public ArrayList<String> tableHistory(long id){
+        ArrayList<String> table= new ArrayList<String>();
+        String format;
+        Timestamp dateTime;
+        String action;
+        String item;
+        Timestamp returnTime;
+        try{
+            ConnectDatabase cndb = new ConnectDatabase();
+            Connection connect = ConnectDatabase.connectDb("jan", "jan042");
+            Class.forName("com.mysql.jdbc.Driver");
+            
+            Statement st = connect.createStatement(); 
+            
+            String temp = "SELECT dateTime,action,itemName,return_dateTime FROM Green_Society.Items "
+                    + "JOIN Transaction On Items.itemID = Transaction.itemID "
+                    + "WHERE NOT Transaction.action = 'Return' AND Transaction.userID= "+id;
+            ResultSet rs = st.executeQuery(temp);
+            
+            while(rs.next()){
+                dateTime=rs.getTimestamp("dateTime");
+                String newDateTime= new SimpleDateFormat("MM/dd/yyyy").format(dateTime);
+                action = rs.getString("action");
+                item = rs.getString("itemName");
+                returnTime = rs.getTimestamp("return_dateTime");
+                String newReturn =  new SimpleDateFormat("MM/dd/yyyy").format(returnTime);
+                format = "      "+newDateTime+"                        "+action+"                            "+item+"                    "+newReturn;
+                table.add(format);
+            }
+            
+            try {
+		if(connect != null){
+                    connect.close();
+		}
+		}catch (SQLException e){
+                    e.printStackTrace();
+		}                
+        }
+        
+        catch(ClassNotFoundException cfe){
+            System.out.println(cfe);
+        }
+        catch(Exception ex){
+            System.out.println(ex);
+        }
+        return table;
+    }
+    
     
     public void HistoryByAdmin(String itemId,Timestamp startDate,Timestamp returnDate,String input){ //รับจาก ตัวแปรที่ต้องการส่งลง DB เป็น String
         int userIdInt = 111;
