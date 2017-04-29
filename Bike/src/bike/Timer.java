@@ -23,16 +23,23 @@ public class Timer {
     public Timer() {
         borrowDate = df.format(borrowTime);
     }
-
+    
+    public Timer(Date returnItems,Date current){
+        borrowTime = current;
+        borrowDate = df.format(borrowTime);
+        returnTime = returnItems;
+        returnDate = df.format(returnTime);
+    }
+    
     public Timer(int userDate, int userMonth, int userYear,int userHr, int userMin, int userSec) {
         borrowDate = df.format(borrowTime);
         
         returnTime.setDate(userDate);
+        returnTime.setMonth(userMonth-1);
+        returnTime.setYear(userYear-1900);
         returnTime.setHours(userHr);
         returnTime.setMinutes(userMin);
         returnTime.setSeconds(userSec);
-        returnTime.setMonth(userMonth-1);
-        returnTime.setYear(userYear-1900);
         returnDate = df.format(returnTime);
         
     }
@@ -255,7 +262,7 @@ public class Timer {
             con = Database.connectDb("win", "win016");
         
             Statement st = con.createStatement(); 
-            String sql = "SELECT dateTime,return_dateTime FROM Transaction WHERE userID='12345' and action='Borrow' ORDER BY dateTime DESC LIMIT 5";
+            String sql = "SELECT dateTime,return_dateTime FROM Transaction WHERE userID='"+User.getUserId()+"' and action='Borrow' ORDER BY dateTime DESC LIMIT 5";
             ResultSet rs = st.executeQuery(sql);
             while(rs.next()){
                 date = rs.getTimestamp("dateTime");

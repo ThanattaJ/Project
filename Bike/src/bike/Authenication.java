@@ -126,7 +126,7 @@ public class Authenication {
 
             id++;
             sql = "INSERT INTO User VALUES('" + id + "','" + firstName + "','" + lastName + "','" + gender
-                    + "'," + birthDate + ",'" + congenitialDisease + "','" + email + "','" + tel + "','" + deptId + "',can_point='0','" + pass.toString() + "','"+newPath+"')";
+                    + "','" + birthDate + "','" + congenitialDisease + "','" + email + "','" + tel + "','" + deptId + "','0','" + pass.toString() + "','"+newPath+"')";
             s.executeUpdate(sql);
             if (position.equalsIgnoreCase("Technician") || position.equalsIgnoreCase("Officer")) {
                 insertOfficer(position, id);
