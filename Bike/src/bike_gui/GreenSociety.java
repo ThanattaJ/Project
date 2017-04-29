@@ -122,7 +122,7 @@ public class GreenSociety extends javax.swing.JFrame {
             
             imgItem[i] = new JLabel();
             imgItem[i].setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-            imgItem[i].setIcon(new javax.swing.ImageIcon(getClass().getResource(pathOfItem[i]))); // NOI18N
+            imgItem[i].setIcon(new ImageIcon(new ImageIcon(getClass().getResource(pathOfItem[i])).getImage().getScaledInstance(128, 128, Image.SCALE_DEFAULT))); // NOI18N
             jp[i].add(imgItem[i], new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 140, 130));
             
             available[i] = new JLabel();
@@ -271,6 +271,11 @@ public class GreenSociety extends javax.swing.JFrame {
         numNoti = new javax.swing.JLabel();
         circleNoti = new javax.swing.JLabel();
         iconNoti1 = new javax.swing.JLabel();
+        sharingScroll = new javax.swing.JScrollPane();
+        sharingStep1 = new javax.swing.JPanel();
+        nextStep = new javax.swing.JButton();
+        s1 = new javax.swing.JLabel();
+        isCp = new javax.swing.JLabel();
         timePageT = new javax.swing.JPanel();
         timeupPage = new javax.swing.JPanel();
         titleItemTimeUp = new javax.swing.JLabel();
@@ -306,11 +311,6 @@ public class GreenSociety extends javax.swing.JFrame {
         cancleBut = new javax.swing.JButton();
         borrowBut = new javax.swing.JButton();
         s9 = new javax.swing.JLabel();
-        sharingScroll = new javax.swing.JScrollPane();
-        sharingStep1 = new javax.swing.JPanel();
-        nextStep = new javax.swing.JButton();
-        s1 = new javax.swing.JLabel();
-        isCp = new javax.swing.JLabel();
         userProfilePage1 = new javax.swing.JPanel();
         editProfileBut1 = new javax.swing.JButton();
         titleUserId1 = new javax.swing.JLabel();
@@ -736,6 +736,46 @@ public class GreenSociety extends javax.swing.JFrame {
 
         mainUser.add(barNoti1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 480, 770, 60));
 
+        sharingScroll.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(25, 41, 65), 1, true));
+
+        sharingStep1.setBackground(new java.awt.Color(25, 41, 65));
+        sharingStep1.setEnabled(false);
+        sharingStep1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        nextStep.setBackground(new java.awt.Color(25, 41, 65));
+        nextStep.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/right arrow.png"))); // NOI18N
+        nextStep.setContentAreaFilled(false);
+        nextStep.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                nextStepMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                nextStepMouseExited(evt);
+            }
+        });
+        nextStep.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nextStepActionPerformed(evt);
+            }
+        });
+        sharingStep1.add(nextStep, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 370, 60, 50));
+
+        s1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 20)); // NOI18N
+        s1.setForeground(new java.awt.Color(255, 255, 255));
+        s1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        s1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/Step1.png"))); // NOI18N
+        sharingStep1.add(s1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 180, 40));
+
+        isCp.setFont(new java.awt.Font("Leelawadee", 0, 16)); // NOI18N
+        isCp.setForeground(new java.awt.Color(255, 255, 255));
+        isCp.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        isCp.setText("Your CP : 1000 Points ");
+        sharingStep1.add(isCp, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 10, 180, 30));
+
+        sharingScroll.setViewportView(sharingStep1);
+
+        mainUser.add(sharingScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 58, 770, 422));
+
         timePageT.setBackground(new java.awt.Color(25, 41, 65));
         timePageT.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -964,46 +1004,6 @@ public class GreenSociety extends javax.swing.JFrame {
         sharingStep3.add(s9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 180, 40));
 
         mainUser.add(sharingStep3, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 60, 770, 421));
-
-        sharingScroll.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(25, 41, 65), 1, true));
-
-        sharingStep1.setBackground(new java.awt.Color(25, 41, 65));
-        sharingStep1.setEnabled(false);
-        sharingStep1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        nextStep.setBackground(new java.awt.Color(25, 41, 65));
-        nextStep.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/right arrow.png"))); // NOI18N
-        nextStep.setContentAreaFilled(false);
-        nextStep.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                nextStepMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                nextStepMouseExited(evt);
-            }
-        });
-        nextStep.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nextStepActionPerformed(evt);
-            }
-        });
-        sharingStep1.add(nextStep, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 370, 60, 50));
-
-        s1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 20)); // NOI18N
-        s1.setForeground(new java.awt.Color(255, 255, 255));
-        s1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        s1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/Step1.png"))); // NOI18N
-        sharingStep1.add(s1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 180, 40));
-
-        isCp.setFont(new java.awt.Font("Leelawadee", 0, 16)); // NOI18N
-        isCp.setForeground(new java.awt.Color(255, 255, 255));
-        isCp.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        isCp.setText("Your CP : 1000 Points ");
-        sharingStep1.add(isCp, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 10, 180, 30));
-
-        sharingScroll.setViewportView(sharingStep1);
-
-        mainUser.add(sharingScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 58, 770, 422));
 
         userProfilePage1.setBackground(new java.awt.Color(25, 41, 65));
         userProfilePage1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -3259,6 +3259,7 @@ public class GreenSociety extends javax.swing.JFrame {
             genderProfile1.setText("Male");
         }
         setDataUserProfile();
+        
         imageProfile1.setIcon(new ImageIcon(new ImageIcon(getClass().getResource(User.getImgPath())).getImage().getScaledInstance(200, 170, Image.SCALE_DEFAULT)));
     }//GEN-LAST:event_profile1MouseClicked
 
@@ -3466,7 +3467,7 @@ public class GreenSociety extends javax.swing.JFrame {
             sh.setPointUse();
             sh.getCp().selectCP();
             (sh.getCp()).checkCp();
-            sh.enterTime(dt.getDate(), dt.getMonth()+1,dt.getYear()+1900,22, 0, 0);
+            sh.enterTime(dt.getDate(), dt.getMonth()+1,dt.getYear()+1900,18, 0, 0);
             sharingScroll.setVisible(false);
             sharingStep3.setVisible(true);
             setBorrowDetail();
