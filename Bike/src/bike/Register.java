@@ -1,27 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package Register;
+package bike;
 
-import ConnectDB.ConnectDatabase;
-import Timer.Timer;
-import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import javax.xml.bind.DatatypeConverter;
-import java.util.Scanner;
 
-/**
- *
- * @author January
- */
 public class Register {
     private String name;
     private String surname;
@@ -45,8 +30,7 @@ public class Register {
         
          try{
             
-            ConnectDatabase cndb = new ConnectDatabase();
-            Connection connect = ConnectDatabase.connectDb("jan", "jan042");
+            Connection connect = Database.connectDb("jan", "jan042");
             Class.forName("com.mysql.jdbc.Driver");
             
             Statement st = connect.createStatement(); 
@@ -92,8 +76,7 @@ public class Register {
         
          try{
             
-            ConnectDatabase cndb = new ConnectDatabase();
-            Connection connect = ConnectDatabase.connectDb("jan", "jan042");
+            Connection connect = Database.connectDb("jan", "jan042");
             Class.forName("com.mysql.jdbc.Driver");
             
             Statement st = connect.createStatement(); 
