@@ -39,7 +39,6 @@ public class Support {
         catch(Exception ex){
             System.out.println(ex);
         }
-        System.out.println("");
     }
     
     public String contact(){
@@ -55,7 +54,46 @@ public class Support {
         return detail;
     }
 
-    
+    public void insertSupport(String title,String content){
+        int id = 0;
+        String insertId = null;
+        try{
+            Connection connect = Database.connectDb("jan", "jan042");
+            Class.forName("com.mysql.jdbc.Driver");
+        
+            Statement st = connect.createStatement(); 
+            String sql = "SELECT MAX(manualID) AS id FROM Manual";
+            ResultSet rs = st.executeQuery(sql);
+            while(rs.next()){
+               id = rs.getInt("id");
+            }
+            
+            id++;
+            String temp = id+"";
+            if(temp.length()==1){
+                insertId = "00"+id;
+            }else if(temp.length()==2){
+                insertId = "0"+id;
+            }else{
+                insertId = id+"";
+            }
+            
+            sql = "INSERT INTO Manual VALUES('"+insertId+"','"+title+"','"+content+"')";
+            st.executeUpdate(sql);
+            
+            try {
+		if(connect != null){
+                    connect.close();
+		}
+		}catch (SQLException e){
+                    e.printStackTrace();
+		}
+        }catch(ClassNotFoundException cfe){
+            System.out.println(cfe);
+        }catch(Exception ex){
+            System.out.println(ex);
+        }
+    }
 
     public Support(String search) {
         this.search = search;

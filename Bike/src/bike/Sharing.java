@@ -1,5 +1,9 @@
 package bike;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.*;
 import java.util.Date;
 public class Sharing {
@@ -320,13 +324,18 @@ public class Sharing {
         return equipId;
     }
         
-    public void addItem(String id,String name,int count){
+    public void addItem(String id,String name,int count,String path){
         Connection con = null;
+        String newPath;
         int available=0;
+        String typeFile = path.substring(path.indexOf("."),path.length()-1);
+        newPath = "/bike_gui/itemPic/"+name+typeFile;
+        copyFileImg(path,newPath);
+
         try{
             con = Database.connectDb("ja","jaja036");
             Statement s = con.createStatement();
-            String sql = "INSERT INTO Items VALUES ('"+id+"','"+name+"','"+count+"','"+count+"')";
+            String sql = "INSERT INTO Items VALUES ('"+id+"','"+name+"','"+count+"','"+count+"','"+newPath+",)";
             s.executeUpdate(sql);
         }
         catch(Exception e){
@@ -586,6 +595,27 @@ public class Sharing {
             con.close();
         }catch(Exception e){
             e.printStackTrace();
+        }
+    }
+    
+        public void copyFileImg(String sourceFile,String targetFile){
+        try{
+            FileInputStream fis = new FileInputStream(sourceFile);
+            FileOutputStream fos = new FileOutputStream(targetFile);
+            
+            byte[] data = new byte[1024];
+            int numFile;
+            while((numFile=fis.read(data))!=-1){
+                fos.write(data, 0, numFile);
+            }
+            fis.close();
+            fos.close();
+        }
+        catch(FileNotFoundException fnfe){
+            System.out.println(fnfe);
+        }
+        catch(IOException ioe){
+            System.out.println(ioe);
         }
     }
 }
