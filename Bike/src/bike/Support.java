@@ -1,43 +1,27 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package Support;
+package bike;
 
-import ConnectDB.ConnectDatabase;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-
-/**
- *
- * @author January
- */
+import java.sql.*;
 public class Support {
     private String search;
     private String output=""; 
+
+    public Support() {
+    }
     
     public void searchSupport(String search){
         try{
-            ConnectDatabase cndb = new ConnectDatabase();
-            Connection connect = ConnectDatabase.connectDb("jan", "jan042");
+            Connection connect = Database.connectDb("jan", "jan042");
             Class.forName("com.mysql.jdbc.Driver");
-            System.out.println("Database connecting");
         
             Statement st = connect.createStatement(); 
             String temp = "SELECT * FROM Manual WHERE manualDescription LIKE '%"+search+"%' OR manualDetails LIKE '%"+search+"%'";
             ResultSet rs = st.executeQuery(temp);
     
             while(rs.next()){
-                output+=("manualID: " + rs.getString("manualID"))+"\n";
-                output+=("manualDescription: " + rs.getString("manualDescription"))+"\n";
-                output+=("manualDetails: " + rs.getString("manualDetails")+"\n");
+                output+=("manualID : " + rs.getString("manualID"))+"\n";
+                output+=("manualDescription : \n" + rs.getString("manualDescription"))+"\n";
+                output+=("manualDetails : " + rs.getString("manualDetails")+"\n");
                 output+=("----------------------------------------------");
-//                System.out.println(output);
             }
             
             try {
@@ -72,8 +56,6 @@ public class Support {
     }
 
     
-    public Support() {
-    }
 
     public Support(String search) {
         this.search = search;
@@ -95,8 +77,6 @@ public class Support {
         this.output = output;
     }
     
-    
-
     @Override
     public String toString() {
         return "Support{" + "search=" + search + '}';

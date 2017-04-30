@@ -13,6 +13,8 @@ public class Sharing {
     private static int[] availableItem; //จำนวนไอเทมที่สามารถใช้ได้
     private String itemID[];
     private int itemCP[];
+    private String[] itemReturnUser;
+    private int[] itemAmountReturnUser;
     private int countType;
     private int countEquip;
     private CanCounter cp; //ซีพี
@@ -479,14 +481,14 @@ public class Sharing {
                     returnTime[i-1] = rs.getTimestamp("return_dateTime");
                 }
             }
-            String current = dt.getDate()+(dt.getMonth()+1)+(dt.getYear()+1900)+"";
-            String temp;
+            String current = dt.getDate()+(dt.getMonth()+1)+(dt.getYear()+1900)+"";;
+            String temp;    
             for (int i = 0; i < returnTime.length; i++) {
                 temp = returnTime[i].getDate()+(returnTime[i].getMonth()+1)+(returnTime[i].getYear()+1900)+"";
-                if(!current.equals(temp)){
+                if(!current.equals(temp) || returnTime[i].getTime() <= dt.getTime()){
                     statusTimesUp = true;
-                    cp.setCpUse(cp.getCpUse()*2);
-                    cp.decreseCp();
+                    int tmpCP = 0;
+                    itemMustReturn();
                 }
             }
         }catch(Exception e){
@@ -513,8 +515,6 @@ public class Sharing {
     
     public String itemMustReturn(){
         String dateReturn = returnTime[0]+"";
-        String[] item = null;
-        int[] amount = null;
         int i = 0;
         String listItem = "";
         Connection con = null;
@@ -526,20 +526,20 @@ public class Sharing {
             while(rs.next()){
                 i = rs.getInt("count");
             }
-            item = new String[i];
-            amount = new int[i];
+            itemReturnUser = new String[i];
+            itemAmountReturnUser = new int[i];
             
             sql = "SELECT itemID,SUM(amount) AS sum FROM Transaction WHERE userID='"+User.getUserId()+"' and return_dateTime='"+dateReturn+"' GROUP BY itemID LIMIT "+returnTime.length;
             rs = s.executeQuery(sql);
             i = 0;
             while(rs.next()){
-                item[i] = rs.getString("itemID");
-                amount[i] = rs.getInt("sum");
+                itemReturnUser[i] = rs.getString("itemID");
+                itemAmountReturnUser[i] = rs.getInt("sum");
                 i++;
             }
-            
-            for (int j = 0; j < item.length; j++) {
-                listItem += "- "+item[j] + "    Amount  : " + amount[j]+"<br>";
+          
+            for (int j = 0; j < itemReturnUser.length; j++) {
+                listItem +="- " + itemReturnUser[j] + "    Amount   : " + itemAmountReturnUser[j] + "<br>";
             }
         }catch(Exception e){
             e.printStackTrace();
@@ -551,5 +551,41 @@ public class Sharing {
             e.printStackTrace();
         }
         return listItem;
+    }
+    
+    public void timesupCP(){
+        Connection con = null;
+        Date dt = new Date();
+        String sql;
+        try{
+            con = Database.connectDb("ja","jaja036");
+            Statement s = con.createStatement();
+            String current = dt.getDate()+(dt.getMonth()+1)+(dt.getYear()+1900)+"";;
+            String temp;    
+            for (int i = 0; i < returnTime.length; i++) {
+                temp = returnTime[i].getDate()+(returnTime[i].getMonth()+1)+(returnTime[i].getYear()+1900)+"";
+                if(!current.equals(temp) || returnTime[i].getTime() <= dt.getTime()){
+                    int tmpCP = 0;
+                    for (int j = 0; j < itemReturnUser.length; j++) {
+                        sql = "SELECT CP_cost FROM Items WHERE itemID='"+itemReturnUser[i]+"'";
+                        ResultSet rs = s.executeQuery(sql);
+                        if(rs.next()){
+                            tmpCP += rs.getInt("CP_cost")*itemAmountReturnUser[i];
+                        }
+                    }
+                    cp.selectCP();
+                    cp.setCpUse(tmpCP*2);
+                    cp.decreseCp();
+                }
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            con.close();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 }
