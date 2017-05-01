@@ -5,6 +5,7 @@ import javax.swing.*;
 public class News extends javax.swing.JFrame {
     private AdminNews ad = new AdminNews();
     private JPanel content[] = null;
+    private UserNews sn = new UserNews();
     public News() {
         initComponents();
         jPanel10.setVisible(false);
@@ -18,14 +19,21 @@ public class News extends javax.swing.JFrame {
         topic.setText("a");
     }
     
+    public void deleteNewsButton(java.awt.event.ActionEvent evt,long tem){
+        this.setVisible(false);
+        ad.deleteNews(tem);
+    }
+   
     public void layerUser(){
         int y = 20;
+        
         String[] topic = ad.selectTopicNews();
         JPanel[] jp = new JPanel[topic.length];
         JLabel[] label = new JLabel[topic.length];
         JButton[] click = new JButton[topic.length];
         
         for (int i = 0; i < topic.length; i++) {
+            int tem=i;
             jp[i] = new JPanel();
             jp[i].setBackground(new java.awt.Color(204, 204, 204));
             jp[i].setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -39,7 +47,8 @@ public class News extends javax.swing.JFrame {
             click[i].setText("View");
             click[i].addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    showNews();
+//                    showNews();
+                    jBtClickActionPerformed(evt,tem+1);
                 }
             });
             
@@ -47,6 +56,13 @@ public class News extends javax.swing.JFrame {
             jPanel11.add(jp[i],new org.netbeans.lib.awtextra.AbsoluteConstraints(50, y, 500, 40));
             y+=50;
         }
+    }
+    
+    public void jBtClickActionPerformed(java.awt.event.ActionEvent evt,int tem){
+        jPanel12.setVisible(true);
+        jTextAreaNews.setText(ad.detailNewsSelect(tem));
+        topic.setText(ad.topicNewsSelect(tem));//เปลี่ยนหัวข้อข่าว
+        jPanel11.setVisible(false);
     }
 
     /**
@@ -102,11 +118,12 @@ public class News extends javax.swing.JFrame {
         topic = new javax.swing.JLabel();
         deleteNews = new javax.swing.JButton();
         updateNews = new javax.swing.JButton();
-        jLabel6 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTextAreaNews = new javax.swing.JTextArea();
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel11 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        jButtonInsert = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -371,6 +388,11 @@ public class News extends javax.swing.JFrame {
         deleteNews.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
         deleteNews.setText("Delete");
         deleteNews.setToolTipText("");
+        deleteNews.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteNewsActionPerformed(evt);
+            }
+        });
         jPanel12.add(deleteNews, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 360, -1, -1));
 
         updateNews.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
@@ -378,8 +400,13 @@ public class News extends javax.swing.JFrame {
         updateNews.setToolTipText("");
         jPanel12.add(updateNews, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 360, -1, -1));
 
-        jLabel6.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        jPanel12.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, 650, 280));
+        jTextAreaNews.setBackground(new java.awt.Color(25, 41, 65));
+        jTextAreaNews.setColumns(20);
+        jTextAreaNews.setForeground(new java.awt.Color(255, 255, 255));
+        jTextAreaNews.setRows(5);
+        jScrollPane2.setViewportView(jTextAreaNews);
+
+        jPanel12.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 100, 450, 180));
 
         jPanel10.add(jPanel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 710, 400));
 
@@ -394,14 +421,14 @@ public class News extends javax.swing.JFrame {
         jLabel3.setText("News");
         jPanel10.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 60, 30));
 
-        jButton2.setFont(new java.awt.Font("Leelawadee", 0, 11)); // NOI18N
-        jButton2.setText("INSERT");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jButtonInsert.setFont(new java.awt.Font("Leelawadee", 0, 11)); // NOI18N
+        jButtonInsert.setText("INSERT");
+        jButtonInsert.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jButtonInsertActionPerformed(evt);
             }
         });
-        jPanel10.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 20, -1, -1));
+        jPanel10.add(jButtonInsert, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 20, -1, -1));
 
         jPanel5.add(jPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 60, 730, 420));
 
@@ -423,16 +450,26 @@ public class News extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void jButtonInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonInsertActionPerformed
         this.setVisible(false);
         new InsertNews().setVisible(true);
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_jButtonInsertActionPerformed
 
     private void newsLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_newsLabelMouseClicked
        newsLabel.setForeground(new Color(19,175,248));
        jPanel10.setVisible(true);
        layerUser();
     }//GEN-LAST:event_newsLabelMouseClicked
+
+    private void deleteNewsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteNewsActionPerformed
+        // TODO add your handling code here:
+//        String[] topic = ad.selectTopicNews();
+//        for (int i = 0; i < topic.length; i++) {
+//            long tem = i;
+//            long id = deleteNews.get;
+//            deleteNews.setText(ad.deleteNews(tem));
+//        }
+    }//GEN-LAST:event_deleteNewsActionPerformed
 
     /**
      * @param args the command line arguments
@@ -471,7 +508,7 @@ public class News extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton deleteNews;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButtonInsert;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -488,7 +525,6 @@ public class News extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -504,8 +540,10 @@ public class News extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JTextArea jTextAreaNews;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel newsCanCounterLabel;
     private javax.swing.JLabel newsHistoryLabel;

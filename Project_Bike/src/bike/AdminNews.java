@@ -8,7 +8,7 @@ package bike;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import bike.database.Database;
+import database.Database;
 /**
  *
  * @author user
@@ -70,6 +70,7 @@ public class AdminNews {
         }
         return allTopicNews;
     }
+    
     public String[] selectDetailNews(){
         String[] detailNews = null;
         Connection c = null;
@@ -101,6 +102,60 @@ public class AdminNews {
             e.printStackTrace();
         }
         return detailNews;
+    }
+    public String topicNewsSelect(int selectTopic){
+        String showTopic="";
+        Connection c = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            c = Database.connectDb("win", "win016");
+            Statement s = c.createStatement();
+            String sql;
+            sql = "SELECT newsDescription FROM News where newsID= "+selectTopic;
+            ResultSet rs = s.executeQuery(sql);
+            
+            while(rs.next()){
+                showTopic=rs.getString("newsDescription");
+            }
+ 
+            
+        } catch (Exception e) {
+            e.printStackTrace();    //โชว์ข้อผิดพลาดทั้งหมด
+        }
+        try{
+            c.close();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        return showTopic;
+    }
+    public String detailNewsSelect(int selectNews){
+        String showNews="";
+        Connection c = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            c = Database.connectDb("win", "win016");
+            Statement s = c.createStatement();
+            String sql;
+            sql = "SELECT newsDetails FROM News where newsID= "+selectNews;
+            ResultSet rs = s.executeQuery(sql);
+            
+            while(rs.next()){
+                showNews=rs.getString("newsDetails");
+            }
+ 
+            
+        } catch (Exception e) {
+            e.printStackTrace();    //โชว์ข้อผิดพลาดทั้งหมด
+        }
+        try{
+            c.close();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        return showNews;
     }
     
     public void insertNews(String head, String detail) {
