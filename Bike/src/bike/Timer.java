@@ -23,16 +23,23 @@ public class Timer {
     public Timer() {
         borrowDate = df.format(borrowTime);
     }
-
+    
+    public Timer(Date returnItems,Date current){
+        borrowTime = current;
+        borrowDate = df.format(borrowTime);
+        returnTime = returnItems;
+        returnDate = df.format(returnTime);
+    }
+    
     public Timer(int userDate, int userMonth, int userYear,int userHr, int userMin, int userSec) {
         borrowDate = df.format(borrowTime);
         
         returnTime.setDate(userDate);
+        returnTime.setMonth(userMonth-1);
+        returnTime.setYear(userYear-1900);
         returnTime.setHours(userHr);
         returnTime.setMinutes(userMin);
         returnTime.setSeconds(userSec);
-        returnTime.setMonth(userMonth-1);
-        returnTime.setYear(userYear-1900);
         returnDate = df.format(returnTime);
         
     }
@@ -201,48 +208,53 @@ public class Timer {
             totalMin -= 1;
             totalSeconds = 60;
         }
-        Runnable runnable = new Runnable(){
-            public void run(){
-                for(int i = 0;i<=tmp;i++){
-                    for(int j = 0;j<60;j++){
-                        for(int k = 0;k<60;k++){
-                            
-                            try {
-                                Thread.sleep(1000);
-                            } catch (InterruptedException ex) {
-                                Logger.getLogger(Timer.class.getName()).log(Level.SEVERE, null, ex);
+        if(totalHour!= 0 && totalMin != 0 &&totalSeconds != 0){
+            Runnable runnable = new Runnable(){
+                public void run(){
+                    for(int i = 0;i<=tmp;i++){
+                        for(int j = 0;j<60;j++){
+                            for(int k = 0;k<60;k++){
+
+                                try {
+                                    Thread.sleep(1000);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(Timer.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                totalSeconds--;
+                                timeLeft = totalHour+" Hours "+totalMin+" Minutes "+totalSeconds+" Secounds";
+                                if(nf.notiTime(obj,totalHour,totalMin,totalSeconds)){
+                                    bu = new BikeUser();
+                                    int add[]= bu.notiTime();
+                                    increaseTime(add[0],add[1],add[2]);
+                                }
+                                System.out.println(timeLeft);
+                                if(totalSeconds == 0){
+                                    break;
+                                }
                             }
-                            totalSeconds--;
-                            timeLeft = totalHour+" Hours "+totalMin+" Minutes "+totalSeconds+" Secounds";
-                            if(nf.notiTime(obj,totalHour,totalMin,totalSeconds)){
-                                bu = new BikeUser();
-                                int add[]= bu.notiTime();
-                                increaseTime(add[0],add[1],add[2]);
-                            }
-                            System.out.println(timeLeft);
-                            if(totalSeconds == 0){
+                            totalMin--;
+
+                            if(totalMin==-1){
+                                totalMin = 0;
                                 break;
                             }
+                            totalSeconds = 60;
                         }
-                        totalMin--;
-
-                        if(totalMin==-1){
-                            totalMin = 0;
+                        totalHour--;
+                        if(totalHour == -1){
+                            totalHour = 0;
                             break;
                         }
-                        totalSeconds = 60;
+                        totalMin = 59;
                     }
-                    totalHour--;
-                    if(totalHour == -1){
-                        totalHour = 0;
-                        break;
+                    if(totalHour == 0 && totalMin == 0 &&totalSeconds == 0){
+                            thread.stop();
                     }
-                    totalMin = 59;
                 }
-            }
-        };
-        thread = new Thread(runnable);
-        thread.start();
+            };
+            thread = new Thread(runnable);
+            thread.start();
+        }
     }
     
      public int showStartAndEndTime(){
@@ -255,7 +267,7 @@ public class Timer {
             con = Database.connectDb("win", "win016");
         
             Statement st = con.createStatement(); 
-            String sql = "SELECT dateTime,return_dateTime FROM Transaction WHERE userID='12345' and action='Borrow' ORDER BY dateTime DESC LIMIT 5";
+            String sql = "SELECT dateTime,return_dateTime FROM Transaction WHERE userID='"+User.getUserId()+"' and action='Borrow' ORDER BY dateTime DESC LIMIT 5";
             ResultSet rs = st.executeQuery(sql);
             while(rs.next()){
                 date = rs.getTimestamp("dateTime");

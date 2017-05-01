@@ -3,10 +3,60 @@ package History;
 import ConnectDB.ConnectDatabase;
 import java.sql.*;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Scanner;
 public class History {
     private long historyId;
     private long transID;
+    
+    public ArrayList<String> tableHistory(long id){
+        ArrayList<String> table= new ArrayList<String>();
+        String format;
+        Timestamp dateTime;
+        String action;
+        String item;
+        Timestamp returnTime;
+        try{
+            ConnectDatabase cndb = new ConnectDatabase();
+            Connection connect = ConnectDatabase.connectDb("jan", "jan042");
+            Class.forName("com.mysql.jdbc.Driver");
+            
+            Statement st = connect.createStatement(); 
+            
+            String temp = "SELECT dateTime,action,itemName,return_dateTime FROM Green_Society.Items "
+                    + "JOIN Transaction On Items.itemID = Transaction.itemID "
+                    + "WHERE NOT Transaction.action = 'Return' AND Transaction.userID= "+id;
+            ResultSet rs = st.executeQuery(temp);
+            
+            while(rs.next()){
+                dateTime=rs.getTimestamp("dateTime");
+                String newDateTime= new SimpleDateFormat("MM/dd/yyyy").format(dateTime);
+                action = rs.getString("action");
+                item = rs.getString("itemName");
+                returnTime = rs.getTimestamp("return_dateTime");
+                String newReturn =  new SimpleDateFormat("MM/dd/yyyy").format(returnTime);
+                format = "      "+newDateTime+"                        "+action+"                            "+item+"                    "+newReturn;
+                table.add(format);
+            }
+            
+            try {
+		if(connect != null){
+                    connect.close();
+		}
+		}catch (SQLException e){
+                    e.printStackTrace();
+		}                
+        }
+        
+        catch(ClassNotFoundException cfe){
+            System.out.println(cfe);
+        }
+        catch(Exception ex){
+            System.out.println(ex);
+        }
+        return table;
+    }
+    
     
     public void HistoryByAdmin(String itemId,Timestamp startDate,Timestamp returnDate,String input){ //รับจาก ตัวแปรที่ต้องการส่งลง DB เป็น String
         int userIdInt = 111;
@@ -149,9 +199,43 @@ public class History {
             ResultSet rs4 = st.executeQuery(temp4);
             while(rs4.next()){
                 borrow = rs4.getTimestamp("dateTime");
-                format +="Start: ";
                 format += new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(borrow);
                 format +="\n";
+            }
+            
+            try {
+		if(connect != null){
+                    connect.close();
+		}
+		}catch (SQLException e){
+                    e.printStackTrace();
+		}      
+        }
+        catch(ClassNotFoundException cfe){
+            System.out.println(cfe);
+        }
+        catch(Exception ex){
+            System.out.println(ex);
+        }
+        return format;
+    }
+    
+     public String showHistoryUser(long id){ //user ใส่ไอดีตัวเองที่ต้องการรู้ประวัติการใช้งานของตัวเอง ดึงข้อมูลเฉพาะวันที่คืน
+        String format="";
+        Timestamp returnDate;
+        try{
+            ConnectDatabase cndb = new ConnectDatabase();
+            Connection connect = ConnectDatabase.connectDb("jan", "jan042");
+            Class.forName("com.mysql.jdbc.Driver");
+            
+            Statement st = connect.createStatement();
+            String temp4 = "SELECT itemName FROM Green_Society.Items JOIN Transaction On Items.itemID = Transaction.itemID WHERE Transaction.itemID LIKE \"%\" GROUP BY Items.itemName";
+            ResultSet rs4 = st.executeQuery(temp4);
+            while(rs4.next()){
+//                returnDate = rs4.getTimestamp("return_dateTime");
+//                format += new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(returnDate);
+//                format +="\n";
+                    format = rs4.getString("");
             }
             
             try {
@@ -184,8 +268,75 @@ public class History {
             ResultSet rs4 = st.executeQuery(temp4);
             while(rs4.next()){
                 returnDate = rs4.getTimestamp("return_dateTime");
-                format +="Stop: ";
                 format += new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(returnDate);
+                format +="\n";
+            }
+            
+            try {
+		if(connect != null){
+                    connect.close();
+		}
+		}catch (SQLException e){
+                    e.printStackTrace();
+		}      
+        }
+        catch(ClassNotFoundException cfe){
+            System.out.println(cfe);
+        }
+        catch(Exception ex){
+            System.out.println(ex);
+        }
+        return format;
+    }
+    
+    public String showActionUserFormDatabase(long id){ //user ใส่ไอดีตัวเองที่ต้องการรู้ประวัติการใช้งานของตัวเอง ดึงข้อมูลเฉพาะวันที่คืน
+        String format="";
+        String temp;
+        try{
+            ConnectDatabase cndb = new ConnectDatabase();
+            Connection connect = ConnectDatabase.connectDb("jan", "jan042");
+            Class.forName("com.mysql.jdbc.Driver");
+            
+            Statement st = connect.createStatement();
+            String temp4 = "select action from `Transaction` where UserId = "+ id +" and action LIKE 'Borrow' ";
+            ResultSet rs4 = st.executeQuery(temp4);
+            while(rs4.next()){
+                temp = rs4.getString("action");
+                format += temp;
+                format +="\n";
+            }
+            
+            try {
+		if(connect != null){
+                    connect.close();
+		}
+		}catch (SQLException e){
+                    e.printStackTrace();
+		}      
+        }
+        catch(ClassNotFoundException cfe){
+            System.out.println(cfe);
+        }
+        catch(Exception ex){
+            System.out.println(ex);
+        }
+        return format;
+    }
+    
+    public String showItemUserFormDatabase(long id){ //user ใส่ไอดีตัวเองที่ต้องการรู้ประวัติการใช้งานของตัวเอง ดึงข้อมูลเฉพาะวันที่คืน
+        String format="";
+        String temp;
+        try{
+            ConnectDatabase cndb = new ConnectDatabase();
+            Connection connect = ConnectDatabase.connectDb("jan", "jan042");
+            Class.forName("com.mysql.jdbc.Driver");
+            
+            Statement st = connect.createStatement();
+            String temp4 = "select itemID from `Transaction` where UserId = "+ id +" and action LIKE 'Borrow' ";
+            ResultSet rs4 = st.executeQuery(temp4);
+            while(rs4.next()){
+                temp = rs4.getString("itemID");
+                format += temp;
                 format +="\n";
             }
             

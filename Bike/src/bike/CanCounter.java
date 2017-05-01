@@ -17,7 +17,7 @@ public class CanCounter {
         try{
             con = Database.connectDb("ja","jaja036");
             Statement s = con.createStatement();
-            String sql = "SELECT can_point FROM User WHERE userID='12345'";
+            String sql = "SELECT can_point FROM User WHERE userID='"+User.getUserId()+"'";
             ResultSet rs = s.executeQuery(sql);
             if(rs.next()){
                 cp = rs.getInt("can_point");
@@ -105,7 +105,7 @@ public class CanCounter {
         try{
             con = Database.connectDb("ja","jaja036");
             Statement s = con.createStatement();
-            sql = "UPDATE User SET can_point='"+point+"' WHERE userID='12345'";
+            sql = "UPDATE User SET can_point='"+point+"' WHERE userID='"+User.getUserId()+"'";
             s.executeUpdate(sql);
         }
         catch(Exception e){
@@ -168,7 +168,7 @@ public class CanCounter {
                 id = rs.getInt("id");
             }
             id += 1;
-            sql = "INSERT INTO CP_Transaction VALUES ('"+id+"','12345',0,'"+wit+"')";
+            sql = "INSERT INTO CP_Transaction VALUES ('"+id+"',"+User.getUserId()+",0,'"+wit+"')";
             s.executeUpdate(sql);
         }
         catch(Exception e){
@@ -230,23 +230,12 @@ public class CanCounter {
         }
     }
 
-    public void countCpBorrow(int[] numBike) { //คำนวนCp ที่จะต้องใช้แลกยืม
+    public void countCpBorrow(int[] numBike,int[] costCp) { //คำนวนCp ที่จะต้องใช้แลกยืม
         int temp = 0;
-        if (numBike[0] > 0) {
-            temp += numBike[0] * 100;
-        }
-        if (numBike[1] > 0) {
-            temp += numBike[1] * 125;
-        }
-        if (numBike[2] > 0) {
-            temp += numBike[2] * 150;
-        }
-
-        if (numBike[3] > 0) {
-            temp += numBike[3] * 60;
-        }
-        if (numBike[4] > 0) {
-            temp += numBike[4] * 80;
+        for (int i = 0; i < numBike.length; i++) {
+            if(numBike[i]>0){
+               temp += numBike[i]*costCp[i]; 
+            }
         }
         cpUse = temp;
     }

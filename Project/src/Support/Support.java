@@ -22,8 +22,6 @@ public class Support {
     private String output=""; 
     
     public void searchSupport(String search){
-        String t1 = search;
-        String t2 = "\'%"+t1+"%\'";
         try{
             ConnectDatabase cndb = new ConnectDatabase();
             Connection connect = ConnectDatabase.connectDb("jan", "jan042");
@@ -31,7 +29,7 @@ public class Support {
             System.out.println("Database connecting");
         
             Statement st = connect.createStatement(); 
-            String temp = "SELECT * FROM Manual WHERE manualDescription LIKE "+t2;
+            String temp = "SELECT * FROM Manual WHERE manualDescription LIKE '%"+search+"%' OR manualDetails LIKE '%"+search+"%'";
             ResultSet rs = st.executeQuery(temp);
     
             while(rs.next()){

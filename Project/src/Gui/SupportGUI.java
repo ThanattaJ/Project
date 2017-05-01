@@ -11,6 +11,7 @@ import Support.Support;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import javax.swing.JTextField;
 
 /**
@@ -26,19 +27,11 @@ public class SupportGUI extends javax.swing.JFrame {
      * Creates new form 
      */
     
-    public SupportGUI(String search){//รับ parameter ที่คลาสอื่นส่งมาเพื่อ search ข้อมูล ต้องเอาไปไว้ทุกคลาส
-        initComponents();
-        whatToSearch = search;
-        jLBWhatsearch.setText(whatToSearch);
-        jTAContact.setText(sp.contact());
-        sp.searchSupport(whatToSearch);
-        jTAShowyouSearch.setText(sp.getOutput());
-    }
-    
     public SupportGUI() {
         initComponents();
         jLBWhatsearch.setText(whatToSearch);
         jTAContact.setText(sp.contact()); 
+        
     }
     
 
@@ -52,30 +45,14 @@ public class SupportGUI extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel5 = new javax.swing.JPanel();
-        jPanel9 = new javax.swing.JPanel();
-        jSeparator1 = new javax.swing.JSeparator();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jTFSearch = new javax.swing.JTextField();
         jSeparator2 = new javax.swing.JSeparator();
         jLabel12 = new javax.swing.JLabel();
         jBTSearch = new javax.swing.JButton();
-        jPanel3 = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jPanel4 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
-        jLabel14 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
@@ -84,49 +61,25 @@ public class SupportGUI extends javax.swing.JFrame {
         jLabel22 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
-        jLabel24 = new javax.swing.JLabel();
-        jPanel10 = new javax.swing.JPanel();
+        supportPage = new javax.swing.JPanel();
+        barTitle = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jPanel11 = new javax.swing.JPanel();
+        bodySupport = new javax.swing.JPanel();
         jLBShowingResult = new javax.swing.JLabel();
         jSeparator3 = new javax.swing.JSeparator();
         jLBWhatsearch = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        resultScroll = new javax.swing.JScrollPane();
         jTAShowyouSearch = new javax.swing.JTextArea();
-        jScrollPane2 = new javax.swing.JScrollPane();
+        contactScroll = new javax.swing.JScrollPane();
         jTAContact = new javax.swing.JTextArea();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel25 = new javax.swing.JLabel();
+        contact = new javax.swing.JLabel();
+        titleContact = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel5.setBackground(new java.awt.Color(25, 41, 65));
         jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jPanel9.setBackground(new java.awt.Color(13, 24, 35));
-        jPanel9.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jSeparator1.setBackground(new java.awt.Color(55, 200, 255));
-        jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
-        jPanel9.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 0, 10, 60));
-
-        jLabel11.setFont(new java.awt.Font("Leelawadee", 0, 11)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel11.setText("1");
-        jPanel9.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 20, 30));
-
-        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/circle.png"))); // NOI18N
-        jPanel9.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(4, -6, 70, 60));
-
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/notifications-button.png"))); // NOI18N
-        jPanel9.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 60, 60));
-
-        jPanel5.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 480, 730, 60));
 
         jPanel8.setBackground(new java.awt.Color(13, 24, 35));
         jPanel8.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -175,68 +128,10 @@ public class SupportGUI extends javax.swing.JFrame {
 
         jPanel5.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 0, 860, 60));
 
-        jPanel3.setBackground(new java.awt.Color(19, 175, 248));
-        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel4.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel4.setFont(new java.awt.Font("Leelawadee", 0, 16)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(13, 24, 35));
-        jLabel4.setText("NAME  SURNAME");
-        jLabel4.setToolTipText("");
-        jLabel4.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        jPanel3.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 130, 50));
-
-        jLabel2.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel2.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Student");
-        jLabel2.setToolTipText("");
-        jLabel2.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 30, 130, 50));
-
-        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/man.png"))); // NOI18N
-        jPanel3.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 60, 60));
-
-        jPanel5.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 480, 200, 60));
-
-        jPanel1.setBackground(new java.awt.Color(19, 175, 248));
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/menu.png"))); // NOI18N
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 50, 30));
-
-        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/bike.png"))); // NOI18N
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 50, 40));
-
-        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/profile-user.png"))); // NOI18N
-        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 330, 50, -1));
-
-        jPanel5.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 50, 540));
-
-        jPanel4.setBackground(new java.awt.Color(55, 200, 255));
-        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel5.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 480, 210, 60));
-
-        jPanel2.setBackground(new java.awt.Color(55, 200, 255));
-        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel5.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 60, 540));
-
         jPanel6.setBackground(new java.awt.Color(22, 31, 39));
 
         jPanel7.setBackground(new java.awt.Color(13, 24, 35));
         jPanel7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel14.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel14.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
-        jLabel14.setForeground(new java.awt.Color(19, 175, 248));
-        jLabel14.setText("     News");
-        jLabel14.setToolTipText("");
-        jLabel14.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        jPanel7.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, 140, 20));
 
         jLabel16.setBackground(new java.awt.Color(0, 0, 0));
         jLabel16.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
@@ -300,21 +195,6 @@ public class SupportGUI extends javax.swing.JFrame {
         jLabel19.setToolTipText("");
         jPanel7.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 50, 30));
 
-        jLabel15.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel15.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
-        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/chevron-arrow-down.png"))); // NOI18N
-        jLabel15.setToolTipText("");
-        jPanel7.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 70, 40, 30));
-
-        jLabel24.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel24.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
-        jLabel24.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel24.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/circle_mini.png"))); // NOI18N
-        jLabel24.setToolTipText("");
-        jPanel7.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 100, 40, 40));
-
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
@@ -334,29 +214,32 @@ public class SupportGUI extends javax.swing.JFrame {
 
         jPanel5.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 0, 150, 480));
 
-        jPanel10.setBackground(new java.awt.Color(76, 81, 86));
-        jPanel10.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        supportPage.setBackground(new java.awt.Color(25, 41, 65));
+        supportPage.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        barTitle.setBackground(new java.awt.Color(15, 30, 52));
+        barTitle.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel3.setFont(new java.awt.Font("Leelawadee", 0, 22)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setForeground(new java.awt.Color(19, 175, 248));
         jLabel3.setText("Support");
-        jPanel10.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 180, 50));
+        barTitle.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 180, 50));
 
-        jPanel5.add(jPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 60, 740, 50));
+        supportPage.add(barTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 740, 50));
 
-        jPanel11.setBackground(new java.awt.Color(25, 41, 65));
-        jPanel11.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        bodySupport.setBackground(new java.awt.Color(25, 41, 65));
+        bodySupport.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLBShowingResult.setBackground(new java.awt.Color(255, 255, 255));
         jLBShowingResult.setFont(new java.awt.Font("Leelawadee", 0, 18)); // NOI18N
         jLBShowingResult.setForeground(new java.awt.Color(255, 255, 255));
         jLBShowingResult.setText("Showing results for:");
-        jPanel11.add(jLBShowingResult, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 170, 30));
-        jPanel11.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 40, 210, 30));
+        bodySupport.add(jLBShowingResult, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 170, 30));
+        bodySupport.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 40, 210, 30));
 
         jLBWhatsearch.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
         jLBWhatsearch.setForeground(new java.awt.Color(255, 255, 255));
-        jPanel11.add(jLBWhatsearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 10, 210, 30));
+        bodySupport.add(jLBWhatsearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 10, 210, 30));
 
         jTAShowyouSearch.setBackground(new java.awt.Color(25, 41, 65));
         jTAShowyouSearch.setColumns(20);
@@ -364,28 +247,28 @@ public class SupportGUI extends javax.swing.JFrame {
         jTAShowyouSearch.setForeground(new java.awt.Color(255, 255, 255));
         jTAShowyouSearch.setRows(5);
         jTAShowyouSearch.setBorder(null);
-        jScrollPane1.setViewportView(jTAShowyouSearch);
+        resultScroll.setViewportView(jTAShowyouSearch);
 
-        jPanel11.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 390, 300));
+        bodySupport.add(resultScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 390, 300));
 
         jTAContact.setBackground(new java.awt.Color(25, 41, 65));
         jTAContact.setColumns(20);
         jTAContact.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
         jTAContact.setForeground(new java.awt.Color(255, 255, 255));
         jTAContact.setRows(5);
-        jScrollPane2.setViewportView(jTAContact);
+        contactScroll.setViewportView(jTAContact);
 
-        jPanel11.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 60, 250, 300));
+        bodySupport.add(contactScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 60, 250, 300));
+        bodySupport.add(contact, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 20, 170, 30));
 
-        jLabel7.setIcon(new javax.swing.ImageIcon("C:\\Users\\January\\Documents\\NetBeansProjects\\Project\\icon\\phone-call.png")); // NOI18N
-        jPanel11.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 20, -1, -1));
+        titleContact.setFont(new java.awt.Font("Leelawadee", 0, 18)); // NOI18N
+        titleContact.setForeground(new java.awt.Color(255, 255, 255));
+        titleContact.setText("Contact");
+        bodySupport.add(titleContact, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 20, -1, -1));
 
-        jLabel25.setFont(new java.awt.Font("Leelawadee", 0, 18)); // NOI18N
-        jLabel25.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel25.setText("Contact");
-        jPanel11.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 20, -1, -1));
+        supportPage.add(bodySupport, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 730, 370));
 
-        jPanel5.add(jPanel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 110, 730, 370));
+        jPanel5.add(supportPage, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 60, 740, 420));
 
         getContentPane().add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 940, 540));
 
@@ -459,53 +342,36 @@ public class SupportGUI extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel barTitle;
+    private javax.swing.JPanel bodySupport;
+    private javax.swing.JLabel contact;
+    private javax.swing.JScrollPane contactScroll;
     private javax.swing.JButton jBTSearch;
     private javax.swing.JLabel jLBShowingResult;
     private javax.swing.JLabel jLBWhatsearch;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
-    private javax.swing.JLabel jLabel24;
-    private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel10;
-    private javax.swing.JPanel jPanel11;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
-    private javax.swing.JPanel jPanel9;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JTextArea jTAContact;
     private javax.swing.JTextArea jTAShowyouSearch;
     private javax.swing.JTextField jTFSearch;
+    private javax.swing.JScrollPane resultScroll;
+    private javax.swing.JPanel supportPage;
+    private javax.swing.JLabel titleContact;
     // End of variables declaration//GEN-END:variables
     
 }
