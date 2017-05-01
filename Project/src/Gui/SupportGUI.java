@@ -33,6 +33,10 @@ public class SupportGUI extends javax.swing.JFrame {
         jTAContact.setText(sp.contact()); 
         
     }
+
+    SupportGUI(String whatToSearch) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 
     /**

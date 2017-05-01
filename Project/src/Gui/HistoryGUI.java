@@ -379,29 +379,13 @@ public class HistoryGUI extends javax.swing.JFrame {
 
         jPanelHistory.setBackground(new java.awt.Color(25, 41, 65));
         jPanelHistory.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel2.setIcon(new javax.swing.ImageIcon("D:\\ProjectConnectGit\\Project\\icon\\cyclist-on-bicycle.png")); // NOI18N
         jPanelHistory.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 20, -1, -1));
-
-        jLabel4.setIcon(new javax.swing.ImageIcon("D:\\ProjectConnectGit\\Project\\icon\\calendar (2).png")); // NOI18N
         jPanelHistory.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 20, -1, -1));
-
-        jLabel5.setIcon(new javax.swing.ImageIcon("D:\\ProjectConnectGit\\Project\\icon\\file.png")); // NOI18N
         jPanelHistory.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 20, -1, -1));
-
-        jLabel7.setIcon(new javax.swing.ImageIcon("D:\\ProjectConnectGit\\Project\\icon\\END.png")); // NOI18N
         jPanelHistory.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 80, -1, 40));
-
-        jLabel8.setIcon(new javax.swing.ImageIcon("D:\\ProjectConnectGit\\Project\\icon\\calendar (3).png")); // NOI18N
         jPanelHistory.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 20, -1, -1));
-
-        jLabel9.setIcon(new javax.swing.ImageIcon("D:\\ProjectConnectGit\\Project\\icon\\START.png")); // NOI18N
         jPanelHistory.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 80, -1, 40));
-
-        jLabel10.setIcon(new javax.swing.ImageIcon("D:\\ProjectConnectGit\\Project\\icon\\action.png")); // NOI18N
         jPanelHistory.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 80, -1, 40));
-
-        jLabel11.setIcon(new javax.swing.ImageIcon("D:\\ProjectConnectGit\\Project\\icon\\ITEM.png")); // NOI18N
         jPanelHistory.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 80, -1, 40));
 
         jPanelTableHistory.setBackground(new java.awt.Color(36, 45, 61));
