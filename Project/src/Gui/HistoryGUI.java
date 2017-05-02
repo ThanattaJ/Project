@@ -11,6 +11,7 @@ import History.History;
 import Support.Support;
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.Point;
 import java.util.ArrayList;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
@@ -39,6 +40,7 @@ public class HistoryGUI extends javax.swing.JFrame {
     
    public void tableHistoryGui(ArrayList<String> tem){
        ArrayList<String> newtem = tem;
+       jScrollPaneHistory.getViewport().setViewPosition(new Point(0, 0));
        System.out.println(newtem.size());
        System.out.println("-----------------------------------------------");
        for (int i = 0; i < newtem.size(); i++) {
@@ -71,6 +73,7 @@ public class HistoryGUI extends javax.swing.JFrame {
             jPanelHistoryGuiUser.add(jPanelHistory, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 110, 730, 370));
             getContentPane().add(jPanelHistoryGuiUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 940, 540));
         }
+        jScrollPaneHistory.setViewportView(jPanelTableHistory);
    }
 
     /**
@@ -128,6 +131,7 @@ public class HistoryGUI extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
+        jScrollPaneHistory = new javax.swing.JScrollPane();
         jPanelTableHistory = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -390,7 +394,9 @@ public class HistoryGUI extends javax.swing.JFrame {
 
         jPanelTableHistory.setBackground(new java.awt.Color(36, 45, 61));
         jPanelTableHistory.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanelHistory.add(jPanelTableHistory, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, 640, 220));
+        jScrollPaneHistory.setViewportView(jPanelTableHistory);
+
+        jPanelHistory.add(jScrollPaneHistory, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 690, 220));
 
         jPanelHistoryGuiUser.add(jPanelHistory, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 110, 730, 370));
 
@@ -504,6 +510,7 @@ public class HistoryGUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelTableHistory;
     private javax.swing.JPanel jPanelUserProFile;
     private javax.swing.JPanel jPanelUserProbileLightBule;
+    private javax.swing.JScrollPane jScrollPaneHistory;
     private javax.swing.JSeparator jSeparatorHistoryUser;
     private javax.swing.JSeparator jSeparatorUnderSearch;
     private javax.swing.JTextField jTFSearch;
