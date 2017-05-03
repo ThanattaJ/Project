@@ -1,10 +1,8 @@
 package bike;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Date;
 public class Sharing {
     private Date[] returnTime;
@@ -522,6 +520,15 @@ public class Sharing {
         timeDetail = time.showDetail();
     }
     
+    public void timeAdmin(Date current) throws InterruptedException { //ระบุวันเวลาที่จะคืน
+        Date dt = current;
+        Date re = new Date(dt.getYear(),dt.getMonth(),dt.getDate(), 18, 0, 0);
+        time = new Timer(re,dt);
+        time.differentTime();
+        time.start(this);
+        timeDetail = time.showDetail();
+    }
+    
     public String itemMustReturn(){
         String dateReturn = returnTime[0]+"";
         int i = 0;
@@ -598,7 +605,7 @@ public class Sharing {
         }
     }
     
-        public void copyFileImg(String sourceFile,String targetFile){
+    public void copyFileImg(String sourceFile,String targetFile){
         try{
             FileInputStream fis = new FileInputStream(sourceFile);
             FileOutputStream fos = new FileOutputStream(targetFile);
@@ -618,4 +625,63 @@ public class Sharing {
             System.out.println(ioe);
         }
     }
+    
+    public ArrayList<Integer> adminCheckUserBorrow(){
+        Connection con = null;
+        ArrayList<Integer> tempUserId = new ArrayList<Integer>();
+        ArrayList<Integer> allUserId = new ArrayList<Integer>();
+        ArrayList<Integer> allBorrowUser = new ArrayList<Integer>();
+        ArrayList<Integer> allReturnUser = new ArrayList<Integer>();
+        ArrayList<Integer> allBorrowingUser = new ArrayList<Integer>();
+        try{
+            
+            con = Database.connectDb("ja","jaja036");
+            Statement s = con.createStatement();
+            String sql = "SELECT userID AS countUser FROM User";
+            ResultSet rs = s.executeQuery(sql);
+            while(rs.next()){
+                tempUserId.add(rs.getInt("userID"));
+            }
+            
+            sql = "SELECT COUNT(action) AS borrowCount FROM Transaction WHERE userID=? and action=?";
+            PreparedStatement pst = con.prepareStatement(sql);
+            for (int i = 0; i < tempUserId.size(); i++) {
+                pst.setInt(1, tempUserId.get(i));
+                pst.setString(2, "Borrow");
+                rs = pst.executeQuery();
+                while(rs.next()){
+                    allBorrowUser.add(rs.getInt("borrowCount"));
+                }
+            }
+            
+            sql = "SELECT COUNT(action) AS returnCount FROM Transaction WHERE userID=? and action=?";
+            pst = con.prepareStatement(sql);
+            for (int i = 0; i < tempUserId.size(); i++) {
+                pst.setInt(1, tempUserId.get(i));
+                pst.setString(2, "Return");
+                rs = pst.executeQuery();
+                while(rs.next()){
+                    allReturnUser.add(rs.getInt("returnCount"));
+                }
+            }
+            
+            for (int i = 0; i < tempUserId.size(); i++) {
+                int temp = allBorrowUser.get(i)-allReturnUser.get(i);
+                allBorrowingUser.add(temp);
+                if(allBorrowUser.get(i) != 0){
+                    allUserId.add(tempUserId.get(i));
+                }
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            con.close();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return allUserId;
+    }
+    
 }
