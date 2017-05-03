@@ -105,6 +105,8 @@ public class InsertNews extends javax.swing.JFrame {
         submitButton = new javax.swing.JButton();
         jPanel12 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
+        jPanelAddImage = new javax.swing.JPanel();
+        jButtonAddImage = new javax.swing.JButton();
 
         jPanel9.setBackground(new java.awt.Color(13, 24, 35));
         jPanel9.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -428,7 +430,7 @@ public class InsertNews extends javax.swing.JFrame {
                 txtFieldNewsDescriptionActionPerformed(evt);
             }
         });
-        jPanel5.add(txtFieldNewsDescription, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 170, 670, 40));
+        jPanel5.add(txtFieldNewsDescription, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 170, 420, 40));
 
         txtDescription.setFont(new java.awt.Font("Leelawadee", 0, 24)); // NOI18N
         txtDescription.setForeground(new java.awt.Color(255, 255, 255));
@@ -441,7 +443,7 @@ public class InsertNews extends javax.swing.JFrame {
         txtAreaNewsDetail.setRows(5);
         jScrollPane1.setViewportView(txtAreaNewsDetail);
 
-        jPanel5.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 270, 670, 170));
+        jPanel5.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 270, 420, 170));
 
         submitButton.setBackground(new java.awt.Color(255, 255, 255));
         submitButton.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
@@ -451,7 +453,7 @@ public class InsertNews extends javax.swing.JFrame {
                 submitButtonActionPerformed(evt);
             }
         });
-        jPanel5.add(submitButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 450, 80, 30));
+        jPanel5.add(submitButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 450, 80, 30));
 
         jPanel12.setBackground(new java.awt.Color(102, 102, 102));
         jPanel12.setForeground(new java.awt.Color(255, 255, 255));
@@ -463,6 +465,13 @@ public class InsertNews extends javax.swing.JFrame {
         jPanel12.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 130, 40));
 
         jPanel5.add(jPanel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 60, 740, 60));
+
+        jPanelAddImage.setBackground(new java.awt.Color(13, 24, 35));
+        jPanelAddImage.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel5.add(jPanelAddImage, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 170, 130, 120));
+
+        jButtonAddImage.setText("BROWSE");
+        jPanel5.add(jButtonAddImage, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 310, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -540,6 +549,7 @@ public class InsertNews extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonAddImage;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -588,6 +598,7 @@ public class InsertNews extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JPanel jPanelAddImage;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
