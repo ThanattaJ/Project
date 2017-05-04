@@ -13,16 +13,12 @@ public class News extends javax.swing.JFrame {
         jPanel10.setVisible(false);
         setLocationRelativeTo(null);
         jPanel12.setVisible(false); 
-        jPanelUpdateNews.setVisible(false); //Update news ทำให้ panel ของ Update ไม่แสดง
+        jPanelUpdateTopic.setVisible(false); //Update news ทำให้ panel ของ Update ไม่แสดง
     }
     
     public void showNews(){
         jPanel12.setVisible(true);
         topic.setText("a");
-    }
-    
-    public void deleteButton(){
-        
     }
    
     public void layerUser(){
@@ -61,10 +57,18 @@ public class News extends javax.swing.JFrame {
     public void deleteActionPerformed(java.awt.event.ActionEvent evt, int tem){
         ad.deleteNews(tem);
     }
+  
+    public void updateActionPerformed(java.awt.event.ActionEvent evt, int tem){
+        String description = jTextFieldShowTopicInUpdate.getText();
+        String details = jTextAreaUpdateTopic.getText();
+        ad.editNews(description, details, tem);
+    }
     public void jBtClickActionPerformed(java.awt.event.ActionEvent evt,int tem){    
         jPanel12.setVisible(true);
         jTextAreaNews.setText(ad.detailNewsSelect(tem));
         topic.setText(ad.topicNewsSelect(tem));//เปลี่ยนหัวข้อข่าว
+        jTextFieldShowTopicInUpdate.setText(ad.topicNewsSelect(tem));//แสดงหัวข้อข่าวใน update
+        jTextAreaUpdateTopic.setText(ad.detailNewsSelect(tem));//แสดงเนื้อหาข่าวใน update
         jPanel11.setVisible(false);
         //----------Delete button-------------
         JButton delete = new JButton();
@@ -76,7 +80,18 @@ public class News extends javax.swing.JFrame {
             }
 
     });
+        //-------------Submit Button in Update---------
+        JButton update = new JButton();
+        update.setText("SUBMIT");
+        update.setFont(new java.awt.Font("Leelawadee", 0, 14));
+        update.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            updateActionPerformed(evt,tem);
+            }
+
+    });
         jPanel12.add(delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 360, -1, 30));
+        jPanelUpdateTopic.add(update, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 360, -1, 30));
     }
     
     /**
@@ -128,8 +143,11 @@ public class News extends javax.swing.JFrame {
         jLabel36 = new javax.swing.JLabel();
         jPanel10 = new javax.swing.JPanel();
         jPanel12 = new javax.swing.JPanel();
-        jPanelUpdateNews = new javax.swing.JPanel();
+        jPanelUpdateTopic = new javax.swing.JPanel();
         jLabelUpdateTopic = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTextAreaUpdateTopic = new javax.swing.JTextArea();
+        jTextFieldShowTopicInUpdate = new javax.swing.JTextField();
         jLabel27 = new javax.swing.JLabel();
         topic = new javax.swing.JLabel();
         updateNews = new javax.swing.JButton();
@@ -388,16 +406,31 @@ public class News extends javax.swing.JFrame {
         jPanel12.setBackground(new java.awt.Color(9, 20, 36));
         jPanel12.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanelUpdateNews.setBackground(new java.awt.Color(9, 20, 36));
-        jPanelUpdateNews.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanelUpdateTopic.setBackground(new java.awt.Color(9, 20, 36));
+        jPanelUpdateTopic.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabelUpdateTopic.setBackground(new java.awt.Color(255, 255, 255));
         jLabelUpdateTopic.setFont(new java.awt.Font("Leelawadee", 0, 18)); // NOI18N
         jLabelUpdateTopic.setForeground(new java.awt.Color(255, 255, 255));
         jLabelUpdateTopic.setText("Topic : ");
-        jPanelUpdateNews.add(jLabelUpdateTopic, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
+        jPanelUpdateTopic.add(jLabelUpdateTopic, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
 
-        jPanel12.add(jPanelUpdateNews, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 710, 400));
+        jTextAreaUpdateTopic.setEditable(true);
+        jTextAreaUpdateTopic.setBackground(new java.awt.Color(25, 41, 65));
+        jTextAreaUpdateTopic.setColumns(20);
+        jTextAreaUpdateTopic.setRows(5);
+        jScrollPane3.setViewportView(jTextAreaUpdateTopic);
+
+        jPanelUpdateTopic.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 90, 420, 260));
+
+        jTextFieldShowTopicInUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldShowTopicInUpdateActionPerformed(evt);
+            }
+        });
+        jPanelUpdateTopic.add(jTextFieldShowTopicInUpdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 20, 180, 40));
+
+        jPanel12.add(jPanelUpdateTopic, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 710, 400));
 
         jLabel27.setBackground(new java.awt.Color(255, 255, 255));
         jLabel27.setFont(new java.awt.Font("Leelawadee", 0, 18)); // NOI18N
@@ -414,6 +447,11 @@ public class News extends javax.swing.JFrame {
         updateNews.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
         updateNews.setText("Update");
         updateNews.setToolTipText("");
+        updateNews.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateNewsActionPerformed(evt);
+            }
+        });
         jPanel12.add(updateNews, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 360, -1, -1));
 
         jTextAreaNews.setBackground(new java.awt.Color(25, 41, 65));
@@ -476,7 +514,19 @@ public class News extends javax.swing.JFrame {
        jPanel10.setVisible(true);
        layerUser();
     }//GEN-LAST:event_newsLabelMouseClicked
-  
+
+    private void updateNewsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateNewsActionPerformed
+        // TODO add your handling code here:
+        
+        jPanelUpdateTopic.setVisible(true);
+    }//GEN-LAST:event_updateNewsActionPerformed
+
+    private void jTextFieldShowTopicInUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldShowTopicInUpdateActionPerformed
+        // TODO add your handling code here:
+        jTextFieldShowTopicInUpdate.setEditable(true);
+    }//GEN-LAST:event_jTextFieldShowTopicInUpdateActionPerformed
+
+    
     /**
      * @param args the command line arguments
      */
@@ -545,13 +595,16 @@ public class News extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
-    private javax.swing.JPanel jPanelUpdateNews;
+    private javax.swing.JPanel jPanelUpdateTopic;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTextArea jTextAreaNews;
+    private javax.swing.JTextArea jTextAreaUpdateTopic;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextFieldShowTopicInUpdate;
     private javax.swing.JLabel newsCanCounterLabel;
     private javax.swing.JLabel newsHistoryLabel;
     private javax.swing.JLabel newsLabel;
