@@ -364,6 +364,7 @@ public class RepairingForAdmin extends javax.swing.JFrame {
         jPanelBikeRepairNotSuccess = new javax.swing.JPanel();
         jButtonBackFromRepairingNotSuccess = new javax.swing.JButton();
         jButtonNextFormRepairingNotSuccess = new javax.swing.JButton();
+        jButtonRefreshRepairNotSuccess = new javax.swing.JButton();
         jPanelShowRepair = new javax.swing.JPanel();
         jScrollPaneShowDetail = new javax.swing.JScrollPane();
         jTAShowDetail = new javax.swing.JTextArea();
@@ -724,13 +725,20 @@ public class RepairingForAdmin extends javax.swing.JFrame {
 
         jPanelRepairingNotSuccess.add(jScrollPaneBikeRepairing, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 690, 260));
 
-        jButtonBackFromRepairingNotSuccess.setIcon(new javax.swing.ImageIcon("C:\\Users\\January\\Documents\\ProjectGit\\Project\\icon\\left-arrow.png")); // NOI18N
         jButtonBackFromRepairingNotSuccess.setContentAreaFilled(false);
         jPanelRepairingNotSuccess.add(jButtonBackFromRepairingNotSuccess, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 370, -1, -1));
 
-        jButtonNextFormRepairingNotSuccess.setIcon(new javax.swing.ImageIcon("C:\\Users\\January\\Documents\\ProjectGit\\Project\\icon\\right-arrow.png")); // NOI18N
         jButtonNextFormRepairingNotSuccess.setContentAreaFilled(false);
         jPanelRepairingNotSuccess.add(jButtonNextFormRepairingNotSuccess, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 370, -1, -1));
+
+        jButtonRefreshRepairNotSuccess.setFont(new java.awt.Font("Leelawadee", 0, 11)); // NOI18N
+        jButtonRefreshRepairNotSuccess.setText("Refresh");
+        jButtonRefreshRepairNotSuccess.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRefreshRepairNotSuccessActionPerformed(evt);
+            }
+        });
+        jPanelRepairingNotSuccess.add(jButtonRefreshRepairNotSuccess, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 60, -1, -1));
 
         jPanelHomeRepair.add(jPanelRepairingNotSuccess, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 60, 730, 420));
 
@@ -826,7 +834,6 @@ public class RepairingForAdmin extends javax.swing.JFrame {
         jPanelRepairAdminDetailUser.add(jPanelShoeUserSentToAdminForRepair, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 90, 600, 250));
 
         jBTbackToJPanelRepairAdmin.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
-        jBTbackToJPanelRepairAdmin.setIcon(new javax.swing.ImageIcon("C:\\Users\\January\\Documents\\ProjectGit\\Project\\icon\\left-arrow.png")); // NOI18N
         jBTbackToJPanelRepairAdmin.setContentAreaFilled(false);
         jBTbackToJPanelRepairAdmin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -836,7 +843,6 @@ public class RepairingForAdmin extends javax.swing.JFrame {
         jPanelRepairAdminDetailUser.add(jBTbackToJPanelRepairAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 360, 90, 50));
 
         jBTnextTojPanelRepairing.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
-        jBTnextTojPanelRepairing.setIcon(new javax.swing.ImageIcon("C:\\Users\\January\\Documents\\ProjectGit\\Project\\icon\\right-arrow.png")); // NOI18N
         jBTnextTojPanelRepairing.setContentAreaFilled(false);
         jBTnextTojPanelRepairing.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1510,6 +1516,14 @@ public class RepairingForAdmin extends javax.swing.JFrame {
         jPanelRepairingNotSuccess.setVisible(false);
     }//GEN-LAST:event_jButtonBackToRepairingActionPerformed
 
+    private void jButtonRefreshRepairNotSuccessActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRefreshRepairNotSuccessActionPerformed
+        // TODO add your handling code here:
+        jPanelBikeRepairNotSuccess.removeAll();
+        repairingNotSuccess();
+        jPanelBikeRepairNotSuccess.revalidate();
+        jPanelBikeRepairNotSuccess.repaint();
+    }//GEN-LAST:event_jButtonRefreshRepairNotSuccessActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1628,6 +1642,7 @@ public class RepairingForAdmin extends javax.swing.JFrame {
     private javax.swing.JButton jButtonBackFromRepairingNotSuccess;
     private javax.swing.JButton jButtonBackToRepairing;
     private javax.swing.JButton jButtonNextFormRepairingNotSuccess;
+    private javax.swing.JButton jButtonRefreshRepairNotSuccess;
     private javax.swing.JComboBox<String> jCBoxHour;
     private javax.swing.JComboBox<String> jCBoxHourRepairIncrease;
     private javax.swing.JComboBox<String> jCBoxMinute;
