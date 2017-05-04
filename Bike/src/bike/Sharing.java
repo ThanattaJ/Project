@@ -19,6 +19,7 @@ public class Sharing {
     private int[] itemAmountReturnUser;
     private int countType;
     private int countEquip;
+    private ArrayList<Integer> idUserBorrowing = new ArrayList<Integer>();
     private CanCounter cp; //ซีพี
     
     public Sharing() { //constructors
@@ -444,12 +445,12 @@ public class Sharing {
             con = Database.connectDb("ja","jaja036");
             Statement s = con.createStatement();
             
-            String sql = "SELECT COUNT(action) As numBorrow FROM Transaction Where userID='"+User.getUserId()+"' and action='Borrow'";
+            String sql = "SELECT SUM(amount) As numBorrow FROM Transaction Where userID='"+User.getUserId()+"' and action='Borrow'";
             ResultSet rs = s.executeQuery(sql);
             if(rs.next()){
                 countBorrow = rs.getInt("numBorrow");
             }
-            sql = "SELECT COUNT(action) As numReturn FROM Transaction Where userID='"+User.getUserId()+"' and action='Return'";
+            sql = "SELECT SUM(amount) As numReturn FROM Transaction Where userID='"+User.getUserId()+"' and action='Return'";
             rs = s.executeQuery(sql);
             if(rs.next()){
                 countReturn = rs.getInt("numReturn");
@@ -626,50 +627,57 @@ public class Sharing {
         }
     }
     
-    public ArrayList<Integer> adminCheckUserBorrow(){
+    public ArrayList<String> adminCheckUserBorrow(){
         Connection con = null;
-        ArrayList<Integer> tempUserId = new ArrayList<Integer>();
-        ArrayList<Integer> allUserId = new ArrayList<Integer>();
+        ArrayList<Integer> tempClear = new ArrayList<Integer>();
+        idUserBorrowing = tempClear;
+        ArrayList<Integer> tempId = new ArrayList<Integer>();;
+        ArrayList<String> tempUser = new ArrayList<String>();
+        ArrayList<String> allUser = new ArrayList<String>();
         ArrayList<Integer> allBorrowUser = new ArrayList<Integer>();
         ArrayList<Integer> allReturnUser = new ArrayList<Integer>();
-        ArrayList<Integer> allBorrowingUser = new ArrayList<Integer>();
         try{
             
             con = Database.connectDb("ja","jaja036");
             Statement s = con.createStatement();
-            String sql = "SELECT userID AS countUser FROM User";
+            String sql = "SELECT userID,firstName FROM User";
             ResultSet rs = s.executeQuery(sql);
             while(rs.next()){
-                tempUserId.add(rs.getInt("userID"));
+                tempId.add(rs.getInt("userID"));
+                tempUser.add("       "+"ID "+rs.getInt("userID")+"      "+rs.getString("firstName"));
             }
             
-            sql = "SELECT COUNT(action) AS borrowCount FROM Transaction WHERE userID=? and action=?";
-            PreparedStatement pst = con.prepareStatement(sql);
-            for (int i = 0; i < tempUserId.size(); i++) {
-                pst.setInt(1, tempUserId.get(i));
-                pst.setString(2, "Borrow");
-                rs = pst.executeQuery();
-                while(rs.next()){
-                    allBorrowUser.add(rs.getInt("borrowCount"));
+            if(tempId.size()!=0){
+                sql = "SELECT SUM(amount) AS amounBorrow FROM Transaction WHERE userID=? and action=?";
+                PreparedStatement pst = con.prepareStatement(sql);
+                for (int i = 0; i < tempUser.size(); i++) {
+                    pst.setInt(1, tempId.get(i));
+                    pst.setString(2, "Borrow");
+                    rs = pst.executeQuery();
+                    while(rs.next()){
+                        allBorrowUser.add(rs.getInt("amounBorrow"));
+                        System.out.println(rs.getInt("amounBorrow"));
+                    }
                 }
-            }
-            
-            sql = "SELECT COUNT(action) AS returnCount FROM Transaction WHERE userID=? and action=?";
-            pst = con.prepareStatement(sql);
-            for (int i = 0; i < tempUserId.size(); i++) {
-                pst.setInt(1, tempUserId.get(i));
-                pst.setString(2, "Return");
-                rs = pst.executeQuery();
-                while(rs.next()){
-                    allReturnUser.add(rs.getInt("returnCount"));
+
+                sql = "SELECT SUM(amount) AS amountReturn FROM Transaction WHERE userID=? and action=?";
+                pst = con.prepareStatement(sql);
+                for (int i = 0; i < tempUser.size(); i++) {
+                    pst.setInt(1, tempId.get(i));
+                    pst.setString(2, "Return");
+                    rs = pst.executeQuery();
+                    while(rs.next()){
+                        allReturnUser.add(rs.getInt("amountReturn"));
+                        System.out.println(rs.getInt("amountReturn"));
+                    }
                 }
-            }
-            
-            for (int i = 0; i < tempUserId.size(); i++) {
-                int temp = allBorrowUser.get(i)-allReturnUser.get(i);
-                allBorrowingUser.add(temp);
-                if(allBorrowUser.get(i) != 0){
-                    allUserId.add(tempUserId.get(i));
+
+                for (int i = 0; i < tempUser.size(); i++) {
+                    int temp = allBorrowUser.get(i)-allReturnUser.get(i);
+                    if(temp != 0){
+                        idUserBorrowing.add(i+1);
+                        allUser.add(tempUser.get(i));
+                    }
                 }
             }
         }catch(Exception e){
@@ -681,7 +689,68 @@ public class Sharing {
         }catch(Exception e){
             e.printStackTrace();
         }
-        return allUserId;
+        return allUser;
+    }
+
+    public ArrayList<Integer> getIdUserBorrowing() {
+        return idUserBorrowing;
+    }
+    public String nameOfuser(int id){
+        Connection con = null;
+        String name = "";
+        try{
+            con = Database.connectDb("ja","jaja036");
+            Statement s = con.createStatement();
+            String sql = "SELECT firstName FROM Users WHERE userID='"+id+"'";
+            ResultSet rs = s.executeQuery(sql);
+            if(rs.next()){
+                name = rs.getString("firstName");
+            }
+            
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            con.close();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return name;
     }
     
+    public boolean checkUserBorrowNow(int id){
+        boolean timeup = false;
+        int mustReturn = 0;
+        int countBorrow = 0;
+        int countReturn = 0;
+        Connection con = null;
+        Date dt = new Date();
+        try{
+            con = Database.connectDb("ja","jaja036");
+            Statement s = con.createStatement();
+            
+            String sql = "SELECT return_dateTime FROM Transaction Where userID='"+id+"' and tion='Borrow' ORDER BY transID DESC LIMIT 1";
+            ResultSet rs = s.executeQuery(sql);
+            if(rs.next()){
+                
+            }
+
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        
+        try{
+            con.close();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return timeup;
+    }
+    
+    public void itemUserBorrow(int id){
+        checkUserBorrowNow(id);
+        
+    }
 }

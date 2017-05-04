@@ -45,13 +45,15 @@ public class AdminNews {
             c = Database.connectDb("win", "win016");
             Statement s = c.createStatement();
             String sql;
-            sql = "SELECT COUNT(newsID) AS num FROM News";
+//            sql = "SELECT COUNT(newsID) AS num FROM News";
+            sql = "SELECT COUNT(newsID) AS num FROM News WHERE newsDescription IS NOT NULL";
             ResultSet rs = s.executeQuery(sql);
             rs.first();
             int count = rs.getInt("num");
             allTopicNews = new String[count];
             
-            sql = "SELECT newsID,newsDescription FROM News";
+//            sql = "SELECT newsID,newsDescription FROM News";
+            sql = "SELECT * FROM `News` WHERE newsDescription IS NOT NULL";
             rs = s.executeQuery(sql);
             for (int i = 0; i < allTopicNews.length; i++) {
                 if(rs.next()){
@@ -111,7 +113,10 @@ public class AdminNews {
             c = Database.connectDb("win", "win016");
             Statement s = c.createStatement();
             String sql;
-            sql = "SELECT newsDescription FROM News where newsID= "+selectTopic;
+//            sql = "SELECT * FROM News where newsID= "+selectTopic+"AND newsDescription IS NOT NULL";
+//            sql = "SELECT * FROM `News` WHERE "+selectTopic+" IS NOT NULL";
+            sql = "SELECT * FROM News WHERE newsDescription IS NOT NULL";
+            
             ResultSet rs = s.executeQuery(sql);
             
             while(rs.next()){
@@ -182,14 +187,17 @@ public class AdminNews {
         }
     }
 
-    public void deleteNews(long newsId){
+    public void deleteNews(long tempNewsId){
         Connection c = null;
         try {
             Class.forName("com.mysql.jdbc.Driver");
             c = Database.connectDb("win", "win016");
             Statement s = c.createStatement();
 //            newsId++;
-            String sql = "DELETE FROM News WHERE newsId='"+newsId+"'";
+//            String sql = "DELETE FROM News WHERE newsId='"+newsId+"'";
+            String sql = "UPDATE News SET newsDescription = null WHERE newsID='"+tempNewsId+"'";
+            
+//            String sql = "update GreenSociety.News SET newsDescription='"+head+"',newsDetails='"+detail+"'WHERE newsId='"+newsId+"'";
             s.executeUpdate(sql);
         } catch (Exception e) {
             e.printStackTrace();    //โชว์ข้อผิดพลาดทั้งหมด
@@ -200,6 +208,7 @@ public class AdminNews {
         catch(Exception e){
             e.printStackTrace();
         }
+//        return newsId;
     }
     
     public void editNews(String head, String detail, long newsId) {
@@ -211,7 +220,7 @@ public class AdminNews {
             c = Database.connectDb("win", "win016");
             Statement s = c.createStatement();
 //            newsId++;
-            String sql = "update GreenSociety.News SET newsDescription='"+head+"',newsDetails='"+detail+"'WHERE newsId='"+newsId+"'";
+            String sql = "update News SET newsDescription='"+head+"',newsDetails='"+detail+"'WHERE newsId='"+newsId+"'";
             s.executeUpdate(sql);
         } catch (Exception e) {
             e.printStackTrace();    //โชว์ข้อผิดพลาดทั้งหมด
