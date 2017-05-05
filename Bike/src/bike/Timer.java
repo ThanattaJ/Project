@@ -221,7 +221,7 @@ public class Timer {
                                     Logger.getLogger(Timer.class.getName()).log(Level.SEVERE, null, ex);
                                 }
                                 totalSeconds--;
-                                timeLeft = totalHour+" Hours "+totalMin+" Minutes "+totalSeconds+" Secounds";
+                                timeLeft = totalHour+" Hours "+totalMin+" Minutes "+totalSeconds+" Seconds";
                                 if(nf.notiTime(obj,totalHour,totalMin,totalSeconds)){
                                     bu = new BikeUser();
                                     int add[]= bu.notiTime();
