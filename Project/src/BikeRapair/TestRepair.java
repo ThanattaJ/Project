@@ -38,33 +38,33 @@ public class TestRepair {
 ////        rp.setWhyRepair("Beake Broke");
 ////        
 ////
-        System.out.print("Enter your bike: ");
-        rp.setBike(sc.nextLine());
-        System.out.print("Enter bike problem: ");
-        rp.setProblem(sc.nextLine());
-        System.out.print("Enter bike detail: ");
-        rp.setDetail(sc.nextLine());
-        System.out.print("Enter your time(HH:mm:ss): ");
-        rp.setHours(sc.nextInt());
-        rp.setMinute(sc.nextInt());
-        rp.setSecound(sc.nextInt());
-      
-        System.out.println("---------------------------------------------------------------------------");
-        System.out.print("Any service else?: ");
-        rp.whatAlse(sc.next());
+//        System.out.print("Enter your bike: ");
+//        rp.setBike(sc.nextLine());
+//        System.out.print("Enter bike problem: ");
+//        rp.setProblem(sc.nextLine());
+//        System.out.print("Enter bike detail: ");
+//        rp.setDetail(sc.nextLine());
+//        System.out.print("Enter your time(HH:mm:ss): ");
+//        rp.setHours(sc.nextInt());
+//        rp.setMinute(sc.nextInt());
+//        rp.setSecound(sc.nextInt());
+//      
+//        System.out.println("---------------------------------------------------------------------------");
+//        System.out.print("Any service else?: ");
+//        rp.whatAlse(sc.next());
 //        rp.getDetailRepair();
-        rp.Status(true);
+//        rp.Status(true);
 //        rp.time();
 //        rp.connectDB();
 //        rp.sentDatabaseHistory();
-        System.out.print(rp);
-        System.out.println(rp.time());
-        System.out.println("-----------------------------------no-------------------");
-        
-        rp.increaseTimeRepair("Test","Increase",0, 30, 0);
-        System.out.println("***************************************");
-        System.out.println(rp.submitRepair());
-        System.out.println("...."+rp.getTimeDetail());
+//        System.out.print(rp);
+//        System.out.println(rp.time());
+//        System.out.println("-----------------------------------no-------------------");
+//        
+//        rp.increaseTimeRepair("Test","Increase",0, 30, 0);
+//        System.out.println("***************************************");
+//        System.out.println(rp.submitRepair());
+//        System.out.println("...."+rp.getTimeDetail());
 //        System.out.println(c);
 //        System.out.println(rp.getDetailRepair());
 //        System.out.println(rp.submitRepair());
@@ -76,5 +76,10 @@ public class TestRepair {
 //            }
 //        });
 //        rp.sentDatabaseHistory();
+          int temp = rp.connectDBForCheckRepairNotSucceess().size();
+          for (int i = 0; i < temp; i++) {
+              System.out.println(rp.connectDBForCheckRepairNotSucceess().get(i));
+        }
+        rp.connectDBForChangeToSuccess(4);
     }
 }

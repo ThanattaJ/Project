@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -43,7 +44,6 @@ public class Repair{
     private String bike="";//รับจาก GUI ให้ user กรอก
     private String whyRepair="";//ให้ user กรอกว่าทำไมถึงต้องส่งซ่อม
     private String color="";
-    
     private long peairId;
     private long countTransId;
     private Date time = new Date();
@@ -55,6 +55,75 @@ public class Repair{
     private String status="";
     private String asking="";
     private String repairing="";
+    
+    public void connectDBForChangeToSuccess(int idRepairState){
+         try{
+            ConnectDatabase cndb = new ConnectDatabase();
+            Connection connect = ConnectDatabase.connectDb("jan", "jan042");
+            Class.forName("com.mysql.jdbc.Driver");
+//            System.out.println("...connectDBFomeUserToAdmin");
+            Statement st = connect.createStatement(); 
+            String temp = "UPDATE Repair_State SET Repair_State.Recieving = 'Success' WHERE id= "+idRepairState;
+            
+            st.executeUpdate(temp);
+            
+            if(connect != null){
+                    connect.close();
+		}
+		}catch (SQLException e){
+                    e.printStackTrace();
+        }
+        
+        catch(ClassNotFoundException cfe){
+            System.out.println(cfe);
+        }
+        catch(Exception ex){
+            System.out.println(ex);
+        }
+    }
+    
+    public ArrayList<String> connectDBForCheckRepairNotSucceess(){
+        ArrayList<String> notSuccess = new ArrayList<String>();
+        String name;
+        String action;
+        Timestamp remaining;
+        String format;
+        int id;
+         try{
+            ConnectDatabase cndb = new ConnectDatabase();
+            Connection connect = ConnectDatabase.connectDb("jan", "jan042");
+            Class.forName("com.mysql.jdbc.Driver");
+//            System.out.println("...connectDBFomeUserToAdmin");
+            Statement st = connect.createStatement(); 
+            String temp = "SELECT Repair_State.id,User.firstName,Repair_State.Repairing,Transaction.dateTime FROM Green_Society.User " +
+                            "JOIN Repair_State ON User.userID = Repair_State.userID " +
+                            "INNER JOIN Prepair_Desctiption ON Repair_State.item_id=Prepair_Desctiption.id " +
+                            "INNER JOIN Transaction ON Prepair_Desctiption.transID=Transaction.transID " +
+                            "WHERE Repair_State.Recieving = 'Not Success!'";
+            ResultSet rs = st.executeQuery(temp);
+            while(rs.next()){
+                id = rs.getInt("id");
+                name=rs.getString("firstName");
+                action=rs.getString("Repairing");
+                remaining=rs.getTimestamp("dateTime");
+                format=id+"   |   "+name+"   |   "+action+"   |   "+remaining;
+                notSuccess.add(format);
+            }
+            if(connect != null){
+                    connect.close();
+		}
+		}catch (SQLException e){
+                    e.printStackTrace();
+        }
+        
+        catch(ClassNotFoundException cfe){
+            System.out.println(cfe);
+        }
+        catch(Exception ex){
+            System.out.println(ex);
+        }
+         return notSuccess;
+    }
     
     public long connectDBFomeUserToAdmin(long userID,Timestamp startDate,Timestamp returnDate){
 //        Timestamp startDate = new Timestamp(t.getBorrowTime().getTime());
