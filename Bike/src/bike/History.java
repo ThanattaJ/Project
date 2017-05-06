@@ -100,6 +100,51 @@ public class History {
         
     }
     
+    public void HistoryByAdminReturn(String itemId,Timestamp startDate,Timestamp returnDate,String input,int amount,int id){ //รับจาก ตัวแปรที่ต้องการส่งลง DB เป็น String
+        try{
+            Connection connect = Database.connectDb("jan", "jan042");
+            Class.forName("com.mysql.jdbc.Driver");
+            
+            Statement st = connect.createStatement(); 
+            
+            String temp3 = "SELECT MAX(transID) AS countTransId FROM Transaction ";
+            ResultSet rs1 = st.executeQuery(temp3);
+            int count=0;
+            while(rs1.next()){
+                count = rs1.getInt("countTransId");
+            }
+            this.historyId = ++count;
+            
+             String temp ="INSERT INTO Transaction VALUES " //set ค่าให้กับ Database
+                    + "("+this.historyId+",'"
+                     +startDate+"','"
+                     +returnDate+"','"
+                      +itemId + "','"
+                      +amount + "','"
+                      +id+"','"
+                      +input+"','" 
+                      +User.getUserId()+"')";
+             
+            st.executeUpdate(temp);
+                   
+          try {
+		if(connect != null){
+                    connect.close();
+		}
+		}catch (SQLException e){
+                    e.printStackTrace();
+		}                
+        }
+        
+        catch(ClassNotFoundException cfe){
+            System.out.println(cfe);
+        }
+        catch(Exception ex){
+            System.out.println(ex);
+        }
+        
+    }
+    
     public String showActionUser(){ //user ใส่ไอดีตัวเองที่ต้องการรู้ประวัติการใช้งานของตัวเอง
         String output="";
         int statUser=0;

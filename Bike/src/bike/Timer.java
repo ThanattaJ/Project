@@ -158,7 +158,7 @@ public class Timer {
             temp += diffDate*24;
         }
         totalHour += temp+diffHour;
-        timeLeft = totalHour+" Hours "+totalMin+" Minutes "+totalSeconds+" Secounds";
+        timeLeft = totalHour+" Hours "+totalMin+" Minutes "+totalSeconds+" Seconds";
     }
 	
     public void increaseTime(int hr,int min,int sec){
@@ -181,7 +181,7 @@ public class Timer {
             totalHour += 1;
             totalMin -= 60;
         }
-        timeLeft = totalHour+" Hours "+totalMin+" Minutes "+totalSeconds+" Secounds";
+        timeLeft = totalHour+" Hours "+totalMin+" Minutes "+totalSeconds+" Seconds";
           
     }
     
@@ -193,7 +193,7 @@ public class Timer {
         totalHour = 0;
         borrowDate = null;
         returnDate = null;
-        timeLeft =  totalHour+" Hours "+totalMin+" Minutes "+totalSeconds+" Secounds";
+        timeLeft =  totalHour+" Hours "+totalMin+" Minutes "+totalSeconds+" Seconds";
         //String = ''; หรือ เก็บ Totaltime = null ตามความเหมาะสม
     }
     

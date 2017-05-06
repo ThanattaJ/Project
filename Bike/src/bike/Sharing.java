@@ -5,23 +5,25 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
 public class Sharing {
-    private Date[] returnTime;
-    public boolean timesUp = false;
     private History his = new History();
     private Timer time = new Timer(); //เวลา
     private String timeDetail = ""; //รายละเอียด
-    private int[] numBikeUser; //จำนวนที่ user ยืมแต่ละอุปกรณ์
     private String[] nameItem;
     private String[] pathImgItem;
     private static int[] availableItem; //จำนวนไอเทมที่สามารถใช้ได้
     private String itemID[];
     private int itemCP[];
-    private ArrayList<String> itemReturnUser;
-    private ArrayList<Integer> itemAmountReturnUser;
     private int countType;
     private int countEquip;
-    private ArrayList<Integer> idUserBorrowing = new ArrayList<Integer>();
+    private int[] numBikeUser; //จำนวนที่ user ยืมแต่ละอุปกรณ์
     private CanCounter cp; //ซีพี
+    public boolean timesUp = false;
+    private Date returnTimeBorrow;
+    private ArrayList<Integer> idUserBorrowing = new ArrayList<Integer>();
+    private ArrayList<String> itemNameReturnUser = new ArrayList<>();
+    private ArrayList<String> itemIDReturnUser = new ArrayList<>();
+    private ArrayList<Integer> itemAmountReturnUser = new ArrayList<>();
+    private ArrayList<Integer> itemCPReturnUser = new ArrayList<>();
     
     public Sharing() { //constructors
         cp = new CanCounter();
@@ -120,31 +122,37 @@ public class Sharing {
         }
     }
     
-    private void returnItems(){
+    public void returnItems(int cpUse,ArrayList<Integer> amountItem,ArrayList<String> idItem,int idUser){
         Date nd = new Date();
         Timestamp nowDate = new Timestamp(nd.getTime());
-        Timestamp returnDate = new Timestamp(time.getReturnTime().getTime());
+        Timestamp returnDate = new Timestamp(returnTimeBorrow.getTime());
+        int[] availableNumberItem = new int[idItem.size()];
         String sql;
+        ResultSet rs;
         Connection con = null;
         try{
             con = Database.connectDb("ja","jaja036");
             Statement s = con.createStatement();
-            for (int i = 0; i < countType; i++) {
-                sql = "UPDATE Items SET availableNumber='"+availableItem[i]+"' WHERE itemID LIKE 'B%"+(i+1)+"'";
-                s.execute(sql);
-                if(numBikeUser[i] != 0){
-                    his.HistoryByAdmin("B0"+(i+1),nowDate,returnDate,"Return",numBikeUser[i]);
+            sql = "SELECT availableNumber FROM Items WHERE itemID=?";
+            PreparedStatement pst = con.prepareStatement(sql);
+            for (int i = 0; i < idItem.size(); i++) {
+                pst.setString(1,idItem.get(i));
+                rs = pst.executeQuery();
+                while(rs.next()){
+                    availableNumberItem[i] = rs.getInt("availableNumber");
                 }
-                numBikeUser[i] = 0;
             }
-
-            for (int i = 1; i <= countEquip; i++) {
-                sql = "UPDATE Items SET availableNumber='"+availableItem[countType-1+i]+"' WHERE itemID LIKE 'E%"+i+"'";
-                s.execute(sql);
-                if(numBikeUser[countType-1+i] != 0){
-                    his.HistoryByAdmin("E0"+i,nowDate,returnDate,"Return",numBikeUser[i]);
-                }
-                numBikeUser[countType-1+i] = 0;
+            sql = "UPDATE Items SET availableNumber=? WHERE itemID=?";
+            pst = con.prepareStatement(sql);
+            for (int i = 0; i < amountItem.size(); i++) {
+                int temp = availableNumberItem[i]+amountItem.get(i);
+                pst.setInt(1,temp);
+                pst.setString(2,idItem.get(i));
+                pst.executeUpdate();
+                his.HistoryByAdminReturn(idItem.get(i),nowDate,returnDate,"Return",amountItem.get(i),idUser);
+            }
+            if(cpUse > 0){
+                cp.decreseCpByAdmin(idUser, cpUse);
             }
         }
         catch(Exception e){
@@ -174,29 +182,11 @@ public class Sharing {
         }
     }
     
-    public void returnStep(){ //ระบุจำนวนยืมจักรยานแต่ละชนิด
-        for (int i = 0; i < numBikeUser.length ; i++) {
-            availableItem[i] += numBikeUser[i];
-        }
-    }
-    
-    public void decreseCPNoti(){
-        cp.decreseCp();
-    }
-    
     public void startBorrow() throws InterruptedException{ //เริ่มยืม
         cp.decreseCp();
         borrowItem();
         time.start(this);
-    }
-
-    public void stopBorrow() { //หยุดยืม(นำของมาคืน)
-        time.stop();
-        timeDetail = time.showDetail();
-        cp.setCpUse(0);
-        returnStep();
-        returnItems();
-    }   
+    }  
 
     public void enterTime(int userDate, int userMonth, int userYear, int userHr, int userMin, int userSec) { //ระบุวันเวลาที่จะคืน
         time = new Timer(userDate, userMonth, userYear, userHr, userMin, userSec);
@@ -337,6 +327,7 @@ public class Sharing {
             Statement s = con.createStatement();
             String sql = "INSERT INTO Items VALUES ('"+id+"','"+name+"','"+count+"','"+count+"','"+newPath+",)";
             s.executeUpdate(sql);
+            setDataOfItem();
         }
         catch(Exception e){
             e.printStackTrace();
@@ -361,6 +352,7 @@ public class Sharing {
             available = rs.getInt("amount")-rs.getInt("availableNumber");
             sql = "UPDATE Items SET name='"+name+"',amount='"+count+"',availableNumber='"+(count-available)+"' WHERE itemID='"+id+"'";
             s.executeUpdate(sql);
+            setDataOfItem();
         }
         catch(Exception e){
             e.printStackTrace();
@@ -380,6 +372,7 @@ public class Sharing {
             Statement s = con.createStatement();
             String sql = "DELETE FROM Items WHERE itemID='"+id+"'";
             s.executeUpdate(sql);
+            setDataOfItem();
         }
         catch(Exception e){
             e.printStackTrace();
@@ -437,6 +430,7 @@ public class Sharing {
     }
     
     public boolean checkStatus(){
+        Date dt = new Date();
         boolean statusReturn = false;
         int mustReturn = 0;
         int countBorrow = 0;
@@ -460,7 +454,18 @@ public class Sharing {
             if(mustReturn == 0){
                statusReturn = true;
             }else{
-               returnTime = new Date[mustReturn];
+                sql = "SELECT return_dateTime FROM Transaction Where userID='"+User.getUserId()+"' and action='Borrow' ORDER BY transID DESC LIMIT 1";
+                rs = s.executeQuery(sql);
+                if(rs.next()){
+                    returnTimeBorrow = rs.getTimestamp("return_dateTime");
+                }
+                if(dt.getDate()!=returnTimeBorrow.getDate() || dt.getMonth()!=returnTimeBorrow.getMonth() || dt.getYear()!=returnTimeBorrow.getYear()){
+                    timesUp = true;
+                }else if (dt.getHours() >= 18 && dt.getHours() >= 0 && dt.getHours() >= 0  ){
+                    timesUp = true;
+                }else{
+                    timesUp = false;
+                }
             }
         }
         catch(Exception e){
@@ -475,47 +480,9 @@ public class Sharing {
         return statusReturn;
     }
     
-    public boolean remaintoReturn(){
-        Date dt= new Date();
-        boolean statusTimesUp = false;
-
-        Connection con = null;
-        try{
-            con = Database.connectDb("ja","jaja036");
-            Statement s = con.createStatement();
-            String sql = "SELECT return_dateTime FROM Transaction WHERE userID='"+User.getUserId()+"' and action='Borrow' ORDER BY dateTime DESC LIMIT "+ returnTime.length;
-            ResultSet rs = s.executeQuery(sql);
-            for (int i = returnTime.length; i > 0; i--) {
-                if(rs.next()){
-                    returnTime[i-1] = rs.getTimestamp("return_dateTime");
-                }
-            }
-            String current = dt.getDate()+(dt.getMonth()+1)+(dt.getYear()+1900)+"";;
-            String temp;    
-            for (int i = 0; i < returnTime.length; i++) {
-                temp = returnTime[i].getDate()+(returnTime[i].getMonth()+1)+(returnTime[i].getYear()+1900)+"";
-                if(!current.equals(temp) || returnTime[i].getTime() <= dt.getTime()){
-                    statusTimesUp = true;
-                    int tmpCP = 0;
-//                    itemMustReturn();
-                }
-            }
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-
-        try{
-            con.close();
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-        return statusTimesUp;
-     }
-    
     public void checkTime() throws InterruptedException { //ระบุวันเวลาที่จะคืน
         Date dt = new Date();
-        Date re = returnTime[0];
-        System.out.println(re);
+        Date re = getReturnTimeBorrow();
         time = new Timer(re,dt);
         time.differentTime();
         time.start(this);
@@ -531,81 +498,70 @@ public class Sharing {
         timeDetail = time.showDetail();
     }
     
-//    public String itemMustReturn(){
-//        String dateReturn = returnTime[0]+"";
-//        int i = 0;
-//        String listItem = "";
-//        Connection con = null;
-//        try{
-//            con = Database.connectDb("ja","jaja036");
-//            Statement s = con.createStatement();
-//            String sql = "SELECT COUNT(DISTINCT itemID) AS count FROM Transaction WHERE userID='"+User.getUserId()+"' and return_dateTime='"+dateReturn+"' LIMIT "+returnTime.length;
-//            ResultSet rs = s.executeQuery(sql);
-//            while(rs.next()){
-//                i = rs.getInt("count");
-//            }
-//            itemReturnUser = new String[i];
-//            itemAmountReturnUser = new int[i];
-//            
-//            sql = "SELECT itemID,SUM(amount) AS sum FROM Transaction WHERE userID='"+User.getUserId()+"' and return_dateTime='"+dateReturn+"' GROUP BY itemID LIMIT "+returnTime.length;
-//            rs = s.executeQuery(sql);
-//            i = 0;
-//            while(rs.next()){
-//                itemReturnUser[i] = rs.getString("itemID");
-//                itemAmountReturnUser[i] = rs.getInt("sum");
-//                i++;
-//            }
-//          
-//            for (int j = 0; j < itemReturnUser.length; j++) {
-//                listItem +="- " + itemReturnUser[j] + "    Amount   : " + itemAmountReturnUser[j] + "<br>";
-//            }
-//        }catch(Exception e){
-//            e.printStackTrace();
-//        }
-//
-//        try{
-//            con.close();
-//        }catch(Exception e){
-//            e.printStackTrace();
-//        }
-//        return listItem;
-//    }
-    
-//    public void timesupCP(){
-//        Connection con = null;
-//        Date dt = new Date();
-//        String sql;
-//        try{
-//            con = Database.connectDb("ja","jaja036");
-//            Statement s = con.createStatement();
-//            String current = dt.getDate()+(dt.getMonth()+1)+(dt.getYear()+1900)+"";;
-//            String temp;    
-//            for (int i = 0; i < returnTime.length; i++) {
-//                temp = returnTime[i].getDate()+(returnTime[i].getMonth()+1)+(returnTime[i].getYear()+1900)+"";
-//                if(!current.equals(temp) || returnTime[i].getTime() <= dt.getTime()){
-//                    int tmpCP = 0;
-//                    for (int j = 0; j < itemReturnUser.length; j++) {
-//                        sql = "SELECT CP_cost FROM Items WHERE itemID='"+itemReturnUser[i]+"'";
-//                        ResultSet rs = s.executeQuery(sql);
-//                        if(rs.next()){
-//                            tmpCP += rs.getInt("CP_cost")*itemAmountReturnUser[i];
-//                        }
-//                    }
-//                    cp.selectCP();
-//                    cp.setCpUse(tmpCP*2);
-//                    cp.decreseCp();
-//                }
-//            }
-//        }catch(Exception e){
-//            e.printStackTrace();
-//        }
-//
-//        try{
-//            con.close();
-//        }catch(Exception e){
-//            e.printStackTrace();
-//        }
-//    }
+    public String itemMustReturn(){
+        String listItem="";
+        Connection con = null;
+        Timestamp t = new Timestamp(returnTimeBorrow.getTime());
+        ArrayList<String> tempNameItem = new ArrayList<>();
+        ArrayList<String> tempIDItem = new ArrayList<>();
+        ArrayList<Integer> tempAmountItem = new ArrayList<>();
+        ArrayList<Integer> borrowItem = new ArrayList<>();
+        ArrayList<Integer> returnItem = new ArrayList<>();
+        itemNameReturnUser.clear();
+        itemIDReturnUser.clear();
+        itemAmountReturnUser.clear();
+        
+        try{
+            con = Database.connectDb("ja","jaja036");
+            Statement s = con.createStatement();
+            String sql = "SELECT itemID,itemName,CP_cost FROM Items ORDER BY itemID ASC";
+            ResultSet rs = s.executeQuery(sql);
+            while(rs.next()){
+                tempIDItem.add(rs.getString("itemID"));
+                tempNameItem.add(rs.getString("itemName"));
+            }
+                sql = "SELECT SUM(amount) AS count FROM Transaction WHERE userID=? and action=? and return_dateTime=? and itemID=?";
+                PreparedStatement pst = con.prepareStatement(sql);
+                for (int i = 0; i < tempNameItem.size(); i++) {
+                    pst.setInt(1, User.getUserId());
+                    pst.setString(2, "Borrow");
+                    pst.setTimestamp(3, t);
+                    pst.setString(4,tempIDItem.get(i));
+                    rs = pst.executeQuery();
+                    rs.first();
+                    borrowItem.add(rs.getInt("count"));
+                }
+                for (int i = 0; i < tempNameItem.size(); i++) {
+                    pst.setInt(1, User.getUserId());
+                    pst.setString(2, "Return");
+                    pst.setTimestamp(3, t);
+                    pst.setString(4,tempIDItem.get(i));
+                    rs = pst.executeQuery();
+                    rs.first();
+                    returnItem.add(rs.getInt("count"));
+                }
+                for (int i = 0; i < tempNameItem.size(); i++) {
+                    int count = borrowItem.get(i) - returnItem.get(i);
+                    if(count >0){
+                        itemNameReturnUser.add(tempNameItem.get(i));
+                        itemAmountReturnUser.add(count);
+                    }
+                }
+          
+            for (int j = 0; j < itemNameReturnUser.size(); j++) {
+                listItem +="- " + itemNameReturnUser.get(j) + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Amount : " + itemAmountReturnUser.get(j) + "<br>";
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            con.close();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return listItem;
+    }
     
     public void copyFileImg(String sourceFile,String targetFile){
         try{
@@ -696,13 +652,14 @@ public class Sharing {
     public ArrayList<Integer> getIdUserBorrowing() {
         return idUserBorrowing;
     }
+    
     public String nameOfuser(int id){
         Connection con = null;
         String name = "";
         try{
             con = Database.connectDb("ja","jaja036");
             Statement s = con.createStatement();
-            String sql = "SELECT firstName FROM Users WHERE userID='"+id+"'";
+            String sql = "SELECT firstName FROM User WHERE userID='"+id+"'";
             ResultSet rs = s.executeQuery(sql);
             if(rs.next()){
                 name = rs.getString("firstName");
@@ -720,41 +677,6 @@ public class Sharing {
         return name;
     }
     
-    public boolean checkUserBorrowNow(int id){
-        boolean timeup = false;
-        int mustReturn = 0;
-        int countBorrow = 0;
-        int countReturn = 0;
-        Connection con = null;
-        Date dt = new Date();
-        try{
-            con = Database.connectDb("ja","jaja036");
-            Statement s = con.createStatement();
-            
-            String sql = "SELECT return_dateTime FROM Transaction Where userID='"+id+"' and action='Borrow' ORDER BY transID DESC LIMIT 1";
-            ResultSet rs = s.executeQuery(sql);
-            if(rs.next()){
-                Date reUser = rs.getTimestamp("return_dateTime");
-                if(dt.getDate()!=reUser.getDate() || dt.getMonth()!=reUser.getMonth() || dt.getYear()!=reUser.getYear()){
-                    timeup = true;
-                }else if (reUser.getHours() >= 18 && reUser.getHours() >= 0 && reUser.getHours() >= 0  ){
-                    timeup = true;
-                }
-            }
-
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }
-        
-        try{
-            con.close();
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-        return timeup;
-    }
-
     public boolean isTimesUp() {
         return timesUp;
     }
@@ -763,30 +685,69 @@ public class Sharing {
         Date dt = new Date();
         Connection con = null;
         Timestamp t = null;
-        ArrayList<String> tempNameItem = new ArrayList<String>();
-        ArrayList<Integer> tempAmountItem = new ArrayList<Integer>();
-        itemReturnUser.clear();
+        
+        ArrayList<String> tempNameItem = new ArrayList<>();
+        ArrayList<String> tempIDItem = new ArrayList<>();
+        ArrayList<Integer> tempCPItem = new ArrayList<>();
+        ArrayList<Integer> borrowItem = new ArrayList<>();
+        ArrayList<Integer> returnItem = new ArrayList<>();
+        itemNameReturnUser.clear();
+        itemIDReturnUser.clear();
         itemAmountReturnUser.clear();
+        returnTimeBorrow = null;
         
         try{
             con = Database.connectDb("ja","jaja036");
             Statement s = con.createStatement();
-            String sql = "SELECT itemName FROM Items ORDER BY itemID ASC";
+            String sql = "SELECT itemID,itemName,CP_cost FROM Items ORDER BY itemID ASC";
             ResultSet rs = s.executeQuery(sql);
-            if(rs.next()){
+            while(rs.next()){
+                tempIDItem.add(rs.getString("itemID"));
                 tempNameItem.add(rs.getString("itemName"));
+                tempCPItem.add(rs.getInt("CP_cost"));
             }
             sql = "SELECT return_dateTime FROM Transaction Where userID='"+id+"' and action='Borrow' ORDER BY transID DESC LIMIT 1";
             rs = s.executeQuery(sql);
             if(rs.next()){
                 t = rs.getTimestamp("return_dateTime");
-                if(dt.getDate()!=t.getDate() || dt.getMonth()!=t.getMonth() || dt.getYear()!=t.getYear()){
+                returnTimeBorrow = rs.getTimestamp("return_dateTime");
+                if(dt.getDate()!=returnTimeBorrow.getDate() || dt.getMonth()!=returnTimeBorrow.getMonth() || dt.getYear()!=returnTimeBorrow.getYear()){
                     timesUp = true;
-                }else if (t.getHours() >= 18 && t.getHours() >= 0 && t.getHours() >= 0  ){
+                }else if (dt.getHours() >= 18 && dt.getHours() >= 0 && dt.getHours() >= 0  ){
                     timesUp = true;
+                }else{
+                    timesUp = false;
                 }
             }
-            
+                sql = "SELECT SUM(amount) AS count FROM Transaction WHERE userID=? and action=? and return_dateTime=? and itemID=?";
+                PreparedStatement pst = con.prepareStatement(sql);
+                for (int i = 0; i < tempNameItem.size(); i++) {
+                    pst.setInt(1, id);
+                    pst.setString(2, "Borrow");
+                    pst.setTimestamp(3, t);
+                    pst.setString(4,tempIDItem.get(i));
+                    rs = pst.executeQuery();
+                    rs.first();
+                    borrowItem.add(rs.getInt("count"));
+                }
+                for (int i = 0; i < tempNameItem.size(); i++) {
+                    pst.setInt(1, id);
+                    pst.setString(2, "Return");
+                    pst.setTimestamp(3, t);
+                    pst.setString(4,tempIDItem.get(i));
+                    rs = pst.executeQuery();
+                    rs.first();
+                    returnItem.add(rs.getInt("count"));
+                }
+                for (int i = 0; i < tempNameItem.size(); i++) {
+                    int count = borrowItem.get(i) - returnItem.get(i);
+                    if(count >0){
+                        itemIDReturnUser.add(tempIDItem.get(i));
+                        itemNameReturnUser.add(tempNameItem.get(i));
+                        itemCPReturnUser.add(tempCPItem.get(i));
+                        itemAmountReturnUser.add(count);
+                    }
+                }
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -797,5 +758,25 @@ public class Sharing {
             e.printStackTrace();
         }
         
+    }
+
+    public ArrayList<String> getItemNameReturnUser() {
+        return itemNameReturnUser;
+    }
+
+    public ArrayList<Integer> getItemCPReturnUser() {
+        return itemCPReturnUser;
+    }
+
+    public Date getReturnTimeBorrow() {
+        return returnTimeBorrow;
+    }
+
+    public ArrayList<String> getItemIDReturnUser() {
+        return itemIDReturnUser;
+    }
+
+    public ArrayList<Integer> getItemAmountReturnUser() {
+        return itemAmountReturnUser;
     }
 }

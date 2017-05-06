@@ -222,6 +222,45 @@ public class CanCounter {
         insertTransWithdraw(cpUse);
         updateCP(cp);
     }
+    
+    public void decreseCpByAdmin(int id,int cpUse) {
+        int cpUser = 0;
+        int transId = 0;
+        Connection con = null;
+        try{
+            con = Database.connectDb("ja","jaja036");
+            Statement s = con.createStatement();
+            String sql = "SELECT can_point FROM User WHERE userID='"+id+"'";
+            ResultSet rs = s.executeQuery(sql);
+            if(rs.next()){
+                cpUser = rs.getInt("can_point");
+            }else{
+                cpUser = 0;
+            }
+            
+            sql = "SELECT MAX(transactionID) AS id FROM CP_Transaction";
+            rs = s.executeQuery(sql);
+            while(rs.next()){
+                transId = rs.getInt("id");
+            }
+            transId += 1;
+            sql = "INSERT INTO CP_Transaction VALUES ('"+transId+"',"+id+",0,'"+cpUse+"')";
+            s.executeUpdate(sql);
+            
+            sql = "UPDATE User SET can_point='"+(cpUser-cpUse)+"' WHERE userID='"+id+"'";
+            s.executeUpdate(sql);
+            
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            con.close();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
 
     public void checkCp() throws CanCountException { //check Cpของuserกับcpทั้งหมดที่ต้องนำมาใช้แลกเพื่อยืม
         if (cpUse>cp){
