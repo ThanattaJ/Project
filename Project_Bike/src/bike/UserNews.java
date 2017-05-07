@@ -9,7 +9,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import bike.database.Database;
+import database.Database;
 /**
  *
  * @author user
@@ -22,7 +22,7 @@ public class UserNews {
         this.nameNews = nameNews;
         this.descrip = descrip;
     }
-    
+
     public UserNews(){
         
     }
@@ -69,6 +69,7 @@ public class UserNews {
         }
         System.out.println("");
     }
+    
     public void getNews(int newsID){
         try{
             Database cndb = new Database();
@@ -107,7 +108,8 @@ public class UserNews {
             System.out.println(ex);
         }
     }
-    public void showNews(){
+    
+    public String showNews(String showNews){
         try{
             Database cndb = new Database();
             Connection connect = Database.connectDb("win", "win016");
@@ -115,13 +117,13 @@ public class UserNews {
             System.out.println("Database connecting");
         
             Statement st = connect.createStatement(); 
-            String temp = "SELECT * FROM GreenSociety.News";
+            String temp = "SELECT * FROM Green_Society.News";
             ResultSet rs = st.executeQuery(temp);
     
             while(rs.next()){
                 System.out.println("newsID: " + rs.getInt("newsID"));
                 System.out.println("newsDescription: " + rs.getString("newsDescription"));
-                System.out.println("newslDetails: " + rs.getString("manualDetails"));
+                System.out.println("newslDetails: " + rs.getString("newsDetails"));
                 System.out.println("----------------------------------------------");
             }
             
@@ -141,8 +143,9 @@ public class UserNews {
             System.out.println(ex);
         }
         System.out.println("");
-                                 
+        return showNews;
     }
+    
     public void insertData() {
         Connection c = null;
         try {

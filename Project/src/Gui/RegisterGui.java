@@ -841,7 +841,7 @@ public class RegisterGui extends javax.swing.JFrame {
         JFileChooser file = new JFileChooser();
         String userhome = System.getProperty("user.home");
         file.setCurrentDirectory(new File(userhome));
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("*.Images", "jpg", "gif","png");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("*.Images", "jpg", "png");
         file.addChoosableFileFilter(filter);
         int result = file.showSaveDialog(null);
         if(result == JFileChooser.APPROVE_OPTION){
