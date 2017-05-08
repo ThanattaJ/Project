@@ -56,6 +56,80 @@ public class Repair{
     private String asking="";
     private String repairing="";
     
+    
+    
+    public long ConnectDBReturnTransIDForUpdateTimr(long prepairID){
+        long transID=0;
+        try{
+            ConnectDatabase cndb = new ConnectDatabase();
+            Connection connect = ConnectDatabase.connectDb("jan", "jan042");
+            Class.forName("com.mysql.jdbc.Driver");
+            System.out.println("..connectDBFromAdminToUser");
+            Statement st = connect.createStatement(); 
+            //ดึงเอา id ที่มาที่สุดออกมา เพื่อให้มันสามารถ insert ลง table ให้ไม่ซ้ำกันได้
+            String temp = "SELECT Prepair_Desctiption.transID FROM `Prepair_Desctiption` "
+                    + "JOIN Repair_State ON Prepair_Desctiption.id = Repair_State.item_id "
+                    + "WHERE Prepair_Desctiption.id= "+prepairID;
+            ResultSet rs = st.executeQuery(temp);
+            
+            while(rs.next()){
+                transID = rs.getInt("transID");
+            }
+            
+            if(connect != null){
+                    connect.close();
+		}
+		}catch (SQLException e){
+                    e.printStackTrace();
+        }
+        
+        catch(ClassNotFoundException cfe){
+            System.out.println(cfe);
+        }
+        catch(Exception ex){
+            System.out.println(ex);
+        }
+        return transID;
+    }
+
+    
+        public ArrayList<String> connectDBforListUserSentToRepair(){
+        ArrayList<String> list = new ArrayList<String>();
+        String format="";
+        try{
+            ConnectDatabase cndb = new ConnectDatabase();
+            Connection connect = ConnectDatabase.connectDb("jan", "jan042");
+            Class.forName("com.mysql.jdbc.Driver");
+//            System.out.println("...connectDBFomeUserToAdmin");
+            Statement st = connect.createStatement(); 
+            String temp = "SELECT User.firstName,User.lastName,User.userID FROM Green_Society.Prepair_Desctiption "
+                    + "JOIN Transaction ON Prepair_Desctiption.transID=Transaction.transID INNER JOIN User ON Transaction.userID=User.userID" ;
+            ResultSet rs = st.executeQuery(temp);
+            while(rs.next()){
+                String name = rs.getString("firstName");
+                String surname = rs.getString("lastName");
+                int id = rs.getInt("userID");
+                format = "<html>Name: "+name+"<br>Surname: "+surname+"<br>ID: "+id+"</html>";
+                list.add(format);
+            }
+            
+            if(connect != null){
+                    connect.close();
+		}
+		}catch (SQLException e){
+                    e.printStackTrace();
+        }
+        
+        catch(ClassNotFoundException cfe){
+            System.out.println(cfe);
+        }
+        catch(Exception ex){
+            System.out.println(ex);
+        }
+        return list;
+    }
+
+    
     public void connectDBForChangeToSuccess(int idRepairState){
          try{
             ConnectDatabase cndb = new ConnectDatabase();
@@ -106,7 +180,7 @@ public class Repair{
                 name=rs.getString("firstName");
                 action=rs.getString("Repairing");
                 remaining=rs.getTimestamp("dateTime");
-                format=id+"   |   "+name+"   |   "+action+"   |   "+remaining;
+                format=id+"   |   "+name+"   |   "+action+"       "+remaining;
                 notSuccess.add(format);
             }
             if(connect != null){
@@ -124,6 +198,7 @@ public class Repair{
         }
          return notSuccess;
     }
+
     
     public long connectDBFomeUserToAdmin(long userID,Timestamp startDate,Timestamp returnDate){
 //        Timestamp startDate = new Timestamp(t.getBorrowTime().getTime());
@@ -285,7 +360,7 @@ public class Repair{
         }
     }
     
-    public void connectDBForAdminUpdateTime(long transId,Timestamp startTime,Timestamp endTime){
+   public void connectDBForAdminUpdateTime(long transId,Timestamp startTime,Timestamp endTime){
         try{
             ConnectDatabase cndb = new ConnectDatabase();
             Connection connect = ConnectDatabase.connectDb("jan", "jan042");
@@ -312,6 +387,7 @@ public class Repair{
             System.out.println(ex);
         }
     }
+
     
     public void sentDatabaseHistory(){//เอาค่าจาก gui ลง db เพื่อให้ admin สามารถดึงข้อมูลไปแสดงได้
         Timestamp dateRepair = new Timestamp(t.getBorrowTime().getTime());//เวลาที่เริ่มต้นให้ช่างซ่อม

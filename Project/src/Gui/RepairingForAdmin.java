@@ -69,6 +69,7 @@ public class RepairingForAdmin extends javax.swing.JFrame {
 //        }
         JPanel []jp = new JPanel[size];
         JLabel []detail = new JLabel[size];
+        JLabel []remaining = new JLabel[size];
         JButton []detailButton = new JButton[size];
         JButton []doneButton = new JButton[size];
         String temp;
@@ -78,17 +79,36 @@ public class RepairingForAdmin extends javax.swing.JFrame {
             jp[i]=new JPanel();
             jp[i].setBackground(new java.awt.Color(51, 51, 51));
             jp[i].setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
+            
+            temp = tem.get(i);//String จาก ArrayList = Stringตัวหนึ่ง
+            int lengthTemp = temp.length();
+            String output = temp.substring(0,lengthTemp-23);
+            
             detail[i]=new JLabel();
-            detail[i].setText(tem.get(i));
+            detail[i].setText(output);
             detail[i].setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
             detail[i].setForeground(new java.awt.Color(255, 255, 255));
             jp[i].add(detail[i], new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
             
-            temp = tem.get(i);
+            // Substring เอาเฉพาะเลย id เพื่อส่งค่าให้ผ่านพาราไปเข้าปุ่มอีกสองปุ่ม
             String idRepairState1 = temp.substring(0,1);
             int idRepairState = Integer.parseInt(idRepairState1);
             System.out.println("testIdRepairState: "+idRepairState);
+            //SubString เอา Timer ด้านหลัง
+            String time = temp.substring(lengthTemp-23,lengthTemp);
+            System.out.println("Time: "+time);
+            
+            remaining[i]=new JLabel();
+            remaining[i].setText(time);
+//            remaining[i].addMouseListener(new java.awt.event.MouseAdapter() {
+//            @Override
+//            public void mouseClicked(java.awt.event.MouseEvent evt) {
+//                timerForRepairMouseClicked(evt);
+//            }
+//            });
+            remaining[i].setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
+            remaining[i].setForeground(new java.awt.Color(255, 255, 255));
+            jp[i].add(remaining[i], new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 10, -1, -1));
             
             detailButton[i]=new JButton();
             detailButton[i].setText("Detail");
@@ -116,6 +136,20 @@ public class RepairingForAdmin extends javax.swing.JFrame {
             jPanelRepairingNotSuccess.add(jScrollPaneBikeRepairing, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 690, 300));
         }
     }
+    
+        public void timerForRepairMouseClicked(java.awt.event.MouseEvent evt){
+//        Date current = new Date();
+//        time[0].setText("End:    " + current.getDate() + " / " + (current.getMonth() + 1) + " / " + (current.getYear() + 1900) + "  18 : 00");
+//        new javax.swing.Timer(1000, new ActionListener() {
+//                    @Override
+//                    public void actionPerformed(ActionEvent e) {
+//                        time[0].setText("End:    " + current.getDate() + " / " + (current.getMonth() + 1) + " / " + (current.getYear() + 1900) + "  18 : 00");
+////                        timeLeftShow.setText(sh.getTimeDetail());
+//                    }
+//                }).start();
+        
+    }    
+
     
     private void jButtonDoneInJPanelNotSuccess(java.awt.event.ActionEvent evt,int tem) {  
         System.out.println("jButtonDoneInJPanelNotSuccess: "+tem);
@@ -186,7 +220,8 @@ public class RepairingForAdmin extends javax.swing.JFrame {
         return increase;
     }
     
-    public void layerUser(){//JPanel jPanelRepairingAdmin
+   public void layerUser(){//JPanel jPanelRepairingAdmin
+        ArrayList<String> list = rp.connectDBforListUserSentToRepair();
         JPanel[] jp = new JPanel[num];
         JLabel[] name = new JLabel[num];
         JLabel[] surname = new JLabel[num];
@@ -203,20 +238,8 @@ public class RepairingForAdmin extends javax.swing.JFrame {
             name[i] = new JLabel();
             name[i].setFont(new java.awt.Font("Leelawadee",0,11));
             name[i].setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-            name[i].setText("Name: ");//ใส่ชื่อของ User แต่ล่ะคน
+            name[i].setText(list.get(i));//ใส่ชื่อของ User แต่ล่ะคน
             jp[i].add(name[i],new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, -1, -1));
-            //----------------------------------------------------------------------------------------//
-            surname[i] = new JLabel();
-            surname[i].setFont(new java.awt.Font("Leelawadee",0,11));
-            surname[i].setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-            surname[i].setText("surname: ");//ใส่นามสกุลของ User แต่ล่ะคน
-            jp[i].add(surname[i],new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, -1, -1));
-            //----------------------------------------------------------------------------------------//
-            id[i] = new JLabel();
-            id[i].setFont(new java.awt.Font("Leelawadee",0,11));
-            id[i].setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-            id[i].setText("id: ");//ใส่ไอดีของ User แต่ล่ะคน
-            jp[i].add(id[i],new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, -1, -1));
             //----------------------------------------------------------------------------------------//
             icon[i]= new JLabel();
             icon[i].setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -238,6 +261,7 @@ public class RepairingForAdmin extends javax.swing.JFrame {
             
         }
     }
+
     
     private void jBTclickActionPerformed(java.awt.event.ActionEvent evt,int tem) {  //   click in  jPanelRepairingAdmin                                    
         // TODO add your handling code here:
@@ -1269,6 +1293,10 @@ public class RepairingForAdmin extends javax.swing.JFrame {
     private void jBTStopTimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBTStopTimeActionPerformed
         // TODO add your handling code here:
         rp.stopTime();
+        Timestamp start = new Timestamp (rp.startTimeToRepair().getTime());
+        Timestamp stop = new Timestamp ( rp.endTimeToRepair().getTime());
+        long transID = rp.ConnectDBReturnTransIDForUpdateTimr(perpairID);
+        rp.connectDBForAdminUpdateTime(transID,start,stop);
         String submit = rp.submitRepair();
         JOptionPane.showMessageDialog(null,submit,"Success",JOptionPane.WARNING_MESSAGE);
         rp.Status(true);//ให้ Attribute String ใน class Repair เก็บเป็น true return Success

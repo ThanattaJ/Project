@@ -776,7 +776,7 @@ public class RepairingForUser extends javax.swing.JFrame {
         color = jTFColor.getText();
         bike = jTFbike.getText();
         whyRepair = jTFWhat.getText();
-        connectDBFomeUserToAdmin(222);//return date ยังใส่ไม่ได้ต้องให้ช่างประเมินเวลาก่อน
+        connectDBFomeUserToAdmin(1);//return date ยังใส่ไม่ได้ต้องให้ช่างประเมินเวลาก่อน
         System.out.println("Connect DB Success");
         jPanelRepairUserFollowRepairing.setVisible(true);
         jPanelRepairUserSentToAdmin.setVisible(false);
