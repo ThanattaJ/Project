@@ -109,7 +109,7 @@ public class Repair{
                 String name = rs.getString("firstName");
                 String surname = rs.getString("lastName");
                 int id = rs.getInt("userID");
-                format = "<html>Name: "+name+"<br>Surname: "+surname+"<br>ID: "+id+"</html>";
+                format = "Name: "+name+"    |   Surname: "+surname+"    |   ID: "+id;
                 list.add(format);
             }
             
