@@ -478,8 +478,6 @@ public class Repair{
         this.showTime = showTime;
     }
     
-    
-    
     public void startTime() throws InterruptedException{
         t.start(this);
     }

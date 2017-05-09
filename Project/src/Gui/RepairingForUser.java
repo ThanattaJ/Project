@@ -23,8 +23,8 @@ import java.sql.Timestamp;
 public class RepairingForUser extends javax.swing.JFrame {
     
     private Repair rp = new Repair();
-    private static final int MY_MINIMUM = 0;
-    private static final int MY_MAXIMUM = 100;
+//    private static final int MY_MINIMUM = 0;
+//    private static final int MY_MAXIMUM = 100;
     private String asking;
     private String repairing;
     private String status;
@@ -33,57 +33,44 @@ public class RepairingForUser extends javax.swing.JFrame {
     private String color="";
     private long peairId;
     private long countTransId;
-    /**
-     * Creates new form 
-     */
-
-    public RepairingForUser(Repair r) {
-        initComponents();
-        rp = r;
-        System.out.println("RepairUser: "+rp.getProblem());
-        userFollowingForRepair(r);
-        jPanelRepairUserFollowRepairing.setVisible(true);
-        jPanelRepairUserSentToAdmin.setVisible(false);
-
-    }
-    
+ 
     public RepairingForUser() {
         initComponents();
-        connectDBShowRepairForUserFollowing(asking);
+        connectDBShowRepairForUserFollowing(1);
         jPanelRepairUserSentToAdmin.setVisible(true);
         jPanelRepairUserFollowRepairing.setVisible(false);
     }
 
-    public void userFollowingForRepair(Repair r){
-        connectDBShowRepairForUserFollowing(asking);
-        textAsking.setText(rp.getProblem());
-        textRecieving.setText(rp.getStatus());
-        textRepair.setText(rp.getDetail());
-        //set ค่าให้ progress ว่าเป็น percent ตั้งแต่ 1-100
-        jProgressBarAskingToRepairing.setMinimum(MY_MINIMUM);
-        jProgressBarAskingToRepairing.setMaximum(MY_MAXIMUM);
-        jPBpercentRepairToRecieving.setMinimum(MY_MINIMUM);
-        jPBpercentRepairToRecieving.setMaximum(MY_MAXIMUM);
-        //------------------------------------------------------------
-        jProgressBarAskingToRepairing.setStringPainted(true);
-        jProgressBarAskingToRepairing.setBackground(Color.blue);
-        jProgressBarAskingToRepairing.setForeground(Color.white);
-        jProgressBarAskingToRepairing.setFont(new java.awt.Font("Leelawadee",0,11));
-        jProgressBarAskingToRepairing.setString(rp.getPercentAskingToRepair()+"%");
-        //set progessBar ให้มีค่เท่ากับที่ admin ส่งค่ามาว่ากี่เปอร์เซ็น
-        updateBarAskingToRepair(rp.getPercentAskingToRepair());
-        updateBarRepairToRecieving(rp.getPercentRepairToRecie());
-    }
+//    public void userFollowingForRepair(Repair r){
+//        connectDBShowRepairForUserFollowing(asking);
+//        textAsking.setText(rp.getProblem());
+//        textRecieving.setText(rp.getStatus());
+//        textRepair.setText(rp.getDetail());
+//        //set ค่าให้ progress ว่าเป็น percent ตั้งแต่ 1-100
+//        jProgressBarAskingToRepairing.setMinimum(MY_MINIMUM);
+//        jProgressBarAskingToRepairing.setMaximum(MY_MAXIMUM);
+//        jPBpercentRepairToRecieving.setMinimum(MY_MINIMUM);
+//        jPBpercentRepairToRecieving.setMaximum(MY_MAXIMUM);
+//        //------------------------------------------------------------
+//        jProgressBarAskingToRepairing.setStringPainted(true);
+//        jProgressBarAskingToRepairing.setBackground(Color.blue);
+//        jProgressBarAskingToRepairing.setForeground(Color.white);
+//        jProgressBarAskingToRepairing.setFont(new java.awt.Font("Leelawadee",0,11));
+//        jProgressBarAskingToRepairing.setString(rp.getPercentAskingToRepair()+"%");
+//        //set progessBar ให้มีค่เท่ากับที่ admin ส่งค่ามาว่ากี่เปอร์เซ็น
+//        updateBarAskingToRepair(rp.getPercentAskingToRepair());
+//        updateBarRepairToRecieving(rp.getPercentRepairToRecie());
+//    }
     
-    public void updateBarAskingToRepair(int newValue) {//รับจาก คลาส Repairing  Percent ถึงไหนแล้ว
-    jProgressBarAskingToRepairing.setValue(newValue);
-    }
+//    public void updateBarAskingToRepair(int newValue) {//รับจาก คลาส Repairing  Percent ถึงไหนแล้ว
+//    jProgressBarAskingToRepairing.setValue(newValue);
+//    }
+//    
+//    public void updateBarRepairToRecieving(int newValue) {//รับจาก คลาส Repairing  Percent ถึงไหนแล้ว
+//    jPBpercentRepairToRecieving.setValue(newValue);
+//    }
     
-    public void updateBarRepairToRecieving(int newValue) {//รับจาก คลาส Repairing  Percent ถึงไหนแล้ว
-    jPBpercentRepairToRecieving.setValue(newValue);
-    }
-    
-        public void connectDBFomeUserToAdmin(long userID){
+    public void connectDBFomeUserToAdmin(long userID){
         Timer t = new Timer();
         Timestamp startDate = new Timestamp(t.getBorrowTime().getTime());
         Timestamp returnDate = new Timestamp(t.getReturnTime().getTime());
@@ -161,7 +148,7 @@ public class RepairingForUser extends javax.swing.JFrame {
 
     }
         
-    public void connectDBShowRepairForUserFollowing(String ask){//เพื่อที่ User จะสามารถดูและติดตามดารซ่อมของตัวเองได้
+    public void connectDBShowRepairForUserFollowing(long userID){//เพื่อที่ User จะสามารถดูและติดตามดารซ่อมของตัวเองได้
         try{
             ConnectDatabase cndb = new ConnectDatabase();
             Connection connect = ConnectDatabase.connectDb("jan", "jan042");
@@ -169,7 +156,7 @@ public class RepairingForUser extends javax.swing.JFrame {
             
             Statement st = connect.createStatement(); 
             //ดึงเอา id ที่มาที่สุดออกมา เพื่อให้มันสามารถ insert ลง table ให้ไม่ซ้ำกันได้
-            String temp = "SELECT Asking,Repairing,Recieving FROM Repair_State where Asking= "+ask;
+            String temp = "SELECT Asking,Repairing,Recieving FROM Repair_State where userID= "+userID;
             ResultSet rs = st.executeQuery(temp);
             int count=0;
             while(rs.next()){
