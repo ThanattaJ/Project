@@ -56,7 +56,56 @@ public class Repair{
     private String asking="";
     private String repairing="";
     
-    
+    public ArrayList<Integer> connextDBforAdminCheakAddRepeir(){
+       ArrayList<Integer> prepair = new ArrayList<Integer>();
+       ArrayList<Integer> repair = new ArrayList<Integer>();       
+       ArrayList<Integer> diff = new ArrayList<Integer>();       
+        try{
+            ConnectDatabase cndb = new ConnectDatabase();
+            Connection connect = ConnectDatabase.connectDb("jan", "jan042");
+            Class.forName("com.mysql.jdbc.Driver");
+            Statement st = connect.createStatement(); 
+            
+            String temp ="SELECT id FROM  Green_Society.`Prepair_Desctiption`";
+            ResultSet rs = st.executeQuery(temp);
+            while(rs.next()){
+                prepair.add(rs.getInt("id"));
+            }
+            
+            String temp2 = "SELECT item_id FROM `Repair_State`";
+            ResultSet rs2 = st.executeQuery(temp2);
+            while(rs2.next()){
+                repair.add(rs2.getInt("item_id"));
+            }
+            
+            for (int i = 0; i < prepair.size(); i++) {
+                boolean check = true;
+                for (int j = 0; j < repair.size(); j++) {
+                    if(prepair.get(i).equals(repair.get(j))){
+                        check = false;
+                        break;
+                    }
+                }
+                if(check){
+                        diff.add(prepair.get(i));
+                    }
+            }
+            
+            if(connect != null){
+                    connect.close();
+		}
+		}catch (SQLException e){
+                    e.printStackTrace();
+        }
+        
+        catch(ClassNotFoundException cfe){
+            System.out.println(cfe);
+        }
+        catch(Exception ex){
+            System.out.println(ex);
+        }
+        return diff;
+    }
     
     public long ConnectDBReturnTransIDForUpdateTimr(long prepairID){
         long transID=0;
@@ -93,7 +142,7 @@ public class Repair{
     }
 
     
-        public ArrayList<String> connectDBforListUserSentToRepair(){
+    public ArrayList<String> connectDBforListUserSentToRepair(){
         ArrayList<String> list = new ArrayList<String>();
         String format="";
         try{
@@ -102,14 +151,18 @@ public class Repair{
             Class.forName("com.mysql.jdbc.Driver");
 //            System.out.println("...connectDBFomeUserToAdmin");
             Statement st = connect.createStatement(); 
-            String temp = "SELECT User.firstName,User.lastName,User.userID FROM Green_Society.Prepair_Desctiption "
-                    + "JOIN Transaction ON Prepair_Desctiption.transID=Transaction.transID INNER JOIN User ON Transaction.userID=User.userID" ;
+            String temp = "SELECT Prepair_Desctiption.id,User.firstName,User.lastName,User.userID FROM Green_Society.Prepair_Desctiption " +
+                            "JOIN Transaction ON Prepair_Desctiption.transID=Transaction.transID " +
+                            "INNER JOIN User ON Transaction.userID=User.userID " +
+                            "LEFT JOIN Green_Society.Repair_State ON Prepair_Desctiption.id = Repair_State.item_id " +
+                            "WHERE Repair_State.item_id IS NULL";
             ResultSet rs = st.executeQuery(temp);
             while(rs.next()){
+                int idPrepair = rs.getInt("id");
                 String name = rs.getString("firstName");
                 String surname = rs.getString("lastName");
                 int id = rs.getInt("userID");
-                format = "Name: "+name+"    |   Surname: "+surname+"    |   ID: "+id;
+                format = idPrepair+"    |     Name: "+name+"    |   Surname: "+surname+"    |   ID: "+id;
                 list.add(format);
             }
             
@@ -276,6 +329,10 @@ public class Repair{
         }
         return peairId;
     }
+
+    public long getCountTransId() {
+        return countTransId;
+    }
     
      public void connectDBFromAdminToUser(long itemId,int user){//เพื่อที่ User จะสามารถติดตามดารซ่อมของตัวเองได้ ใส่ itemId
          System.out.println("itemId: "+itemId);
@@ -338,7 +395,7 @@ public class Repair{
             //ดึงเอา id ที่มาที่สุดออกมา เพื่อให้มันสามารถ insert ลง table ให้ไม่ซ้ำกันได้
             String temp = "SELECT Asking,Repairing,Recieving FROM Repair_State where item_id= "+itemId;
             ResultSet rs = st.executeQuery(temp);
-            int count=0;
+           
             while(rs.next()){
                 asking = rs.getString("Asking");
                 repairing = rs.getString("Repairing");
