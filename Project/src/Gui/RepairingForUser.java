@@ -130,6 +130,8 @@ public class RepairingForUser extends javax.swing.JFrame {
     }
         
     public void connectDBShowRepairForUserFollowing(long userID){//เพื่อที่ User จะสามารถดูและติดตามดารซ่อมของตัวเองได้
+        Timestamp startTime=null;
+        Timestamp endTime=null;
         try{
             ConnectDatabase cndb = new ConnectDatabase();
             Connection connect = ConnectDatabase.connectDb("jan", "jan042");
@@ -149,7 +151,15 @@ public class RepairingForUser extends javax.swing.JFrame {
                 textRecieving.setText(status);
             }
             
-            String temp2 = "";
+            String temp2 = "SELECT dateTime,return_dateTime FROM `Transaction` WHERE transID = "+this.countTransId;
+            ResultSet rs2 = st.executeQuery(temp2);
+            
+            while(rs2.next()){
+                startTime = rs2.getTimestamp("dateTime");
+                endTime = rs2.getTimestamp("return_dateTime");
+            }
+            
+            jLabelTime.setText("<html>Start: "+startTime+"<br>Stop: "+endTime+"</html>");
             //---------------------------------------------------------------------------------------
             if(connect != null){
                     connect.close();
