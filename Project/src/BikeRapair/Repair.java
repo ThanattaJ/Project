@@ -56,6 +56,13 @@ public class Repair{
         
     }
     
+    public void timeDiffStop(Date stopTime){
+        Date current = new Date();
+        t = new Timer(stopTime,current);
+        t.differentTime();
+        showTime = t.showDetail();
+    }
+    
     public ArrayList<Integer> connextDBforAdminCheakAddRepeir(){
        ArrayList<Integer> prepair = new ArrayList<Integer>();
        ArrayList<Integer> repair = new ArrayList<Integer>();       
@@ -489,7 +496,7 @@ public class Repair{
     }
     
     
-    public String time() throws InterruptedException{//set ค่า time ก่อน
+    public Timer time() throws InterruptedException{//set ค่า time ก่อน
         Calendar time = Calendar.getInstance();
         int realHour = time.get(Calendar.HOUR_OF_DAY)+hours;//เวลาเป็นชั่วโมงจริงของวันนี้บวกกับชั่วโมงที่ช่างซ่อมประเมินว่าจะซ่อมเสร็จ
         int realMinute=time.get(Calendar.MINUTE)+minute; // เวลาเป็นนาทีของวันนี้บวกกับนาทีที่ช่างซ่อมประเมินว่าจะซ่อมเสร็จ
@@ -499,22 +506,22 @@ public class Repair{
         t.differentTime();
         timeDetail=t.showDetail();
         showTime="Start: "+t.getBorrowTime()+"\nStop: "+t.getReturnTime()+"\n"+timeDetail;
-        return showTime;
+        return t;
     }
     
      public void startTime() throws InterruptedException{
         t.start(this);
-        Date userDate = endTimeToRepair();
-        Date current = new Date();
-        t = new Timer(userDate,current);
-        t.differentTime();
-        t = getTime();
-        
+//        Date userDate = endTimeToRepair();
+//        Date current = new Date();
+//        t = new Timer(userDate,current);
+//        t.differentTime();
+//        t = getTime();
+//        
     }
     
     public void stopTime(){
         t.stop();
-        timeDetail = t.showDetail();
+//        timeDetail = t.showDetail();
         statusThread = true;
     }
 

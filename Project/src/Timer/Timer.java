@@ -43,11 +43,11 @@ public class Timer {
         borrowDate = df.format(borrowTime);
         
         returnTime.setDate(userDate);
-        returnTime.setMonth(userMonth-1);
-        returnTime.setYear(userYear-1900);
         returnTime.setHours(userHr);
         returnTime.setMinutes(userMin);
         returnTime.setSeconds(userSec);
+        returnTime.setMonth(userMonth-1);
+        returnTime.setYear(userYear-1900);
         returnDate = df.format(returnTime);
         
     }
@@ -166,7 +166,7 @@ public class Timer {
             temp += diffDate*24;
         }
         totalHour += temp+diffHour;
-        timeLeft = totalHour+" Hours "+totalMin+" Minutes "+totalSeconds+" Seconds";
+        timeLeft = totalHour+" Hours "+totalMin+" Minutes "+totalSeconds+" Secounds";
     }
 	
     public void increaseTime(int hr,int min,int sec){
@@ -189,7 +189,7 @@ public class Timer {
             totalHour += 1;
             totalMin -= 60;
         }
-        timeLeft = totalHour+" Hours "+totalMin+" Minutes "+totalSeconds+" Seconds";
+        timeLeft = totalHour+" Hours "+totalMin+" Minutes "+totalSeconds+" Secounds";
           
     }
     
@@ -201,7 +201,7 @@ public class Timer {
         totalHour = 0;
         borrowDate = null;
         returnDate = null;
-        timeLeft =  totalHour+" Hours "+totalMin+" Minutes "+totalSeconds+" Seconds";
+        timeLeft =  totalHour+" Hours "+totalMin+" Minutes "+totalSeconds+" Secounds";
         //String = ''; หรือ เก็บ Totaltime = null ตามความเหมาะสม
     }
     
@@ -216,57 +216,52 @@ public class Timer {
             totalMin -= 1;
             totalSeconds = 60;
         }
-        if(totalHour!= 0 && totalMin != 0 &&totalSeconds != 0){
-            Runnable runnable = new Runnable(){
-                public void run(){
-                    for(int i = 0;i<=tmp;i++){
-                        for(int j = 0;j<60;j++){
-                            for(int k = 0;k<60;k++){
-
+        Runnable runnable = new Runnable(){
+            public void run(){
+                for(int i = 0;i<=tmp;i++){
+                    for(int j = 0;j<60;j++){
+                        for(int k = 0;k<60;k++){
+                            
+                            try {
+                                Thread.sleep(1000);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(Timer.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            totalSeconds--;
+                            timeLeft = totalHour+" Hours "+totalMin+" Minutes "+totalSeconds+" Secounds";
+                            if(nf.notiTime(obj,totalHour,totalMin,totalSeconds)){
                                 try {
-                                    Thread.sleep(1000);
+                                    rpGui = new RepairingForAdmin();
+                                    int add[] = rpGui.notiTime();
+                                    increaseTime(add[0],add[1],add[2]);
                                 } catch (InterruptedException ex) {
                                     Logger.getLogger(Timer.class.getName()).log(Level.SEVERE, null, ex);
                                 }
-                                totalSeconds--;
-                                timeLeft = totalHour+" Hours "+totalMin+" Minutes "+totalSeconds+" Seconds";
-                                if(nf.notiTime(obj,totalHour,totalMin,totalSeconds)){
-                                    try {
-                                        rpGui = new RepairingForAdmin();
-                                        int add[] = rpGui.notiTime();
-                                        increaseTime(add[0],add[1],add[2]);
-                                    } catch (InterruptedException ex) {
-                                        Logger.getLogger(Timer.class.getName()).log(Level.SEVERE, null, ex);
-                                    }
-                                }
-                                System.out.println(timeLeft);
-                                if(totalSeconds == 0){
-                                    break;
-                                }
                             }
-                            totalMin--;
-
-                            if(totalMin==-1){
-                                totalMin = 0;
+                            System.out.println(timeLeft);
+                            if(totalSeconds == 0){
                                 break;
                             }
-                            totalSeconds = 60;
                         }
-                        totalHour--;
-                        if(totalHour == -1){
-                            totalHour = 0;
+                        totalMin--;
+
+                        if(totalMin==-1){
+                            totalMin = 0;
                             break;
                         }
-                        totalMin = 59;
+                        totalSeconds = 60;
                     }
-                    if(totalHour == 0 && totalMin == 0 &&totalSeconds == 0){
-                            thread.stop();
+                    totalHour--;
+                    if(totalHour == -1){
+                        totalHour = 0;
+                        break;
                     }
+                    totalMin = 59;
                 }
-            };
-            thread = new Thread(runnable);
-            thread.start();
-        }
+            }
+        };
+        thread = new Thread(runnable);
+        thread.start();
     }
     
      public int showStartAndEndTime(){
@@ -279,7 +274,7 @@ public class Timer {
             con = ConnectDatabase.connectDb("win", "win016");
         
             Statement st = con.createStatement(); 
-            String sql = "SELECT dateTime,return_dateTime FROM Transaction WHERE userID='"+User.getUserId()+"' and action='Borrow' ORDER BY dateTime DESC LIMIT 5";
+            String sql = "SELECT dateTime,return_dateTime FROM Transaction WHERE userID='12345' and action='Borrow' ORDER BY dateTime DESC LIMIT 5";
             ResultSet rs = st.executeQuery(sql);
             while(rs.next()){
                 date = rs.getTimestamp("dateTime");

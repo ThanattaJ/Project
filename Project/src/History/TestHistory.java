@@ -7,6 +7,7 @@ package History;
 
 import java.sql.Timestamp;
 import Timer.Timer;
+import java.util.Date;
 /**
  *
  * @author January
@@ -19,7 +20,7 @@ public class TestHistory {
 ////        h.HistoryByAdmin("B01",borrowDate,"Repair");
 //        System.out.println(h.statGreensociety());
 //        h.showBorrowUser(1111);
-           System.out.println(h.statGreensociety());
+        
     }
     
 }
