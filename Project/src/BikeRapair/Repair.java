@@ -37,8 +37,6 @@ public class Repair{
     private String timeDetail;//เวลาที่ช่างซ่อมจะซ่อมเสร็จ
     private Notification notic = new Notification();
     private String repairOutput=""; //ข้อมูลทั้งหมด
-    private String repairWhatAlse="";//เก็บ String ตรงเมธอด Whatalse
-    private String repairNormal="";//เก็บ String output ข้อมูลปกติ
     private String increaseDetail="";
     private History historyRp = new History();
     private String bike="";//รับจาก GUI ให้ user กรอก
@@ -47,16 +45,67 @@ public class Repair{
     private long peairId;
     private long countTransId;
     private Date time = new Date();
-    private int percentAskingToRepair;//รับค่าจาก guiadmin เพื่อส่งค่าไปยัง guiHomeuser เพื่อกำหนดค่า progess bar
-    private int percentRepairToRecie;
     private String showTime="";
     private long repairStateId;
-    
     private String status="";
     private String asking="";
     private String repairing="";
+    private boolean statusThread = false;
     
+    public Repair() {
+        
+    }
     
+    public ArrayList<Integer> connextDBforAdminCheakAddRepeir(){
+       ArrayList<Integer> prepair = new ArrayList<Integer>();
+       ArrayList<Integer> repair = new ArrayList<Integer>();       
+       ArrayList<Integer> diff = new ArrayList<Integer>();       
+        try{
+            ConnectDatabase cndb = new ConnectDatabase();
+            Connection connect = ConnectDatabase.connectDb("jan", "jan042");
+            Class.forName("com.mysql.jdbc.Driver");
+            Statement st = connect.createStatement(); 
+            
+            String temp ="SELECT id FROM  Green_Society.`Prepair_Desctiption`";
+            ResultSet rs = st.executeQuery(temp);
+            while(rs.next()){
+                prepair.add(rs.getInt("id"));
+            }
+            
+            String temp2 = "SELECT item_id FROM `Repair_State`";
+            ResultSet rs2 = st.executeQuery(temp2);
+            while(rs2.next()){
+                repair.add(rs2.getInt("item_id"));
+            }
+            
+            for (int i = 0; i < prepair.size(); i++) {
+                boolean check = true;
+                for (int j = 0; j < repair.size(); j++) {
+                    if(prepair.get(i).equals(repair.get(j))){
+                        check = false;
+                        break;
+                    }
+                }
+                if(check){
+                        diff.add(prepair.get(i));
+                    }
+            }
+            
+            if(connect != null){
+                    connect.close();
+		}
+		}catch (SQLException e){
+                    e.printStackTrace();
+        }
+        
+        catch(ClassNotFoundException cfe){
+            System.out.println(cfe);
+        }
+        catch(Exception ex){
+            System.out.println(ex);
+        }
+        return diff;
+    }
     
     public long ConnectDBReturnTransIDForUpdateTimr(long prepairID){
         long transID=0;
@@ -93,7 +142,7 @@ public class Repair{
     }
 
     
-        public ArrayList<String> connectDBforListUserSentToRepair(){
+    public ArrayList<String> connectDBforListUserSentToRepair(){
         ArrayList<String> list = new ArrayList<String>();
         String format="";
         try{
@@ -102,14 +151,18 @@ public class Repair{
             Class.forName("com.mysql.jdbc.Driver");
 //            System.out.println("...connectDBFomeUserToAdmin");
             Statement st = connect.createStatement(); 
-            String temp = "SELECT User.firstName,User.lastName,User.userID FROM Green_Society.Prepair_Desctiption "
-                    + "JOIN Transaction ON Prepair_Desctiption.transID=Transaction.transID INNER JOIN User ON Transaction.userID=User.userID" ;
+            String temp = "SELECT Prepair_Desctiption.id,User.firstName,User.lastName,User.userID FROM Green_Society.Prepair_Desctiption " +
+                            "JOIN Transaction ON Prepair_Desctiption.transID=Transaction.transID " +
+                            "INNER JOIN User ON Transaction.userID=User.userID " +
+                            "LEFT JOIN Green_Society.Repair_State ON Prepair_Desctiption.id = Repair_State.item_id " +
+                            "WHERE Repair_State.item_id IS NULL";
             ResultSet rs = st.executeQuery(temp);
             while(rs.next()){
+                int idPrepair = rs.getInt("id");
                 String name = rs.getString("firstName");
                 String surname = rs.getString("lastName");
                 int id = rs.getInt("userID");
-                format = "Name: "+name+"    |   Surname: "+surname+"    |   ID: "+id;
+                format = idPrepair+"    |     Name: "+name+"    |   Surname: "+surname+"    |   ID: "+id;
                 list.add(format);
             }
             
@@ -130,7 +183,7 @@ public class Repair{
     }
 
     
-    public void connectDBForChangeToSuccess(int idRepairState){
+    public void connectDBForChangeToSuccess(long idRepairState){
          try{
             ConnectDatabase cndb = new ConnectDatabase();
             Connection connect = ConnectDatabase.connectDb("jan", "jan042");
@@ -276,6 +329,10 @@ public class Repair{
         }
         return peairId;
     }
+
+    public long getCountTransId() {
+        return countTransId;
+    }
     
      public void connectDBFromAdminToUser(long itemId,int user){//เพื่อที่ User จะสามารถติดตามดารซ่อมของตัวเองได้ ใส่ itemId
          System.out.println("itemId: "+itemId);
@@ -338,7 +395,7 @@ public class Repair{
             //ดึงเอา id ที่มาที่สุดออกมา เพื่อให้มันสามารถ insert ลง table ให้ไม่ซ้ำกันได้
             String temp = "SELECT Asking,Repairing,Recieving FROM Repair_State where item_id= "+itemId;
             ResultSet rs = st.executeQuery(temp);
-            int count=0;
+           
             while(rs.next()){
                 asking = rs.getString("Asking");
                 repairing = rs.getString("Repairing");
@@ -388,38 +445,24 @@ public class Repair{
         }
     }
 
-    
     public void sentDatabaseHistory(){//เอาค่าจาก gui ลง db เพื่อให้ admin สามารถดึงข้อมูลไปแสดงได้
         Timestamp dateRepair = new Timestamp(t.getBorrowTime().getTime());//เวลาที่เริ่มต้นให้ช่างซ่อม
         Timestamp dateSuccess = new Timestamp(t.getReturnTime().getTime());//เวลาที่ช่างจะซ่อมเสร็จ
         historyRp.HistoryByAdmin("000", dateRepair,dateSuccess, "Repair");
     }
-    
-    public String getDetailForAdmin(){
-        return "Bike Model: "+bike+"\n"
-                +"What Repair: "+whyRepair;
-    }
 
-
-
-    
     public String submitRepair(){
-//        Timestamp borrowDate = new Timestamp(time.getNowTime().getTime());
         repairOutput+="Problem: "+getProblem()+"\n"+"Detail: "+getDetail();
-        repairOutput += "\n"+repairWhatAlse+increaseDetail;
+        repairOutput += "\n"+increaseDetail;
         repairOutput +=showTime;
-//        time.stop();
-//        historyRp.HistoryByAdmin(bike, borrowDate,"Repair");
         return repairOutput;
     }
     
     public String increaseTimeRepair(int hr,int min,int sec) throws InterruptedException{//เมธอดเพิ่มเวลาเมื่อช่างซ่อมซ่อมไม่เสร็จ
-        
         String oldTime = timeDetail;
         plusDay(hr,min,sec);
         String newTime="";
         String increaseTime = "Increase Time : "+hr+":"+min+":"+sec; //เวลาที่ช่างซ่อมต้องการเพิ่ม
-//        newTime = time(); //เวลาที่ช่างซ่อมจะซ่อมเสร็จ
         String output = notic.notiRepairIncreseTime(oldTime, increaseTime, newTime); //เรียก Notic
         timeDetail= newTime;
         return output;
@@ -454,11 +497,27 @@ public class Repair{
         t = new Timer(time.get(Calendar.DATE),time.get(Calendar.MONTH)+1,time.get(Calendar.YEAR), 
                 realHour,realMinute,realSecound); //ส่งค่าผ่าน Constructor ไปให้ Class Timer กำหนดวัน เดือน ปี เป็นของวันที่ปัจจุบัน
         t.differentTime();
-//        t.start();
         timeDetail=t.showDetail();
         showTime="Start: "+t.getBorrowTime()+"\nStop: "+t.getReturnTime()+"\n"+timeDetail;
         return showTime;
     }
+    
+     public void startTime() throws InterruptedException{
+        t.start(this);
+        Date userDate = endTimeToRepair();
+        Date current = new Date();
+        t = new Timer(userDate,current);
+        t.differentTime();
+        t = getTime();
+        
+    }
+    
+    public void stopTime(){
+        t.stop();
+        timeDetail = t.showDetail();
+        statusThread = true;
+    }
+
     
     public Date startTimeToRepair(){
         Date startDate = t.getBorrowTime();
@@ -478,57 +537,18 @@ public class Repair{
         this.showTime = showTime;
     }
     
-    public void startTime() throws InterruptedException{
-        t.start(this);
+   
+    public void setStatusThread(boolean statusThread) {
+        this.statusThread = statusThread;
     }
-    
-    public void stopTime(){
-        t.stop();
+
+    public boolean isStatusThread() {
+        return statusThread;
     }
-    
     
     public void plusDay(int h,int m,int s){ //เมธอดคำนวณชั่วโมง นาที วินาที ไม่ให้มันเกินตามความเป็นจริง
-//          hours+=h;
-//          minute+=m;
-//          secound+=s;
           t.increaseTime(h, m, s);
     }
-    
-    
-    public String whatAlse(String ans) throws InterruptedException{ //เมธอดถามช่างซ่อมส่าต้องการที่จะกรอกปัญหาอีกไหม
-       String output="";
-        System.out.println("----------------------------------------------");
-        if(ans.equalsIgnoreCase("Yes")){
-            boolean tem = true;
-            do{
-                Scanner sc = new Scanner(System.in);
-                Repair rp = new Repair();
-                System.out.print("Enter your problem: ");
-                rp.setProblem(sc.nextLine());
-                output+="Problem: "+rp.getProblem();
-//                asking +=rp.getProblem()+", ";//asking ใน GUI
-                System.out.print("Enter your detail: ");
-                rp.setDetail(sc.nextLine());
-//                repairing+=rp.getDetail()+", ";//repair ใน GUI
-                output+="\nDetail: "+rp.getDetail()+"\n";
-                System.out.print("Enter your time(HH:mm:ss): ");
-                plusDay(sc.nextInt(),sc.nextInt(),sc.nextInt());
-                System.out.print("Any service else?: ");
-                rp.setAns(sc.next());
-                if(rp.getAns().equalsIgnoreCase("No")){
-                    System.out.println("-------------------------------------");
-                    tem = false;
-                    System.out.println(output);
-                    break;
-                }
-            }while(true);
-            repairWhatAlse += output;
-            output+=time();
-        }
-        return output;
-    }
-    //----------------------------------------------------------------------------------------------------------------------
-    
     
     public String Status(boolean tem){ // รับมาจากปุ่มกด ถ้าเสร็จเป็น true ไม่เสร็จเป็น false
         if(tem==false){
@@ -538,18 +558,6 @@ public class Repair{
         }
         return status;  
     }
-   
-    public Repair() {
-    }
-
-    public String getRepairWhatAlse() {
-        return repairWhatAlse;
-    }
-
-    public void setRepairWhatAlse(String repairWhatAlse) {
-        this.repairWhatAlse = repairWhatAlse;
-    }
-    
     
     public String getProblem() {
         return problem;
@@ -652,26 +660,13 @@ public class Repair{
         this.color = color;
     }
 
-    public int getPercentAskingToRepair() {
-        return percentAskingToRepair;
-    }
-
-    public void setPercentAskingToRepair(int percentAskingToRepair) {
-        this.percentAskingToRepair = percentAskingToRepair;
-    }
-
-    public int getPercentRepairToRecie() {
-        return percentRepairToRecie;
-    }
-
-    public void setPercentRepairToRecie(int percentRepairToRecie) {
-        this.percentRepairToRecie = percentRepairToRecie;
-    }
-
     public String getTimeDetail() {
         return timeDetail;
     }
     
+    public long getRepairStateId() {
+        return repairStateId;
+    }
     
     @Override
     public String toString() {
