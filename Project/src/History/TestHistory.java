@@ -19,7 +19,7 @@ public class TestHistory {
 ////        h.HistoryByAdmin("B01",borrowDate,"Repair");
 //        System.out.println(h.statGreensociety());
 //        h.showBorrowUser(1111);
-            h.tableHistory(1);
+           System.out.println(h.statGreensociety());
     }
     
 }

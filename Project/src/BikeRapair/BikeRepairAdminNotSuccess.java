@@ -23,6 +23,16 @@ public class BikeRepairAdminNotSuccess {
     private int itemID;
     private Timestamp startTime;
     private Timestamp endTime;
+    private long transID;
+    private long repairState;
+
+    public long getRepairState() {
+        return repairState;
+    }
+
+    public long getTransID() {
+        return transID;
+    }
 
     public String getAsking() {
         return asking;
@@ -49,6 +59,7 @@ public class BikeRepairAdminNotSuccess {
     }
     
     public void repairDetailForNotSuccess(int repairState){
+        this.repairState = repairState;
     try{
             ConnectDatabase cndb = new ConnectDatabase();
             Connection connect = ConnectDatabase.connectDb("jan", "jan042");
@@ -68,12 +79,19 @@ public class BikeRepairAdminNotSuccess {
             //ดึงเอาเวลาที่ช่างเริ่มซ่อม กับซ่อมเสร็จออกมา
             String timeForRepair = "SELECT dateTime,return_dateTime FROM Green_Society.Transaction JOIN Prepair_Desctiption "
                     + "ON Transaction.transID = Prepair_Desctiption.transID WHERE Prepair_Desctiption.id = "+itemID;
-             ResultSet rs2 = st.executeQuery(timeForRepair);
+            ResultSet rs2 = st.executeQuery(timeForRepair);
             while(rs2.next()){
                 startTime = rs2.getTimestamp("dateTime");
                 endTime = rs2.getTimestamp("return_dateTime");
             }
             //---------------------------------------------------------------------------------------
+            
+            String transIdNumber = "SELECT transID FROM `Prepair_Desctiption` JOIN Repair_State ON Prepair_Desctiption.id = Repair_State.item_id WHERE Repair_State.item_id = "+itemID;
+            ResultSet rs3 = st.executeQuery(transIdNumber);
+            
+            while(rs3.next()){
+                transID = rs3.getInt("transID");
+            }
             if(connect != null){
                     connect.close();
 		}
