@@ -21,6 +21,8 @@ public class TestHistory {
 //        System.out.println(h.statGreensociety());
 //        h.showBorrowUser(1111);
         
+        System.out.println(h.statGreensocietyRepair());
+        
     }
     
 }

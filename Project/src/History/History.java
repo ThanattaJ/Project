@@ -152,8 +152,23 @@ public class History {
     
     public int statGreensocietyRepair(){//admin จะเห็นหน้าสถิติการใช้งานของ User แต่ล่ะคน เรียงลำดับการใช้งานมากไปน้อย
         int statOfRepair=0;
+        String month;
+        String date;
         java.util.Date now = new java.util.Date();
-        String adminDate = (now.getYear()+1900)+"-"+(now.getMonth()+1)+"-"+now.getDate();
+        if((now.getMonth()+1)<10){
+            month = "0"+(now.getMonth()+1);
+        }else{
+            month = ""+now.getMonth()+1;
+        }
+        
+        if(now.getDate()<10){
+            date = "0"+ now.getDate();
+        }else{
+            date = ""+now.getDate();
+        }
+        
+        String adminDate = (now.getYear()+1900)+"-"+month+"-"+date;
+        
         try{
             ConnectDatabase cndb = new ConnectDatabase();
             Connection connect = ConnectDatabase.connectDb("jan", "jan042");
@@ -163,6 +178,7 @@ public class History {
             
             String temp5 = "SELECT COUNT(transID) AS statRepair FROM `Transaction` WHERE dateTime LIKE \'" +adminDate +"%\' AND action LIKE 'Repair'";
             ResultSet rs5 = st.executeQuery(temp5);
+            System.out.println("adminDate: "+adminDate);
             
             while(rs5.next()){
                 statOfRepair = rs5.getInt("statRepair");
