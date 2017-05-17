@@ -16,8 +16,6 @@ public class GreenSociety extends javax.swing.JFrame {
     private Authenication ac = new Authenication();
     private Register rs = new Register();
     private Sharing sh = new Sharing();
-    private Timer tm;
-    private Notification nf = new Notification();
     private Support sp = new Support();
     private int countBorrow[];
     private int availableItem[];
@@ -4187,7 +4185,6 @@ public class GreenSociety extends javax.swing.JFrame {
                     userProfilePage1.setVisible(false);
                     timePageT.setVisible(true);
                     timeupPage.setVisible(true);
-//                    listTimeup.setText(sh.itemMustReturn());
                     timewatch.setVisible(false);
                     itemListShow.setVisible(false);
                 }

@@ -5,8 +5,8 @@ public class SelectMemberNameException extends Exception {
         super("Don't have Member's name.");
     }
 
-    public SelectMemberNameException(String message) {
-        super(message);
+    public SelectMemberNameException(String msg) {
+        super(msg);
     }
     
 }

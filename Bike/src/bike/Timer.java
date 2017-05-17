@@ -1,5 +1,5 @@
 package bike;
-import bike_gui.BikeUser;
+import bike_gui.GreenSociety;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -15,9 +15,8 @@ public class Timer {
     private SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     private String returnDate;
     private String borrowDate;
-    private Notification nf = new Notification();
     private Thread thread = new Thread();
-    private BikeUser bu;
+    private GreenSociety gs;
     private String[] hisBorrow = new String[5];
    
     public Timer() {
@@ -222,10 +221,9 @@ public class Timer {
                                 }
                                 totalSeconds--;
                                 timeLeft = totalHour+" Hours "+totalMin+" Minutes "+totalSeconds+" Seconds";
-                                if(nf.notiTime(obj,totalHour,totalMin,totalSeconds)){
-                                    bu = new BikeUser();
-                                    int add[]= bu.notiTime();
-                                    increaseTime(add[0],add[1],add[2]);
+                                if(notiTimer(obj,totalHour,totalMin,totalSeconds)){
+                                    gs = new GreenSociety();
+                                    gs.notiTime();
                                 }
                                 System.out.println(timeLeft);
                                 if(totalSeconds == 0){
@@ -294,7 +292,16 @@ public class Timer {
         }
         return i;
     }
-
+     
+    public boolean notiTimer(Object obj,int hr, int min, int sec) {
+          if(obj instanceof Sharing){
+            if(hr==0 && min == 10 && sec ==0){
+              return true;
+            }
+          }
+          return false;
+    }
+    
     public String[] getHisBorrow() {
         return hisBorrow;
     }

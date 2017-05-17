@@ -8,6 +8,10 @@ public class Support {
     public Support() {
     }
     
+    public Support(String search) {
+        this.search = search;
+    }
+    
     public void searchSupport(String search){
         try{
             Connection connect = Database.connectDb("jan", "jan042");
@@ -95,9 +99,6 @@ public class Support {
         }
     }
 
-    public Support(String search) {
-        this.search = search;
-    }
 
     public String getSearch() {
         return search;
