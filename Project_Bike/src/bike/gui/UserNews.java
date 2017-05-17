@@ -5,97 +5,71 @@
  */
 package bike.gui;
 
-import bike.*;
-import bike.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.sql.*;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import javax.swing.*;
-public class ShowNews extends javax.swing.JFrame {
+import bike.AdminNews;
+import java.awt.Color;
+import java.awt.GridLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
-    private AdminNews admin = new AdminNews();
-
-    public ShowNews() {
+/**
+ *
+ * @author user
+ */
+public class UserNews extends javax.swing.JFrame {
+    private AdminNews ad = new AdminNews();
+    private int num;
+    /**
+     * Creates new form UserNews
+     */
+    public UserNews() {
         initComponents();
+        jPanelShowNewsAfterClick.setVisible(false);
         layerUser();
-       
     }
-    
-//    public void connectDB() throws SQLException{
-//        try{
-//            Database cndb = new Database();
-//            Connection connect = Database.connectDb("win", "win016");
-//            Class.forName("com.mysql.jdbc.Driver");
-//            System.out.println("Database connecting");
-//        
-//            Statement st = connect.createStatement(); 
-//            String sql = "SELECT newsDescription,newsDetails MAX(newsID) FROM `News`";
-//            ResultSet rs = st.executeQuery(sql);
-//    
-//            while(rs.next()){
-//                this.numOfNews = rs.getInt("newsID");
-//            }
-//            
-//            try {
-//		if(connect != null){
-//                    connect.close();
-//		}
-//		}catch (SQLException e){
-//                    e.printStackTrace();
-//		}
-//        }
-//        
-//        catch(ClassNotFoundException cfe){
-//            System.out.println(cfe);
-//        }
-//        catch(Exception ex){
-//            System.out.println(ex);
-//        }
-//    }
-    
-    public void layerUser(){
-        int y = 20;
-        String[] news = admin.selectTopicNews();
-        JPanel[] jp = new JPanel[news.length];
-        JLabel[] description = new JLabel[news.length];
-        JLabel[] detail = new JLabel[news.length];
-        JLabel[] id = new JLabel[news.length];
-//        JButton[] delete = new JButton[numOfNews];
-        for (int i = 0; i < news.length; i++) {
-            int temp = 1;
-            jp[i] = new JPanel();
-            jp[i].setBackground(new java.awt.Color(204, 204, 204));
-            jp[i].setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-            System.out.println(i);
-//            System.out.println(news);
+
+    public void layerUser(){    //JPanel show news for user
+        int x = 20;
+        String[] topicNews = ad.selectTopicNewsForUser();
+        JPanel[] jPanelNews = new JPanel[topicNews.length];
+        JLabel[] jLabelTopicNews = new JLabel[topicNews.length];
+        JButton[] viewButton = new JButton[topicNews.length];
+        
+        for (int i = 0; i < topicNews.length; i++) {
+            int tem=i;
+            jPanelNews[i] = new JPanel();
+            jPanelNews[i].setBackground(new java.awt.Color(204, 204, 204));
+            jPanelNews[i].setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
             
-            description[i] = new JLabel();
-            description[i].setFont(new java.awt.Font("Leelawadee",0,11));
-            description[i].setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-            description[i].setText("Description : ");
-            jp[i].add(description[i],new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, -1, -1));
+            //------------------------------------------------------------------
+            jLabelTopicNews[i] = new JLabel();
+            jLabelTopicNews[i].setText(topicNews[i]);
+            jPanelNews[i].add(jLabelTopicNews[i], new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, -1, -1));
+            //------------------------------------------------------------------
+            viewButton[i] = new JButton();
+            viewButton[i].setText("View");
+            viewButton[i].addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {   //กดแล้วทำงาน
+//                    showNews();
+                    jBtClickActionPerformed(evt,tem+1);
+                }
+            });
             
-            detail[i] = new JLabel();
-            detail[i].setFont(new java.awt.Font("Leelawadee",0,11));
-            detail[i].setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-            detail[i].setText("Description : ");
-            jp[i].add(detail[i],new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, -1, -1));
-            
-            id[i] = new JLabel();
-            id[i].setFont(new java.awt.Font("Leelawadee",0,11));
-            id[i].setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-            id[i].setText("Description : ");
-            jp[i].add(id[i],new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, -1, -1));
-            showNews.add(jp[i],new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 690, 100));
+            jPanelNews[i].add(viewButton[i], new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 190, -1, -1));
+            jPanelShowFirstPageNews.add(jPanelNews[i],new org.netbeans.lib.awtextra.AbsoluteConstraints(x, 60, 160, 220));
+            x+=190;
         }
+    }
+    public void jBtClickActionPerformed(java.awt.event.ActionEvent evt,int tem){ 
+        jPanelShowNewsAfterClick.setVisible(true);
+        jLabelShowTopicAfterClick.setText(ad.topicNewsSelect(tem));
+        jTextAreaShowDetailNewsAfterClick.setText(ad.detailNewsSelect(tem));
     }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
      * regenerated by the Form Editor.
-     */ 
+     */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -137,7 +111,13 @@ public class ShowNews extends javax.swing.JFrame {
         jLabel24 = new javax.swing.JLabel();
         jLabel30 = new javax.swing.JLabel();
         jLabel36 = new javax.swing.JLabel();
-        showNews = new javax.swing.JPanel();
+        jPanel10 = new javax.swing.JPanel();
+        jPanelShowFirstPageNews = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jPanelShowNewsAfterClick = new javax.swing.JPanel();
+        jLabelShowTopicAfterClick = new javax.swing.JLabel();
+        jScrollPaneInTextAreaNewsDetail = new javax.swing.JScrollPane();
+        jTextAreaShowDetailNewsAfterClick = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -363,25 +343,41 @@ public class ShowNews extends javax.swing.JFrame {
         jLabel36.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/bike.png"))); // NOI18N
         jPanel5.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 50, 40));
 
-        showNews.setBackground(new java.awt.Color(25, 41, 65));
-        showNews.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel5.add(showNews, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 60, 730, 420));
+        jPanel10.setBackground(new java.awt.Color(25, 41, 65));
+        jPanel10.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel5.add(jPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 730, -1));
+
+        jPanelShowFirstPageNews.setBackground(new java.awt.Color(25, 41, 65));
+        jPanelShowFirstPageNews.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanelShowFirstPageNews.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        jPanelShowNewsAfterClick.setBackground(new java.awt.Color(25, 41, 65));
+        jPanelShowNewsAfterClick.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabelShowTopicAfterClick.setFont(new java.awt.Font("Leelawadee", 0, 18)); // NOI18N
+        jLabelShowTopicAfterClick.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelShowTopicAfterClick.setText("jLabel3");
+        jPanelShowNewsAfterClick.add(jLabelShowTopicAfterClick, new org.netbeans.lib.awtextra.AbsoluteConstraints(22, 23, -1, -1));
+
+        jTextAreaShowDetailNewsAfterClick.setColumns(20);
+        jTextAreaShowDetailNewsAfterClick.setRows(5);
+        jScrollPaneInTextAreaNewsDetail.setViewportView(jTextAreaShowDetailNewsAfterClick);
+
+        jPanelShowNewsAfterClick.add(jScrollPaneInTextAreaNewsDetail, new org.netbeans.lib.awtextra.AbsoluteConstraints(22, 64, 686, 302));
+
+        jPanelShowFirstPageNews.add(jPanelShowNewsAfterClick, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 730, 420));
+
+        jPanel5.add(jPanelShowFirstPageNews, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 60, 730, 420));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 940, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 940, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 540, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 540, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -404,21 +400,20 @@ public class ShowNews extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ShowNews.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UserNews.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ShowNews.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UserNews.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ShowNews.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UserNews.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ShowNews.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UserNews.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ShowNews().setVisible(true);
-                
+                new UserNews().setVisible(true);
             }
         });
     }
@@ -450,7 +445,9 @@ public class ShowNews extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabelShowTopicAfterClick;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -459,10 +456,12 @@ public class ShowNews extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JPanel jPanelShowFirstPageNews;
+    private javax.swing.JPanel jPanelShowNewsAfterClick;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPaneInTextAreaNewsDetail;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JPanel showNews;
+    private javax.swing.JTextArea jTextAreaShowDetailNewsAfterClick;
     // End of variables declaration//GEN-END:variables
-
 }
-

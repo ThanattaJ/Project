@@ -14,6 +14,7 @@ public class News extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         jPanel12.setVisible(false); 
         jPanelUpdateTopic.setVisible(false); //Update news ทำให้ panel ของ Update ไม่แสดง
+        jPanelInsertNews.setVisible(false);
     }
     
     public void showNews(){
@@ -143,6 +144,15 @@ public class News extends javax.swing.JFrame {
         jLabel36 = new javax.swing.JLabel();
         jPanel10 = new javax.swing.JPanel();
         jPanel12 = new javax.swing.JPanel();
+        jPanelInsertNews = new javax.swing.JPanel();
+        jPanelBackgroundInsertLabel = new javax.swing.JPanel();
+        jLabelInsert = new javax.swing.JLabel();
+        txtDescription1 = new javax.swing.JLabel();
+        txtFieldNewsDescription = new javax.swing.JTextField();
+        txtDescription = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        txtAreaNewsDetail = new javax.swing.JTextArea();
+        submitButton = new javax.swing.JButton();
         jPanelUpdateTopic = new javax.swing.JPanel();
         jLabelUpdateTopic = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -406,6 +416,59 @@ public class News extends javax.swing.JFrame {
         jPanel12.setBackground(new java.awt.Color(9, 20, 36));
         jPanel12.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jPanelInsertNews.setBackground(new java.awt.Color(25, 41, 65));
+        jPanelInsertNews.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanelBackgroundInsertLabel.setBackground(new java.awt.Color(102, 102, 102));
+        jPanelBackgroundInsertLabel.setForeground(new java.awt.Color(255, 255, 255));
+        jPanelBackgroundInsertLabel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabelInsert.setFont(new java.awt.Font("Leelawadee", 0, 18)); // NOI18N
+        jLabelInsert.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelInsert.setText("INSERT");
+        jPanelBackgroundInsertLabel.add(jLabelInsert, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 130, 40));
+
+        jPanelInsertNews.add(jPanelBackgroundInsertLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 740, 60));
+
+        txtDescription1.setFont(new java.awt.Font("Leelawadee", 0, 18)); // NOI18N
+        txtDescription1.setForeground(new java.awt.Color(255, 255, 255));
+        txtDescription1.setText("DESCRIPTION");
+        jPanelInsertNews.add(txtDescription1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, -1, -1));
+
+        txtFieldNewsDescription.setBackground(new java.awt.Color(51, 255, 255));
+        txtFieldNewsDescription.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtFieldNewsDescription.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtFieldNewsDescriptionActionPerformed(evt);
+            }
+        });
+        jPanelInsertNews.add(txtFieldNewsDescription, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 420, 40));
+
+        txtDescription.setFont(new java.awt.Font("Leelawadee", 0, 18)); // NOI18N
+        txtDescription.setForeground(new java.awt.Color(255, 255, 255));
+        txtDescription.setText("DETAILS");
+        jPanelInsertNews.add(txtDescription, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, -1, -1));
+
+        txtAreaNewsDetail.setBackground(new java.awt.Color(0, 255, 255));
+        txtAreaNewsDetail.setColumns(20);
+        txtAreaNewsDetail.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtAreaNewsDetail.setRows(5);
+        jScrollPane4.setViewportView(txtAreaNewsDetail);
+
+        jPanelInsertNews.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, 420, 170));
+
+        submitButton.setBackground(new java.awt.Color(255, 255, 255));
+        submitButton.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
+        submitButton.setText("SUBMIT");
+        submitButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                submitButtonActionPerformed(evt);
+            }
+        });
+        jPanelInsertNews.add(submitButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 370, 80, 30));
+
+        jPanel12.add(jPanelInsertNews, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 710, 400));
+
         jPanelUpdateTopic.setBackground(new java.awt.Color(9, 20, 36));
         jPanelUpdateTopic.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -505,14 +568,17 @@ public class News extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButtonInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonInsertActionPerformed
-        this.setVisible(false);
-        new InsertNews().setVisible(true);
+//        this.setVisible(false);
+//        new InsertNews().setVisible(true);
+        jPanelInsertNews.setVisible(true);
+        
     }//GEN-LAST:event_jButtonInsertActionPerformed
 
     private void newsLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_newsLabelMouseClicked
        newsLabel.setForeground(new Color(19,175,248));
        jPanel10.setVisible(true);
        layerUser();
+       
     }//GEN-LAST:event_newsLabelMouseClicked
 
     private void updateNewsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateNewsActionPerformed
@@ -525,6 +591,21 @@ public class News extends javax.swing.JFrame {
         // TODO add your handling code here:
         jTextFieldShowTopicInUpdate.setEditable(true);
     }//GEN-LAST:event_jTextFieldShowTopicInUpdateActionPerformed
+
+    private void txtFieldNewsDescriptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFieldNewsDescriptionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFieldNewsDescriptionActionPerformed
+
+    private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
+        String description = txtFieldNewsDescription.getText();
+        String detail = txtAreaNewsDetail.getText();
+        ad.insertNews(description, detail);
+        //Reset Text Fields
+        txtFieldNewsDescription.setText("");
+        txtAreaNewsDetail.setText("");
+
+        JOptionPane.showMessageDialog(null, "Insert Sucessfully");
+    }//GEN-LAST:event_submitButtonActionPerformed
 
     
     /**
@@ -583,6 +664,7 @@ public class News extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabelInsert;
     private javax.swing.JLabel jLabelUpdateTopic;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
@@ -595,10 +677,13 @@ public class News extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JPanel jPanelBackgroundInsertLabel;
+    private javax.swing.JPanel jPanelInsertNews;
     private javax.swing.JPanel jPanelUpdateTopic;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTextArea jTextAreaNews;
@@ -615,7 +700,12 @@ public class News extends javax.swing.JFrame {
     private javax.swing.JPanel newsSharingLabel;
     private javax.swing.JLabel newsSupportLabel;
     private javax.swing.JLabel newsTimerLabel;
+    private javax.swing.JButton submitButton;
     private javax.swing.JLabel topic;
+    private javax.swing.JTextArea txtAreaNewsDetail;
+    private javax.swing.JLabel txtDescription;
+    private javax.swing.JLabel txtDescription1;
+    private javax.swing.JTextField txtFieldNewsDescription;
     private javax.swing.JButton updateNews;
     // End of variables declaration//GEN-END:variables
 }

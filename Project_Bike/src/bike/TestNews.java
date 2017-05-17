@@ -11,9 +11,9 @@ package bike;
  */
 public class TestNews {
     public static void main(String[] args) {
-        AdminNews usr2 = new AdminNews();
+        UserNews usr = new UserNews();
 //        usr2.insertNews("head", "detail");
-        usr2.editNews("WinnerEiei", "InwZazaza", 1);
+        usr.getNews(1);
 //        AdminNews ad2 = new AdminNews();
 //        ad2.insertNews("Samsungaa", "Galaxy s9 Now open in 19 april 2018");
 //        System.out.println(ad2.showNews());

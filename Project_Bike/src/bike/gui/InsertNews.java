@@ -453,7 +453,7 @@ public class InsertNews extends javax.swing.JFrame {
                 submitButtonActionPerformed(evt);
             }
         });
-        jPanel5.add(submitButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 450, 80, 30));
+        jPanel5.add(submitButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 260, 80, 30));
 
         jPanel12.setBackground(new java.awt.Color(102, 102, 102));
         jPanel12.setForeground(new java.awt.Color(255, 255, 255));
@@ -477,17 +477,15 @@ public class InsertNews extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 940, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(0, 20, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 540, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(0, 22, Short.MAX_VALUE))
         );
 
         pack();
