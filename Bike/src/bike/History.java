@@ -4,15 +4,23 @@ import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 public class History {
+    ArrayList<String> newDateTime = new ArrayList<String>();
+    ArrayList<String> action = new ArrayList<String>();
+    ArrayList<String> item = new ArrayList<String>();
+    ArrayList<String> newReturn = new ArrayList<String>();
     private long historyId;
     private long transID;
+
+    public History() {
+    }
     
-     public ArrayList<String> tableHistory(long id){
-        ArrayList<String> table= new ArrayList<String>();
+     public ArrayList<String> tableHistory(){
+        newDateTime.clear();
+        action.clear();
+        item.clear();
+        newReturn.clear();
         String format;
         Timestamp dateTime;
-        String action;
-        String item;
         Timestamp returnTime;
         try{
             Connection connect = Database.connectDb("jan", "jan042");
@@ -27,13 +35,11 @@ public class History {
             
             while(rs.next()){
                 dateTime=rs.getTimestamp("dateTime");
-                String newDateTime= new SimpleDateFormat("MM/dd/yyyy").format(dateTime);
-                action = rs.getString("action");
-                item = rs.getString("itemName");
+                newDateTime.add(new SimpleDateFormat("MM/dd/yyyy").format(dateTime));
+                action.add(rs.getString("action"));
+                item.add(rs.getString("itemName"));
                 returnTime = rs.getTimestamp("return_dateTime");
-                String newReturn =  new SimpleDateFormat("MM/dd/yyyy").format(returnTime);
-                format = "      "+newDateTime+"                        "+action+"                            "+item+"                    "+newReturn;
-                table.add(format);
+                newReturn.add(new SimpleDateFormat("MM/dd/yyyy").format(returnTime));
             }
             
             try {
@@ -51,11 +57,10 @@ public class History {
         catch(Exception ex){
             System.out.println(ex);
         }
-        return table;
+        return newDateTime;
     }
      
     public void HistoryByAdmin(String itemId,Timestamp startDate,Timestamp returnDate,String input,int amount){ //รับจาก ตัวแปรที่ต้องการส่งลง DB เป็น String
-        int officerIdInt = 100;
         try{
             Connection connect = Database.connectDb("jan", "jan042");
             Class.forName("com.mysql.jdbc.Driver");
@@ -419,15 +424,22 @@ public class History {
         }
         return output;
     }
-    
-    public long getHistoryId() {
-        return historyId;
+
+    public ArrayList<String> getNewDateTime() {
+        return newDateTime;
     }
 
-    public void setHistoryId(long historyId) {
-        this.historyId = historyId;
+    public ArrayList<String> getAction() {
+        return action;
     }
 
+    public ArrayList<String> getItem() {
+        return item;
+    }
+
+    public ArrayList<String> getNewReturn() {
+        return newReturn;
+    }
     
     public String toString(){
         String output = "";

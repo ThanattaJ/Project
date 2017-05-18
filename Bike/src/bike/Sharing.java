@@ -613,7 +613,6 @@ public class Sharing {
                     rs = pst.executeQuery();
                     while(rs.next()){
                         allBorrowUser.add(rs.getInt("amounBorrow"));
-                        System.out.println(rs.getInt("amounBorrow"));
                     }
                 }
 
@@ -625,7 +624,6 @@ public class Sharing {
                     rs = pst.executeQuery();
                     while(rs.next()){
                         allReturnUser.add(rs.getInt("amountReturn"));
-                        System.out.println(rs.getInt("amountReturn"));
                     }
                 }
 

@@ -6,6 +6,7 @@ import BikeRapair.Repair;
 import ConnectDB.ConnectDatabase;
 import Gui.BikeUser;
 import Gui.RepairingForAdmin;
+import Sharing.Sharing;
 import User.User;
 import java.sql.*;
 import java.text.SimpleDateFormat;
@@ -170,9 +171,7 @@ public class Timer {
         timeLeft = totalHour+" Hours "+totalMin+" Minutes "+totalSeconds+" Secounds";
     }
 	
-    public void increaseTime(Date endTime,int hr,int min,int sec){
-        returnTime = endTime;
-        System.out.println("returnTime: "+returnTime);
+    public void increaseTime(int hr,int min,int sec){
         returnTime = new Date(returnTime.getYear(), returnTime.getMonth(),returnTime.getDate(),returnTime.getHours()+hr,returnTime.getMinutes()+min,returnTime.getSeconds()+sec);
         returnDate = df.format(returnTime);
         
@@ -234,14 +233,8 @@ public class Timer {
                             totalSeconds--;
                             timeLeft = totalHour+" Hours "+totalMin+" Minutes "+totalSeconds+" Secounds";
                             if(nf.notiTime(obj,totalHour,totalMin,totalSeconds)){
-                                if(obj instanceof Sharing){
-                                    
-                                }else if(obj instanceof Repair){
-                                    rpGui.notiTime(obj);
-                                    int add[] = rpGui.getIncrease();
-                                    increaseTime(returnTime,add[0],add[1],add[2]);
-                                }    
-                                
+                                int add[] = rpGui.notiTime();
+                                increaseTime(add[0],add[1],add[2]);
                             }
                             System.out.println(timeLeft);
                             if(totalSeconds == 0){
