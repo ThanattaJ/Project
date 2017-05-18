@@ -183,7 +183,7 @@ public class Authenication {
         String lastname = name.substring(i+1,name.length());
         
         if(!path.equalsIgnoreCase(User.getImgPath())){
-            String typeFile = path.substring(path.indexOf("."),path.length()-1);
+            String typeFile = path.substring(path.length(),path.length());
             newPath = "/bike_gui/userProfile/"+User.getUserId()+typeFile;
             copyFileImg(path,newPath);
         }else{

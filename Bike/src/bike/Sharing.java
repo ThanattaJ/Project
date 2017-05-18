@@ -318,7 +318,7 @@ public class Sharing {
         Connection con = null;
         String newPath;
         int available=0;
-        String typeFile = path.substring(path.indexOf("."),path.length()-1);
+        String typeFile = path.substring(path.length()-4,path.length());
         newPath = "/bike_gui/itemPic/"+name+typeFile;
         copyFileImg(path,newPath);
 

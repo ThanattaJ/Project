@@ -13,6 +13,8 @@ import javax.swing.Timer;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class GreenSociety extends javax.swing.JFrame {
+
+    private News nw = new News();
     private Authenication ac = new Authenication();
     private Register rs = new Register();
     private Sharing sh = new Sharing();
@@ -42,6 +44,7 @@ public class GreenSociety extends javax.swing.JFrame {
 
     private void mainAdminSetVisible() {
         cpPage.setVisible(false);
+        newsPage.setVisible(false);
         sharingPage.setVisible(false);
         titleSignout.setVisible(false);
         timerPage.setVisible(false);
@@ -59,6 +62,7 @@ public class GreenSociety extends javax.swing.JFrame {
     }
 
     public void startSetVisible() {
+        newsPage1.setVisible(false);
         cpPage1.setVisible(false);
         titleSignout1.setVisible(false);
         sharingStep1.setVisible(false);
@@ -176,8 +180,8 @@ public class GreenSociety extends javax.swing.JFrame {
         sharingPage1.add(nextStep, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, y, 60, 50));
         sharingScroll.setViewportView(sharingPage1);
     }
-    
-    public void setUserBorrow(){
+
+    public void setUserBorrow() {
         int x = 30;
         int y = 40;
         JPanel panelMainUser = new JPanel();
@@ -187,8 +191,8 @@ public class GreenSociety extends javax.swing.JFrame {
         panelMainUser.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         ArrayList<String> tempUser = sh.adminCheckUserBorrow();
         ArrayList<Integer> tempId = sh.getIdUserBorrowing();
-        
-        if((!tempUser.isEmpty()) && (!tempId.isEmpty()) && (tempUser.size() == tempId.size())){
+
+        if ((!tempUser.isEmpty()) && (!tempId.isEmpty()) && (tempUser.size() == tempId.size())) {
             JPanel[] backUser = new JPanel[tempUser.size()];
             JLabel[] user = new JLabel[tempUser.size()];
             for (int i = 0; i < tempUser.size(); i++) {
@@ -197,7 +201,6 @@ public class GreenSociety extends javax.swing.JFrame {
                 backUser[i].setBackground(new java.awt.Color(13, 24, 35));
                 backUser[i].setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-
                 user[i] = new JLabel();
                 user[i].setFont(new java.awt.Font("Leelawadee", 0, 16)); // NOI18N
                 user[i].setForeground(new java.awt.Color(55, 200, 255));
@@ -205,27 +208,27 @@ public class GreenSociety extends javax.swing.JFrame {
 
                 user[i].addMouseListener(new java.awt.event.MouseAdapter() {
                     public void mouseClicked(java.awt.event.MouseEvent evt) {
-                        userIdMouseClick(evt,t);
+                        userIdMouseClick(evt, t);
                     }
                 });
                 backUser[i].add(user[i], new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 520, 40));
 
-                panelMainUser.add(backUser[i],new org.netbeans.lib.awtextra.AbsoluteConstraints(30, y, 520, 40));
-                y +=70;
+                panelMainUser.add(backUser[i], new org.netbeans.lib.awtextra.AbsoluteConstraints(30, y, 520, 40));
+                y += 70;
             }
         }
-        
+
         listUserBorrowing.setViewportView(panelMainUser);
 
     }
-    
-    public void userIdMouseClick(java.awt.event.MouseEvent evt,int id){
+
+    public void userIdMouseClick(java.awt.event.MouseEvent evt, int id) {
         timewatch1.setVisible(false);
         listUserBorrowing.setVisible(false);
         selectItemReturn.setVisible(false);
         userDetail.setVisible(true);
         String tempName = "";
-        String tempAmount= "";
+        String tempAmount = "";
         JButton iconReturn = new JButton();
         JLabel itemName = new JLabel();
         JLabel itemAmount = new JLabel();
@@ -234,32 +237,33 @@ public class GreenSociety extends javax.swing.JFrame {
         ArrayList<String> item = sh.getItemNameReturnUser();
         ArrayList<Integer> amount = sh.getItemAmountReturnUser();
 
-        userDetail.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(19, 175, 248), 1, true), "Name  : "+name, javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Leelawadee", 0, 16), new java.awt.Color(255, 255, 255))); // NOI18N
+        userDetail.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(19, 175, 248), 1, true), "Name  : " + name, javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Leelawadee", 0, 16), new java.awt.Color(255, 255, 255))); // NOI18N
 
         iconReturn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/ReturnBut.png"))); // NOI18N
         iconReturn.setContentAreaFilled(false);
         iconReturn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                returnActionPerformed(evt,id);
+                returnActionPerformed(evt, id);
             }
         });
-        
+
         iconReturn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 iconReturn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/ReturnButClick.png")));
             }
+
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 iconReturn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/ReturnBut.png")));
             }
         });
-        
+
         userDetail.add(iconReturn, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 279, 150, 60));
-        
+
         itemName.setFont(new java.awt.Font("Leelawadee", 0, 18)); // NOI18N
         itemName.setForeground(new java.awt.Color(55, 200, 255));
         itemName.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         for (int i = 0; i < item.size(); i++) {
-            tempName += item.get(i)+"<br>";
+            tempName += item.get(i) + "<br>";
         }
         itemName.setText("<html><body>" + tempName + "</body></html>");
         itemName.setVerticalAlignment(javax.swing.SwingConstants.TOP);
@@ -268,16 +272,16 @@ public class GreenSociety extends javax.swing.JFrame {
         itemAmount.setFont(new java.awt.Font("Leelawadee", 0, 18)); // NOI18N
         itemAmount.setForeground(new java.awt.Color(55, 200, 255));
         itemAmount.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-         for (int i = 0; i < amount.size(); i++) {
-            tempAmount += "Amount : "+amount.get(i)+"<br>";
+        for (int i = 0; i < amount.size(); i++) {
+            tempAmount += "Amount : " + amount.get(i) + "<br>";
         }
         itemAmount.setText("<html><body>" + tempAmount + "</body></html>");
         itemAmount.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         userDetail.add(itemAmount, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 40, 170, 240));
         userDetail.setVisible(true);
     }
-    
-    public void returnActionPerformed(ActionEvent evt,int id){
+
+    public void returnActionPerformed(ActionEvent evt, int id) {
         selectItemReturn.setVisible(true);
         closeUserDetail.setEnabled(false);
         JButton submitReturn = new JButton();
@@ -295,29 +299,28 @@ public class GreenSociety extends javax.swing.JFrame {
             nameItemReturn[i].setText(item.get(i));
             nameItemReturn[i].setContentAreaFilled(false);
             selectItemReturn.add(nameItemReturn[i], new org.netbeans.lib.awtextra.AbsoluteConstraints(x, y, 130, 20));
-            x+=130;
+            x += 130;
             countItemReturn[i] = new JSpinner();
             int temp = amount.get(i);
-            countItemReturn[i].setModel(new javax.swing.SpinnerNumberModel(0, 0,temp, 1));
+            countItemReturn[i].setModel(new javax.swing.SpinnerNumberModel(0, 0, temp, 1));
             selectItemReturn.add(countItemReturn[i], new org.netbeans.lib.awtextra.AbsoluteConstraints(x, y, 50, -1));
-            x+=100;
-            if(x==380){
+            x += 100;
+            if (x == 380) {
                 x = 30;
                 y += 40;
             }
         }
         boolean check = sh.isTimesUp();
-        if(check == true){
-            System.out.println("red");
+        if (check == true) {
             Date temp = sh.getReturnTimeBorrow();
-            returnDateBorrowing.setForeground(new java.awt.Color(255,102,102));
-            returnDateBorrowing.setText("Return : "+temp.getDate()+"/"+(temp.getMonth()+1)+"/"+(temp.getYear()+1900)+"  "+temp.getHours()+" : "+temp.getMinutes());
-        }else if(check==false){
+            returnDateBorrowing.setForeground(new java.awt.Color(255, 102, 102));
+            returnDateBorrowing.setText("Return : " + temp.getDate() + "/" + (temp.getMonth() + 1) + "/" + (temp.getYear() + 1900) + "  " + temp.getHours() + " : " + temp.getMinutes());
+        } else if (check == false) {
             Date temp = sh.getReturnTimeBorrow();
-            returnDateBorrowing.setForeground(new java.awt.Color(102,255,102));
-            returnDateBorrowing.setText("Return : "+temp.getDate()+"/"+(temp.getMonth()+1)+"/"+(temp.getYear()+1900)+"  "+temp.getHours()+" : "+temp.getMinutes());
+            returnDateBorrowing.setForeground(new java.awt.Color(102, 255, 102));
+            returnDateBorrowing.setText("Return : " + temp.getDate() + "/" + (temp.getMonth() + 1) + "/" + (temp.getYear() + 1900) + "  " + temp.getHours() + " : " + temp.getMinutes());
         }
-        
+
         submitReturn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/submitMini.png"))); // NOI18N
         submitReturn.setContentAreaFilled(false);
         submitReturn.addActionListener(new java.awt.event.ActionListener() {
@@ -332,24 +335,24 @@ public class GreenSociety extends javax.swing.JFrame {
                     boolean notAmount = false;
                     ArrayList<Integer> cpItem = sh.getItemCPReturnUser();
                     for (int i = 0; i < nameItemReturn.length; i++) {
-                        if(nameItemReturn[i].isSelected()){
-                            if(((int)countItemReturn[i].getValue()) != 0){
+                        if (nameItemReturn[i].isSelected()) {
+                            if (((int) countItemReturn[i].getValue()) != 0) {
                                 tempId.add(idItem.get(i));
-                                tempAmount.add((int)countItemReturn[i].getValue());
-                                cpUse += (int)countItemReturn[i].getValue()*cpItem.get(i);
-                            }else{
-                               notAmount = true;
-                               break;
+                                tempAmount.add((int) countItemReturn[i].getValue());
+                                cpUse += (int) countItemReturn[i].getValue() * cpItem.get(i);
+                            } else {
+                                notAmount = true;
+                                break;
                             }
                         }
                     }
-                    if(notAmount){
+                    if (notAmount) {
                         JOptionPane.showMessageDialog(null, "Plese Enter amount of item.", "Error", JOptionPane.ERROR_MESSAGE);
-                    }else{
-                        if(check == true){
-                        cpUse *= 2;
-                        sh.returnItems(cpUse, tempAmount, tempId, id);
-                        }else if(check == false){
+                    } else {
+                        if (check == true) {
+                            cpUse *= 2;
+                            sh.returnItems(cpUse, tempAmount, tempId, id);
+                        } else if (check == false) {
                             sh.returnItems(0, tempAmount, tempId, id);
                         }
                         JOptionPane.showMessageDialog(null, "Success", "Success", JOptionPane.INFORMATION_MESSAGE);
@@ -369,13 +372,14 @@ public class GreenSociety extends javax.swing.JFrame {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 submitReturn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/submitMiniClick.png")));
             }
+
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 submitReturn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/submitMini.png")));
             }
         });
         selectItemReturn.add(submitReturn, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 181, 90, 50));
     }
-    
+
     public void settingItem() {
         nameOfItem = sh.getNameItem();
         pathOfItem = sh.getPathImgItem();
@@ -452,6 +456,198 @@ public class GreenSociety extends javax.swing.JFrame {
         }
     }
 
+    public void setListNewsUser() {    //JPanel show news for user
+        int x = 40;
+        int y = 80;
+        String[] pathImgNews = nw.selectImgNewsForUser();
+        String[] topicNews = nw.selectTopicNewsForUser();
+        JLabel read[] = new JLabel[topicNews.length];
+        JPanel[] jPanelNews = new JPanel[topicNews.length];
+        JLabel[] jLabelImgNews = new JLabel[topicNews.length];
+        JLabel[] jLabelTopicNews = new JLabel[topicNews.length];
+        JButton[] viewButton = new JButton[topicNews.length];
+
+        for (int i = 0; i < topicNews.length; i++) {
+            int tem = nw.getIdCanShow().get(i);
+            jPanelNews[i] = new JPanel();
+            jPanelNews[i].setBackground(new java.awt.Color(255, 255, 255));
+            jPanelNews[i].setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+            //------------------------------------------------------------------
+            jLabelTopicNews[i] = new JLabel();
+            jLabelTopicNews[i].setFont(new java.awt.Font("Leelawadee", 0, 13)); 
+            jLabelTopicNews[i].setText(topicNews[i]);
+            jPanelNews[i].add(jLabelTopicNews[i], new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 190, 30));
+            //------------------------------------------------------------------
+            jLabelImgNews[i] = new JLabel();
+            jLabelImgNews[i].setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+            if(pathImgNews[i].equalsIgnoreCase("No Picture.")){
+                jLabelImgNews[i].setText(pathImgNews[i]);
+                jLabelImgNews[i].setForeground(new Color(204,204,204));
+            }else{
+                jLabelImgNews[i].setIcon(new ImageIcon(new ImageIcon(getClass().getResource(pathImgNews[i])).getImage().getScaledInstance(180, 210, Image.SCALE_DEFAULT))); // NOI18N
+            }
+            jPanelNews[i].add(jLabelImgNews[i], new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 180, 210));
+            //------------------------------------------------------------------
+            read[i] = new JLabel();
+            read[i].setText("Read News");
+            viewButton[i] = new JButton();
+            viewButton[i].setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/readNews.png")));
+            viewButton[i].setContentAreaFilled(false);
+            viewButton[i].setBackground(new Color(19, 175, 248));
+            viewButton[i].setBorder(null);
+            int num = i;
+            viewButton[i].addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {   //กดแล้วทำงาน
+//                    showNews();
+                    jBtUserClickActionPerformed(evt, tem,pathImgNews[num]);
+                }
+            });
+            viewButton[i].addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                viewButton[num].setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/readNewsClick.png")));
+                read[num].setVisible(true);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                viewButton[num].setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/readNews.png")));
+                read[num].setVisible(false);
+            }
+            });
+            jPanelNews[i].add(viewButton[i], new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 243, 40, 30));
+            jPanelNews[i].add(read[i], new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 243, -1, 30));
+            read[i].setVisible(false);
+            listNewsPage.add(jPanelNews[i], new org.netbeans.lib.awtextra.AbsoluteConstraints(x, y, 200, 280));
+            x += 240;
+            if (x > 520) {
+                x = 40;
+                y += 320;
+            }
+        }
+        listNewsScroll.setViewportView(listNewsPage);
+    }
+
+    public void jBtUserClickActionPerformed(java.awt.event.ActionEvent evt, int tem,String path) {
+        jPanelShowNewsAfterClick.setVisible(true);
+        listNewsScroll.setVisible(false);
+        listNewsPage.setVisible(false);
+        jLabelShowTopicAfterClick.setText(nw.topicNewsSelect(tem));
+        jTextAreaShowDetailNewsAfterClick.setText("    "+nw.detailNewsSelect(tem));
+        if(path.equalsIgnoreCase("No Picture.")){
+            imgNews.setText(path);
+            imgNews.setIcon(null); // NOI18N
+            imgNews.setForeground(new Color(255,255,255));
+        }else{
+            imgNews.setText("");
+            imgNews.setIcon(new ImageIcon(new ImageIcon(getClass().getResource(path)).getImage().getScaledInstance(200, 260, Image.SCALE_DEFAULT))); // NOI18N
+        }
+    }
+
+    public void setListNewsAdmin() {
+        int y = 20;
+
+        String[] topic = nw.selectTopicNews();
+        JPanel[] jp = new JPanel[topic.length];
+        JLabel[] label = new JLabel[topic.length];
+        JButton[] click = new JButton[topic.length];
+
+        for (int i = 0; i < topic.length; i++) {
+            int tem = nw.getIdCanShow().get(i);;
+            jp[i] = new JPanel();
+            jp[i].setBackground(new java.awt.Color(204, 204, 204));
+            jp[i].setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+            label[i] = new JLabel();
+            label[i].setText(topic[i]);
+            jp[i].add(label[i], new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 440, -1));
+
+            click[i] = new JButton();
+            click[i].setText("View");
+            click[i].addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {   //กดแล้วทำงาน
+//                    showNews
+                    jBtClickActionPerformed(evt, tem);
+                }
+            });
+
+            jp[i].add(click[i], new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 10, 70, 20));
+            showlistNews.add(jp[i], new org.netbeans.lib.awtextra.AbsoluteConstraints(50, y, 500, 40));
+            y += 50;
+        }
+        newsList.setViewportView(showlistNews);
+    }
+
+    public void deleteActionPerformed(java.awt.event.ActionEvent evt, int tem) {
+        nw.deleteNews(tem);
+    }
+
+    public void updateActionPerformed(java.awt.event.ActionEvent evt, int tem) {
+        topicNews.setEditable(true);
+        topicNews.setBackground(new java.awt.Color(255, 255, 255));
+        topicNews.setForeground(new java.awt.Color(0, 0, 0));
+        describeNewsText.setEditable(true);
+        describeNewsText.setBackground(new java.awt.Color(255, 255, 255));
+        describeNewsText.setForeground(new java.awt.Color(0, 0, 0));
+        binding.setVisible(true);
+        submitUpdateNews.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {   //กดแล้วทำงาน
+                nw.editNews(topicNews.getText(), describeNewsText.getText(), tem);
+                topicNews.setEditable(false);
+                describeNewsText.setEditable(false);
+                binding.setVisible(false);
+                topicNews.setBackground(new java.awt.Color(9, 20, 36));
+                topicNews.setForeground(new java.awt.Color(255, 255, 255));
+                describeNewsText.setBackground(new java.awt.Color(9, 20, 36));
+                describeNewsText.setForeground(new java.awt.Color(255, 255, 255));
+
+            }
+        });
+
+        cancleUpdateNews.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {   //กดแล้วทำงาน
+                topicNews.setEditable(false);
+                describeNewsText.setEditable(false);
+                binding.setVisible(false);
+                topicNews.setBackground(new java.awt.Color(9, 20, 36));
+                topicNews.setForeground(new java.awt.Color(255, 255, 255));
+                describeNewsText.setBackground(new java.awt.Color(9, 20, 36));
+                describeNewsText.setForeground(new java.awt.Color(255, 255, 255));
+            }
+        });
+    }
+
+    public void jBtClickActionPerformed(java.awt.event.ActionEvent evt, int tem) {
+        binding.setVisible(false);
+        showNews.setVisible(true);
+        jButtonInsert.setVisible(false);
+        describeNewsText.setText(nw.detailNewsSelect(tem));
+        describeNewsText.setLineWrap(true);
+        topicNews.setText(nw.topicNewsSelect(tem));//เปลี่ยนหัวข้อข่าว
+        showlistNews.setVisible(false);
+        newsList.setVisible(false);
+        //----------Delete button-------------
+        JButton delete = new JButton();
+        delete.setText("DELETE");
+        delete.setFont(new java.awt.Font("Leelawadee", 0, 14));
+        delete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteActionPerformed(evt, tem);
+            }
+
+        });
+        //-------------Submit Button in Update---------
+        JButton update = new JButton();
+        update.setText("Update");
+        update.setFont(new java.awt.Font("Leelawadee", 0, 14));
+        update.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateActionPerformed(evt, tem);
+            }
+
+        });
+        showNews.add(delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 360, -1, 30));
+        showNews.add(update, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 360, -1, 30));
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -461,143 +657,7 @@ public class GreenSociety extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        mainAdmin = new javax.swing.JPanel();
-        barSearch = new javax.swing.JPanel();
-        jSeparator2 = new javax.swing.JSeparator();
-        iconSearch = new javax.swing.JLabel();
-        title = new javax.swing.JLabel();
-        search = new javax.swing.JTextField();
-        backMenuBar = new javax.swing.JPanel();
-        menuBar = new javax.swing.JPanel();
-        news = new javax.swing.JLabel();
-        bikeRepair = new javax.swing.JLabel();
-        canCounter = new javax.swing.JLabel();
-        bikeSharing = new javax.swing.JLabel();
-        history = new javax.swing.JLabel();
-        profile = new javax.swing.JLabel();
-        menu = new javax.swing.JLabel();
-        timer = new javax.swing.JLabel();
-        support = new javax.swing.JLabel();
-        titleSignout = new javax.swing.JLabel();
-        arrowDownIcon = new javax.swing.JLabel();
-        barUser = new javax.swing.JPanel();
-        pic = new javax.swing.JLabel();
-        name = new javax.swing.JLabel();
-        position = new javax.swing.JLabel();
-        backBarUser = new javax.swing.JPanel();
-        backBarIcon = new javax.swing.JPanel();
-        barIcon = new javax.swing.JPanel();
-        iconMenu = new javax.swing.JLabel();
-        iconBike = new javax.swing.JLabel();
-        iconProfile = new javax.swing.JLabel();
-        signout = new javax.swing.JButton();
-        barNoti = new javax.swing.JPanel();
-        timerPage = new javax.swing.JPanel();
-        selectItemReturn = new javax.swing.JPanel();
-        cancleReturn = new javax.swing.JButton();
-        returnDateBorrowing = new javax.swing.JLabel();
-        userDetail = new javax.swing.JPanel();
-        closeUserDetail = new javax.swing.JButton();
-        timewatch1 = new javax.swing.JPanel();
-        titleNow1 = new javax.swing.JLabel();
-        timeLeftShow1 = new javax.swing.JLabel();
-        endTime1 = new javax.swing.JLabel();
-        iconClockBig1 = new javax.swing.JLabel();
-        listUserBorrowing = new javax.swing.JScrollPane();
-        userProfilePage = new javax.swing.JPanel();
-        editProfileBut = new javax.swing.JButton();
-        titleUserId = new javax.swing.JLabel();
-        userID = new javax.swing.JLabel();
-        imageProfile = new javax.swing.JLabel();
-        titleAbout = new javax.swing.JLabel();
-        titleNameProfile = new javax.swing.JLabel();
-        nameProfile = new javax.swing.JTextField();
-        titleGenderProfile = new javax.swing.JLabel();
-        genderProfile = new javax.swing.JTextField();
-        titlebBirthProfile = new javax.swing.JLabel();
-        birthProfile = new javax.swing.JFormattedTextField();
-        titleDepartProfile = new javax.swing.JLabel();
-        departProfile = new javax.swing.JLabel();
-        titleCongenProfile = new javax.swing.JLabel();
-        congenProfile = new javax.swing.JTextField();
-        titleContact = new javax.swing.JLabel();
-        titleEmailProfile = new javax.swing.JLabel();
-        emailProfile = new javax.swing.JTextField();
-        titleTelProfile = new javax.swing.JLabel();
-        telProfile = new javax.swing.JTextField();
-        chooseImgProfileBut = new javax.swing.JButton();
-        pathImgProfile = new javax.swing.JLabel();
-        submitProfile = new javax.swing.JButton();
-        warningProfile = new javax.swing.JLabel();
-        supportPage = new javax.swing.JPanel();
-        bodySupport = new javax.swing.JPanel();
-        jLBShowingResult = new javax.swing.JLabel();
-        jSeparator8 = new javax.swing.JSeparator();
-        jLBWhatsearch = new javax.swing.JLabel();
-        resultScroll = new javax.swing.JScrollPane();
-        jTAShowyouSearch = new javax.swing.JTextArea();
-        contactScroll = new javax.swing.JScrollPane();
-        jTAContact = new javax.swing.JTextArea();
-        titleContactSupport = new javax.swing.JLabel();
-        insertSupportPanel = new javax.swing.JPanel();
-        titleContent = new javax.swing.JLabel();
-        jSeparator9 = new javax.swing.JSeparator();
-        insertSupporTitle = new javax.swing.JTextField();
-        titleInsertSupport = new javax.swing.JLabel();
-        submitSupport = new javax.swing.JButton();
-        insertSupportContentArea = new javax.swing.JScrollPane();
-        insertContentSup = new javax.swing.JTextArea();
-        waringInsertSupport = new javax.swing.JLabel();
-        cancleInsertSup = new javax.swing.JButton();
-        titleCancleInsertSup = new javax.swing.JLabel();
-        barTitle = new javax.swing.JPanel();
-        titleSupport = new javax.swing.JLabel();
-        newManual = new javax.swing.JButton();
-        cpPage = new javax.swing.JPanel();
-        titleCountCan = new javax.swing.JLabel();
-        titleNameUser = new javax.swing.JLabel();
-        s3 = new javax.swing.JSeparator();
-        s4 = new javax.swing.JSeparator();
-        nameOfUser = new javax.swing.JTextField();
-        countOfCan = new javax.swing.JTextField();
-        submitBut = new javax.swing.JButton();
-        cancleAdminBut = new javax.swing.JButton();
-        titleLastname = new javax.swing.JLabel();
-        surnameOfUser = new javax.swing.JTextField();
-        s5 = new javax.swing.JSeparator();
-        sharingPage = new javax.swing.JPanel();
-        menuSharing = new javax.swing.JPanel();
-        menuAdd = new javax.swing.JButton();
-        menuEdit = new javax.swing.JButton();
-        menuDelete = new javax.swing.JButton();
-        backAdd = new javax.swing.JPanel();
-        backEdit = new javax.swing.JPanel();
-        backDelete = new javax.swing.JPanel();
-        sharingPageTab = new javax.swing.JPanel();
-        itemListScroll = new javax.swing.JScrollPane();
-        itemListPage = new javax.swing.JPanel();
-        titleItemList = new javax.swing.JLabel();
-        closeBut = new javax.swing.JLabel();
-        layerAddItem = new javax.swing.JPanel();
-        titleItemId = new javax.swing.JLabel();
-        s6 = new javax.swing.JSeparator();
-        s7 = new javax.swing.JSeparator();
-        titleItemName = new javax.swing.JLabel();
-        itemName = new javax.swing.JTextField();
-        titleItemCount = new javax.swing.JLabel();
-        s8 = new javax.swing.JSeparator();
-        itemAmount = new javax.swing.JTextField();
-        submitButSharing = new javax.swing.JButton();
-        cancleButSharing = new javax.swing.JButton();
-        itemId = new javax.swing.JTextField();
-        pathImgItem = new javax.swing.JLabel();
-        notiSharing = new javax.swing.JLabel();
-        itemList = new javax.swing.JButton();
-        titleItemPic = new javax.swing.JLabel();
-        chooseImgItem = new javax.swing.JButton();
-        titleWhat = new javax.swing.JLabel();
-        radioType = new javax.swing.JRadioButton();
-        radioEquip = new javax.swing.JRadioButton();
+        jLabel3 = new javax.swing.JLabel();
         mainUser = new javax.swing.JPanel();
         barSearch1 = new javax.swing.JPanel();
         jSeparator3 = new javax.swing.JSeparator();
@@ -632,6 +692,16 @@ public class GreenSociety extends javax.swing.JFrame {
         jSeparator4 = new javax.swing.JSeparator();
         circleNoti = new javax.swing.JLabel();
         iconNoti1 = new javax.swing.JLabel();
+        newsPage1 = new javax.swing.JPanel();
+        jPanelShowNewsAfterClick = new javax.swing.JPanel();
+        jLabelShowTopicAfterClick = new javax.swing.JLabel();
+        jScrollPaneInTextAreaNewsDetail = new javax.swing.JScrollPane();
+        jTextAreaShowDetailNewsAfterClick = new javax.swing.JTextArea();
+        closeNews1 = new javax.swing.JButton();
+        imgNews = new javax.swing.JLabel();
+        listNewsScroll = new javax.swing.JScrollPane();
+        listNewsPage = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
         timePageT = new javax.swing.JPanel();
         timewatch = new javax.swing.JPanel();
         titleNow = new javax.swing.JLabel();
@@ -731,6 +801,169 @@ public class GreenSociety extends javax.swing.JFrame {
         actionHis = new javax.swing.JLabel();
         titleHistory = new javax.swing.JLabel();
         point4 = new javax.swing.JLabel();
+        mainAdmin = new javax.swing.JPanel();
+        barSearch = new javax.swing.JPanel();
+        jSeparator2 = new javax.swing.JSeparator();
+        iconSearch = new javax.swing.JLabel();
+        title = new javax.swing.JLabel();
+        search = new javax.swing.JTextField();
+        backMenuBar = new javax.swing.JPanel();
+        menuBar = new javax.swing.JPanel();
+        news = new javax.swing.JLabel();
+        bikeRepair = new javax.swing.JLabel();
+        canCounter = new javax.swing.JLabel();
+        bikeSharing = new javax.swing.JLabel();
+        history = new javax.swing.JLabel();
+        profile = new javax.swing.JLabel();
+        menu = new javax.swing.JLabel();
+        timer = new javax.swing.JLabel();
+        support = new javax.swing.JLabel();
+        titleSignout = new javax.swing.JLabel();
+        arrowDownIcon = new javax.swing.JLabel();
+        barUser = new javax.swing.JPanel();
+        pic = new javax.swing.JLabel();
+        name = new javax.swing.JLabel();
+        position = new javax.swing.JLabel();
+        backBarUser = new javax.swing.JPanel();
+        backBarIcon = new javax.swing.JPanel();
+        barIcon = new javax.swing.JPanel();
+        iconMenu = new javax.swing.JLabel();
+        iconBike = new javax.swing.JLabel();
+        iconProfile = new javax.swing.JLabel();
+        signout = new javax.swing.JButton();
+        barNoti = new javax.swing.JPanel();
+        newsPage = new javax.swing.JPanel();
+        showNews = new javax.swing.JPanel();
+        titletopicNews = new javax.swing.JLabel();
+        topicNews = new javax.swing.JTextField();
+        describeNews = new javax.swing.JScrollPane();
+        describeNewsText = new javax.swing.JTextArea();
+        binding = new javax.swing.JPanel();
+        cancleUpdateNews = new javax.swing.JButton();
+        submitUpdateNews = new javax.swing.JButton();
+        closeNews = new javax.swing.JButton();
+        jPanelInsertNews = new javax.swing.JPanel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        txtAreaNewsDetail = new javax.swing.JTextArea();
+        txtDescription1 = new javax.swing.JLabel();
+        txtFieldNewsDescription = new javax.swing.JTextField();
+        txtDescription = new javax.swing.JLabel();
+        cancleButtonNews = new javax.swing.JButton();
+        submitButtonNews = new javax.swing.JButton();
+        jPanelBackgroundInsertLabel = new javax.swing.JPanel();
+        jLabelInsert = new javax.swing.JLabel();
+        chooseImgNews = new javax.swing.JButton();
+        pathImgNews = new javax.swing.JLabel();
+        newsList = new javax.swing.JScrollPane();
+        showlistNews = new javax.swing.JPanel();
+        jButtonInsert = new javax.swing.JButton();
+        titleInsert = new javax.swing.JLabel();
+        sharingPage = new javax.swing.JPanel();
+        menuSharing = new javax.swing.JPanel();
+        menuAdd = new javax.swing.JButton();
+        menuEdit = new javax.swing.JButton();
+        menuDelete = new javax.swing.JButton();
+        backAdd = new javax.swing.JPanel();
+        backEdit = new javax.swing.JPanel();
+        backDelete = new javax.swing.JPanel();
+        sharingPageTab = new javax.swing.JPanel();
+        itemListScroll = new javax.swing.JScrollPane();
+        itemListPage = new javax.swing.JPanel();
+        titleItemList = new javax.swing.JLabel();
+        closeBut = new javax.swing.JLabel();
+        layerAddItem = new javax.swing.JPanel();
+        titleItemId = new javax.swing.JLabel();
+        s6 = new javax.swing.JSeparator();
+        s7 = new javax.swing.JSeparator();
+        titleItemName = new javax.swing.JLabel();
+        itemName = new javax.swing.JTextField();
+        titleItemCount = new javax.swing.JLabel();
+        s8 = new javax.swing.JSeparator();
+        itemAmount = new javax.swing.JTextField();
+        submitButSharing = new javax.swing.JButton();
+        cancleButSharing = new javax.swing.JButton();
+        itemId = new javax.swing.JTextField();
+        pathImgItem = new javax.swing.JLabel();
+        notiSharing = new javax.swing.JLabel();
+        itemList = new javax.swing.JButton();
+        titleItemPic = new javax.swing.JLabel();
+        chooseImgItem = new javax.swing.JButton();
+        titleWhat = new javax.swing.JLabel();
+        radioType = new javax.swing.JRadioButton();
+        radioEquip = new javax.swing.JRadioButton();
+        supportPage = new javax.swing.JPanel();
+        bodySupport = new javax.swing.JPanel();
+        jLBShowingResult = new javax.swing.JLabel();
+        jSeparator8 = new javax.swing.JSeparator();
+        jLBWhatsearch = new javax.swing.JLabel();
+        resultScroll = new javax.swing.JScrollPane();
+        jTAShowyouSearch = new javax.swing.JTextArea();
+        contactScroll = new javax.swing.JScrollPane();
+        jTAContact = new javax.swing.JTextArea();
+        titleContactSupport = new javax.swing.JLabel();
+        insertSupportPanel = new javax.swing.JPanel();
+        titleContent = new javax.swing.JLabel();
+        jSeparator9 = new javax.swing.JSeparator();
+        insertSupporTitle = new javax.swing.JTextField();
+        titleInsertSupport = new javax.swing.JLabel();
+        submitSupport = new javax.swing.JButton();
+        insertSupportContentArea = new javax.swing.JScrollPane();
+        insertContentSup = new javax.swing.JTextArea();
+        waringInsertSupport = new javax.swing.JLabel();
+        cancleInsertSup = new javax.swing.JButton();
+        titleCancleInsertSup = new javax.swing.JLabel();
+        barTitle = new javax.swing.JPanel();
+        titleSupport = new javax.swing.JLabel();
+        newManual = new javax.swing.JButton();
+        userProfilePage = new javax.swing.JPanel();
+        editProfileBut = new javax.swing.JButton();
+        titleUserId = new javax.swing.JLabel();
+        userID = new javax.swing.JLabel();
+        imageProfile = new javax.swing.JLabel();
+        titleAbout = new javax.swing.JLabel();
+        titleNameProfile = new javax.swing.JLabel();
+        nameProfile = new javax.swing.JTextField();
+        titleGenderProfile = new javax.swing.JLabel();
+        genderProfile = new javax.swing.JTextField();
+        titlebBirthProfile = new javax.swing.JLabel();
+        birthProfile = new javax.swing.JFormattedTextField();
+        titleDepartProfile = new javax.swing.JLabel();
+        departProfile = new javax.swing.JLabel();
+        titleCongenProfile = new javax.swing.JLabel();
+        congenProfile = new javax.swing.JTextField();
+        titleContact = new javax.swing.JLabel();
+        titleEmailProfile = new javax.swing.JLabel();
+        emailProfile = new javax.swing.JTextField();
+        titleTelProfile = new javax.swing.JLabel();
+        telProfile = new javax.swing.JTextField();
+        chooseImgProfileBut = new javax.swing.JButton();
+        pathImgProfile = new javax.swing.JLabel();
+        submitProfile = new javax.swing.JButton();
+        warningProfile = new javax.swing.JLabel();
+        timerPage = new javax.swing.JPanel();
+        selectItemReturn = new javax.swing.JPanel();
+        cancleReturn = new javax.swing.JButton();
+        returnDateBorrowing = new javax.swing.JLabel();
+        userDetail = new javax.swing.JPanel();
+        closeUserDetail = new javax.swing.JButton();
+        timewatch1 = new javax.swing.JPanel();
+        titleNow1 = new javax.swing.JLabel();
+        timeLeftShow1 = new javax.swing.JLabel();
+        endTime1 = new javax.swing.JLabel();
+        iconClockBig1 = new javax.swing.JLabel();
+        listUserBorrowing = new javax.swing.JScrollPane();
+        cpPage = new javax.swing.JPanel();
+        titleCountCan = new javax.swing.JLabel();
+        titleNameUser = new javax.swing.JLabel();
+        s3 = new javax.swing.JSeparator();
+        s4 = new javax.swing.JSeparator();
+        nameOfUser = new javax.swing.JTextField();
+        countOfCan = new javax.swing.JTextField();
+        submitBut = new javax.swing.JButton();
+        cancleAdminBut = new javax.swing.JButton();
+        titleLastname = new javax.swing.JLabel();
+        surnameOfUser = new javax.swing.JTextField();
+        s5 = new javax.swing.JSeparator();
         login = new javax.swing.JPanel();
         GreenSociety = new javax.swing.JLabel();
         iconEmail = new javax.swing.JLabel();
@@ -819,1078 +1052,11 @@ public class GreenSociety extends javax.swing.JFrame {
         jFormatTextFieldForId = new javax.swing.JFormattedTextField();
         Backgroung2 = new javax.swing.JLabel();
 
+        jLabel3.setText("jLabel3");
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        mainAdmin.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        barSearch.setBackground(new java.awt.Color(13, 24, 35));
-        barSearch.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        barSearch.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 40, 120, 40));
-
-        iconSearch.setFont(new java.awt.Font("Leelawadee UI", 0, 20)); // NOI18N
-        iconSearch.setForeground(new java.awt.Color(255, 255, 255));
-        iconSearch.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        iconSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/search.png"))); // NOI18N
-        iconSearch.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                iconSearchMouseClicked(evt);
-            }
-        });
-        barSearch.add(iconSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 0, 60, 50));
-
-        title.setBackground(new java.awt.Color(0, 0, 0));
-        title.setFont(new java.awt.Font("Leelawadee", 0, 30)); // NOI18N
-        title.setForeground(new java.awt.Color(255, 255, 255));
-        title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        title.setText("GREEN  SOCIETY");
-        title.setToolTipText("");
-        barSearch.add(title, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 260, 60));
-
-        search.setBackground(new java.awt.Color(13, 24, 35));
-        search.setFont(new java.awt.Font("Leelawadee", 0, 18)); // NOI18N
-        search.setForeground(new java.awt.Color(255, 255, 255));
-        search.setText("Search");
-        search.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                searchFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                searchFocusLost(evt);
-            }
-        });
-        search.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                searchKeyPressed(evt);
-            }
-        });
-        barSearch.add(search, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 10, 120, 30));
-
-        mainAdmin.add(barSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 0, 900, 60));
-
-        backMenuBar.setBackground(new java.awt.Color(22, 31, 39));
-        backMenuBar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        menuBar.setBackground(new java.awt.Color(13, 24, 35));
-        menuBar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        news.setBackground(new java.awt.Color(0, 0, 0));
-        news.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
-        news.setForeground(new java.awt.Color(255, 255, 255));
-        news.setText("     News");
-        news.setToolTipText("");
-        news.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        menuBar.add(news, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, 140, 20));
-
-        bikeRepair.setBackground(new java.awt.Color(0, 0, 0));
-        bikeRepair.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
-        bikeRepair.setForeground(new java.awt.Color(255, 255, 255));
-        bikeRepair.setText("     Bike Repairing");
-        bikeRepair.setToolTipText("");
-        bikeRepair.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        menuBar.add(bikeRepair, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 140, 140, 20));
-
-        canCounter.setBackground(new java.awt.Color(0, 0, 0));
-        canCounter.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
-        canCounter.setForeground(new java.awt.Color(255, 255, 255));
-        canCounter.setText("     Can Counter");
-        canCounter.setToolTipText("");
-        canCounter.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        canCounter.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                canCounterMouseClicked(evt);
-            }
-        });
-        menuBar.add(canCounter, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 170, 140, 20));
-
-        bikeSharing.setBackground(new java.awt.Color(255, 255, 255));
-        bikeSharing.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
-        bikeSharing.setForeground(new java.awt.Color(255, 255, 255));
-        bikeSharing.setText("     Bike Sharing");
-        bikeSharing.setToolTipText("");
-        bikeSharing.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        bikeSharing.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                bikeSharingMouseClicked(evt);
-            }
-        });
-        menuBar.add(bikeSharing, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 140, 20));
-
-        history.setBackground(new java.awt.Color(0, 0, 0));
-        history.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
-        history.setForeground(new java.awt.Color(255, 255, 255));
-        history.setText("     History");
-        history.setToolTipText("");
-        history.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        menuBar.add(history, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, 140, 20));
-
-        profile.setBackground(new java.awt.Color(0, 0, 0));
-        profile.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
-        profile.setForeground(new java.awt.Color(255, 255, 255));
-        profile.setText("     PROFILE");
-        profile.setToolTipText("");
-        profile.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                profileMouseClicked(evt);
-            }
-        });
-        menuBar.add(profile, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 330, 140, 30));
-
-        menu.setBackground(new java.awt.Color(0, 0, 0));
-        menu.setFont(new java.awt.Font("Leelawadee", 0, 18)); // NOI18N
-        menu.setForeground(new java.awt.Color(255, 255, 255));
-        menu.setText("MENU");
-        menu.setToolTipText("");
-        menuBar.add(menu, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 50, 30));
-
-        timer.setBackground(new java.awt.Color(0, 0, 0));
-        timer.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
-        timer.setForeground(new java.awt.Color(255, 255, 255));
-        timer.setText("     Timer");
-        timer.setToolTipText("");
-        timer.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        timer.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                timerMouseClicked(evt);
-            }
-        });
-        menuBar.add(timer, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 260, 140, 20));
-
-        support.setBackground(new java.awt.Color(0, 0, 0));
-        support.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
-        support.setForeground(new java.awt.Color(255, 255, 255));
-        support.setText("     Support");
-        support.setToolTipText("");
-        support.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        support.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                supportMouseClicked(evt);
-            }
-        });
-        menuBar.add(support, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 290, 140, 20));
-
-        titleSignout.setBackground(new java.awt.Color(0, 0, 0));
-        titleSignout.setFont(new java.awt.Font("Leelawadee", 0, 13)); // NOI18N
-        titleSignout.setForeground(new java.awt.Color(255, 255, 255));
-        titleSignout.setText("     SIGN OUT");
-        titleSignout.setToolTipText("");
-        menuBar.add(titleSignout, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 430, 140, 30));
-
-        arrowDownIcon.setBackground(new java.awt.Color(0, 0, 0));
-        arrowDownIcon.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
-        arrowDownIcon.setForeground(new java.awt.Color(255, 255, 255));
-        arrowDownIcon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        arrowDownIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/chevron-arrow-down.png"))); // NOI18N
-        arrowDownIcon.setToolTipText("");
-        menuBar.add(arrowDownIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 70, 40, 30));
-
-        backMenuBar.add(menuBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 480));
-
-        mainAdmin.add(backMenuBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 0, 150, 480));
-
-        barUser.setBackground(new java.awt.Color(19, 175, 248));
-        barUser.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        pic.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        barUser.add(pic, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 60, 60));
-
-        name.setBackground(new java.awt.Color(0, 0, 0));
-        name.setFont(new java.awt.Font("Leelawadee", 0, 16)); // NOI18N
-        name.setForeground(new java.awt.Color(13, 24, 35));
-        name.setText("NAME");
-        name.setToolTipText("");
-        name.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        barUser.add(name, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 130, 50));
-
-        position.setBackground(new java.awt.Color(0, 0, 0));
-        position.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
-        position.setForeground(new java.awt.Color(255, 255, 255));
-        position.setText("Student");
-        position.setToolTipText("");
-        position.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        barUser.add(position, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 30, 130, 50));
-
-        mainAdmin.add(barUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 480, 200, 60));
-
-        backBarUser.setBackground(new java.awt.Color(55, 200, 255));
-        backBarUser.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        mainAdmin.add(backBarUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 480, 210, 60));
-
-        backBarIcon.setBackground(new java.awt.Color(55, 200, 255));
-        backBarIcon.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        barIcon.setBackground(new java.awt.Color(19, 175, 248));
-        barIcon.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        iconMenu.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        iconMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/menu.png"))); // NOI18N
-        barIcon.add(iconMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 50, 30));
-
-        iconBike.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        iconBike.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/bike.png"))); // NOI18N
-        barIcon.add(iconBike, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 50, 40));
-
-        iconProfile.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        iconProfile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/profile-user.png"))); // NOI18N
-        barIcon.add(iconProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 320, 50, 50));
-
-        signout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/signout.png"))); // NOI18N
-        signout.setContentAreaFilled(false);
-        signout.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                signoutMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                signoutMouseExited(evt);
-            }
-        });
-        signout.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                signoutActionPerformed(evt);
-            }
-        });
-        barIcon.add(signout, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 420, 50, 50));
-
-        backBarIcon.add(barIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 50, 540));
-
-        mainAdmin.add(backBarIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 60, 540));
-
-        barNoti.setBackground(new java.awt.Color(13, 24, 35));
-        barNoti.setLayout(null);
-        mainAdmin.add(barNoti, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 480, 770, 60));
-
-        timerPage.setBackground(new java.awt.Color(25, 41, 65));
-        timerPage.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        selectItemReturn.setBackground(new java.awt.Color(25, 41, 65));
-        selectItemReturn.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true), "Select Items", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Leelawadee", 0, 14), new java.awt.Color(19, 175, 248))); // NOI18N
-        selectItemReturn.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        cancleReturn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/cancleMini.png"))); // NOI18N
-        cancleReturn.setContentAreaFilled(false);
-        cancleReturn.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                cancleReturnMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                cancleReturnMouseExited(evt);
-            }
-        });
-        cancleReturn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cancleReturnActionPerformed(evt);
-            }
-        });
-        selectItemReturn.add(cancleReturn, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 181, 90, 50));
-
-        returnDateBorrowing.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
-        returnDateBorrowing.setForeground(new java.awt.Color(102, 255, 102));
-        returnDateBorrowing.setText("Return : 20/3/2017  18:00");
-        returnDateBorrowing.setToolTipText("");
-        selectItemReturn.add(returnDateBorrowing, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 200, 200, 40));
-
-        timerPage.add(selectItemReturn, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 80, 480, 240));
-
-        userDetail.setBackground(new java.awt.Color(22, 31, 39));
-        userDetail.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Name : John", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Leelawadee", 0, 16), new java.awt.Color(0, 153, 255))); // NOI18N
-        userDetail.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        closeUserDetail.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/delete-button.png"))); // NOI18N
-        closeUserDetail.setContentAreaFilled(false);
-        closeUserDetail.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                closeUserDetailActionPerformed(evt);
-            }
-        });
-        userDetail.add(closeUserDetail, new org.netbeans.lib.awtextra.AbsoluteConstraints(497, 10, 50, 40));
-
-        timerPage.add(userDetail, new org.netbeans.lib.awtextra.AbsoluteConstraints(105, 40, 550, 340));
-
-        timewatch1.setBackground(new java.awt.Color(255, 255, 255));
-        timewatch1.setEnabled(false);
-        timewatch1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        titleNow1.setFont(new java.awt.Font("Leelawadee", 0, 24)); // NOI18N
-        titleNow1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        titleNow1.setText("Now:");
-        timewatch1.add(titleNow1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 60, 60, 40));
-
-        timeLeftShow1.setFont(new java.awt.Font("Leelawadee", 0, 28)); // NOI18N
-        timeLeftShow1.setForeground(new java.awt.Color(255, 51, 51));
-        timewatch1.add(timeLeftShow1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 60, 460, 40));
-
-        endTime1.setFont(new java.awt.Font("Leelawadee", 0, 18)); // NOI18N
-        timewatch1.add(endTime1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 30, 490, 20));
-
-        iconClockBig1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        iconClockBig1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/clockBig.png"))); // NOI18N
-        timewatch1.add(iconClockBig1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 140, 130));
-
-        timerPage.add(timewatch1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, 660, 130));
-        timerPage.add(listUserBorrowing, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 150, 620, 260));
-
-        mainAdmin.add(timerPage, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 60, 770, 420));
-
-        userProfilePage.setBackground(new java.awt.Color(25, 41, 65));
-        userProfilePage.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        editProfileBut.setBackground(new java.awt.Color(126, 192, 237));
-        editProfileBut.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
-        editProfileBut.setForeground(new java.awt.Color(255, 255, 255));
-        editProfileBut.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/editProfile.png"))); // NOI18N
-        editProfileBut.setContentAreaFilled(false);
-        editProfileBut.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                editProfileButMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                editProfileButMouseExited(evt);
-            }
-        });
-        editProfileBut.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                editProfileButActionPerformed(evt);
-            }
-        });
-        userProfilePage.add(editProfileBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 3, 110, 40));
-
-        titleUserId.setBackground(new java.awt.Color(55, 200, 255));
-        titleUserId.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
-        titleUserId.setForeground(new java.awt.Color(255, 255, 255));
-        titleUserId.setText("User ID :");
-        userProfilePage.add(titleUserId, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, 60, -1));
-
-        userID.setBackground(new java.awt.Color(55, 200, 255));
-        userID.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
-        userID.setForeground(new java.awt.Color(19, 175, 248));
-        userID.setText("1");
-        userID.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        userProfilePage.add(userID, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 20, 60, 20));
-        userProfilePage.add(imageProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, 200, 170));
-
-        titleAbout.setBackground(new java.awt.Color(13, 24, 35));
-        titleAbout.setFont(new java.awt.Font("Leelawadee", 0, 24)); // NOI18N
-        titleAbout.setForeground(new java.awt.Color(255, 255, 255));
-        titleAbout.setText("ABOUT");
-        userProfilePage.add(titleAbout, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 40, -1, -1));
-
-        titleNameProfile.setBackground(new java.awt.Color(55, 200, 255));
-        titleNameProfile.setFont(new java.awt.Font("Leelawadee", 0, 20)); // NOI18N
-        titleNameProfile.setForeground(new java.awt.Color(236, 233, 233));
-        titleNameProfile.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        titleNameProfile.setText("Name :");
-        userProfilePage.add(titleNameProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 90, 80, 20));
-
-        nameProfile.setEditable(false);
-        nameProfile.setBackground(new java.awt.Color(25, 41, 65));
-        nameProfile.setFont(new java.awt.Font("Leelawadee", 0, 20)); // NOI18N
-        nameProfile.setForeground(new java.awt.Color(19, 175, 248));
-        nameProfile.setText("Thanatta  Opatkajonyos");
-        userProfilePage.add(nameProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 80, 380, 40));
-
-        titleGenderProfile.setBackground(new java.awt.Color(55, 200, 255));
-        titleGenderProfile.setFont(new java.awt.Font("Leelawadee", 0, 20)); // NOI18N
-        titleGenderProfile.setForeground(new java.awt.Color(236, 233, 233));
-        titleGenderProfile.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        titleGenderProfile.setText("Gender :");
-        userProfilePage.add(titleGenderProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 140, 90, 20));
-
-        genderProfile.setEditable(false);
-        genderProfile.setBackground(new java.awt.Color(25, 41, 65));
-        genderProfile.setFont(new java.awt.Font("Leelawadee", 0, 20)); // NOI18N
-        genderProfile.setForeground(new java.awt.Color(19, 175, 248));
-        genderProfile.setText("F");
-        userProfilePage.add(genderProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 140, 70, 20));
-
-        titlebBirthProfile.setBackground(new java.awt.Color(55, 200, 255));
-        titlebBirthProfile.setFont(new java.awt.Font("Leelawadee", 0, 20)); // NOI18N
-        titlebBirthProfile.setForeground(new java.awt.Color(236, 233, 233));
-        titlebBirthProfile.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        titlebBirthProfile.setText("Birthday :");
-        userProfilePage.add(titlebBirthProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 130, 100, 40));
-
-        birthProfile.setEditable(false);
-        birthProfile.setBackground(new java.awt.Color(25, 41, 65));
-        birthProfile.setForeground(new java.awt.Color(19, 175, 248));
-        birthProfile.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("yyyy-M-d"))));
-        birthProfile.setToolTipText("yyy-mm-dd");
-        birthProfile.setFont(new java.awt.Font("Leelawadee", 0, 20)); // NOI18N
-        birthProfile.setName(""); // NOI18N
-        userProfilePage.add(birthProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 130, 220, 40));
-
-        titleDepartProfile.setBackground(new java.awt.Color(55, 200, 255));
-        titleDepartProfile.setFont(new java.awt.Font("Leelawadee", 0, 20)); // NOI18N
-        titleDepartProfile.setForeground(new java.awt.Color(236, 233, 233));
-        titleDepartProfile.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        titleDepartProfile.setText("Department :");
-        userProfilePage.add(titleDepartProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 180, 130, 40));
-
-        departProfile.setBackground(new java.awt.Color(55, 200, 255));
-        departProfile.setFont(new java.awt.Font("Leelawadee", 0, 20)); // NOI18N
-        departProfile.setForeground(new java.awt.Color(19, 175, 248));
-        departProfile.setText("School of Information Technology");
-        userProfilePage.add(departProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 180, 330, 40));
-
-        titleCongenProfile.setBackground(new java.awt.Color(55, 200, 255));
-        titleCongenProfile.setFont(new java.awt.Font("Leelawadee", 0, 20)); // NOI18N
-        titleCongenProfile.setForeground(new java.awt.Color(236, 233, 233));
-        titleCongenProfile.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        titleCongenProfile.setText("Congenitial Disease :");
-        userProfilePage.add(titleCongenProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 230, 210, 40));
-
-        congenProfile.setEditable(false);
-        congenProfile.setBackground(new java.awt.Color(25, 41, 65));
-        congenProfile.setFont(new java.awt.Font("Leelawadee", 0, 20)); // NOI18N
-        congenProfile.setForeground(new java.awt.Color(19, 175, 248));
-        congenProfile.setText("ภูมิแพ้");
-        congenProfile.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        userProfilePage.add(congenProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 230, 280, 40));
-
-        titleContact.setBackground(new java.awt.Color(13, 24, 35));
-        titleContact.setFont(new java.awt.Font("Leelawadee", 0, 24)); // NOI18N
-        titleContact.setForeground(new java.awt.Color(255, 255, 255));
-        titleContact.setText("Contact");
-        userProfilePage.add(titleContact, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 290, -1, 30));
-
-        titleEmailProfile.setBackground(new java.awt.Color(55, 200, 255));
-        titleEmailProfile.setFont(new java.awt.Font("Leelawadee", 0, 20)); // NOI18N
-        titleEmailProfile.setForeground(new java.awt.Color(236, 233, 233));
-        titleEmailProfile.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        titleEmailProfile.setText("Email :");
-        userProfilePage.add(titleEmailProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 340, 70, 20));
-
-        emailProfile.setEditable(false);
-        emailProfile.setBackground(new java.awt.Color(25, 41, 65));
-        emailProfile.setFont(new java.awt.Font("Leelawadee", 0, 20)); // NOI18N
-        emailProfile.setForeground(new java.awt.Color(19, 175, 248));
-        emailProfile.setText("thanatta.o@mail.kmutt.ac.th");
-        userProfilePage.add(emailProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 330, 380, 40));
-
-        titleTelProfile.setBackground(new java.awt.Color(55, 200, 255));
-        titleTelProfile.setFont(new java.awt.Font("Leelawadee", 0, 20)); // NOI18N
-        titleTelProfile.setForeground(new java.awt.Color(236, 233, 233));
-        titleTelProfile.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        titleTelProfile.setText("Telephone :");
-        userProfilePage.add(titleTelProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 370, 130, 40));
-
-        telProfile.setEditable(false);
-        telProfile.setBackground(new java.awt.Color(25, 41, 65));
-        telProfile.setFont(new java.awt.Font("Leelawadee", 0, 20)); // NOI18N
-        telProfile.setForeground(new java.awt.Color(19, 175, 248));
-        telProfile.setText("0900000000");
-        userProfilePage.add(telProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 380, 270, -1));
-
-        chooseImgProfileBut.setBackground(new java.awt.Color(126, 192, 237));
-        chooseImgProfileBut.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
-        chooseImgProfileBut.setForeground(new java.awt.Color(255, 255, 255));
-        chooseImgProfileBut.setText("Choose Profile");
-        chooseImgProfileBut.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chooseImgProfileButActionPerformed(evt);
-            }
-        });
-        userProfilePage.add(chooseImgProfileBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 240, -1, -1));
-
-        pathImgProfile.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
-        pathImgProfile.setForeground(new java.awt.Color(255, 255, 255));
-        pathImgProfile.setText("No Select File.");
-        userProfilePage.add(pathImgProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 245, 80, -1));
-
-        submitProfile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/submitMini.png"))); // NOI18N
-        submitProfile.setContentAreaFilled(false);
-        submitProfile.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                submitProfileMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                submitProfileMouseExited(evt);
-            }
-        });
-        submitProfile.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                submitProfileActionPerformed(evt);
-            }
-        });
-        userProfilePage.add(submitProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 370, 110, 50));
-
-        warningProfile.setBackground(new java.awt.Color(55, 200, 255));
-        warningProfile.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
-        warningProfile.setForeground(new java.awt.Color(255, 51, 51));
-        warningProfile.setText("Your name is incorrect");
-        userProfilePage.add(warningProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 380, 150, 30));
-
-        mainAdmin.add(userProfilePage, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 60, 770, 420));
-
-        supportPage.setBackground(new java.awt.Color(25, 41, 65));
-        supportPage.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        bodySupport.setBackground(new java.awt.Color(25, 41, 65));
-        bodySupport.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLBShowingResult.setBackground(new java.awt.Color(255, 255, 255));
-        jLBShowingResult.setFont(new java.awt.Font("Leelawadee", 0, 18)); // NOI18N
-        jLBShowingResult.setForeground(new java.awt.Color(255, 255, 255));
-        jLBShowingResult.setText("Showing results for:");
-        bodySupport.add(jLBShowingResult, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 180, 30));
-        bodySupport.add(jSeparator8, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 40, 220, 10));
-
-        jLBWhatsearch.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
-        jLBWhatsearch.setForeground(new java.awt.Color(255, 255, 255));
-        bodySupport.add(jLBWhatsearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 10, 220, 30));
-
-        jTAShowyouSearch.setEditable(false);
-        jTAShowyouSearch.setBackground(new java.awt.Color(25, 41, 65));
-        jTAShowyouSearch.setColumns(20);
-        jTAShowyouSearch.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
-        jTAShowyouSearch.setForeground(new java.awt.Color(255, 255, 255));
-        jTAShowyouSearch.setRows(5);
-        jTAShowyouSearch.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(19, 175, 248), 1, true));
-        resultScroll.setViewportView(jTAShowyouSearch);
-
-        bodySupport.add(resultScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 420, 300));
-
-        jTAContact.setEditable(false);
-        jTAContact.setBackground(new java.awt.Color(25, 41, 65));
-        jTAContact.setColumns(20);
-        jTAContact.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
-        jTAContact.setForeground(new java.awt.Color(255, 255, 255));
-        jTAContact.setRows(5);
-        jTAContact.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(19, 175, 248), 1, true));
-        contactScroll.setViewportView(jTAContact);
-
-        bodySupport.add(contactScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 60, 270, 300));
-
-        titleContactSupport.setFont(new java.awt.Font("Leelawadee", 0, 18)); // NOI18N
-        titleContactSupport.setForeground(new java.awt.Color(255, 255, 255));
-        titleContactSupport.setText("Contact Info :");
-        bodySupport.add(titleContactSupport, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 20, -1, -1));
-
-        supportPage.add(bodySupport, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 770, 370));
-
-        insertSupportPanel.setBackground(new java.awt.Color(25, 41, 65));
-        insertSupportPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        titleContent.setFont(new java.awt.Font("Leelawadee", 0, 18)); // NOI18N
-        titleContent.setForeground(new java.awt.Color(255, 255, 255));
-        titleContent.setText("Content Manual : ");
-        insertSupportPanel.add(titleContent, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 160, 30));
-        insertSupportPanel.add(jSeparator9, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 50, 440, 10));
-
-        insertSupporTitle.setBackground(new java.awt.Color(25, 41, 65));
-        insertSupporTitle.setFont(new java.awt.Font("Leelawadee", 0, 16)); // NOI18N
-        insertSupporTitle.setForeground(new java.awt.Color(55, 200, 255));
-        insertSupportPanel.add(insertSupporTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 20, 440, 30));
-
-        titleInsertSupport.setFont(new java.awt.Font("Leelawadee", 0, 18)); // NOI18N
-        titleInsertSupport.setForeground(new java.awt.Color(255, 255, 255));
-        titleInsertSupport.setText("Title Manual : ");
-        insertSupportPanel.add(titleInsertSupport, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 120, 30));
-
-        submitSupport.setBackground(new java.awt.Color(19, 175, 248));
-        submitSupport.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
-        submitSupport.setForeground(new java.awt.Color(255, 255, 255));
-        submitSupport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/submitMini.png"))); // NOI18N
-        submitSupport.setContentAreaFilled(false);
-        submitSupport.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                submitSupportMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                submitSupportMouseExited(evt);
-            }
-        });
-        submitSupport.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                submitSupportActionPerformed(evt);
-            }
-        });
-        insertSupportPanel.add(submitSupport, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 320, 100, 50));
-
-        insertContentSup.setBackground(new java.awt.Color(25, 41, 65));
-        insertContentSup.setColumns(20);
-        insertContentSup.setFont(new java.awt.Font("Leelawadee", 0, 16)); // NOI18N
-        insertContentSup.setForeground(new java.awt.Color(255, 255, 255));
-        insertContentSup.setLineWrap(true);
-        insertContentSup.setRows(5);
-        insertContentSup.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(19, 175, 248), 1, true));
-        insertSupportContentArea.setViewportView(insertContentSup);
-
-        insertSupportPanel.add(insertSupportContentArea, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 90, 530, 250));
-
-        waringInsertSupport.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
-        waringInsertSupport.setForeground(new java.awt.Color(255, 51, 51));
-        waringInsertSupport.setText("Please enter title or content.");
-        waringInsertSupport.setToolTipText("");
-        insertSupportPanel.add(waringInsertSupport, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 300, -1, -1));
-
-        cancleInsertSup.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/cancle.png"))); // NOI18N
-        cancleInsertSup.setContentAreaFilled(false);
-        cancleInsertSup.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                cancleInsertSupMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                cancleInsertSupMouseExited(evt);
-            }
-        });
-        cancleInsertSup.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cancleInsertSupActionPerformed(evt);
-            }
-        });
-        insertSupportPanel.add(cancleInsertSup, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 10, 60, 50));
-
-        titleCancleInsertSup.setFont(new java.awt.Font("Leelawadee UI", 0, 12)); // NOI18N
-        titleCancleInsertSup.setForeground(new java.awt.Color(255, 255, 255));
-        titleCancleInsertSup.setText("Cancle");
-        insertSupportPanel.add(titleCancleInsertSup, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 60, 40, 20));
-
-        supportPage.add(insertSupportPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 770, 370));
-
-        barTitle.setBackground(new java.awt.Color(15, 30, 52));
-        barTitle.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        titleSupport.setFont(new java.awt.Font("Leelawadee", 0, 22)); // NOI18N
-        titleSupport.setForeground(new java.awt.Color(19, 175, 248));
-        titleSupport.setText("Support");
-        barTitle.add(titleSupport, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 180, 50));
-
-        newManual.setBackground(new java.awt.Color(19, 175, 248));
-        newManual.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
-        newManual.setForeground(new java.awt.Color(255, 255, 255));
-        newManual.setText("New Manual");
-        newManual.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                newManualActionPerformed(evt);
-            }
-        });
-        barTitle.add(newManual, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 10, -1, 30));
-
-        supportPage.add(barTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 770, 50));
-
-        mainAdmin.add(supportPage, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 60, 770, 420));
-
-        cpPage.setBackground(new java.awt.Color(25, 41, 65));
-        cpPage.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        titleCountCan.setFont(new java.awt.Font("Leelawadee", 0, 20)); // NOI18N
-        titleCountCan.setForeground(new java.awt.Color(255, 255, 255));
-        titleCountCan.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        titleCountCan.setText("Count of Can :");
-        cpPage.add(titleCountCan, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 200, 130, 40));
-
-        titleNameUser.setFont(new java.awt.Font("Leelawadee", 0, 20)); // NOI18N
-        titleNameUser.setForeground(new java.awt.Color(255, 255, 255));
-        titleNameUser.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        titleNameUser.setText("Firstname User :");
-        cpPage.add(titleNameUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, 160, 60));
-
-        s3.setForeground(new java.awt.Color(255, 255, 255));
-        cpPage.add(s3, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 100, 240, 10));
-
-        s4.setForeground(new java.awt.Color(255, 255, 255));
-        cpPage.add(s4, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 230, 240, 10));
-
-        nameOfUser.setBackground(new java.awt.Color(25, 41, 65));
-        nameOfUser.setFont(new java.awt.Font("Leelawadee", 0, 18)); // NOI18N
-        nameOfUser.setForeground(new java.awt.Color(153, 153, 153));
-        nameOfUser.setText("    Name");
-        nameOfUser.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                nameOfUserFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                nameOfUserFocusLost(evt);
-            }
-        });
-        cpPage.add(nameOfUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 70, 230, 30));
-
-        countOfCan.setBackground(new java.awt.Color(25, 41, 65));
-        countOfCan.setFont(new java.awt.Font("Leelawadee", 0, 18)); // NOI18N
-        countOfCan.setForeground(new java.awt.Color(153, 153, 153));
-        countOfCan.setText("    Count");
-        countOfCan.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                countOfCanFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                countOfCanFocusLost(evt);
-            }
-        });
-        cpPage.add(countOfCan, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 200, 240, 30));
-
-        submitBut.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/submit.png"))); // NOI18N
-        submitBut.setContentAreaFilled(false);
-        submitBut.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                submitButMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                submitButMouseExited(evt);
-            }
-        });
-        submitBut.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                submitButActionPerformed(evt);
-            }
-        });
-        cpPage.add(submitBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 270, 150, -1));
-
-        cancleAdminBut.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/cancleBut.png"))); // NOI18N
-        cancleAdminBut.setContentAreaFilled(false);
-        cancleAdminBut.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                cancleAdminButMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                cancleAdminButMouseExited(evt);
-            }
-        });
-        cancleAdminBut.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cancleAdminButActionPerformed(evt);
-            }
-        });
-        cpPage.add(cancleAdminBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 270, 160, -1));
-
-        titleLastname.setFont(new java.awt.Font("Leelawadee", 0, 20)); // NOI18N
-        titleLastname.setForeground(new java.awt.Color(255, 255, 255));
-        titleLastname.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        titleLastname.setText("Lastname User :");
-        cpPage.add(titleLastname, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 120, 160, 60));
-
-        surnameOfUser.setBackground(new java.awt.Color(25, 41, 65));
-        surnameOfUser.setFont(new java.awt.Font("Leelawadee", 0, 18)); // NOI18N
-        surnameOfUser.setForeground(new java.awt.Color(153, 153, 153));
-        surnameOfUser.setText("    Surname");
-        surnameOfUser.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                surnameOfUserFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                surnameOfUserFocusLost(evt);
-            }
-        });
-        cpPage.add(surnameOfUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 130, 230, 30));
-
-        s5.setForeground(new java.awt.Color(255, 255, 255));
-        cpPage.add(s5, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 160, 240, 10));
-
-        mainAdmin.add(cpPage, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 60, 770, 421));
-
-        sharingPage.setBackground(new java.awt.Color(25, 41, 65));
-        sharingPage.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        menuSharing.setBackground(new java.awt.Color(13, 24, 35));
-        menuSharing.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        menuAdd.setBackground(new java.awt.Color(13, 24, 35));
-        menuAdd.setFont(new java.awt.Font("Leelawadee", 0, 18)); // NOI18N
-        menuAdd.setForeground(new java.awt.Color(102, 102, 102));
-        menuAdd.setText("Add Item");
-        menuAdd.setToolTipText("");
-        menuAdd.setContentAreaFilled(false);
-        menuAdd.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuAddActionPerformed(evt);
-            }
-        });
-        menuSharing.add(menuAdd, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, -1, 50));
-
-        menuEdit.setBackground(new java.awt.Color(13, 24, 35));
-        menuEdit.setFont(new java.awt.Font("Leelawadee", 0, 18)); // NOI18N
-        menuEdit.setForeground(new java.awt.Color(102, 102, 102));
-        menuEdit.setText("Edit Item");
-        menuEdit.setToolTipText("");
-        menuEdit.setContentAreaFilled(false);
-        menuEdit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuEditActionPerformed(evt);
-            }
-        });
-        menuSharing.add(menuEdit, new org.netbeans.lib.awtextra.AbsoluteConstraints(205, 10, 120, 50));
-
-        menuDelete.setBackground(new java.awt.Color(25, 41, 65));
-        menuDelete.setFont(new java.awt.Font("Leelawadee", 0, 18)); // NOI18N
-        menuDelete.setForeground(new java.awt.Color(102, 102, 102));
-        menuDelete.setText("Delete Item");
-        menuDelete.setToolTipText("");
-        menuDelete.setContentAreaFilled(false);
-        menuDelete.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuDeleteActionPerformed(evt);
-            }
-        });
-        menuSharing.add(menuDelete, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 10, -1, 50));
-
-        backAdd.setBackground(new java.awt.Color(25, 41, 65));
-
-        javax.swing.GroupLayout backAddLayout = new javax.swing.GroupLayout(backAdd);
-        backAdd.setLayout(backAddLayout);
-        backAddLayout.setHorizontalGroup(
-            backAddLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 130, Short.MAX_VALUE)
-        );
-        backAddLayout.setVerticalGroup(
-            backAddLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 50, Short.MAX_VALUE)
-        );
-
-        menuSharing.add(backAdd, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, 130, -1));
-
-        backEdit.setBackground(new java.awt.Color(25, 41, 65));
-
-        javax.swing.GroupLayout backEditLayout = new javax.swing.GroupLayout(backEdit);
-        backEdit.setLayout(backEditLayout);
-        backEditLayout.setHorizontalGroup(
-            backEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 130, Short.MAX_VALUE)
-        );
-        backEditLayout.setVerticalGroup(
-            backEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 50, Short.MAX_VALUE)
-        );
-
-        menuSharing.add(backEdit, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 10, 130, -1));
-
-        backDelete.setBackground(new java.awt.Color(25, 41, 65));
-
-        javax.swing.GroupLayout backDeleteLayout = new javax.swing.GroupLayout(backDelete);
-        backDelete.setLayout(backDeleteLayout);
-        backDeleteLayout.setHorizontalGroup(
-            backDeleteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 140, Short.MAX_VALUE)
-        );
-        backDeleteLayout.setVerticalGroup(
-            backDeleteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 50, Short.MAX_VALUE)
-        );
-
-        menuSharing.add(backDelete, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 10, 140, -1));
-
-        sharingPage.add(menuSharing, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 770, 60));
-
-        sharingPageTab.setBackground(new java.awt.Color(25, 41, 65));
-        sharingPageTab.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        itemListScroll.setBackground(new java.awt.Color(13, 24, 35));
-
-        itemListPage.setBackground(new java.awt.Color(13, 24, 35));
-        itemListPage.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        titleItemList.setFont(new java.awt.Font("Leelawadee", 0, 24)); // NOI18N
-        titleItemList.setForeground(new java.awt.Color(255, 255, 255));
-        titleItemList.setText("Item List");
-        itemListPage.add(titleItemList, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 100, 60));
-
-        closeBut.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        closeBut.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/delete-button.png"))); // NOI18N
-        closeBut.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                closeButMouseClicked(evt);
-            }
-        });
-        itemListPage.add(closeBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 0, 50, 40));
-
-        itemListScroll.setViewportView(itemListPage);
-
-        sharingPageTab.add(itemListScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 710, 330));
-
-        layerAddItem.setBackground(new java.awt.Color(13, 24, 35));
-        layerAddItem.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true), "Add Item", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Leelawadee", 0, 20), new java.awt.Color(3, 153, 223))); // NOI18N
-        layerAddItem.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        titleItemId.setBackground(new java.awt.Color(255, 255, 255));
-        titleItemId.setFont(new java.awt.Font("Leelawadee", 0, 18)); // NOI18N
-        titleItemId.setForeground(new java.awt.Color(255, 255, 255));
-        titleItemId.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        titleItemId.setText("Item ID :");
-        layerAddItem.add(titleItemId, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 80, 30));
-        layerAddItem.add(s6, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 60, 150, 10));
-        layerAddItem.add(s7, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 110, 170, 10));
-
-        titleItemName.setBackground(new java.awt.Color(255, 255, 255));
-        titleItemName.setFont(new java.awt.Font("Leelawadee", 0, 18)); // NOI18N
-        titleItemName.setForeground(new java.awt.Color(255, 255, 255));
-        titleItemName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        titleItemName.setText("Item Name :");
-        layerAddItem.add(titleItemName, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 130, 30));
-
-        itemName.setBackground(new java.awt.Color(13, 24, 35));
-        itemName.setFont(new java.awt.Font("Leelawadee", 0, 18)); // NOI18N
-        itemName.setForeground(new java.awt.Color(153, 153, 153));
-        itemName.setText("Name");
-        itemName.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                itemNameFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                itemNameFocusLost(evt);
-            }
-        });
-        layerAddItem.add(itemName, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 80, 160, 30));
-
-        titleItemCount.setBackground(new java.awt.Color(255, 255, 255));
-        titleItemCount.setFont(new java.awt.Font("Leelawadee", 0, 18)); // NOI18N
-        titleItemCount.setForeground(new java.awt.Color(255, 255, 255));
-        titleItemCount.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        titleItemCount.setText("Item Amount :");
-        layerAddItem.add(titleItemCount, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, 130, 30));
-        layerAddItem.add(s8, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 160, 150, 20));
-
-        itemAmount.setBackground(new java.awt.Color(13, 24, 35));
-        itemAmount.setFont(new java.awt.Font("Leelawadee", 0, 18)); // NOI18N
-        itemAmount.setForeground(new java.awt.Color(153, 153, 153));
-        itemAmount.setText("Count");
-        itemAmount.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                itemAmountFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                itemAmountFocusLost(evt);
-            }
-        });
-        layerAddItem.add(itemAmount, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 130, 140, 30));
-
-        submitButSharing.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/submitMini.png"))); // NOI18N
-        submitButSharing.setContentAreaFilled(false);
-        submitButSharing.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                submitButSharingMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                submitButSharingMouseExited(evt);
-            }
-        });
-        submitButSharing.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                submitButSharingActionPerformed(evt);
-            }
-        });
-        layerAddItem.add(submitButSharing, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 220, 110, -1));
-
-        cancleButSharing.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/cancleMini.png"))); // NOI18N
-        cancleButSharing.setContentAreaFilled(false);
-        cancleButSharing.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                cancleButSharingMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                cancleButSharingMouseExited(evt);
-            }
-        });
-        cancleButSharing.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cancleButSharingActionPerformed(evt);
-            }
-        });
-        layerAddItem.add(cancleButSharing, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 220, 90, 40));
-
-        itemId.setEditable(false);
-        itemId.setBackground(new java.awt.Color(13, 24, 35));
-        itemId.setFont(new java.awt.Font("Leelawadee", 0, 18)); // NOI18N
-        itemId.setForeground(new java.awt.Color(153, 153, 153));
-        itemId.setText("ID");
-        itemId.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                itemIdFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                itemIdFocusLost(evt);
-            }
-        });
-        layerAddItem.add(itemId, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 30, 130, 30));
-
-        pathImgItem.setBackground(new java.awt.Color(13, 24, 35));
-        pathImgItem.setFont(new java.awt.Font("Leelawadee UI", 0, 12)); // NOI18N
-        pathImgItem.setForeground(new java.awt.Color(153, 153, 153));
-        pathImgItem.setToolTipText("");
-        layerAddItem.add(pathImgItem, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 180, 150, 20));
-
-        notiSharing.setBackground(new java.awt.Color(13, 24, 35));
-        notiSharing.setFont(new java.awt.Font("Leelawadee UI", 0, 12)); // NOI18N
-        notiSharing.setForeground(new java.awt.Color(130, 255, 134));
-        notiSharing.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        notiSharing.setText("Success!!!");
-        notiSharing.setToolTipText("");
-        layerAddItem.add(notiSharing, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, 200, 20));
-
-        itemList.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/itemList.png"))); // NOI18N
-        itemList.setToolTipText("Item List");
-        itemList.setContentAreaFilled(false);
-        itemList.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                itemListMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                itemListMouseExited(evt);
-            }
-        });
-        itemList.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemListActionPerformed(evt);
-            }
-        });
-        layerAddItem.add(itemList, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 20, 50, -1));
-
-        titleItemPic.setBackground(new java.awt.Color(255, 255, 255));
-        titleItemPic.setFont(new java.awt.Font("Leelawadee", 0, 18)); // NOI18N
-        titleItemPic.setForeground(new java.awt.Color(255, 255, 255));
-        titleItemPic.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        titleItemPic.setText("Item Picture :");
-        layerAddItem.add(titleItemPic, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 140, 30));
-
-        chooseImgItem.setBackground(new java.awt.Color(126, 192, 237));
-        chooseImgItem.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
-        chooseImgItem.setForeground(new java.awt.Color(255, 255, 255));
-        chooseImgItem.setText("Choose");
-        chooseImgItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chooseImgItemActionPerformed(evt);
-            }
-        });
-        layerAddItem.add(chooseImgItem, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 173, 90, 30));
-
-        sharingPageTab.add(layerAddItem, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 70, 400, 270));
-
-        titleWhat.setBackground(new java.awt.Color(255, 255, 255));
-        titleWhat.setFont(new java.awt.Font("Leelawadee", 0, 24)); // NOI18N
-        titleWhat.setForeground(new java.awt.Color(255, 255, 255));
-        titleWhat.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        titleWhat.setText("What item do you want to ___? ");
-        sharingPageTab.add(titleWhat, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 450, 50));
-
-        radioType.setBackground(new java.awt.Color(25, 41, 65));
-        radioType.setFont(new java.awt.Font("Leelawadee", 0, 18)); // NOI18N
-        radioType.setForeground(new java.awt.Color(19, 175, 248));
-        radioType.setText("Type Bicycle");
-        radioType.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
-        radioType.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                radioTypeActionPerformed(evt);
-            }
-        });
-        sharingPageTab.add(radioType, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 70, 140, 40));
-
-        radioEquip.setBackground(new java.awt.Color(25, 41, 65));
-        radioEquip.setFont(new java.awt.Font("Leelawadee", 0, 18)); // NOI18N
-        radioEquip.setForeground(new java.awt.Color(19, 175, 248));
-        radioEquip.setText("Equipment");
-        radioEquip.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        radioEquip.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
-        radioEquip.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                radioEquipActionPerformed(evt);
-            }
-        });
-        sharingPageTab.add(radioEquip, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 120, 140, 40));
-
-        sharingPage.add(sharingPageTab, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 770, 360));
-
-        mainAdmin.add(sharingPage, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 60, 770, 421));
-
-        getContentPane().add(mainAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         mainUser.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -1950,6 +1116,11 @@ public class GreenSociety extends javax.swing.JFrame {
         news1.setText("     News");
         news1.setToolTipText("");
         news1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        news1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                news1MouseClicked(evt);
+            }
+        });
         menuBar1.add(news1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, 140, 20));
 
         bikeRepair1.setBackground(new java.awt.Color(0, 0, 0));
@@ -2146,6 +1317,63 @@ public class GreenSociety extends javax.swing.JFrame {
         barNoti1.add(iconNoti1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 60, 60));
 
         mainUser.add(barNoti1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 480, 770, 60));
+
+        newsPage1.setBackground(new java.awt.Color(25, 41, 65));
+        newsPage1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanelShowNewsAfterClick.setBackground(new java.awt.Color(25, 41, 65));
+        jPanelShowNewsAfterClick.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabelShowTopicAfterClick.setFont(new java.awt.Font("Leelawadee", 0, 18)); // NOI18N
+        jLabelShowTopicAfterClick.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelShowTopicAfterClick.setText("jLabel3");
+        jPanelShowNewsAfterClick.add(jLabelShowTopicAfterClick, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 20, 490, 30));
+
+        jTextAreaShowDetailNewsAfterClick.setEditable(false);
+        jTextAreaShowDetailNewsAfterClick.setBackground(new java.awt.Color(22, 31, 39));
+        jTextAreaShowDetailNewsAfterClick.setColumns(20);
+        jTextAreaShowDetailNewsAfterClick.setFont(new java.awt.Font("Leelawadee", 0, 15)); // NOI18N
+        jTextAreaShowDetailNewsAfterClick.setForeground(new java.awt.Color(19, 175, 248));
+        jTextAreaShowDetailNewsAfterClick.setLineWrap(true);
+        jTextAreaShowDetailNewsAfterClick.setRows(5);
+        jTextAreaShowDetailNewsAfterClick.setBorder(null);
+        jScrollPaneInTextAreaNewsDetail.setViewportView(jTextAreaShowDetailNewsAfterClick);
+
+        jPanelShowNewsAfterClick.add(jScrollPaneInTextAreaNewsDetail, new org.netbeans.lib.awtextra.AbsoluteConstraints(226, 60, 500, 302));
+
+        closeNews1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/delete-button.png"))); // NOI18N
+        closeNews1.setContentAreaFilled(false);
+        closeNews1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                closeNews1ActionPerformed(evt);
+            }
+        });
+        jPanelShowNewsAfterClick.add(closeNews1, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 0, -1, 50));
+
+        imgNews.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
+        imgNews.setForeground(new java.awt.Color(255, 255, 255));
+        imgNews.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        imgNews.setText("No Picture.");
+        imgNews.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true));
+        jPanelShowNewsAfterClick.add(imgNews, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 200, 260));
+
+        newsPage1.add(jPanelShowNewsAfterClick, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 770, 420));
+
+        listNewsPage.setBackground(new java.awt.Color(25, 41, 65));
+        listNewsPage.setPreferredSize(new java.awt.Dimension(750, 400));
+        listNewsPage.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel1.setFont(new java.awt.Font("Leelawadee", 0, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("News");
+        listNewsPage.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 70, 30));
+
+        listNewsScroll.setViewportView(listNewsPage);
+
+        newsPage1.add(listNewsScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, -10, 790, 440));
+
+        mainUser.add(newsPage1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 60, 770, 420));
 
         timePageT.setBackground(new java.awt.Color(25, 41, 65));
         timePageT.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -2742,6 +1970,1263 @@ public class GreenSociety extends javax.swing.JFrame {
         mainUser.add(cpPage1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 60, 770, 421));
 
         getContentPane().add(mainUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        mainAdmin.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        barSearch.setBackground(new java.awt.Color(13, 24, 35));
+        barSearch.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        barSearch.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 40, 120, 40));
+
+        iconSearch.setFont(new java.awt.Font("Leelawadee UI", 0, 20)); // NOI18N
+        iconSearch.setForeground(new java.awt.Color(255, 255, 255));
+        iconSearch.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        iconSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/search.png"))); // NOI18N
+        iconSearch.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                iconSearchMouseClicked(evt);
+            }
+        });
+        barSearch.add(iconSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 0, 60, 50));
+
+        title.setBackground(new java.awt.Color(0, 0, 0));
+        title.setFont(new java.awt.Font("Leelawadee", 0, 30)); // NOI18N
+        title.setForeground(new java.awt.Color(255, 255, 255));
+        title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        title.setText("GREEN  SOCIETY");
+        title.setToolTipText("");
+        barSearch.add(title, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 260, 60));
+
+        search.setBackground(new java.awt.Color(13, 24, 35));
+        search.setFont(new java.awt.Font("Leelawadee", 0, 18)); // NOI18N
+        search.setForeground(new java.awt.Color(255, 255, 255));
+        search.setText("Search");
+        search.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                searchFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                searchFocusLost(evt);
+            }
+        });
+        search.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                searchKeyPressed(evt);
+            }
+        });
+        barSearch.add(search, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 10, 120, 30));
+
+        mainAdmin.add(barSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 0, 900, 60));
+
+        backMenuBar.setBackground(new java.awt.Color(22, 31, 39));
+        backMenuBar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        menuBar.setBackground(new java.awt.Color(13, 24, 35));
+        menuBar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        news.setBackground(new java.awt.Color(0, 0, 0));
+        news.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
+        news.setForeground(new java.awt.Color(255, 255, 255));
+        news.setText("     News");
+        news.setToolTipText("");
+        news.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        news.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                newsMouseClicked(evt);
+            }
+        });
+        menuBar.add(news, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, 140, 20));
+
+        bikeRepair.setBackground(new java.awt.Color(0, 0, 0));
+        bikeRepair.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
+        bikeRepair.setForeground(new java.awt.Color(255, 255, 255));
+        bikeRepair.setText("     Bike Repairing");
+        bikeRepair.setToolTipText("");
+        bikeRepair.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        menuBar.add(bikeRepair, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 140, 140, 20));
+
+        canCounter.setBackground(new java.awt.Color(0, 0, 0));
+        canCounter.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
+        canCounter.setForeground(new java.awt.Color(255, 255, 255));
+        canCounter.setText("     Can Counter");
+        canCounter.setToolTipText("");
+        canCounter.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        canCounter.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                canCounterMouseClicked(evt);
+            }
+        });
+        menuBar.add(canCounter, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 170, 140, 20));
+
+        bikeSharing.setBackground(new java.awt.Color(255, 255, 255));
+        bikeSharing.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
+        bikeSharing.setForeground(new java.awt.Color(255, 255, 255));
+        bikeSharing.setText("     Bike Sharing");
+        bikeSharing.setToolTipText("");
+        bikeSharing.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        bikeSharing.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                bikeSharingMouseClicked(evt);
+            }
+        });
+        menuBar.add(bikeSharing, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 140, 20));
+
+        history.setBackground(new java.awt.Color(0, 0, 0));
+        history.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
+        history.setForeground(new java.awt.Color(255, 255, 255));
+        history.setText("     History");
+        history.setToolTipText("");
+        history.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        menuBar.add(history, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, 140, 20));
+
+        profile.setBackground(new java.awt.Color(0, 0, 0));
+        profile.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
+        profile.setForeground(new java.awt.Color(255, 255, 255));
+        profile.setText("     PROFILE");
+        profile.setToolTipText("");
+        profile.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                profileMouseClicked(evt);
+            }
+        });
+        menuBar.add(profile, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 330, 140, 30));
+
+        menu.setBackground(new java.awt.Color(0, 0, 0));
+        menu.setFont(new java.awt.Font("Leelawadee", 0, 18)); // NOI18N
+        menu.setForeground(new java.awt.Color(255, 255, 255));
+        menu.setText("MENU");
+        menu.setToolTipText("");
+        menuBar.add(menu, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 50, 30));
+
+        timer.setBackground(new java.awt.Color(0, 0, 0));
+        timer.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
+        timer.setForeground(new java.awt.Color(255, 255, 255));
+        timer.setText("     Timer");
+        timer.setToolTipText("");
+        timer.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        timer.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                timerMouseClicked(evt);
+            }
+        });
+        menuBar.add(timer, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 260, 140, 20));
+
+        support.setBackground(new java.awt.Color(0, 0, 0));
+        support.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
+        support.setForeground(new java.awt.Color(255, 255, 255));
+        support.setText("     Support");
+        support.setToolTipText("");
+        support.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        support.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                supportMouseClicked(evt);
+            }
+        });
+        menuBar.add(support, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 290, 140, 20));
+
+        titleSignout.setBackground(new java.awt.Color(0, 0, 0));
+        titleSignout.setFont(new java.awt.Font("Leelawadee", 0, 13)); // NOI18N
+        titleSignout.setForeground(new java.awt.Color(255, 255, 255));
+        titleSignout.setText("     SIGN OUT");
+        titleSignout.setToolTipText("");
+        menuBar.add(titleSignout, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 430, 140, 30));
+
+        arrowDownIcon.setBackground(new java.awt.Color(0, 0, 0));
+        arrowDownIcon.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
+        arrowDownIcon.setForeground(new java.awt.Color(255, 255, 255));
+        arrowDownIcon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        arrowDownIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/chevron-arrow-down.png"))); // NOI18N
+        arrowDownIcon.setToolTipText("");
+        menuBar.add(arrowDownIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 70, 40, 30));
+
+        backMenuBar.add(menuBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 480));
+
+        mainAdmin.add(backMenuBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 0, 150, 480));
+
+        barUser.setBackground(new java.awt.Color(19, 175, 248));
+        barUser.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        pic.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        barUser.add(pic, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 60, 60));
+
+        name.setBackground(new java.awt.Color(0, 0, 0));
+        name.setFont(new java.awt.Font("Leelawadee", 0, 16)); // NOI18N
+        name.setForeground(new java.awt.Color(13, 24, 35));
+        name.setText("NAME");
+        name.setToolTipText("");
+        name.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        barUser.add(name, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 130, 50));
+
+        position.setBackground(new java.awt.Color(0, 0, 0));
+        position.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
+        position.setForeground(new java.awt.Color(255, 255, 255));
+        position.setText("Student");
+        position.setToolTipText("");
+        position.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        barUser.add(position, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 30, 130, 50));
+
+        mainAdmin.add(barUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 480, 200, 60));
+
+        backBarUser.setBackground(new java.awt.Color(55, 200, 255));
+        backBarUser.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        mainAdmin.add(backBarUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 480, 210, 60));
+
+        backBarIcon.setBackground(new java.awt.Color(55, 200, 255));
+        backBarIcon.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        barIcon.setBackground(new java.awt.Color(19, 175, 248));
+        barIcon.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        iconMenu.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        iconMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/menu.png"))); // NOI18N
+        barIcon.add(iconMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 50, 30));
+
+        iconBike.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        iconBike.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/bike.png"))); // NOI18N
+        barIcon.add(iconBike, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 50, 40));
+
+        iconProfile.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        iconProfile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/profile-user.png"))); // NOI18N
+        barIcon.add(iconProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 320, 50, 50));
+
+        signout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/signout.png"))); // NOI18N
+        signout.setContentAreaFilled(false);
+        signout.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                signoutMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                signoutMouseExited(evt);
+            }
+        });
+        signout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                signoutActionPerformed(evt);
+            }
+        });
+        barIcon.add(signout, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 420, 50, 50));
+
+        backBarIcon.add(barIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 50, 540));
+
+        mainAdmin.add(backBarIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 60, 540));
+
+        barNoti.setBackground(new java.awt.Color(13, 24, 35));
+        barNoti.setLayout(null);
+        mainAdmin.add(barNoti, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 480, 770, 60));
+
+        newsPage.setBackground(new java.awt.Color(25, 41, 65));
+        newsPage.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        showNews.setBackground(new java.awt.Color(9, 20, 36));
+        showNews.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        titletopicNews.setBackground(new java.awt.Color(255, 255, 255));
+        titletopicNews.setFont(new java.awt.Font("Leelawadee", 0, 18)); // NOI18N
+        titletopicNews.setForeground(new java.awt.Color(255, 255, 255));
+        titletopicNews.setText(" Topic :");
+        showNews.add(titletopicNews, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 60, -1));
+
+        topicNews.setEditable(false);
+        topicNews.setBackground(new java.awt.Color(9, 20, 36));
+        topicNews.setFont(new java.awt.Font("Leelawadee", 0, 18)); // NOI18N
+        topicNews.setForeground(new java.awt.Color(255, 255, 255));
+        topicNews.setText("Galaxy S8");
+        showNews.add(topicNews, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 20, 260, -1));
+
+        describeNewsText.setEditable(false);
+        describeNewsText.setBackground(new java.awt.Color(9, 20, 36));
+        describeNewsText.setColumns(20);
+        describeNewsText.setFont(new java.awt.Font("Leelawadee", 0, 16)); // NOI18N
+        describeNewsText.setForeground(new java.awt.Color(255, 255, 255));
+        describeNewsText.setLineWrap(true);
+        describeNewsText.setRows(5);
+        describeNews.setViewportView(describeNewsText);
+
+        showNews.add(describeNews, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 70, 600, 260));
+
+        binding.setBackground(new java.awt.Color(9, 20, 36));
+        binding.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        cancleUpdateNews.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/cancleMini.png"))); // NOI18N
+        cancleUpdateNews.setContentAreaFilled(false);
+        cancleUpdateNews.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                cancleUpdateNewsMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                cancleUpdateNewsMouseExited(evt);
+            }
+        });
+        binding.add(cancleUpdateNews, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 0, 120, 50));
+
+        submitUpdateNews.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/submitMini.png"))); // NOI18N
+        submitUpdateNews.setContentAreaFilled(false);
+        submitUpdateNews.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                submitUpdateNewsMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                submitUpdateNewsMouseExited(evt);
+            }
+        });
+        binding.add(submitUpdateNews, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 0, 120, 50));
+
+        showNews.add(binding, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 340, 290, 50));
+
+        closeNews.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/delete-button.png"))); // NOI18N
+        closeNews.setContentAreaFilled(false);
+        closeNews.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                closeNewsActionPerformed(evt);
+            }
+        });
+        showNews.add(closeNews, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 0, -1, 50));
+
+        newsPage.add(showNews, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 710, 400));
+
+        jPanelInsertNews.setBackground(new java.awt.Color(25, 41, 65));
+        jPanelInsertNews.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        txtAreaNewsDetail.setBackground(new java.awt.Color(13, 24, 35));
+        txtAreaNewsDetail.setColumns(20);
+        txtAreaNewsDetail.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtAreaNewsDetail.setForeground(new java.awt.Color(19, 175, 248));
+        txtAreaNewsDetail.setRows(5);
+        jScrollPane4.setViewportView(txtAreaNewsDetail);
+
+        jPanelInsertNews.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 190, 630, 170));
+
+        txtDescription1.setFont(new java.awt.Font("Leelawadee", 0, 18)); // NOI18N
+        txtDescription1.setForeground(new java.awt.Color(255, 255, 255));
+        txtDescription1.setText("DESCRIPTION");
+        jPanelInsertNews.add(txtDescription1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 80, -1, -1));
+
+        txtFieldNewsDescription.setBackground(new java.awt.Color(13, 24, 35));
+        txtFieldNewsDescription.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
+        txtFieldNewsDescription.setForeground(new java.awt.Color(19, 175, 248));
+        jPanelInsertNews.add(txtFieldNewsDescription, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 630, 40));
+
+        txtDescription.setFont(new java.awt.Font("Leelawadee", 0, 18)); // NOI18N
+        txtDescription.setForeground(new java.awt.Color(255, 255, 255));
+        txtDescription.setText("DETAILS");
+        jPanelInsertNews.add(txtDescription, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, 280, -1));
+
+        cancleButtonNews.setBackground(new java.awt.Color(255, 255, 255));
+        cancleButtonNews.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
+        cancleButtonNews.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/cancleMini.png"))); // NOI18N
+        cancleButtonNews.setContentAreaFilled(false);
+        cancleButtonNews.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                cancleButtonNewsMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                cancleButtonNewsMouseExited(evt);
+            }
+        });
+        cancleButtonNews.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancleButtonNewsActionPerformed(evt);
+            }
+        });
+        jPanelInsertNews.add(cancleButtonNews, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 370, 90, 40));
+
+        submitButtonNews.setBackground(new java.awt.Color(255, 255, 255));
+        submitButtonNews.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
+        submitButtonNews.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/submitMini.png"))); // NOI18N
+        submitButtonNews.setContentAreaFilled(false);
+        submitButtonNews.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                submitButtonNewsMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                submitButtonNewsMouseExited(evt);
+            }
+        });
+        submitButtonNews.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                submitButtonNewsActionPerformed(evt);
+            }
+        });
+        jPanelInsertNews.add(submitButtonNews, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 370, 90, 40));
+
+        jPanelBackgroundInsertLabel.setBackground(new java.awt.Color(102, 102, 102));
+        jPanelBackgroundInsertLabel.setForeground(new java.awt.Color(255, 255, 255));
+        jPanelBackgroundInsertLabel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabelInsert.setFont(new java.awt.Font("Leelawadee", 0, 18)); // NOI18N
+        jLabelInsert.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelInsert.setText("INSERT");
+        jPanelBackgroundInsertLabel.add(jLabelInsert, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 130, 40));
+
+        jPanelInsertNews.add(jPanelBackgroundInsertLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 770, 60));
+
+        chooseImgNews.setText("Select Image");
+        chooseImgNews.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chooseImgNewsActionPerformed(evt);
+            }
+        });
+        jPanelInsertNews.add(chooseImgNews, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 380, -1, -1));
+
+        pathImgNews.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
+        pathImgNews.setForeground(new java.awt.Color(153, 153, 153));
+        pathImgNews.setText("No Select");
+        jPanelInsertNews.add(pathImgNews, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 384, 170, 20));
+
+        newsPage.add(jPanelInsertNews, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 770, 420));
+
+        showlistNews.setBackground(new java.awt.Color(11, 24, 43));
+        showlistNews.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        newsList.setViewportView(showlistNews);
+
+        newsPage.add(newsList, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 60, 600, 330));
+
+        jButtonInsert.setFont(new java.awt.Font("Leelawadee", 0, 11)); // NOI18N
+        jButtonInsert.setText("INSERT");
+        jButtonInsert.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonInsertActionPerformed(evt);
+            }
+        });
+        newsPage.add(jButtonInsert, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 20, -1, -1));
+
+        titleInsert.setFont(new java.awt.Font("Leelawadee", 0, 18)); // NOI18N
+        titleInsert.setForeground(new java.awt.Color(255, 255, 255));
+        titleInsert.setText("News");
+        newsPage.add(titleInsert, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 60, 30));
+
+        mainAdmin.add(newsPage, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 60, 770, 420));
+
+        sharingPage.setBackground(new java.awt.Color(25, 41, 65));
+        sharingPage.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        menuSharing.setBackground(new java.awt.Color(13, 24, 35));
+        menuSharing.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        menuAdd.setBackground(new java.awt.Color(13, 24, 35));
+        menuAdd.setFont(new java.awt.Font("Leelawadee", 0, 18)); // NOI18N
+        menuAdd.setForeground(new java.awt.Color(102, 102, 102));
+        menuAdd.setText("Add Item");
+        menuAdd.setToolTipText("");
+        menuAdd.setContentAreaFilled(false);
+        menuAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuAddActionPerformed(evt);
+            }
+        });
+        menuSharing.add(menuAdd, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, -1, 50));
+
+        menuEdit.setBackground(new java.awt.Color(13, 24, 35));
+        menuEdit.setFont(new java.awt.Font("Leelawadee", 0, 18)); // NOI18N
+        menuEdit.setForeground(new java.awt.Color(102, 102, 102));
+        menuEdit.setText("Edit Item");
+        menuEdit.setToolTipText("");
+        menuEdit.setContentAreaFilled(false);
+        menuEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuEditActionPerformed(evt);
+            }
+        });
+        menuSharing.add(menuEdit, new org.netbeans.lib.awtextra.AbsoluteConstraints(205, 10, 120, 50));
+
+        menuDelete.setBackground(new java.awt.Color(25, 41, 65));
+        menuDelete.setFont(new java.awt.Font("Leelawadee", 0, 18)); // NOI18N
+        menuDelete.setForeground(new java.awt.Color(102, 102, 102));
+        menuDelete.setText("Delete Item");
+        menuDelete.setToolTipText("");
+        menuDelete.setContentAreaFilled(false);
+        menuDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuDeleteActionPerformed(evt);
+            }
+        });
+        menuSharing.add(menuDelete, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 10, -1, 50));
+
+        backAdd.setBackground(new java.awt.Color(25, 41, 65));
+
+        javax.swing.GroupLayout backAddLayout = new javax.swing.GroupLayout(backAdd);
+        backAdd.setLayout(backAddLayout);
+        backAddLayout.setHorizontalGroup(
+            backAddLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 130, Short.MAX_VALUE)
+        );
+        backAddLayout.setVerticalGroup(
+            backAddLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 50, Short.MAX_VALUE)
+        );
+
+        menuSharing.add(backAdd, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, 130, -1));
+
+        backEdit.setBackground(new java.awt.Color(25, 41, 65));
+
+        javax.swing.GroupLayout backEditLayout = new javax.swing.GroupLayout(backEdit);
+        backEdit.setLayout(backEditLayout);
+        backEditLayout.setHorizontalGroup(
+            backEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 130, Short.MAX_VALUE)
+        );
+        backEditLayout.setVerticalGroup(
+            backEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 50, Short.MAX_VALUE)
+        );
+
+        menuSharing.add(backEdit, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 10, 130, -1));
+
+        backDelete.setBackground(new java.awt.Color(25, 41, 65));
+
+        javax.swing.GroupLayout backDeleteLayout = new javax.swing.GroupLayout(backDelete);
+        backDelete.setLayout(backDeleteLayout);
+        backDeleteLayout.setHorizontalGroup(
+            backDeleteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 140, Short.MAX_VALUE)
+        );
+        backDeleteLayout.setVerticalGroup(
+            backDeleteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 50, Short.MAX_VALUE)
+        );
+
+        menuSharing.add(backDelete, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 10, 140, -1));
+
+        sharingPage.add(menuSharing, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 770, 60));
+
+        sharingPageTab.setBackground(new java.awt.Color(25, 41, 65));
+        sharingPageTab.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        itemListScroll.setBackground(new java.awt.Color(13, 24, 35));
+
+        itemListPage.setBackground(new java.awt.Color(13, 24, 35));
+        itemListPage.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        titleItemList.setFont(new java.awt.Font("Leelawadee", 0, 24)); // NOI18N
+        titleItemList.setForeground(new java.awt.Color(255, 255, 255));
+        titleItemList.setText("Item List");
+        itemListPage.add(titleItemList, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 100, 60));
+
+        closeBut.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        closeBut.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/delete-button.png"))); // NOI18N
+        closeBut.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                closeButMouseClicked(evt);
+            }
+        });
+        itemListPage.add(closeBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 0, 50, 40));
+
+        itemListScroll.setViewportView(itemListPage);
+
+        sharingPageTab.add(itemListScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 710, 330));
+
+        layerAddItem.setBackground(new java.awt.Color(13, 24, 35));
+        layerAddItem.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true), "Add Item", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Leelawadee", 0, 20), new java.awt.Color(3, 153, 223))); // NOI18N
+        layerAddItem.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        titleItemId.setBackground(new java.awt.Color(255, 255, 255));
+        titleItemId.setFont(new java.awt.Font("Leelawadee", 0, 18)); // NOI18N
+        titleItemId.setForeground(new java.awt.Color(255, 255, 255));
+        titleItemId.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        titleItemId.setText("Item ID :");
+        layerAddItem.add(titleItemId, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 80, 30));
+        layerAddItem.add(s6, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 60, 150, 10));
+        layerAddItem.add(s7, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 110, 170, 10));
+
+        titleItemName.setBackground(new java.awt.Color(255, 255, 255));
+        titleItemName.setFont(new java.awt.Font("Leelawadee", 0, 18)); // NOI18N
+        titleItemName.setForeground(new java.awt.Color(255, 255, 255));
+        titleItemName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        titleItemName.setText("Item Name :");
+        layerAddItem.add(titleItemName, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 130, 30));
+
+        itemName.setBackground(new java.awt.Color(13, 24, 35));
+        itemName.setFont(new java.awt.Font("Leelawadee", 0, 18)); // NOI18N
+        itemName.setForeground(new java.awt.Color(153, 153, 153));
+        itemName.setText("Name");
+        itemName.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                itemNameFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                itemNameFocusLost(evt);
+            }
+        });
+        layerAddItem.add(itemName, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 80, 160, 30));
+
+        titleItemCount.setBackground(new java.awt.Color(255, 255, 255));
+        titleItemCount.setFont(new java.awt.Font("Leelawadee", 0, 18)); // NOI18N
+        titleItemCount.setForeground(new java.awt.Color(255, 255, 255));
+        titleItemCount.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        titleItemCount.setText("Item Amount :");
+        layerAddItem.add(titleItemCount, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, 130, 30));
+        layerAddItem.add(s8, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 160, 150, 20));
+
+        itemAmount.setBackground(new java.awt.Color(13, 24, 35));
+        itemAmount.setFont(new java.awt.Font("Leelawadee", 0, 18)); // NOI18N
+        itemAmount.setForeground(new java.awt.Color(153, 153, 153));
+        itemAmount.setText("Count");
+        itemAmount.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                itemAmountFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                itemAmountFocusLost(evt);
+            }
+        });
+        layerAddItem.add(itemAmount, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 130, 140, 30));
+
+        submitButSharing.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/submitMini.png"))); // NOI18N
+        submitButSharing.setContentAreaFilled(false);
+        submitButSharing.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                submitButSharingMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                submitButSharingMouseExited(evt);
+            }
+        });
+        submitButSharing.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                submitButSharingActionPerformed(evt);
+            }
+        });
+        layerAddItem.add(submitButSharing, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 220, 110, -1));
+
+        cancleButSharing.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/cancleMini.png"))); // NOI18N
+        cancleButSharing.setContentAreaFilled(false);
+        cancleButSharing.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                cancleButSharingMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                cancleButSharingMouseExited(evt);
+            }
+        });
+        cancleButSharing.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancleButSharingActionPerformed(evt);
+            }
+        });
+        layerAddItem.add(cancleButSharing, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 220, 90, 40));
+
+        itemId.setEditable(false);
+        itemId.setBackground(new java.awt.Color(13, 24, 35));
+        itemId.setFont(new java.awt.Font("Leelawadee", 0, 18)); // NOI18N
+        itemId.setForeground(new java.awt.Color(153, 153, 153));
+        itemId.setText("ID");
+        itemId.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                itemIdFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                itemIdFocusLost(evt);
+            }
+        });
+        layerAddItem.add(itemId, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 30, 130, 30));
+
+        pathImgItem.setBackground(new java.awt.Color(13, 24, 35));
+        pathImgItem.setFont(new java.awt.Font("Leelawadee UI", 0, 12)); // NOI18N
+        pathImgItem.setForeground(new java.awt.Color(153, 153, 153));
+        pathImgItem.setToolTipText("");
+        layerAddItem.add(pathImgItem, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 180, 150, 20));
+
+        notiSharing.setBackground(new java.awt.Color(13, 24, 35));
+        notiSharing.setFont(new java.awt.Font("Leelawadee UI", 0, 12)); // NOI18N
+        notiSharing.setForeground(new java.awt.Color(130, 255, 134));
+        notiSharing.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        notiSharing.setText("Success!!!");
+        notiSharing.setToolTipText("");
+        layerAddItem.add(notiSharing, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, 200, 20));
+
+        itemList.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/itemList.png"))); // NOI18N
+        itemList.setToolTipText("Item List");
+        itemList.setContentAreaFilled(false);
+        itemList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                itemListMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                itemListMouseExited(evt);
+            }
+        });
+        itemList.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemListActionPerformed(evt);
+            }
+        });
+        layerAddItem.add(itemList, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 20, 50, -1));
+
+        titleItemPic.setBackground(new java.awt.Color(255, 255, 255));
+        titleItemPic.setFont(new java.awt.Font("Leelawadee", 0, 18)); // NOI18N
+        titleItemPic.setForeground(new java.awt.Color(255, 255, 255));
+        titleItemPic.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        titleItemPic.setText("Item Picture :");
+        layerAddItem.add(titleItemPic, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 140, 30));
+
+        chooseImgItem.setBackground(new java.awt.Color(126, 192, 237));
+        chooseImgItem.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
+        chooseImgItem.setForeground(new java.awt.Color(255, 255, 255));
+        chooseImgItem.setText("Choose");
+        chooseImgItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chooseImgItemActionPerformed(evt);
+            }
+        });
+        layerAddItem.add(chooseImgItem, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 173, 90, 30));
+
+        sharingPageTab.add(layerAddItem, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 70, 400, 270));
+
+        titleWhat.setBackground(new java.awt.Color(255, 255, 255));
+        titleWhat.setFont(new java.awt.Font("Leelawadee", 0, 24)); // NOI18N
+        titleWhat.setForeground(new java.awt.Color(255, 255, 255));
+        titleWhat.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        titleWhat.setText("What item do you want to ___? ");
+        sharingPageTab.add(titleWhat, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 450, 50));
+
+        radioType.setBackground(new java.awt.Color(25, 41, 65));
+        radioType.setFont(new java.awt.Font("Leelawadee", 0, 18)); // NOI18N
+        radioType.setForeground(new java.awt.Color(19, 175, 248));
+        radioType.setText("Type Bicycle");
+        radioType.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
+        radioType.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioTypeActionPerformed(evt);
+            }
+        });
+        sharingPageTab.add(radioType, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 70, 140, 40));
+
+        radioEquip.setBackground(new java.awt.Color(25, 41, 65));
+        radioEquip.setFont(new java.awt.Font("Leelawadee", 0, 18)); // NOI18N
+        radioEquip.setForeground(new java.awt.Color(19, 175, 248));
+        radioEquip.setText("Equipment");
+        radioEquip.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        radioEquip.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
+        radioEquip.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioEquipActionPerformed(evt);
+            }
+        });
+        sharingPageTab.add(radioEquip, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 120, 140, 40));
+
+        sharingPage.add(sharingPageTab, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 770, 360));
+
+        mainAdmin.add(sharingPage, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 60, 770, 421));
+
+        supportPage.setBackground(new java.awt.Color(25, 41, 65));
+        supportPage.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        bodySupport.setBackground(new java.awt.Color(25, 41, 65));
+        bodySupport.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLBShowingResult.setBackground(new java.awt.Color(255, 255, 255));
+        jLBShowingResult.setFont(new java.awt.Font("Leelawadee", 0, 18)); // NOI18N
+        jLBShowingResult.setForeground(new java.awt.Color(255, 255, 255));
+        jLBShowingResult.setText("Showing results for:");
+        bodySupport.add(jLBShowingResult, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 180, 30));
+        bodySupport.add(jSeparator8, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 40, 220, 10));
+
+        jLBWhatsearch.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
+        jLBWhatsearch.setForeground(new java.awt.Color(255, 255, 255));
+        bodySupport.add(jLBWhatsearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 10, 220, 30));
+
+        jTAShowyouSearch.setEditable(false);
+        jTAShowyouSearch.setBackground(new java.awt.Color(25, 41, 65));
+        jTAShowyouSearch.setColumns(20);
+        jTAShowyouSearch.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
+        jTAShowyouSearch.setForeground(new java.awt.Color(255, 255, 255));
+        jTAShowyouSearch.setRows(5);
+        jTAShowyouSearch.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(19, 175, 248), 1, true));
+        resultScroll.setViewportView(jTAShowyouSearch);
+
+        bodySupport.add(resultScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 420, 300));
+
+        jTAContact.setEditable(false);
+        jTAContact.setBackground(new java.awt.Color(25, 41, 65));
+        jTAContact.setColumns(20);
+        jTAContact.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
+        jTAContact.setForeground(new java.awt.Color(255, 255, 255));
+        jTAContact.setRows(5);
+        jTAContact.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(19, 175, 248), 1, true));
+        contactScroll.setViewportView(jTAContact);
+
+        bodySupport.add(contactScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 60, 270, 300));
+
+        titleContactSupport.setFont(new java.awt.Font("Leelawadee", 0, 18)); // NOI18N
+        titleContactSupport.setForeground(new java.awt.Color(255, 255, 255));
+        titleContactSupport.setText("Contact Info :");
+        bodySupport.add(titleContactSupport, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 20, -1, -1));
+
+        supportPage.add(bodySupport, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 770, 370));
+
+        insertSupportPanel.setBackground(new java.awt.Color(25, 41, 65));
+        insertSupportPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        titleContent.setFont(new java.awt.Font("Leelawadee", 0, 18)); // NOI18N
+        titleContent.setForeground(new java.awt.Color(255, 255, 255));
+        titleContent.setText("Content Manual : ");
+        insertSupportPanel.add(titleContent, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 160, 30));
+        insertSupportPanel.add(jSeparator9, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 50, 440, 10));
+
+        insertSupporTitle.setBackground(new java.awt.Color(25, 41, 65));
+        insertSupporTitle.setFont(new java.awt.Font("Leelawadee", 0, 16)); // NOI18N
+        insertSupporTitle.setForeground(new java.awt.Color(55, 200, 255));
+        insertSupportPanel.add(insertSupporTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 20, 440, 30));
+
+        titleInsertSupport.setFont(new java.awt.Font("Leelawadee", 0, 18)); // NOI18N
+        titleInsertSupport.setForeground(new java.awt.Color(255, 255, 255));
+        titleInsertSupport.setText("Title Manual : ");
+        insertSupportPanel.add(titleInsertSupport, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 120, 30));
+
+        submitSupport.setBackground(new java.awt.Color(19, 175, 248));
+        submitSupport.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
+        submitSupport.setForeground(new java.awt.Color(255, 255, 255));
+        submitSupport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/submitMini.png"))); // NOI18N
+        submitSupport.setContentAreaFilled(false);
+        submitSupport.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                submitSupportMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                submitSupportMouseExited(evt);
+            }
+        });
+        submitSupport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                submitSupportActionPerformed(evt);
+            }
+        });
+        insertSupportPanel.add(submitSupport, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 320, 100, 50));
+
+        insertContentSup.setBackground(new java.awt.Color(25, 41, 65));
+        insertContentSup.setColumns(20);
+        insertContentSup.setFont(new java.awt.Font("Leelawadee", 0, 16)); // NOI18N
+        insertContentSup.setForeground(new java.awt.Color(255, 255, 255));
+        insertContentSup.setLineWrap(true);
+        insertContentSup.setRows(5);
+        insertContentSup.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(19, 175, 248), 1, true));
+        insertSupportContentArea.setViewportView(insertContentSup);
+
+        insertSupportPanel.add(insertSupportContentArea, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 90, 530, 250));
+
+        waringInsertSupport.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
+        waringInsertSupport.setForeground(new java.awt.Color(255, 51, 51));
+        waringInsertSupport.setText("Please enter title or content.");
+        waringInsertSupport.setToolTipText("");
+        insertSupportPanel.add(waringInsertSupport, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 300, -1, -1));
+
+        cancleInsertSup.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/cancle.png"))); // NOI18N
+        cancleInsertSup.setContentAreaFilled(false);
+        cancleInsertSup.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                cancleInsertSupMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                cancleInsertSupMouseExited(evt);
+            }
+        });
+        cancleInsertSup.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancleInsertSupActionPerformed(evt);
+            }
+        });
+        insertSupportPanel.add(cancleInsertSup, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 10, 60, 50));
+
+        titleCancleInsertSup.setFont(new java.awt.Font("Leelawadee UI", 0, 12)); // NOI18N
+        titleCancleInsertSup.setForeground(new java.awt.Color(255, 255, 255));
+        titleCancleInsertSup.setText("Cancle");
+        insertSupportPanel.add(titleCancleInsertSup, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 60, 40, 20));
+
+        supportPage.add(insertSupportPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 770, 370));
+
+        barTitle.setBackground(new java.awt.Color(15, 30, 52));
+        barTitle.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        titleSupport.setFont(new java.awt.Font("Leelawadee", 0, 22)); // NOI18N
+        titleSupport.setForeground(new java.awt.Color(19, 175, 248));
+        titleSupport.setText("Support");
+        barTitle.add(titleSupport, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 180, 50));
+
+        newManual.setBackground(new java.awt.Color(19, 175, 248));
+        newManual.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
+        newManual.setForeground(new java.awt.Color(255, 255, 255));
+        newManual.setText("New Manual");
+        newManual.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                newManualActionPerformed(evt);
+            }
+        });
+        barTitle.add(newManual, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 10, -1, 30));
+
+        supportPage.add(barTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 770, 50));
+
+        mainAdmin.add(supportPage, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 60, 770, 420));
+
+        userProfilePage.setBackground(new java.awt.Color(25, 41, 65));
+        userProfilePage.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        editProfileBut.setBackground(new java.awt.Color(126, 192, 237));
+        editProfileBut.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
+        editProfileBut.setForeground(new java.awt.Color(255, 255, 255));
+        editProfileBut.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/editProfile.png"))); // NOI18N
+        editProfileBut.setContentAreaFilled(false);
+        editProfileBut.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                editProfileButMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                editProfileButMouseExited(evt);
+            }
+        });
+        editProfileBut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editProfileButActionPerformed(evt);
+            }
+        });
+        userProfilePage.add(editProfileBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 3, 110, 40));
+
+        titleUserId.setBackground(new java.awt.Color(55, 200, 255));
+        titleUserId.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
+        titleUserId.setForeground(new java.awt.Color(255, 255, 255));
+        titleUserId.setText("User ID :");
+        userProfilePage.add(titleUserId, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, 60, -1));
+
+        userID.setBackground(new java.awt.Color(55, 200, 255));
+        userID.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
+        userID.setForeground(new java.awt.Color(19, 175, 248));
+        userID.setText("1");
+        userID.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        userProfilePage.add(userID, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 20, 60, 20));
+        userProfilePage.add(imageProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, 200, 170));
+
+        titleAbout.setBackground(new java.awt.Color(13, 24, 35));
+        titleAbout.setFont(new java.awt.Font("Leelawadee", 0, 24)); // NOI18N
+        titleAbout.setForeground(new java.awt.Color(255, 255, 255));
+        titleAbout.setText("ABOUT");
+        userProfilePage.add(titleAbout, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 40, -1, -1));
+
+        titleNameProfile.setBackground(new java.awt.Color(55, 200, 255));
+        titleNameProfile.setFont(new java.awt.Font("Leelawadee", 0, 20)); // NOI18N
+        titleNameProfile.setForeground(new java.awt.Color(236, 233, 233));
+        titleNameProfile.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        titleNameProfile.setText("Name :");
+        userProfilePage.add(titleNameProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 90, 80, 20));
+
+        nameProfile.setEditable(false);
+        nameProfile.setBackground(new java.awt.Color(25, 41, 65));
+        nameProfile.setFont(new java.awt.Font("Leelawadee", 0, 20)); // NOI18N
+        nameProfile.setForeground(new java.awt.Color(19, 175, 248));
+        nameProfile.setText("Thanatta  Opatkajonyos");
+        userProfilePage.add(nameProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 80, 380, 40));
+
+        titleGenderProfile.setBackground(new java.awt.Color(55, 200, 255));
+        titleGenderProfile.setFont(new java.awt.Font("Leelawadee", 0, 20)); // NOI18N
+        titleGenderProfile.setForeground(new java.awt.Color(236, 233, 233));
+        titleGenderProfile.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        titleGenderProfile.setText("Gender :");
+        userProfilePage.add(titleGenderProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 140, 90, 20));
+
+        genderProfile.setEditable(false);
+        genderProfile.setBackground(new java.awt.Color(25, 41, 65));
+        genderProfile.setFont(new java.awt.Font("Leelawadee", 0, 20)); // NOI18N
+        genderProfile.setForeground(new java.awt.Color(19, 175, 248));
+        genderProfile.setText("F");
+        userProfilePage.add(genderProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 140, 70, 20));
+
+        titlebBirthProfile.setBackground(new java.awt.Color(55, 200, 255));
+        titlebBirthProfile.setFont(new java.awt.Font("Leelawadee", 0, 20)); // NOI18N
+        titlebBirthProfile.setForeground(new java.awt.Color(236, 233, 233));
+        titlebBirthProfile.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        titlebBirthProfile.setText("Birthday :");
+        userProfilePage.add(titlebBirthProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 130, 100, 40));
+
+        birthProfile.setEditable(false);
+        birthProfile.setBackground(new java.awt.Color(25, 41, 65));
+        birthProfile.setForeground(new java.awt.Color(19, 175, 248));
+        birthProfile.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("yyyy-M-d"))));
+        birthProfile.setToolTipText("yyy-mm-dd");
+        birthProfile.setFont(new java.awt.Font("Leelawadee", 0, 20)); // NOI18N
+        birthProfile.setName(""); // NOI18N
+        userProfilePage.add(birthProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 130, 220, 40));
+
+        titleDepartProfile.setBackground(new java.awt.Color(55, 200, 255));
+        titleDepartProfile.setFont(new java.awt.Font("Leelawadee", 0, 20)); // NOI18N
+        titleDepartProfile.setForeground(new java.awt.Color(236, 233, 233));
+        titleDepartProfile.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        titleDepartProfile.setText("Department :");
+        userProfilePage.add(titleDepartProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 180, 130, 40));
+
+        departProfile.setBackground(new java.awt.Color(55, 200, 255));
+        departProfile.setFont(new java.awt.Font("Leelawadee", 0, 20)); // NOI18N
+        departProfile.setForeground(new java.awt.Color(19, 175, 248));
+        departProfile.setText("School of Information Technology");
+        userProfilePage.add(departProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 180, 330, 40));
+
+        titleCongenProfile.setBackground(new java.awt.Color(55, 200, 255));
+        titleCongenProfile.setFont(new java.awt.Font("Leelawadee", 0, 20)); // NOI18N
+        titleCongenProfile.setForeground(new java.awt.Color(236, 233, 233));
+        titleCongenProfile.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        titleCongenProfile.setText("Congenitial Disease :");
+        userProfilePage.add(titleCongenProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 230, 210, 40));
+
+        congenProfile.setEditable(false);
+        congenProfile.setBackground(new java.awt.Color(25, 41, 65));
+        congenProfile.setFont(new java.awt.Font("Leelawadee", 0, 20)); // NOI18N
+        congenProfile.setForeground(new java.awt.Color(19, 175, 248));
+        congenProfile.setText("ภูมิแพ้");
+        congenProfile.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        userProfilePage.add(congenProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 230, 280, 40));
+
+        titleContact.setBackground(new java.awt.Color(13, 24, 35));
+        titleContact.setFont(new java.awt.Font("Leelawadee", 0, 24)); // NOI18N
+        titleContact.setForeground(new java.awt.Color(255, 255, 255));
+        titleContact.setText("Contact");
+        userProfilePage.add(titleContact, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 290, -1, 30));
+
+        titleEmailProfile.setBackground(new java.awt.Color(55, 200, 255));
+        titleEmailProfile.setFont(new java.awt.Font("Leelawadee", 0, 20)); // NOI18N
+        titleEmailProfile.setForeground(new java.awt.Color(236, 233, 233));
+        titleEmailProfile.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        titleEmailProfile.setText("Email :");
+        userProfilePage.add(titleEmailProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 340, 70, 20));
+
+        emailProfile.setEditable(false);
+        emailProfile.setBackground(new java.awt.Color(25, 41, 65));
+        emailProfile.setFont(new java.awt.Font("Leelawadee", 0, 20)); // NOI18N
+        emailProfile.setForeground(new java.awt.Color(19, 175, 248));
+        emailProfile.setText("thanatta.o@mail.kmutt.ac.th");
+        userProfilePage.add(emailProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 330, 380, 40));
+
+        titleTelProfile.setBackground(new java.awt.Color(55, 200, 255));
+        titleTelProfile.setFont(new java.awt.Font("Leelawadee", 0, 20)); // NOI18N
+        titleTelProfile.setForeground(new java.awt.Color(236, 233, 233));
+        titleTelProfile.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        titleTelProfile.setText("Telephone :");
+        userProfilePage.add(titleTelProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 370, 130, 40));
+
+        telProfile.setEditable(false);
+        telProfile.setBackground(new java.awt.Color(25, 41, 65));
+        telProfile.setFont(new java.awt.Font("Leelawadee", 0, 20)); // NOI18N
+        telProfile.setForeground(new java.awt.Color(19, 175, 248));
+        telProfile.setText("0900000000");
+        userProfilePage.add(telProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 380, 270, -1));
+
+        chooseImgProfileBut.setBackground(new java.awt.Color(126, 192, 237));
+        chooseImgProfileBut.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
+        chooseImgProfileBut.setForeground(new java.awt.Color(255, 255, 255));
+        chooseImgProfileBut.setText("Choose Profile");
+        chooseImgProfileBut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chooseImgProfileButActionPerformed(evt);
+            }
+        });
+        userProfilePage.add(chooseImgProfileBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 240, -1, -1));
+
+        pathImgProfile.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
+        pathImgProfile.setForeground(new java.awt.Color(255, 255, 255));
+        pathImgProfile.setText("No Select File.");
+        userProfilePage.add(pathImgProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 245, 80, -1));
+
+        submitProfile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/submitMini.png"))); // NOI18N
+        submitProfile.setContentAreaFilled(false);
+        submitProfile.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                submitProfileMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                submitProfileMouseExited(evt);
+            }
+        });
+        submitProfile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                submitProfileActionPerformed(evt);
+            }
+        });
+        userProfilePage.add(submitProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 370, 110, 50));
+
+        warningProfile.setBackground(new java.awt.Color(55, 200, 255));
+        warningProfile.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
+        warningProfile.setForeground(new java.awt.Color(255, 51, 51));
+        warningProfile.setText("Your name is incorrect");
+        userProfilePage.add(warningProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 380, 150, 30));
+
+        mainAdmin.add(userProfilePage, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 60, 770, 420));
+
+        timerPage.setBackground(new java.awt.Color(25, 41, 65));
+        timerPage.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        selectItemReturn.setBackground(new java.awt.Color(25, 41, 65));
+        selectItemReturn.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true), "Select Items", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Leelawadee", 0, 14), new java.awt.Color(19, 175, 248))); // NOI18N
+        selectItemReturn.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        cancleReturn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/cancleMini.png"))); // NOI18N
+        cancleReturn.setContentAreaFilled(false);
+        cancleReturn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                cancleReturnMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                cancleReturnMouseExited(evt);
+            }
+        });
+        cancleReturn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancleReturnActionPerformed(evt);
+            }
+        });
+        selectItemReturn.add(cancleReturn, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 181, 90, 50));
+
+        returnDateBorrowing.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
+        returnDateBorrowing.setForeground(new java.awt.Color(102, 255, 102));
+        returnDateBorrowing.setText("Return : 20/3/2017  18:00");
+        returnDateBorrowing.setToolTipText("");
+        selectItemReturn.add(returnDateBorrowing, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 200, 200, 40));
+
+        timerPage.add(selectItemReturn, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 80, 480, 240));
+
+        userDetail.setBackground(new java.awt.Color(22, 31, 39));
+        userDetail.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Name : John", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Leelawadee", 0, 16), new java.awt.Color(0, 153, 255))); // NOI18N
+        userDetail.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        closeUserDetail.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/delete-button.png"))); // NOI18N
+        closeUserDetail.setContentAreaFilled(false);
+        closeUserDetail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                closeUserDetailActionPerformed(evt);
+            }
+        });
+        userDetail.add(closeUserDetail, new org.netbeans.lib.awtextra.AbsoluteConstraints(497, 10, 50, 40));
+
+        timerPage.add(userDetail, new org.netbeans.lib.awtextra.AbsoluteConstraints(105, 40, 550, 340));
+
+        timewatch1.setBackground(new java.awt.Color(255, 255, 255));
+        timewatch1.setEnabled(false);
+        timewatch1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        titleNow1.setFont(new java.awt.Font("Leelawadee", 0, 24)); // NOI18N
+        titleNow1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        titleNow1.setText("Now:");
+        timewatch1.add(titleNow1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 60, 60, 40));
+
+        timeLeftShow1.setFont(new java.awt.Font("Leelawadee", 0, 28)); // NOI18N
+        timeLeftShow1.setForeground(new java.awt.Color(255, 51, 51));
+        timewatch1.add(timeLeftShow1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 60, 460, 40));
+
+        endTime1.setFont(new java.awt.Font("Leelawadee", 0, 18)); // NOI18N
+        timewatch1.add(endTime1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 30, 490, 20));
+
+        iconClockBig1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        iconClockBig1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/clockBig.png"))); // NOI18N
+        timewatch1.add(iconClockBig1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 140, 130));
+
+        timerPage.add(timewatch1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, 660, 130));
+        timerPage.add(listUserBorrowing, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 150, 620, 260));
+
+        mainAdmin.add(timerPage, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 60, 770, 420));
+
+        cpPage.setBackground(new java.awt.Color(25, 41, 65));
+        cpPage.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        titleCountCan.setFont(new java.awt.Font("Leelawadee", 0, 20)); // NOI18N
+        titleCountCan.setForeground(new java.awt.Color(255, 255, 255));
+        titleCountCan.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        titleCountCan.setText("Count of Can :");
+        cpPage.add(titleCountCan, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 200, 130, 40));
+
+        titleNameUser.setFont(new java.awt.Font("Leelawadee", 0, 20)); // NOI18N
+        titleNameUser.setForeground(new java.awt.Color(255, 255, 255));
+        titleNameUser.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        titleNameUser.setText("Firstname User :");
+        cpPage.add(titleNameUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, 160, 60));
+
+        s3.setForeground(new java.awt.Color(255, 255, 255));
+        cpPage.add(s3, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 100, 240, 10));
+
+        s4.setForeground(new java.awt.Color(255, 255, 255));
+        cpPage.add(s4, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 230, 240, 10));
+
+        nameOfUser.setBackground(new java.awt.Color(25, 41, 65));
+        nameOfUser.setFont(new java.awt.Font("Leelawadee", 0, 18)); // NOI18N
+        nameOfUser.setForeground(new java.awt.Color(153, 153, 153));
+        nameOfUser.setText("    Name");
+        nameOfUser.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                nameOfUserFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                nameOfUserFocusLost(evt);
+            }
+        });
+        cpPage.add(nameOfUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 70, 230, 30));
+
+        countOfCan.setBackground(new java.awt.Color(25, 41, 65));
+        countOfCan.setFont(new java.awt.Font("Leelawadee", 0, 18)); // NOI18N
+        countOfCan.setForeground(new java.awt.Color(153, 153, 153));
+        countOfCan.setText("    Count");
+        countOfCan.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                countOfCanFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                countOfCanFocusLost(evt);
+            }
+        });
+        cpPage.add(countOfCan, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 200, 240, 30));
+
+        submitBut.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/submit.png"))); // NOI18N
+        submitBut.setContentAreaFilled(false);
+        submitBut.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                submitButMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                submitButMouseExited(evt);
+            }
+        });
+        submitBut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                submitButActionPerformed(evt);
+            }
+        });
+        cpPage.add(submitBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 270, 150, -1));
+
+        cancleAdminBut.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/cancleBut.png"))); // NOI18N
+        cancleAdminBut.setContentAreaFilled(false);
+        cancleAdminBut.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                cancleAdminButMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                cancleAdminButMouseExited(evt);
+            }
+        });
+        cancleAdminBut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancleAdminButActionPerformed(evt);
+            }
+        });
+        cpPage.add(cancleAdminBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 270, 160, -1));
+
+        titleLastname.setFont(new java.awt.Font("Leelawadee", 0, 20)); // NOI18N
+        titleLastname.setForeground(new java.awt.Color(255, 255, 255));
+        titleLastname.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        titleLastname.setText("Lastname User :");
+        cpPage.add(titleLastname, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 120, 160, 60));
+
+        surnameOfUser.setBackground(new java.awt.Color(25, 41, 65));
+        surnameOfUser.setFont(new java.awt.Font("Leelawadee", 0, 18)); // NOI18N
+        surnameOfUser.setForeground(new java.awt.Color(153, 153, 153));
+        surnameOfUser.setText("    Surname");
+        surnameOfUser.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                surnameOfUserFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                surnameOfUserFocusLost(evt);
+            }
+        });
+        cpPage.add(surnameOfUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 130, 230, 30));
+
+        s5.setForeground(new java.awt.Color(255, 255, 255));
+        cpPage.add(s5, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 160, 240, 10));
+
+        mainAdmin.add(cpPage, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 60, 770, 421));
+
+        getContentPane().add(mainAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         login.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -3364,13 +3849,17 @@ public class GreenSociety extends javax.swing.JFrame {
                     mainUserSetVisible();
                     mainAdmin.setVisible(false);
                     mainAdminSetVisible();
+                    newsPage1.setVisible(true);
+                    news1.setForeground(new java.awt.Color(19, 175, 248));
+                    listNewsScroll.setVisible(true);
+                    listNewsPage.setVisible(true);
+                    jPanelShowNewsAfterClick.setVisible(false);
+                    setListNewsUser();
                     name1.setText(User.getFirstName().toUpperCase());
                     pic1.setIcon(new ImageIcon(new ImageIcon(getClass().getResource(User.getImgPath())).getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT)));
                     boolean status = sh.checkStatus();
-                    System.out.println(status);
                     if (status == false) {
                         boolean timesup = sh.isTimesUp();
-                        System.out.println(timesup);
                         if (timesup == false) {
                             try {
                                 sh.checkTime();
@@ -3457,17 +3946,19 @@ public class GreenSociety extends javax.swing.JFrame {
     }//GEN-LAST:event_searchFocusLost
 
     private void canCounterMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_canCounterMouseClicked
+        news.setForeground(new java.awt.Color(255, 255, 255));
         canCounter.setForeground(new java.awt.Color(19, 175, 248));
         bikeSharing.setForeground(new java.awt.Color(255, 255, 255));
-        timer.setForeground(new java.awt.Color(255,255,255));
-        support.setForeground(new java.awt.Color(255,255,255));
+        timer.setForeground(new java.awt.Color(255, 255, 255));
+        support.setForeground(new java.awt.Color(255, 255, 255));
         profile.setForeground(new java.awt.Color(255, 255, 255));
+        newsPage.setVisible(false);
         cpPage.setVisible(true);
         sharingPage.setVisible(false);
         timerPage.setVisible(false);
         supportPage.setVisible(false);
         userProfilePage.setVisible(false);
-        
+
         nameOfUser.setText("    Name");
         surnameOfUser.setText("    Surname");
         countOfCan.setText("    Count");
@@ -3477,17 +3968,19 @@ public class GreenSociety extends javax.swing.JFrame {
     }//GEN-LAST:event_canCounterMouseClicked
 
     private void bikeSharingMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bikeSharingMouseClicked
-        canCounter.setForeground(new java.awt.Color(255,255,255));
+        news.setForeground(new java.awt.Color(255, 255, 255));
+        canCounter.setForeground(new java.awt.Color(255, 255, 255));
         bikeSharing.setForeground(new java.awt.Color(19, 175, 248));
-        timer.setForeground(new java.awt.Color(255,255,255));
-        support.setForeground(new java.awt.Color(255,255,255));
+        timer.setForeground(new java.awt.Color(255, 255, 255));
+        support.setForeground(new java.awt.Color(255, 255, 255));
         profile.setForeground(new java.awt.Color(255, 255, 255));
+        newsPage.setVisible(false);
         cpPage.setVisible(false);
         sharingPage.setVisible(true);
         timerPage.setVisible(false);
         supportPage.setVisible(false);
         userProfilePage.setVisible(false);
-        
+
         menuAdd.setForeground(new Color(102, 102, 102));
         menuEdit.setForeground(new Color(102, 102, 102));
         menuDelete.setForeground(new Color(102, 102, 102));
@@ -3501,15 +3994,17 @@ public class GreenSociety extends javax.swing.JFrame {
         layerAddItem.setVisible(false);
         canCounter.setForeground(new java.awt.Color(255, 255, 255));
         itemListScroll.setVisible(false);
-        
+
     }//GEN-LAST:event_bikeSharingMouseClicked
 
     private void timerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_timerMouseClicked
-        canCounter.setForeground(new java.awt.Color(255,255,255));
-        bikeSharing.setForeground(new java.awt.Color(255,255,255));
+        news.setForeground(new java.awt.Color(255, 255, 255));
+        canCounter.setForeground(new java.awt.Color(255, 255, 255));
+        bikeSharing.setForeground(new java.awt.Color(255, 255, 255));
         timer.setForeground(new java.awt.Color(19, 175, 248));
-        support.setForeground(new java.awt.Color(255,255,255));
+        support.setForeground(new java.awt.Color(255, 255, 255));
         profile.setForeground(new java.awt.Color(255, 255, 255));
+        newsPage.setVisible(false);
         cpPage.setVisible(false);
         sharingPage.setVisible(false);
         timerPage.setVisible(true);
@@ -3518,7 +4013,7 @@ public class GreenSociety extends javax.swing.JFrame {
         userDetail.setVisible(false);
         selectItemReturn.setVisible(false);
         setUserBorrow();
-        
+
         Date current = new java.util.Date();
         try {
             sh.timeAdmin(current);
@@ -3818,25 +4313,25 @@ public class GreenSociety extends javax.swing.JFrame {
             try {
                 int count = Integer.parseInt(itemAmount.getText());
                 if (name.equals("Name")) {
-                    if(pathPic.equals("")){
+                    if (pathPic.equals("")) {
                         titleItemName.setForeground(new Color(255, 51, 51));
                         titleItemPic.setForeground(new Color(255, 51, 51));
                         notiSharing.setText("Not Success,Please enter again");
                         notiSharing.setForeground(new Color(255, 51, 51));
                         notiSharing.setVisible(true);
-                    }else{
+                    } else {
                         titleItemName.setForeground(new Color(255, 51, 51));
                         notiSharing.setText("Not Success,Please enter again");
                         notiSharing.setForeground(new Color(255, 51, 51));
                         notiSharing.setVisible(true);
                     }
-                }else if(pathPic.equals("")){
+                } else if (pathPic.equals("")) {
                     titleItemPic.setForeground(new Color(255, 51, 51));
                     notiSharing.setText("Not Success,Please enter again");
                     notiSharing.setForeground(new Color(255, 51, 51));
                     notiSharing.setVisible(true);
-                }else{
-                    sh.addItem(id, name, count,pathPic);
+                } else {
+                    sh.addItem(id, name, count, pathPic);
                     notiSharing.setText("Success.");
                     notiSharing.setForeground(new Color(130, 255, 134));
                     notiSharing.setVisible(true);
@@ -3850,27 +4345,27 @@ public class GreenSociety extends javax.swing.JFrame {
                 }
             } catch (NumberFormatException ne) {
                 if (name.equals("Name")) {
-                    if(pathPic.equals("")){
+                    if (pathPic.equals("")) {
                         titleItemName.setForeground(new Color(255, 51, 51));
                         titleItemPic.setForeground(new Color(255, 51, 51));
                         titleItemCount.setForeground(new Color(255, 51, 51));
                         notiSharing.setText("Not Success,Please enter again");
                         notiSharing.setForeground(new Color(255, 51, 51));
                         notiSharing.setVisible(true);
-                    }else{
+                    } else {
                         titleItemName.setForeground(new Color(255, 51, 51));
                         titleItemCount.setForeground(new Color(255, 51, 51));
                         notiSharing.setText("Not Success,Please enter again");
                         notiSharing.setForeground(new Color(255, 51, 51));
                         notiSharing.setVisible(true);
                     }
-                }else if(pathPic.equals("")){
+                } else if (pathPic.equals("")) {
                     titleItemCount.setForeground(new Color(255, 51, 51));
                     titleItemPic.setForeground(new Color(255, 51, 51));
                     notiSharing.setText("Not Success,Please enter again");
                     notiSharing.setForeground(new Color(255, 51, 51));
                     notiSharing.setVisible(true);
-                }else {
+                } else {
                     titleItemPic.setForeground(new Color(255, 51, 51));
                     notiSharing.setText("Not Success,Please enter again");
                     notiSharing.setForeground(new Color(255, 51, 51));
@@ -4125,12 +4620,14 @@ public class GreenSociety extends javax.swing.JFrame {
     }//GEN-LAST:event_search1FocusLost
 
     private void canCounter1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_canCounter1MouseClicked
+        news1.setForeground(new java.awt.Color(255,255,255));
         canCounter1.setForeground(new java.awt.Color(19, 175, 248));
-        bikeSharing1.setForeground(new java.awt.Color(255,255,255));
-        timer1.setForeground(new java.awt.Color(255,255,255));
-        history1.setForeground(new java.awt.Color(255,255,255));
-        support1.setForeground(new java.awt.Color(255,255,255));
-        profile1.setForeground(new java.awt.Color(255,255,255));
+        bikeSharing1.setForeground(new java.awt.Color(255, 255, 255));
+        timer1.setForeground(new java.awt.Color(255, 255, 255));
+        history1.setForeground(new java.awt.Color(255, 255, 255));
+        support1.setForeground(new java.awt.Color(255, 255, 255));
+        profile1.setForeground(new java.awt.Color(255, 255, 255));
+        newsPage1.setVisible(false);
         cpPage1.setVisible(true);
         sharingScroll.setVisible(false);
         sharingStep3.setVisible(false);
@@ -4148,11 +4645,13 @@ public class GreenSociety extends javax.swing.JFrame {
 
     private void bikeSharing1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bikeSharing1MouseClicked
         bikeSharing1.setForeground(new java.awt.Color(19, 175, 248));
-        canCounter1.setForeground(new java.awt.Color(255,255,255));
-        timer1.setForeground(new java.awt.Color(255,255,255));
-        history1.setForeground(new java.awt.Color(255,255,255));
-        support1.setForeground(new java.awt.Color(255,255,255));
-        profile1.setForeground(new java.awt.Color(255,255,255));
+        news1.setForeground(new java.awt.Color(255, 255, 255));
+        canCounter1.setForeground(new java.awt.Color(255, 255, 255));
+        timer1.setForeground(new java.awt.Color(255, 255, 255));
+        history1.setForeground(new java.awt.Color(255, 255, 255));
+        support1.setForeground(new java.awt.Color(255, 255, 255));
+        profile1.setForeground(new java.awt.Color(255, 255, 255));
+        newsPage1.setVisible(false);
         cpPage1.setVisible(false);
         timePageT.setVisible(false);
         timePageF.setVisible(false);
@@ -4174,9 +4673,9 @@ public class GreenSociety extends javax.swing.JFrame {
                 if (timesup == true) {
                     JOptionPane.showMessageDialog(this, "Please return Items before borrow.", "Warning", JOptionPane.OK_OPTION);
                     timer1.setForeground(new java.awt.Color(19, 175, 248));
-                    bikeSharing1.setForeground(new java.awt.Color(255,255,255));
-                    canCounter1.setForeground(new java.awt.Color(255,255,255));
-                    profile1.setForeground(new java.awt.Color(255,255,255));
+                    bikeSharing1.setForeground(new java.awt.Color(255, 255, 255));
+                    canCounter1.setForeground(new java.awt.Color(255, 255, 255));
+                    profile1.setForeground(new java.awt.Color(255, 255, 255));
                     cpPage1.setVisible(false);
                     timePageT.setVisible(false);
                     timePageF.setVisible(false);
@@ -4194,11 +4693,13 @@ public class GreenSociety extends javax.swing.JFrame {
 
     private void timer1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_timer1MouseClicked
         timer1.setForeground(new java.awt.Color(19, 175, 248));
-        bikeSharing1.setForeground(new java.awt.Color(255,255,255));
-        canCounter1.setForeground(new java.awt.Color(255,255,255));
-        history1.setForeground(new java.awt.Color(255,255,255));
-        support1.setForeground(new java.awt.Color(255,255,255));
-        profile1.setForeground(new java.awt.Color(255,255,255));
+        news1.setForeground(new java.awt.Color(255, 255, 255));
+        canCounter1.setForeground(new java.awt.Color(255, 255, 255));
+        bikeSharing1.setForeground(new java.awt.Color(255, 255, 255));
+        history1.setForeground(new java.awt.Color(255, 255, 255));
+        support1.setForeground(new java.awt.Color(255, 255, 255));
+        profile1.setForeground(new java.awt.Color(255, 255, 255));
+        newsPage1.setVisible(false);
         cpPage1.setVisible(false);
         timePageT.setVisible(false);
         timePageF.setVisible(false);
@@ -4410,12 +4911,14 @@ public class GreenSociety extends javax.swing.JFrame {
     }//GEN-LAST:event_forgotEmailFocusLost
 
     private void profile1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profile1MouseClicked
-        canCounter1.setForeground(new java.awt.Color(255,255,255));
-        bikeSharing1.setForeground(new java.awt.Color(255,255,255));
-        timer1.setForeground(new java.awt.Color(255,255,255));
-        history1.setForeground(new java.awt.Color(255,255,255));
-        support1.setForeground(new java.awt.Color(255,255,255));
+        news1.setForeground(new java.awt.Color(255, 255, 255));
+        canCounter1.setForeground(new java.awt.Color(255, 255, 255));
+        bikeSharing1.setForeground(new java.awt.Color(255, 255, 255));
+        timer1.setForeground(new java.awt.Color(255, 255, 255));
+        history1.setForeground(new java.awt.Color(255, 255, 255));
+        support1.setForeground(new java.awt.Color(255, 255, 255));
         profile1.setForeground(new java.awt.Color(19, 175, 248));
+        newsPage1.setVisible(false);
         cpPage1.setVisible(false);
         timePageT.setVisible(false);
         timePageF.setVisible(false);
@@ -4615,17 +5118,19 @@ public class GreenSociety extends javax.swing.JFrame {
     }//GEN-LAST:event_submitProfileActionPerformed
 
     private void profileMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileMouseClicked
+        news.setForeground(new java.awt.Color(255, 255, 255));
         canCounter.setForeground(new java.awt.Color(255, 255, 255));
-        bikeSharing.setForeground(new java.awt.Color(255,255,255));
-        timer.setForeground(new java.awt.Color(255,255,255));
-        support.setForeground(new java.awt.Color(255,255,255));
+        bikeSharing.setForeground(new java.awt.Color(255, 255, 255));
+        timer.setForeground(new java.awt.Color(255, 255, 255));
+        support.setForeground(new java.awt.Color(255, 255, 255));
         profile.setForeground(new java.awt.Color(19, 175, 248));
+        newsPage.setVisible(false);
         cpPage.setVisible(false);
         sharingPage.setVisible(false);
         timerPage.setVisible(false);
         supportPage.setVisible(false);
         userProfilePage.setVisible(true);
-        
+
         chooseImgProfileBut.setVisible(false);
         pathImgProfile.setVisible(false);
         submitProfile.setVisible(false);
@@ -4959,12 +5464,14 @@ public class GreenSociety extends javax.swing.JFrame {
     }//GEN-LAST:event_jFormatTextFieldForIdFocusLost
 
     private void support1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_support1MouseClicked
-        canCounter1.setForeground(new java.awt.Color(255,255,255));
-        bikeSharing1.setForeground(new java.awt.Color(255,255,255));
-        timer1.setForeground(new java.awt.Color(255,255,255));
-        history1.setForeground(new java.awt.Color(255,255,255));
+        news1.setForeground(new java.awt.Color(255, 255, 255));
+        canCounter1.setForeground(new java.awt.Color(255, 255, 255));
+        bikeSharing1.setForeground(new java.awt.Color(255, 255, 255));
+        timer1.setForeground(new java.awt.Color(255, 255, 255));
+        history1.setForeground(new java.awt.Color(255, 255, 255));
         support1.setForeground(new java.awt.Color(19, 175, 248));
-        profile1.setForeground(new java.awt.Color(255,255,255));
+        profile1.setForeground(new java.awt.Color(255, 255, 255));
+        newsPage1.setVisible(false);
         cpPage1.setVisible(false);
         sharingScroll.setVisible(false);
         sharingStep3.setVisible(false);
@@ -4979,18 +5486,18 @@ public class GreenSociety extends javax.swing.JFrame {
 
     private void search1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_search1KeyPressed
         jTAShowyouSearch1.setText("");
-        jTAShowyouSearch1.setLineWrap (true); 
-        jTAContact1.setText(sp.contact()); 
+        jTAShowyouSearch1.setLineWrap(true);
+        jTAContact1.setText(sp.contact());
         sp.setOutput("");
-        if (evt.getKeyCode()==KeyEvent.VK_ENTER){
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             String whatToSearch = search1.getText();
             sp.searchSupport(whatToSearch);
             jLBWhatsearch1.setText(whatToSearch);
-            jTAShowyouSearch1.setText(sp.getOutput()); 
-            canCounter1.setForeground(new java.awt.Color(255,255,255));
-            bikeSharing1.setForeground(new java.awt.Color(255,255,255));
-            timer1.setForeground(new java.awt.Color(255,255,255));
-            profile1.setForeground(new java.awt.Color(255,255,255));
+            jTAShowyouSearch1.setText(sp.getOutput());
+            canCounter1.setForeground(new java.awt.Color(255, 255, 255));
+            bikeSharing1.setForeground(new java.awt.Color(255, 255, 255));
+            timer1.setForeground(new java.awt.Color(255, 255, 255));
+            profile1.setForeground(new java.awt.Color(255, 255, 255));
             support1.setForeground(new java.awt.Color(19, 175, 248));
             cpPage1.setVisible(false);
             sharingScroll.setVisible(false);
@@ -5004,16 +5511,16 @@ public class GreenSociety extends javax.swing.JFrame {
     }//GEN-LAST:event_search1KeyPressed
 
     private void searchKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchKeyPressed
-        jTAShowyouSearch.setLineWrap (true); 
-        jTAContact.setText(sp.contact()); 
+        jTAShowyouSearch.setLineWrap(true);
+        jTAContact.setText(sp.contact());
         sp.setOutput("");
-        if (evt.getKeyCode()==KeyEvent.VK_ENTER){
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             String whatToSearch = search.getText();
             sp.searchSupport(whatToSearch);
             jLBWhatsearch.setText(whatToSearch);
-            jTAShowyouSearch.setText(sp.getOutput()); 
-            
-            canCounter.setForeground(new java.awt.Color(255,255,255));
+            jTAShowyouSearch.setText(sp.getOutput());
+
+            canCounter.setForeground(new java.awt.Color(255, 255, 255));
             bikeSharing.setForeground(new java.awt.Color(255, 255, 255));
             support.setForeground(new java.awt.Color(19, 175, 248));
             profile.setForeground(new java.awt.Color(255, 255, 255));
@@ -5028,11 +5535,13 @@ public class GreenSociety extends javax.swing.JFrame {
     }//GEN-LAST:event_searchKeyPressed
 
     private void supportMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_supportMouseClicked
-        canCounter.setForeground(new java.awt.Color(255,255,255));
-        bikeSharing.setForeground(new java.awt.Color(255,255,255));
-        timer.setForeground(new java.awt.Color(255,255,255));
+        news.setForeground(new java.awt.Color(255, 255, 255));
+        canCounter.setForeground(new java.awt.Color(255, 255, 255));
+        bikeSharing.setForeground(new java.awt.Color(255, 255, 255));
+        timer.setForeground(new java.awt.Color(255, 255, 255));
         support.setForeground(new java.awt.Color(19, 175, 248));
-        profile.setForeground(new java.awt.Color(255,255,255));
+        profile.setForeground(new java.awt.Color(255, 255, 255));
+        newsPage.setVisible(false);
         cpPage.setVisible(false);
         sharingPage.setVisible(false);
         timerPage.setVisible(false);
@@ -5055,9 +5564,9 @@ public class GreenSociety extends javax.swing.JFrame {
     private void submitSupportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitSupportActionPerformed
         String title = insertSupporTitle.getText();
         String content = insertContentSup.getText();
-        if(title.length() == 0 || content.length()==0){
+        if (title.length() == 0 || content.length() == 0) {
             waringInsertSupport.setVisible(true);
-        }else{
+        } else {
             sp.insertSupport(title, content);
             waringInsertSupport.setVisible(false);
             bodySupport.setVisible(true);
@@ -5111,12 +5620,14 @@ public class GreenSociety extends javax.swing.JFrame {
     }//GEN-LAST:event_chooseImgItemActionPerformed
 
     private void history1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_history1MouseClicked
-        canCounter1.setForeground(new java.awt.Color(255,255,255));
-        bikeSharing1.setForeground(new java.awt.Color(255,255,255));
-        timer1.setForeground(new java.awt.Color(255,255,255));
+        news.setForeground(new java.awt.Color(255, 255, 255));
+        canCounter1.setForeground(new java.awt.Color(255, 255, 255));
+        bikeSharing1.setForeground(new java.awt.Color(255, 255, 255));
+        timer1.setForeground(new java.awt.Color(255, 255, 255));
         history1.setForeground(new java.awt.Color(19, 175, 248));
         support1.setForeground(new java.awt.Color(255, 255, 255));
-        profile1.setForeground(new java.awt.Color(255,255,255));
+        profile1.setForeground(new java.awt.Color(255, 255, 255));
+        news1.setVisible(false);
         cpPage1.setVisible(false);
         sharingScroll.setVisible(false);
         sharingStep3.setVisible(false);
@@ -5125,7 +5636,7 @@ public class GreenSociety extends javax.swing.JFrame {
         historyPage1.setVisible(true);
         supportPage1.setVisible(false);
         userProfilePage1.setVisible(false);
-        
+
     }//GEN-LAST:event_history1MouseClicked
 
     private void closeUserDetailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeUserDetailActionPerformed
@@ -5147,6 +5658,147 @@ public class GreenSociety extends javax.swing.JFrame {
     private void cancleReturnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancleReturnMouseExited
         cancleReturn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/cancleMini.png")));
     }//GEN-LAST:event_cancleReturnMouseExited
+
+    private void newsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_newsMouseClicked
+        news.setForeground(new java.awt.Color(19, 175, 248));
+        canCounter.setForeground(new java.awt.Color(255, 255, 255));
+        bikeSharing.setForeground(new java.awt.Color(255, 255, 255));
+        timer.setForeground(new java.awt.Color(255, 255, 255));
+        support.setForeground(new java.awt.Color(255, 255, 255));
+        profile.setForeground(new java.awt.Color(255, 255, 255));
+        newsPage.setVisible(true);
+        cpPage.setVisible(false);
+        sharingPage.setVisible(false);
+        timerPage.setVisible(false);
+        supportPage.setVisible(false);
+        userProfilePage.setVisible(false);
+
+        setListNewsAdmin();
+        jPanelInsertNews.setVisible(false);
+        showNews.setVisible(false);
+        newsList.setVisible(true);
+    }//GEN-LAST:event_newsMouseClicked
+
+    private void jButtonInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonInsertActionPerformed
+        jPanelInsertNews.setVisible(true);
+        newsList.setVisible(false);
+        txtAreaNewsDetail.setLineWrap(true);
+        jButtonInsert.setVisible(false);
+    }//GEN-LAST:event_jButtonInsertActionPerformed
+
+    private void submitButtonNewsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonNewsActionPerformed
+        String description = txtFieldNewsDescription.getText();
+        String detail = txtAreaNewsDetail.getText();
+        nw.insertNews(description, detail, pathImgNews.getText());
+        pathImgNews.setText("No Select File.");
+        //Reset Text Fields
+        txtFieldNewsDescription.setText("");
+        txtAreaNewsDetail.setText("");
+        jPanelInsertNews.setVisible(false);
+        showlistNews.setVisible(true);
+        newsList.setVisible(true);
+        setListNewsAdmin();
+        jButtonInsert.setVisible(true);
+        JOptionPane.showMessageDialog(null, "Insert Sucessfully");
+    }//GEN-LAST:event_submitButtonNewsActionPerformed
+
+    private void chooseImgNewsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseImgNewsActionPerformed
+        JFileChooser file = new JFileChooser();
+        file.setCurrentDirectory(new File(System.getProperty("user.home") + System.getProperty("file.separator") + "Desktop"));
+
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("*.image", "jpg", "png");
+        file.addChoosableFileFilter(filter);
+        int result = file.showSaveDialog(null);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = file.getSelectedFile();
+            String path = selectedFile.toString();
+            pathImgNews.setText(path);
+        } else if (result == JFileChooser.CANCEL_OPTION) {
+            pathImgNews.setText("No Select File.");
+        }
+    }//GEN-LAST:event_chooseImgNewsActionPerformed
+
+    private void cancleButtonNewsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancleButtonNewsActionPerformed
+        jPanelInsertNews.setVisible(false);
+        newsList.setVisible(true);
+        showlistNews.setVisible(true);
+        newsList.setVisible(true);
+        setListNewsAdmin();
+        jButtonInsert.setVisible(true);
+    }//GEN-LAST:event_cancleButtonNewsActionPerformed
+
+    private void closeNewsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeNewsActionPerformed
+        jPanelInsertNews.setVisible(false);
+        binding.setVisible(false);
+        showNews.setVisible(false);
+        showlistNews.setVisible(true);
+        newsList.setVisible(true);
+        setListNewsAdmin();
+        jButtonInsert.setVisible(true);
+    }//GEN-LAST:event_closeNewsActionPerformed
+
+    private void submitButtonNewsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_submitButtonNewsMouseEntered
+        submitButtonNews.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/submitMiniClick.png")));
+    }//GEN-LAST:event_submitButtonNewsMouseEntered
+
+    private void submitButtonNewsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_submitButtonNewsMouseExited
+        submitButtonNews.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/submitMini.png")));
+    }//GEN-LAST:event_submitButtonNewsMouseExited
+
+    private void cancleButtonNewsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancleButtonNewsMouseEntered
+        cancleButtonNews.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/cancleMiniClick.png")));
+    }//GEN-LAST:event_cancleButtonNewsMouseEntered
+
+    private void cancleButtonNewsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancleButtonNewsMouseExited
+        cancleButtonNews.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/cancleMini.png")));
+    }//GEN-LAST:event_cancleButtonNewsMouseExited
+
+    private void submitUpdateNewsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_submitUpdateNewsMouseEntered
+        submitUpdateNews.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/submitMiniClick.png")));
+    }//GEN-LAST:event_submitUpdateNewsMouseEntered
+
+    private void submitUpdateNewsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_submitUpdateNewsMouseExited
+        submitUpdateNews.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/submitMini.png")));
+    }//GEN-LAST:event_submitUpdateNewsMouseExited
+
+    private void cancleUpdateNewsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancleUpdateNewsMouseEntered
+        cancleUpdateNews.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/cancleMiniClick.png")));
+    }//GEN-LAST:event_cancleUpdateNewsMouseEntered
+
+    private void cancleUpdateNewsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancleUpdateNewsMouseExited
+        cancleUpdateNews.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/cancleMini.png")));
+    }//GEN-LAST:event_cancleUpdateNewsMouseExited
+
+    private void news1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_news1MouseClicked
+        news1.setForeground(new java.awt.Color(19, 175, 248));
+        canCounter1.setForeground(new java.awt.Color(255, 255, 255));
+        bikeSharing1.setForeground(new java.awt.Color(255, 255, 255));
+        timer1.setForeground(new java.awt.Color(255, 255, 255));
+        history1.setForeground(new java.awt.Color(255, 255, 255));
+        support1.setForeground(new java.awt.Color(255, 255, 255));
+        profile1.setForeground(new java.awt.Color(255, 255, 255));
+        newsPage1.setVisible(true);
+        cpPage1.setVisible(false);
+        sharingScroll.setVisible(false);
+        sharingStep3.setVisible(false);
+        timePageT.setVisible(false);
+        timePageF.setVisible(false);
+        historyPage1.setVisible(false);
+        supportPage1.setVisible(false);
+        userProfilePage1.setVisible(false);
+
+        listNewsScroll.setVisible(true);
+        listNewsPage.setVisible(true);
+        setListNewsUser();
+        jPanelShowNewsAfterClick.setVisible(false);
+    }//GEN-LAST:event_news1MouseClicked
+
+    private void closeNews1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeNews1ActionPerformed
+        jPanelShowNewsAfterClick.setVisible(false);
+        listNewsScroll.setVisible(true);
+        listNewsPage.setVisible(true);
+        setListNewsUser();
+    }//GEN-LAST:event_closeNews1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -5222,6 +5874,7 @@ public class GreenSociety extends javax.swing.JFrame {
     private javax.swing.JLabel bikeRepair1;
     private javax.swing.JLabel bikeSharing;
     private javax.swing.JLabel bikeSharing1;
+    private javax.swing.JPanel binding;
     private javax.swing.JFormattedTextField birthProfile;
     private javax.swing.JFormattedTextField birthProfile1;
     private javax.swing.JPanel bodySupport;
@@ -5232,15 +5885,20 @@ public class GreenSociety extends javax.swing.JFrame {
     private javax.swing.JButton cancleAdminBut;
     private javax.swing.JButton cancleBut;
     private javax.swing.JButton cancleButSharing;
+    private javax.swing.JButton cancleButtonNews;
     private javax.swing.JButton cancleInsertSup;
     private javax.swing.JButton cancleReturn;
+    private javax.swing.JButton cancleUpdateNews;
     private javax.swing.JButton chooseImgItem;
+    private javax.swing.JButton chooseImgNews;
     private javax.swing.JButton chooseImgProfileBut;
     private javax.swing.JButton chooseImgProfileBut1;
     private javax.swing.JLabel circleCp;
     private javax.swing.JLabel circleMini;
     private javax.swing.JLabel circleNoti;
     private javax.swing.JLabel closeBut;
+    private javax.swing.JButton closeNews;
+    private javax.swing.JButton closeNews1;
     private javax.swing.JButton closeUserDetail;
     private javax.swing.JTextField congenProfile;
     private javax.swing.JTextField congenProfile1;
@@ -5253,6 +5911,8 @@ public class GreenSociety extends javax.swing.JFrame {
     private javax.swing.JLabel cpUser;
     private javax.swing.JLabel departProfile;
     private javax.swing.JLabel departProfile1;
+    private javax.swing.JScrollPane describeNews;
+    private javax.swing.JTextArea describeNewsText;
     private javax.swing.JPanel detailBox;
     private javax.swing.JPanel detailBoxHistory;
     private javax.swing.JLabel detailData;
@@ -5287,6 +5947,7 @@ public class GreenSociety extends javax.swing.JFrame {
     private javax.swing.JLabel iconSearch1;
     private javax.swing.JLabel imageProfile;
     private javax.swing.JLabel imageProfile1;
+    private javax.swing.JLabel imgNews;
     private javax.swing.JPanel inputForgot;
     private javax.swing.JTextArea insertContentSup;
     private javax.swing.JTextField insertSupporTitle;
@@ -5302,6 +5963,7 @@ public class GreenSociety extends javax.swing.JFrame {
     private javax.swing.JPanel itemListShowInsidee;
     private javax.swing.JTextField itemName;
     private javax.swing.JButton jButtonChooseFileForUpload;
+    private javax.swing.JButton jButtonInsert;
     private javax.swing.JButton jButtonSignUp;
     private javax.swing.JComboBox<String> jComboBoxPosition;
     private com.toedter.calendar.JDateChooser jDateChooserBirthDate;
@@ -5310,9 +5972,11 @@ public class GreenSociety extends javax.swing.JFrame {
     private javax.swing.JLabel jLBShowingResult1;
     private javax.swing.JLabel jLBWhatsearch;
     private javax.swing.JLabel jLBWhatsearch1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
@@ -5320,6 +5984,7 @@ public class GreenSociety extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelEmailNotCorrect;
     private javax.swing.JLabel jLabelHistoryText;
+    private javax.swing.JLabel jLabelInsert;
     private javax.swing.JLabel jLabelNoticBirthDate;
     private javax.swing.JLabel jLabelNoticGender;
     private javax.swing.JLabel jLabelNoticName;
@@ -5330,6 +5995,7 @@ public class GreenSociety extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelNoticTel;
     private javax.swing.JLabel jLabelPartPictureUserUpload;
     private javax.swing.JLabel jLabelPictureProfileRegister;
+    private javax.swing.JLabel jLabelShowTopicAfterClick;
     private javax.swing.JLabel jLabelStarLN;
     private javax.swing.JLabel jLabelifLengthId;
     private javax.swing.JLabel jLbConfirmPassWord;
@@ -5353,8 +6019,11 @@ public class GreenSociety extends javax.swing.JFrame {
     private javax.swing.JLabel jLbStarPosition;
     private javax.swing.JLabel jLbStarTelophone;
     private javax.swing.JLabel jLbTelophone;
+    private javax.swing.JPanel jPanelBackgroundInsertLabel;
     private javax.swing.JPanel jPanelHeadHistory;
     private javax.swing.JPanel jPanelHistory;
+    private javax.swing.JPanel jPanelInsertNews;
+    private javax.swing.JPanel jPanelShowNewsAfterClick;
     private javax.swing.JPanel jPanelSignUp;
     private javax.swing.JPanel jPanelTableHistory;
     private javax.swing.JPasswordField jPasswordConfirmPassSignup;
@@ -5363,6 +6032,8 @@ public class GreenSociety extends javax.swing.JFrame {
     private javax.swing.JPasswordField jPasswordSignUp;
     private javax.swing.JRadioButton jRadioButtonGenderFemale;
     private javax.swing.JRadioButton jRadioButtonGenderMale;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPaneInTextAreaNewsDetail;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
@@ -5376,12 +6047,15 @@ public class GreenSociety extends javax.swing.JFrame {
     private javax.swing.JTextArea jTAContact1;
     private javax.swing.JTextArea jTAShowyouSearch;
     private javax.swing.JTextArea jTAShowyouSearch1;
+    private javax.swing.JTextArea jTextAreaShowDetailNewsAfterClick;
     private javax.swing.JTextField jTextFieldConDisease;
     private javax.swing.JTextField jTextFieldEmail;
     private javax.swing.JTextField jTextFieldSurname;
     private javax.swing.JTextField jTextFieldTelophone;
     private javax.swing.JTextField jTfFirstName;
     private javax.swing.JPanel layerAddItem;
+    private javax.swing.JPanel listNewsPage;
+    private javax.swing.JScrollPane listNewsScroll;
     private javax.swing.JLabel listShow;
     private javax.swing.JLabel listTimeup;
     private javax.swing.JScrollPane listUserBorrowing;
@@ -5405,10 +6079,14 @@ public class GreenSociety extends javax.swing.JFrame {
     private javax.swing.JButton newManual;
     private javax.swing.JLabel news;
     private javax.swing.JLabel news1;
+    private javax.swing.JScrollPane newsList;
+    private javax.swing.JPanel newsPage;
+    private javax.swing.JPanel newsPage1;
     private javax.swing.JButton nextStep;
     private javax.swing.JLabel notiSharing;
     private javax.swing.JPasswordField password;
     private javax.swing.JLabel pathImgItem;
+    private javax.swing.JLabel pathImgNews;
     private javax.swing.JLabel pathImgProfile;
     private javax.swing.JLabel pathImgProfile1;
     private javax.swing.JLabel pic;
@@ -5450,7 +6128,9 @@ public class GreenSociety extends javax.swing.JFrame {
     private javax.swing.JPanel sharingStep1;
     private javax.swing.JPanel sharingStep3;
     private javax.swing.JLabel showCp;
+    private javax.swing.JPanel showNews;
     private javax.swing.JLabel showPass;
+    private javax.swing.JPanel showlistNews;
     private javax.swing.JButton signin;
     private javax.swing.JButton signout;
     private javax.swing.JButton signout1;
@@ -5459,10 +6139,12 @@ public class GreenSociety extends javax.swing.JFrame {
     private javax.swing.JLabel star3;
     private javax.swing.JButton submitBut;
     private javax.swing.JButton submitButSharing;
+    private javax.swing.JButton submitButtonNews;
     private javax.swing.JLabel submitPass;
     private javax.swing.JButton submitProfile;
     private javax.swing.JButton submitProfile1;
     private javax.swing.JButton submitSupport;
+    private javax.swing.JButton submitUpdateNews;
     private javax.swing.JLabel support;
     private javax.swing.JLabel support1;
     private javax.swing.JPanel supportPage;
@@ -5508,6 +6190,7 @@ public class GreenSociety extends javax.swing.JFrame {
     private javax.swing.JLabel titleGenderProfile;
     private javax.swing.JLabel titleGenderProfile1;
     private javax.swing.JLabel titleHistory;
+    private javax.swing.JLabel titleInsert;
     private javax.swing.JLabel titleInsertSupport;
     private javax.swing.JLabel titleItemCount;
     private javax.swing.JLabel titleItemId;
@@ -5535,6 +6218,12 @@ public class GreenSociety extends javax.swing.JFrame {
     private javax.swing.JLabel titleWhat;
     private javax.swing.JLabel titlebBirthProfile;
     private javax.swing.JLabel titlebBirthProfile1;
+    private javax.swing.JLabel titletopicNews;
+    private javax.swing.JTextField topicNews;
+    private javax.swing.JTextArea txtAreaNewsDetail;
+    private javax.swing.JLabel txtDescription;
+    private javax.swing.JLabel txtDescription1;
+    private javax.swing.JTextField txtFieldNewsDescription;
     private javax.swing.JPanel userDetail;
     private javax.swing.JLabel userID;
     private javax.swing.JLabel userID1;
