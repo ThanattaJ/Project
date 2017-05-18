@@ -492,20 +492,20 @@ public class Repair{
         return repairOutput;
     }
     
-    public String increaseTimeRepair(int hr,int min,int sec) throws InterruptedException{//เมธอดเพิ่มเวลาเมื่อช่างซ่อมซ่อมไม่เสร็จ
-        String oldTime = timeDetail;
-        plusDay(hr,min,sec);
-        String newTime="";
-        String increaseTime = "Increase Time : "+hr+":"+min+":"+sec; //เวลาที่ช่างซ่อมต้องการเพิ่ม
-        String output = notic.notiRepairIncreseTime(oldTime, increaseTime, newTime); //เรียก Notic
-        timeDetail= newTime;
-        return output;
-    }
+//    public String increaseTimeRepair(int hr,int min,int sec) throws InterruptedException{//เมธอดเพิ่มเวลาเมื่อช่างซ่อมซ่อมไม่เสร็จ
+//        String oldTime = timeDetail;
+//        plusDay(hr,min,sec);
+//        String newTime="";
+//        String increaseTime = "Increase Time : "+hr+":"+min+":"+sec; //เวลาที่ช่างซ่อมต้องการเพิ่ม
+//        String output = notic.notiRepairIncreseTime(oldTime, increaseTime, newTime); //เรียก Notic
+//        timeDetail= newTime;
+//        return output;
+//    }
     
     public String increaseTimeRepair(String newProblem,String newDetail,int hr,int min,int sec) throws InterruptedException{
 //เมธอดเพิ่มปัญหาที่ช่างซ่อมพบเจอใหม่ พร้อมกับประเมินเวลาที่จะซ่อมเสร็จด้วย
         String oldTime = timeDetail;
-        plusDay(hr,min,sec);
+//        plusDay(hr,min,sec);
         String newTime=t.showDetail();
 //        ---------------------------------------------------------------------
         String increaseTime = "Increase Time : "+hr+":"+min+":"+sec;
@@ -581,7 +581,13 @@ public class Repair{
     }
     
     public void plusDay(int h,int m,int s){ //เมธอดคำนวณชั่วโมง นาที วินาที ไม่ให้มันเกินตามความเป็นจริง
-          t.increaseTime(h, m, s);
+        System.out.println("plusDay...");
+//        System.out.println("returnTime: "+returnTime);
+        hours+=h;
+        minute+=m;
+        secound+=s;
+        
+//        t.increaseTime(returnTime,h, m, s);
     }
     
     public String Status(boolean tem){ // รับมาจากปุ่มกด ถ้าเสร็จเป็น true ไม่เสร็จเป็น false
