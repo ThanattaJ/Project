@@ -150,6 +150,57 @@ public class History {
         return output;
     }
     
+    public int statGreensocietyReturn(){//admin จะเห็นหน้าสถิติการใช้งานของ User แต่ล่ะคน เรียงลำดับการใช้งานมากไปน้อย
+        int statOfReturn=0;
+        String month;
+        String date;
+        java.util.Date now = new java.util.Date();
+        if((now.getMonth()+1)<10){
+            month = "0"+(now.getMonth()+1);
+        }else{
+            month = ""+now.getMonth()+1;
+        }
+        
+        if(now.getDate()<10){
+            date = "0"+ now.getDate();
+        }else{
+            date = ""+now.getDate();
+        }
+        
+        String adminDate = (now.getYear()+1900)+"-"+month+"-"+date;
+        
+        try{
+            ConnectDatabase cndb = new ConnectDatabase();
+            Connection connect = ConnectDatabase.connectDb("jan", "jan042");
+            Class.forName("com.mysql.jdbc.Driver");
+        
+            Statement st = connect.createStatement();
+            
+            String temp5 = "SELECT COUNT(transID) AS statReturn FROM `Transaction` WHERE dateTime LIKE \'" +adminDate +"%\' AND action LIKE 'Return'";
+            ResultSet rs5 = st.executeQuery(temp5);
+            System.out.println("adminDate: "+adminDate);
+            
+            while(rs5.next()){
+                statOfReturn = rs5.getInt("statReturn");
+            }
+            
+            try {
+		if(connect != null){
+                    connect.close();
+		}
+		}catch (SQLException e){
+                    e.printStackTrace();
+		}      
+        }
+        catch(ClassNotFoundException cfe){
+            System.out.println(cfe);
+        }
+        catch(Exception ex){
+            System.out.println(ex);
+        }
+        return statOfReturn;
+    }
+    
     public int statGreensocietyRepair(){//admin จะเห็นหน้าสถิติการใช้งานของ User แต่ล่ะคน เรียงลำดับการใช้งานมากไปน้อย
         int statOfRepair=0;
         String month;

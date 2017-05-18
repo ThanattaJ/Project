@@ -234,8 +234,14 @@ public class Timer {
                             totalSeconds--;
                             timeLeft = totalHour+" Hours "+totalMin+" Minutes "+totalSeconds+" Secounds";
                             if(nf.notiTime(obj,totalHour,totalMin,totalSeconds)){
-                                    int add[] = rpGui.notiTime();
+                                if(obj instanceof Sharing){
+                                    
+                                }else if(obj instanceof Repair){
+                                    rpGui.notiTime(obj);
+                                    int add[] = rpGui.getIncrease();
                                     increaseTime(returnTime,add[0],add[1],add[2]);
+                                }    
+                                
                             }
                             System.out.println(timeLeft);
                             if(totalSeconds == 0){

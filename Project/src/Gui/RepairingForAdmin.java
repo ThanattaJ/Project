@@ -48,6 +48,7 @@ public class RepairingForAdmin extends javax.swing.JFrame {
     private long idRepairState;
     private Timer myTimer;
     private String timeDetail;
+    private int increase[];
     /**
      * Creates new form 
      */
@@ -213,42 +214,46 @@ public class RepairingForAdmin extends javax.swing.JFrame {
         rp.connectDBForAdminUpdateTime(transID, startTime, endTime);
     }
 
-    public int[] notiTime(){//jPanel ShowTime
-        int increase[]={0,0,0};
-        int ans = JOptionPane.showConfirmDialog(this,"Time is running out.Do you want to add time?",
+    public void notiTime(Object obj){//jPanel ShowTime
+        if(obj instanceof Sharing){
+            
+        }else if(obj instanceof Repair){
+            int increase[]={0,0,0};
+            int ans = JOptionPane.showConfirmDialog(this,"Time is running out.Do you want to add time?",
                 "Warning",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
-        if(ans==JOptionPane.YES_OPTION){
-            Object[] number = {0,1,2,3,4,5,6,7,8,9,10
-                          ,11,12,13,14,15,16,17,18,19,20
-                          ,21,22,23,24,25,26,27,28,29,30
-                          ,31,32,33,34,35,36,37,38,39,40
-                          ,41,42,43,44,45,46,47,48,49,50
-                          ,51,52,53,54,55,56,57,58,59,60};
-            JComboBox cbMin = new JComboBox(number);
-            JComboBox cbHours = new JComboBox(number);
-            JComboBox cbSec = new JComboBox(number);
-            
-            cbHours.setFont(new java.awt.Font("Leelawadee",0,18));
-            cbMin.setFont(new java.awt.Font("Leelawadee",0,18));
-            cbSec.setFont(new java.awt.Font("Leelawadee",0,18));
-            
-            JPanel popup = new JPanel(new GridLayout(0,1));
-            popup.add(new JLabel("Hour"));
-            popup.add(cbHours);
-            popup.add(new JLabel("Minute"));
-            popup.add(cbMin);
-            popup.add(new JLabel("secound"));
-            popup.add(cbSec);
-            int result = JOptionPane.showConfirmDialog(null,popup,
-                    "How much time you want to add?",JOptionPane.PLAIN_MESSAGE);
-            increase[0]=(int) cbHours.getSelectedItem();
-            increase[1]=(int) cbMin.getSelectedItem();
-            increase[2]=(int) cbSec.getSelectedItem();
-            rp.plusDay(increase[0],increase[1],increase[2]);
-//            System.out.println("2.1)notiTime: "+myTimer.getReturnTime());
-//            rp.plusDay(myTimer.getReturnTime(),increase[0], increase[1], increase[2]);
-            
+            if(ans==JOptionPane.YES_OPTION){
+                Object[] number = {0,1,2,3,4,5,6,7,8,9,10
+                              ,11,12,13,14,15,16,17,18,19,20
+                              ,21,22,23,24,25,26,27,28,29,30
+                              ,31,32,33,34,35,36,37,38,39,40
+                              ,41,42,43,44,45,46,47,48,49,50
+                              ,51,52,53,54,55,56,57,58,59,60};
+                JComboBox cbMin = new JComboBox(number);
+                JComboBox cbHours = new JComboBox(number);
+                JComboBox cbSec = new JComboBox(number);
+
+                cbHours.setFont(new java.awt.Font("Leelawadee",0,18));
+                cbMin.setFont(new java.awt.Font("Leelawadee",0,18));
+                cbSec.setFont(new java.awt.Font("Leelawadee",0,18));
+
+                JPanel popup = new JPanel(new GridLayout(0,1));
+                popup.add(new JLabel("Hour"));
+                popup.add(cbHours);
+                popup.add(new JLabel("Minute"));
+                popup.add(cbMin);
+                popup.add(new JLabel("secound"));
+                popup.add(cbSec);
+                int result = JOptionPane.showConfirmDialog(null,popup,
+                        "How much time you want to add?",JOptionPane.PLAIN_MESSAGE);
+                increase[0]=(int) cbHours.getSelectedItem();
+                increase[1]=(int) cbMin.getSelectedItem();
+                increase[2]=(int) cbSec.getSelectedItem();
+                rp.plusDay(increase[0],increase[1],increase[2]);
+            }
         }
+    }
+
+    public int[] getIncrease() {
         return increase;
     }
     
