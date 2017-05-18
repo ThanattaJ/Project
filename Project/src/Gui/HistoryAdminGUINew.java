@@ -399,9 +399,10 @@ public class HistoryAdminGUINew extends javax.swing.JFrame {
 //        spGUI.setVisible(true);
     }//GEN-LAST:event_jBTSearchActionPerformed
     public void showStatHistory(){
-        int tempRepair = history.statGreensocietyRepair();
-        int tempBorrow = history.statGreensocietyBorrow();
-        int tempReturn = history.statGreensocietyReturn();
+        //ดึง method statGreensociety...... ใน History มาใส่
+        int tempRepair = history.statGreensocietyRepair();  
+        int tempBorrow = history.statGreensocietyBorrow();  
+        int tempReturn = history.statGreensocietyReturn();  
         DefaultCategoryDataset barchartData = new DefaultCategoryDataset();
     
         barchartData.setValue(tempRepair, "0", "RepairHistory");
@@ -411,7 +412,7 @@ public class HistoryAdminGUINew extends javax.swing.JFrame {
         
         JFreeChart chart = ChartFactory.createBarChart("History Statictics", "History", "Times", barchartData, PlotOrientation.HORIZONTAL, false, true, false);
         
-//        chart.getTitle().setPaint(Color.WHITE);
+//        chart.getTitle().setPaint(Color.WHITE);   //เผื่อจะแก้สีหัวข้อ
         
         //--------SET FONT--------------
         try{
@@ -441,29 +442,6 @@ public class HistoryAdminGUINew extends javax.swing.JFrame {
         renderer.setSeriesPaint(0, paint1); //Color for RepairGraph
         renderer.setSeriesPaint(1, paint2); //Color for BorrowGraph
         renderer.setSeriesPaint(2, paint3); //Color for ReturnGraph
-        //set color
-//        Color color = new Color(79, 129, 189);
-//        renderer.setSeriesPaint(0, color);
-//        for (int i = 0; i < barchartData.getRowCount(); i++) {
-//            switch(i){
-//                case 0:
-//                    //red
-//                    color = new Color(255, 0, 0);
-//                    break;
-//                case 1:
-//                    //blue
-//                    color = new Color(0, 0, 255);
-//                    break;
-//                case 2:
-//                    //yellow
-//                    color = new Color(255, 255, 0);
-//                    break;
-//                default :
-//                    //green
-//                    color = new Color(0, 255, 0);
-//                    break;
-//            }
-//        }
         
         ChartPanel barPanel = new ChartPanel(chart);
         jPanelShowGraph.removeAll();
