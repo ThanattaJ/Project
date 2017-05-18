@@ -188,6 +188,33 @@ public class Repair{
         }
         return list;
     }
+    
+    public void connectDBForChangeToSuccessFromPerpair(long perpairID){
+         try{
+            ConnectDatabase cndb = new ConnectDatabase();
+            Connection connect = ConnectDatabase.connectDb("jan", "jan042");
+            Class.forName("com.mysql.jdbc.Driver");
+//            System.out.println("...connectDBFomeUserToAdmin");
+            Statement st = connect.createStatement(); 
+            String temp = "UPDATE Repair_State JOIN Prepair_Desctiption ON Repair_State.item_id = Prepair_Desctiption.id "
+                    + "SET Repair_State.Recieving = 'Success' WHERE Prepair_Desctiption.id = "+perpairID;
+            
+            st.executeUpdate(temp);
+            
+            if(connect != null){
+                    connect.close();
+		}
+		}catch (SQLException e){
+                    e.printStackTrace();
+        }
+        
+        catch(ClassNotFoundException cfe){
+            System.out.println(cfe);
+        }
+        catch(Exception ex){
+            System.out.println(ex);
+        }
+    }
 
     
     public void connectDBForChangeToSuccess(long idRepairState){
