@@ -222,8 +222,12 @@ public class Timer {
                                 totalSeconds--;
                                 timeLeft = totalHour+" Hours "+totalMin+" Minutes "+totalSeconds+" Seconds";
                                 if(notiTimer(obj,totalHour,totalMin,totalSeconds)){
-                                    gs = new GreenSociety();
-                                    gs.notiTime();
+                                    if(obj instanceof Sharing){
+                                        gs = new GreenSociety();
+                                        gs.notiTime(obj);
+                                    }else if(obj instanceof Repair){
+                                        
+                                    }
                                 }
                                 System.out.println(timeLeft);
                                 if(totalSeconds == 0){
@@ -241,19 +245,21 @@ public class Timer {
                         totalHour--;
                         if(totalHour == -1){
                             totalHour = 0;
+                            if(totalHour <= 0 && totalMin <= 0 && totalSeconds <= 0){
+                                thread.stop();
+                            }
                             break;
                         }
                         totalMin = 59;
-                    }
-                    if(totalHour == 0 && totalMin == 0 &&totalSeconds == 0){
-                            thread.stop();
                     }
                 }
             };
             thread = new Thread(runnable);
             thread.start();
+        }else if (totalHour <= 0 && totalMin <= 0 && totalSeconds <=0){
+            thread.stop();
         }
-    }
+}
     
      public int showStartAndEndTime(){
         String startBorrow = "";
@@ -294,12 +300,18 @@ public class Timer {
     }
      
     public boolean notiTimer(Object obj,int hr, int min, int sec) {
-          if(obj instanceof Sharing){
+        if(obj instanceof Sharing){
             if(hr==0 && min == 10 && sec ==0){
-              return true;
+                return true;
             }
-          }
-          return false;
+        }else if(obj instanceof Repair){
+            if(hr==0 && min == 0 && sec ==0){
+                return true;
+            }else if(hr==0 && min == 3 && sec ==0){
+            
+            }
+        }
+        return false;
     }
     
     public String[] getHisBorrow() {
