@@ -581,13 +581,9 @@ public class Repair{
     }
     
     public void plusDay(int h,int m,int s){ //เมธอดคำนวณชั่วโมง นาที วินาที ไม่ให้มันเกินตามความเป็นจริง
-        System.out.println("plusDay...");
-//        System.out.println("returnTime: "+returnTime);
         hours+=h;
         minute+=m;
         secound+=s;
-        
-//        t.increaseTime(returnTime,h, m, s);
     }
     
     public String Status(boolean tem){ // รับมาจากปุ่มกด ถ้าเสร็จเป็น true ไม่เสร็จเป็น false
