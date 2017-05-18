@@ -58,60 +58,6 @@ public class History {
     }
     
     
-    public void HistoryByAdmin(String itemId,Timestamp startDate,Timestamp returnDate,String input){ //รับจาก ตัวแปรที่ต้องการส่งลง DB เป็น String
-        int userIdInt = 111;
-        int officerIdInt = 100;
-        try{
-            ConnectDatabase cndb = new ConnectDatabase();
-            Connection connect = ConnectDatabase.connectDb("jan", "jan042");
-            Class.forName("com.mysql.jdbc.Driver");
-            
-            Statement st = connect.createStatement(); 
-            
-            String temp3 = "SELECT MAX(transID) AS countTransId FROM Transaction ";
-            ResultSet rs1 = st.executeQuery(temp3);
-            int count=0;
-            while(rs1.next()){
-                count = rs1.getInt("countTransId");
-            }
-            this.historyId = ++count;
-                                  
-           
-            String userId = "\'"+userIdInt+"\'";
-            String action = "\'"+input+"\'";
-            String officerId = "\'"+officerIdInt+"\'";
-        
-            
-             String temp ="INSERT INTO Transaction VALUES " //set ค่าให้กับ Database
-                    + "("+this.historyId+","
-                    +"'"+startDate+"','"
-                     +returnDate+"',"
-                      +itemId + ","
-                      +userId+","
-                      +action+"," 
-                      +officerId+")";
-             
-            st.executeUpdate(temp);
-                   
-          try {
-		if(connect != null){
-                    connect.close();
-		}
-		}catch (SQLException e){
-                    e.printStackTrace();
-		}                
-        }
-        
-        catch(ClassNotFoundException cfe){
-            System.out.println(cfe);
-        }
-        catch(Exception ex){
-            System.out.println(ex);
-        }
-        
-    }
-    
-    
     public String showActionUser(long id){ //user ใส่ไอดีตัวเองที่ต้องการรู้ประวัติการใช้งานของตัวเอง
         String output="";
         int statUser=0;
