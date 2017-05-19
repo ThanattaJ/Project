@@ -1,5 +1,5 @@
 package bike;
-import bike_gui.BikeUser;
+import bike_gui.GreenSociety;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -15,9 +15,8 @@ public class Timer {
     private SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     private String returnDate;
     private String borrowDate;
-    private Notification nf = new Notification();
     private Thread thread = new Thread();
-    private BikeUser bu;
+    private GreenSociety gs;
     private String[] hisBorrow = new String[5];
    
     public Timer() {
@@ -222,10 +221,13 @@ public class Timer {
                                 }
                                 totalSeconds--;
                                 timeLeft = totalHour+" Hours "+totalMin+" Minutes "+totalSeconds+" Seconds";
-                                if(nf.notiTime(obj,totalHour,totalMin,totalSeconds)){
-                                    bu = new BikeUser();
-                                    int add[]= bu.notiTime();
-                                    increaseTime(add[0],add[1],add[2]);
+                                if(notiTimer(obj,totalHour,totalMin,totalSeconds)){
+                                    if(obj instanceof Sharing){
+                                        gs = new GreenSociety();
+                                        gs.notiTime(obj);
+                                    }else if(obj instanceof Repair){
+                                        
+                                    }
                                 }
                                 System.out.println(timeLeft);
                                 if(totalSeconds == 0){
@@ -243,19 +245,21 @@ public class Timer {
                         totalHour--;
                         if(totalHour == -1){
                             totalHour = 0;
+                            if(totalHour <= 0 && totalMin <= 0 && totalSeconds <= 0){
+                                thread.stop();
+                            }
                             break;
                         }
                         totalMin = 59;
-                    }
-                    if(totalHour == 0 && totalMin == 0 &&totalSeconds == 0){
-                            thread.stop();
                     }
                 }
             };
             thread = new Thread(runnable);
             thread.start();
+        }else if (totalHour <= 0 && totalMin <= 0 && totalSeconds <=0){
+            thread.stop();
         }
-    }
+}
     
      public int showStartAndEndTime(){
         String startBorrow = "";
@@ -294,7 +298,22 @@ public class Timer {
         }
         return i;
     }
-
+     
+    public boolean notiTimer(Object obj,int hr, int min, int sec) {
+        if(obj instanceof Sharing){
+            if(hr==0 && min == 10 && sec ==0){
+                return true;
+            }
+        }else if(obj instanceof Repair){
+            if(hr==0 && min == 0 && sec ==0){
+                return true;
+            }else if(hr==0 && min == 3 && sec ==0){
+            
+            }
+        }
+        return false;
+    }
+    
     public String[] getHisBorrow() {
         return hisBorrow;
     }

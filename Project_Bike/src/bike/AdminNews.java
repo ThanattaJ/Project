@@ -73,6 +73,42 @@ public class AdminNews {
         return allTopicNews;
     }
     
+    //method สำหรับ หน้าแรกของ user
+    public String[] selectTopicNewsForUser(){
+        String[] allTopicNews = null;
+        Connection c = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            c = Database.connectDb("win", "win016");
+            Statement s = c.createStatement();
+            String sql;
+//            sql = "SELECT COUNT(newsID) AS num FROM News";
+            sql = "SELECT COUNT(newsID) AS num FROM News WHERE newsDescription IS NOT NULL";
+            ResultSet rs = s.executeQuery(sql);
+            rs.first();
+            int count = rs.getInt("num");
+            allTopicNews = new String[count];
+            
+//            sql = "SELECT newsID,newsDescription FROM News";
+            sql = "SELECT * FROM `News` WHERE newsDescription IS NOT NULL";
+            rs = s.executeQuery(sql);
+            for (int i = 0; i < allTopicNews.length; i++) {
+                if(rs.next()){
+                    allTopicNews[i] = rs.getString("newsDescription");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();    //โชว์ข้อผิดพลาดทั้งหมด
+        }
+        try{
+            c.close();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        return allTopicNews;
+    }
+    
     public String[] selectDetailNews(){
         String[] detailNews = null;
         Connection c = null;

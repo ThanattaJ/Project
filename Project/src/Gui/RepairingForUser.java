@@ -15,14 +15,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.*;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.event.AncestorEvent;
 
 /**
  *
@@ -31,8 +23,6 @@ import javax.swing.event.AncestorEvent;
 public class RepairingForUser extends javax.swing.JFrame {
     
     private Repair rp = new Repair();
-    private static final int MY_MINIMUM = 0;
-    private static final int MY_MAXIMUM = 100;
     private String asking;
     private String repairing;
     private String status;
@@ -41,57 +31,26 @@ public class RepairingForUser extends javax.swing.JFrame {
     private String color="";
     private long peairId;
     private long countTransId;
-    /**
-     * Creates new form 
-     */
-
-    public RepairingForUser(Repair r) {
-        initComponents();
-        rp = r;
-        System.out.println("RepairUser: "+rp.getProblem());
-        userFollowingForRepair(r);
-        jPanelRepairUserFollowRepairing.setVisible(true);
-        jPanelRepairUserSentToAdmin.setVisible(false);
-
-    }
-    
+ 
     public RepairingForUser() {
         initComponents();
-        connectDBShowRepairForUserFollowing(asking);
+        connectDBShowRepairForUserFollowing(1);
+        iconStatusFollowingRepairing();
         jPanelRepairUserSentToAdmin.setVisible(true);
         jPanelRepairUserFollowRepairing.setVisible(false);
     }
-
-    public void userFollowingForRepair(Repair r){
-        connectDBShowRepairForUserFollowing(asking);
-        textAsking.setText(rp.getProblem());
-        textRecieving.setText(rp.getStatus());
-        textRepair.setText(rp.getDetail());
-        //set ค่าให้ progress ว่าเป็น percent ตั้งแต่ 1-100
-        jProgressBarAskingToRepairing.setMinimum(MY_MINIMUM);
-        jProgressBarAskingToRepairing.setMaximum(MY_MAXIMUM);
-        jPBpercentRepairToRecieving.setMinimum(MY_MINIMUM);
-        jPBpercentRepairToRecieving.setMaximum(MY_MAXIMUM);
-        //------------------------------------------------------------
-        jProgressBarAskingToRepairing.setStringPainted(true);
-        jProgressBarAskingToRepairing.setBackground(Color.blue);
-        jProgressBarAskingToRepairing.setForeground(Color.white);
-        jProgressBarAskingToRepairing.setFont(new java.awt.Font("Leelawadee",0,11));
-        jProgressBarAskingToRepairing.setString(rp.getPercentAskingToRepair()+"%");
-        //set progessBar ให้มีค่เท่ากับที่ admin ส่งค่ามาว่ากี่เปอร์เซ็น
-        updateBarAskingToRepair(rp.getPercentAskingToRepair());
-        updateBarRepairToRecieving(rp.getPercentRepairToRecie());
-    }
     
-    public void updateBarAskingToRepair(int newValue) {//รับจาก คลาส Repairing  Percent ถึงไหนแล้ว
-    jProgressBarAskingToRepairing.setValue(newValue);
+    public void iconStatusFollowingRepairing(){
+        if(repairing!=null){
+            jLabelStatusRepairIcon.setIcon(new javax.swing.ImageIcon("D:\\ProjectGreenSociety\\Project\\icon\\2.png")); // NOI18N
+            jPanelRepairUserFollowRepairing.add(jLabelStatusRepairIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 240, 40));
+        }else if(status.equalsIgnoreCase("Success")){
+            jLabelStatusRepairIcon.setIcon(new javax.swing.ImageIcon("D:\\ProjectGreenSociety\\Project\\icon\\3.png")); // NOI18N
+            jPanelRepairUserFollowRepairing.add(jLabelStatusRepairIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 240, 40));
+        }
     }
-    
-    public void updateBarRepairToRecieving(int newValue) {//รับจาก คลาส Repairing  Percent ถึงไหนแล้ว
-    jPBpercentRepairToRecieving.setValue(newValue);
-    }
-    
-        public void connectDBFomeUserToAdmin(long userID){
+  
+    public void connectDBFomeUserToAdmin(long userID){
         Timer t = new Timer();
         Timestamp startDate = new Timestamp(t.getBorrowTime().getTime());
         Timestamp returnDate = new Timestamp(t.getReturnTime().getTime());
@@ -146,6 +105,7 @@ public class RepairingForUser extends javax.swing.JFrame {
                     +"'"+startDate+"','"
                      +returnDate+"',"
                       +0+ ","
+                      +0+" ,"
                       +userId+","
                       +action+"," 
                       +officerId+")";
@@ -169,7 +129,9 @@ public class RepairingForUser extends javax.swing.JFrame {
 
     }
         
-    public void connectDBShowRepairForUserFollowing(String ask){//เพื่อที่ User จะสามารถดูและติดตามดารซ่อมของตัวเองได้
+    public void connectDBShowRepairForUserFollowing(long userID){//เพื่อที่ User จะสามารถดูและติดตามดารซ่อมของตัวเองได้
+        Timestamp startTime=null;
+        Timestamp endTime=null;
         try{
             ConnectDatabase cndb = new ConnectDatabase();
             Connection connect = ConnectDatabase.connectDb("jan", "jan042");
@@ -177,14 +139,27 @@ public class RepairingForUser extends javax.swing.JFrame {
             
             Statement st = connect.createStatement(); 
             //ดึงเอา id ที่มาที่สุดออกมา เพื่อให้มันสามารถ insert ลง table ให้ไม่ซ้ำกันได้
-            String temp = "SELECT Asking,Repairing,Recieving FROM Repair_State where Asking= "+ask;
+            String temp = "SELECT Asking,Repairing,Recieving FROM Repair_State where userID= "+userID;
             ResultSet rs = st.executeQuery(temp);
             int count=0;
             while(rs.next()){
                 asking = rs.getString("Asking");
+                textAsking.setText(asking);
                 repairing = rs.getString("Repairing");
+                textRepair.setText(repairing);
                 status = rs.getString("Recieving");
+                textRecieving.setText(status);
             }
+            
+            String temp2 = "SELECT dateTime,return_dateTime FROM `Transaction` WHERE transID = "+this.countTransId;
+            ResultSet rs2 = st.executeQuery(temp2);
+            
+            while(rs2.next()){
+                startTime = rs2.getTimestamp("dateTime");
+                endTime = rs2.getTimestamp("return_dateTime");
+            }
+            
+            jLabelTime.setText("<html>Start: "+startTime+"<br>Stop: "+endTime+"</html>");
             //---------------------------------------------------------------------------------------
             if(connect != null){
                     connect.close();
@@ -237,6 +212,7 @@ public class RepairingForUser extends javax.swing.JFrame {
         jPanelSideBarUnder = new javax.swing.JPanel();
         jPanelSideBar = new javax.swing.JPanel();
         jPanelMenuSideBar = new javax.swing.JPanel();
+        jLabel24 = new javax.swing.JLabel();
         jLabelNew = new javax.swing.JLabel();
         jLabelBikeRepair = new javax.swing.JLabel();
         jLabelCanCounter = new javax.swing.JLabel();
@@ -247,18 +223,12 @@ public class RepairingForUser extends javax.swing.JFrame {
         jLabelSupport = new javax.swing.JLabel();
         jLabelMenu = new javax.swing.JLabel();
         jLabelSideDown = new javax.swing.JLabel();
-        jLabel24 = new javax.swing.JLabel();
         jPanelRepairUserFollowRepairing = new javax.swing.JPanel();
         jPanelHeadBikeRepairing = new javax.swing.JPanel();
         jLabelBikeRepairing = new javax.swing.JLabel();
         jLabelStatus = new javax.swing.JLabel();
-        jLabelIconAsking = new javax.swing.JLabel();
         jLabelAskingText = new javax.swing.JLabel();
-        jProgressBarAskingToRepairing = new javax.swing.JProgressBar();
-        jLabelIconRepairing = new javax.swing.JLabel();
         jLabelRepairing = new javax.swing.JLabel();
-        jPBpercentRepairToRecieving = new javax.swing.JProgressBar();
-        jLabelIconRecieving = new javax.swing.JLabel();
         jLabelRecieving = new javax.swing.JLabel();
         jPanelRecieving = new javax.swing.JPanel();
         jLabelRecievingText = new javax.swing.JLabel();
@@ -268,10 +238,12 @@ public class RepairingForUser extends javax.swing.JFrame {
         jLabelRepairingText = new javax.swing.JLabel();
         textRepair = new javax.swing.JLabel();
         jPnTimeDetail = new javax.swing.JPanel();
+        jLabelTime = new javax.swing.JLabel();
         jBtBackRepairUserSentToAdmin = new javax.swing.JButton();
         jPanelAsking = new javax.swing.JPanel();
         jLabelAskingTextInJPanelAsking = new javax.swing.JLabel();
         textAsking = new javax.swing.JLabel();
+        jLabelStatusRepairIcon = new javax.swing.JLabel();
         jPanelRepairUserSentToAdmin = new javax.swing.JPanel();
         jPanel16 = new javax.swing.JPanel();
         jLabel25 = new javax.swing.JLabel();
@@ -285,7 +257,13 @@ public class RepairingForUser extends javax.swing.JFrame {
         jLabelBrandBike2 = new javax.swing.JLabel();
         jSeparator5 = new javax.swing.JSeparator();
         jTFColor = new javax.swing.JTextField();
+        jLabelWarningUserInputColorBike = new javax.swing.JLabel();
+        jLabelWarningUserInputWhyRepair = new javax.swing.JLabel();
+        jLabelWarningUserInputModelBike = new javax.swing.JLabel();
         jBtToFollowingRepair = new javax.swing.JButton();
+        jButtonFollowingRepair = new javax.swing.JButton();
+        jButtonSentToRepair = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         jPanelRepairingIncrease1.setBackground(new java.awt.Color(25, 41, 65));
         jPanelRepairingIncrease1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -422,9 +400,16 @@ public class RepairingForUser extends javax.swing.JFrame {
         jPanelMenuSideBar.setBackground(new java.awt.Color(13, 24, 35));
         jPanelMenuSideBar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jLabel24.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel24.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
+        jLabel24.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel24.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gui/circle_mini.png"))); // NOI18N
+        jLabel24.setToolTipText("");
+        jPanelMenuSideBar.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 130, 40, 40));
+
         jLabelNew.setBackground(new java.awt.Color(0, 0, 0));
         jLabelNew.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
-        jLabelNew.setForeground(new java.awt.Color(19, 175, 248));
+        jLabelNew.setForeground(new java.awt.Color(255, 255, 255));
         jLabelNew.setText("     News");
         jLabelNew.setToolTipText("");
         jLabelNew.setVerticalAlignment(javax.swing.SwingConstants.TOP);
@@ -432,7 +417,7 @@ public class RepairingForUser extends javax.swing.JFrame {
 
         jLabelBikeRepair.setBackground(new java.awt.Color(0, 0, 0));
         jLabelBikeRepair.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
-        jLabelBikeRepair.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelBikeRepair.setForeground(new java.awt.Color(19, 175, 248));
         jLabelBikeRepair.setText("     Bike Repairing");
         jLabelBikeRepair.setToolTipText("");
         jLabelBikeRepair.setVerticalAlignment(javax.swing.SwingConstants.TOP);
@@ -500,18 +485,11 @@ public class RepairingForUser extends javax.swing.JFrame {
         jLabelSideDown.setToolTipText("");
         jPanelMenuSideBar.add(jLabelSideDown, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 70, 40, 30));
 
-        jLabel24.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel24.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
-        jLabel24.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel24.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gui/circle_mini.png"))); // NOI18N
-        jLabel24.setToolTipText("");
-        jPanelMenuSideBar.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 100, 40, 40));
-
         javax.swing.GroupLayout jPanelSideBarLayout = new javax.swing.GroupLayout(jPanelSideBar);
         jPanelSideBar.setLayout(jPanelSideBarLayout);
         jPanelSideBarLayout.setHorizontalGroup(
             jPanelSideBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 150, Short.MAX_VALUE)
+            .addGap(0, 170, Short.MAX_VALUE)
             .addGroup(jPanelSideBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelSideBarLayout.createSequentialGroup()
                     .addComponent(jPanelMenuSideBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -547,42 +525,29 @@ public class RepairingForUser extends javax.swing.JFrame {
         jLabelStatus.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         jPanelRepairUserFollowRepairing.add(jLabelStatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 50, 30));
 
-        jLabelIconAsking.setIcon(new javax.swing.ImageIcon("D:\\Homework\\INT105\\Project\\Project\\Bike\\png\\001-success-1.png")); // NOI18N
-        jPanelRepairUserFollowRepairing.add(jLabelIconAsking, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 80, 40, 40));
-
         jLabelAskingText.setBackground(new java.awt.Color(0, 0, 0));
-        jLabelAskingText.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
+        jLabelAskingText.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
         jLabelAskingText.setForeground(new java.awt.Color(255, 255, 255));
         jLabelAskingText.setText("Asking");
         jLabelAskingText.setToolTipText("");
         jLabelAskingText.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        jPanelRepairUserFollowRepairing.add(jLabelAskingText, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 130, 50, 30));
-
-        jProgressBarAskingToRepairing.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jPanelRepairUserFollowRepairing.add(jProgressBarAskingToRepairing, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 90, 210, -1));
-
-        jLabelIconRepairing.setIcon(new javax.swing.ImageIcon("D:\\Homework\\INT105\\Project\\Project\\Bike\\png\\001-success-1.png")); // NOI18N
-        jPanelRepairUserFollowRepairing.add(jLabelIconRepairing, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 80, 40, 40));
+        jPanelRepairUserFollowRepairing.add(jLabelAskingText, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, 50, 30));
 
         jLabelRepairing.setBackground(new java.awt.Color(0, 0, 0));
-        jLabelRepairing.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
+        jLabelRepairing.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
         jLabelRepairing.setForeground(new java.awt.Color(255, 255, 255));
         jLabelRepairing.setText("Repairing");
         jLabelRepairing.setToolTipText("");
         jLabelRepairing.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        jPanelRepairUserFollowRepairing.add(jLabelRepairing, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 130, 70, 30));
-        jPanelRepairUserFollowRepairing.add(jPBpercentRepairToRecieving, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 90, 210, -1));
-
-        jLabelIconRecieving.setIcon(new javax.swing.ImageIcon("D:\\Homework\\INT105\\Project\\Project\\Bike\\png\\001-success-1.png")); // NOI18N
-        jPanelRepairUserFollowRepairing.add(jLabelIconRecieving, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 80, 40, 40));
+        jPanelRepairUserFollowRepairing.add(jLabelRepairing, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 120, 90, 30));
 
         jLabelRecieving.setBackground(new java.awt.Color(0, 0, 0));
-        jLabelRecieving.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
+        jLabelRecieving.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
         jLabelRecieving.setForeground(new java.awt.Color(255, 255, 255));
         jLabelRecieving.setText("Recieving");
         jLabelRecieving.setToolTipText("");
         jLabelRecieving.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        jPanelRepairUserFollowRepairing.add(jLabelRecieving, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 130, 70, 30));
+        jPanelRepairUserFollowRepairing.add(jLabelRecieving, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 120, 70, 30));
 
         jPanelRecieving.setBackground(new java.awt.Color(190, 192, 184));
         jPanelRecieving.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -629,6 +594,10 @@ public class RepairingForUser extends javax.swing.JFrame {
 
         jPnTimeDetail.setBackground(new java.awt.Color(190, 192, 184));
         jPnTimeDetail.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabelTime.setFont(new java.awt.Font("Leelawadee", 0, 11)); // NOI18N
+        jPnTimeDetail.add(jLabelTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 220, 80));
+
         jPanelRepairUserFollowRepairing.add(jPnTimeDetail, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 280, 260, 100));
 
         jBtBackRepairUserSentToAdmin.setIcon(new javax.swing.ImageIcon("C:\\Users\\January\\Documents\\NetBeansProjects\\Project\\icon\\left-arrow.png")); // NOI18N
@@ -661,6 +630,9 @@ public class RepairingForUser extends javax.swing.JFrame {
 
         jPanelRepairUserFollowRepairing.add(jPanelAsking, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 280, 260, 100));
 
+        jLabelStatusRepairIcon.setIcon(new javax.swing.ImageIcon("D:\\ProjectGreenSociety\\Project\\icon\\1.png")); // NOI18N
+        jPanelRepairUserFollowRepairing.add(jLabelStatusRepairIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 240, 40));
+
         jPanelRepairUserSentAdmin.add(jPanelRepairUserFollowRepairing, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 60, 730, 420));
 
         jPanelRepairUserSentToAdmin.setBackground(new java.awt.Color(25, 41, 65));
@@ -683,7 +655,7 @@ public class RepairingForUser extends javax.swing.JFrame {
         jLabelBrandBike.setForeground(new java.awt.Color(255, 255, 255));
         jLabelBrandBike.setText("Why repair?");
         jPanel11.add(jLabelBrandBike, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 50, 90, 40));
-        jPanel11.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 80, 340, 20));
+        jPanel11.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 80, 340, 10));
 
         jTFWhat.setBackground(new java.awt.Color(56, 54, 54));
         jTFWhat.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
@@ -730,7 +702,19 @@ public class RepairingForUser extends javax.swing.JFrame {
         });
         jPanel11.add(jTFColor, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 190, 340, 30));
 
-        jPanelRepairUserSentToAdmin.add(jPanel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 80, 520, 310));
+        jLabelWarningUserInputColorBike.setFont(new java.awt.Font("Leelawadee", 0, 11)); // NOI18N
+        jLabelWarningUserInputColorBike.setForeground(new java.awt.Color(255, 0, 0));
+        jPanel11.add(jLabelWarningUserInputColorBike, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 230, 190, 20));
+
+        jLabelWarningUserInputWhyRepair.setFont(new java.awt.Font("Leelawadee", 0, 11)); // NOI18N
+        jLabelWarningUserInputWhyRepair.setForeground(new java.awt.Color(255, 0, 0));
+        jPanel11.add(jLabelWarningUserInputWhyRepair, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 90, 190, 20));
+
+        jLabelWarningUserInputModelBike.setFont(new java.awt.Font("Leelawadee", 0, 11)); // NOI18N
+        jLabelWarningUserInputModelBike.setForeground(new java.awt.Color(255, 0, 0));
+        jPanel11.add(jLabelWarningUserInputModelBike, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 160, 190, 20));
+
+        jPanelRepairUserSentToAdmin.add(jPanel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 80, 520, 280));
 
         jBtToFollowingRepair.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
         jBtToFollowingRepair.setIcon(new javax.swing.ImageIcon("C:\\Users\\January\\Documents\\NetBeansProjects\\Project\\icon\\right-arrow.png")); // NOI18N
@@ -741,7 +725,30 @@ public class RepairingForUser extends javax.swing.JFrame {
                 jBtToFollowingRepairActionPerformed(evt);
             }
         });
-        jPanelRepairUserSentToAdmin.add(jBtToFollowingRepair, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 360, 40, 50));
+        jPanelRepairUserSentToAdmin.add(jBtToFollowingRepair, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 370, 40, 50));
+
+        jButtonFollowingRepair.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
+        jButtonFollowingRepair.setText("FollowingRepair");
+        jButtonFollowingRepair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonFollowingRepairActionPerformed(evt);
+            }
+        });
+        jPanelRepairUserSentToAdmin.add(jButtonFollowingRepair, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 150, 120, -1));
+
+        jButtonSentToRepair.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
+        jButtonSentToRepair.setText("Sent to repair");
+        jButtonSentToRepair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSentToRepairActionPerformed(evt);
+            }
+        });
+        jPanelRepairUserSentToAdmin.add(jButtonSentToRepair, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 110, 120, -1));
+
+        jLabel1.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Select Page:");
+        jPanelRepairUserSentToAdmin.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 80, -1, -1));
 
         jPanelRepairUserSentAdmin.add(jPanelRepairUserSentToAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 60, 730, 420));
 
@@ -773,13 +780,26 @@ public class RepairingForUser extends javax.swing.JFrame {
 //        java.util.Date utilDate = new java.util.Date();
 //        Timestamp nowDate = new Timestamp(utilDate.getTime());
         //--------------------------------------------
-        color = jTFColor.getText();
-        bike = jTFbike.getText();
-        whyRepair = jTFWhat.getText();
-        connectDBFomeUserToAdmin(222);//return date ยังใส่ไม่ได้ต้องให้ช่างประเมินเวลาก่อน
-        System.out.println("Connect DB Success");
-        jPanelRepairUserFollowRepairing.setVisible(true);
-        jPanelRepairUserSentToAdmin.setVisible(false);
+        if(jTFWhat.getText().equalsIgnoreCase("")){
+            jLabelWarningUserInputWhyRepair.setText("Why Repair is empty!");
+        }
+        if(jTFbike.getText().equalsIgnoreCase("")){
+            jLabelWarningUserInputModelBike.setText("Model Bike is empty!");
+        }
+        if(jTFColor.getText().equalsIgnoreCase("")){
+            jLabelWarningUserInputColorBike.setText("Coloe bike is empty!");
+        }
+        
+      
+        if(jTFWhat.getText().equalsIgnoreCase("")==false && jTFbike.getText().equalsIgnoreCase("")==false && jTFColor.getText().equalsIgnoreCase("")==false){
+            whyRepair = jTFWhat.getText();
+            bike = jTFbike.getText();
+            color = jTFColor.getText();
+            connectDBFomeUserToAdmin(1);//return date ยังใส่ไม่ได้ต้องให้ช่างประเมินเวลาก่อน
+            System.out.println("Connect DB Success");
+            jPanelRepairUserFollowRepairing.setVisible(true);
+            jPanelRepairUserSentToAdmin.setVisible(false);
+        }
         
     }//GEN-LAST:event_jBtToFollowingRepairActionPerformed
 
@@ -788,6 +808,18 @@ public class RepairingForUser extends javax.swing.JFrame {
         jPanelRepairUserSentToAdmin.setVisible(true);
         jPanelRepairUserFollowRepairing.setVisible(false);
     }//GEN-LAST:event_jBtBackRepairUserSentToAdminActionPerformed
+
+    private void jButtonFollowingRepairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFollowingRepairActionPerformed
+        // TODO add your handling code here:
+        jPanelRepairUserSentToAdmin.setVisible(false);
+        jPanelRepairUserFollowRepairing.setVisible(true);
+    }//GEN-LAST:event_jButtonFollowingRepairActionPerformed
+
+    private void jButtonSentToRepairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSentToRepairActionPerformed
+        // TODO add your handling code here:
+        jPanelRepairUserSentToAdmin.setVisible(true);
+        jPanelRepairUserFollowRepairing.setVisible(false);
+    }//GEN-LAST:event_jButtonSentToRepairActionPerformed
 
     /**
      * @param args the command line arguments
@@ -831,6 +863,9 @@ public class RepairingForUser extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBtBackRepairUserSentToAdmin;
     private javax.swing.JButton jBtToFollowingRepair;
+    private javax.swing.JButton jButtonFollowingRepair;
+    private javax.swing.JButton jButtonSentToRepair;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
@@ -847,12 +882,9 @@ public class RepairingForUser extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelHeadGreen;
     private javax.swing.JLabel jLabelHeadSociety;
     private javax.swing.JLabel jLabelHistory;
-    private javax.swing.JLabel jLabelIconAsking;
     private javax.swing.JLabel jLabelIconBikeInRecieving;
     private javax.swing.JLabel jLabelIconCircle;
     private javax.swing.JLabel jLabelIconNotic;
-    private javax.swing.JLabel jLabelIconRecieving;
-    private javax.swing.JLabel jLabelIconRepairing;
     private javax.swing.JLabel jLabelIconSearch;
     private javax.swing.JLabel jLabelIconUser;
     private javax.swing.JLabel jLabelMenu;
@@ -868,10 +900,14 @@ public class RepairingForUser extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelRepairingText;
     private javax.swing.JLabel jLabelSideDown;
     private javax.swing.JLabel jLabelStatus;
+    private javax.swing.JLabel jLabelStatusRepairIcon;
     private javax.swing.JLabel jLabelSupport;
+    private javax.swing.JLabel jLabelTime;
     private javax.swing.JLabel jLabelTimer;
     private javax.swing.JLabel jLabelUserSideLigthBlue;
-    private javax.swing.JProgressBar jPBpercentRepairToRecieving;
+    private javax.swing.JLabel jLabelWarningUserInputColorBike;
+    private javax.swing.JLabel jLabelWarningUserInputModelBike;
+    private javax.swing.JLabel jLabelWarningUserInputWhyRepair;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel16;
     private javax.swing.JPanel jPanel17;
@@ -892,7 +928,6 @@ public class RepairingForUser extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelSideBar;
     private javax.swing.JPanel jPanelSideBarUnder;
     private javax.swing.JPanel jPnTimeDetail;
-    private javax.swing.JProgressBar jProgressBarAskingToRepairing;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;

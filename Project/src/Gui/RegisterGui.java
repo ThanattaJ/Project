@@ -352,7 +352,7 @@ public class RegisterGui extends javax.swing.JFrame {
 
         jTextFieldConDisease.setBackground(new java.awt.Color(0, 0, 0));
         jTextFieldConDisease.setForeground(new java.awt.Color(102, 102, 102));
-        jTextFieldConDisease.setText("if you have");
+        jTextFieldConDisease.setToolTipText("if you have");
         jTextFieldConDisease.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         jTextFieldConDisease.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {

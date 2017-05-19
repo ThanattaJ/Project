@@ -61,6 +61,8 @@ public class Notification {
           }else if(obj instanceof Repair){
             if(hr==0 && min == 3 && sec ==0){
                 return true;
+            }else if(hr==0 && min == 0 && sec ==0){
+                return true;
             }
           }
           return false;

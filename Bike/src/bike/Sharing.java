@@ -318,7 +318,7 @@ public class Sharing {
         Connection con = null;
         String newPath;
         int available=0;
-        String typeFile = path.substring(path.indexOf("."),path.length()-1);
+        String typeFile = path.substring(path.length()-4,path.length());
         newPath = "/bike_gui/itemPic/"+name+typeFile;
         copyFileImg(path,newPath);
 
@@ -613,7 +613,6 @@ public class Sharing {
                     rs = pst.executeQuery();
                     while(rs.next()){
                         allBorrowUser.add(rs.getInt("amounBorrow"));
-                        System.out.println(rs.getInt("amounBorrow"));
                     }
                 }
 
@@ -625,7 +624,6 @@ public class Sharing {
                     rs = pst.executeQuery();
                     while(rs.next()){
                         allReturnUser.add(rs.getInt("amountReturn"));
-                        System.out.println(rs.getInt("amountReturn"));
                     }
                 }
 

@@ -6,10 +6,13 @@ import BikeRapair.Repair;
 import ConnectDB.ConnectDatabase;
 import Gui.BikeUser;
 import Gui.RepairingForAdmin;
+import Sharing.Sharing;
+import User.User;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.*;
+
 public class Timer {
     private String timeLeft ="";
     private int totalSeconds;   //ผลต่างเวลาทั้งหมด
@@ -23,13 +26,21 @@ public class Timer {
     private Notification nf = new Notification();
     private Thread thread = new Thread();
 //    private BikeUser bu;
-    private RepairingForAdmin rpGui;
+    private RepairingForAdmin rpGui = new RepairingForAdmin();
     private String[] hisBorrow = new String[5];
    
     public Timer() {
         borrowDate = df.format(borrowTime);
     }
-
+    
+    public Timer(Date returnItems,Date current){
+        System.out.println("returnTime: "+returnItems);
+        borrowTime = current;
+        borrowDate = df.format(borrowTime);
+        returnTime = returnItems;
+        returnDate = df.format(returnTime);
+    }
+    
     public Timer(int userDate, int userMonth, int userYear,int userHr, int userMin, int userSec) {
         borrowDate = df.format(borrowTime);
         
@@ -209,6 +220,7 @@ public class Timer {
         }
         Runnable runnable = new Runnable(){
             public void run(){
+                System.out.println("2)RunTime: "+returnTime);
                 for(int i = 0;i<=tmp;i++){
                     for(int j = 0;j<60;j++){
                         for(int k = 0;k<60;k++){
@@ -221,13 +233,8 @@ public class Timer {
                             totalSeconds--;
                             timeLeft = totalHour+" Hours "+totalMin+" Minutes "+totalSeconds+" Secounds";
                             if(nf.notiTime(obj,totalHour,totalMin,totalSeconds)){
-                                try {
-                                    rpGui = new RepairingForAdmin();
-                                    int add[] = rpGui.notiTime();
-                                    increaseTime(add[0],add[1],add[2]);
-                                } catch (InterruptedException ex) {
-                                    Logger.getLogger(Timer.class.getName()).log(Level.SEVERE, null, ex);
-                                }
+                                int add[] = rpGui.notiTime();
+                                increaseTime(add[0],add[1],add[2]);
                             }
                             System.out.println(timeLeft);
                             if(totalSeconds == 0){

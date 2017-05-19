@@ -81,9 +81,9 @@ public class UserNews {
             String temp = "SELECT * FROM News WHERE newsID="+newsID;
             ResultSet rs = st.executeQuery(temp);
             
-            st = connect.createStatement();
-            String temp2 = "INSERT into News_Reader (newsID, userID) VALUES (12345,12345)";
-            st.executeUpdate(temp2);
+//            st = connect.createStatement();
+//            String temp2 = "INSERT into News_Reader (newsID, userID) VALUES (12345,12345)";
+//            st.executeUpdate(temp2);
     
             while(rs.next()){
                 System.out.println("newsID: " + rs.getInt("newsID"));
@@ -109,7 +109,7 @@ public class UserNews {
         }
     }
     
-    public String showNews(String showNews){
+    public void showNews(long newsID){
         try{
             Database cndb = new Database();
             Connection connect = Database.connectDb("win", "win016");
@@ -117,7 +117,7 @@ public class UserNews {
             System.out.println("Database connecting");
         
             Statement st = connect.createStatement(); 
-            String temp = "SELECT * FROM Green_Society.News";
+            String temp = "SELECT * FROM News";
             ResultSet rs = st.executeQuery(temp);
     
             while(rs.next()){
@@ -143,10 +143,10 @@ public class UserNews {
             System.out.println(ex);
         }
         System.out.println("");
-        return showNews;
+//        return showNews;
     }
     
-    public void insertData() {
+    public void insertNewsID() {
         Connection c = null;
         try {
             c = Database.connectDb("win", "win016");

@@ -58,60 +58,6 @@ public class History {
     }
     
     
-    public void HistoryByAdmin(String itemId,Timestamp startDate,Timestamp returnDate,String input){ //รับจาก ตัวแปรที่ต้องการส่งลง DB เป็น String
-        int userIdInt = 111;
-        int officerIdInt = 100;
-        try{
-            ConnectDatabase cndb = new ConnectDatabase();
-            Connection connect = ConnectDatabase.connectDb("jan", "jan042");
-            Class.forName("com.mysql.jdbc.Driver");
-            
-            Statement st = connect.createStatement(); 
-            
-            String temp3 = "SELECT MAX(transID) AS countTransId FROM Transaction ";
-            ResultSet rs1 = st.executeQuery(temp3);
-            int count=0;
-            while(rs1.next()){
-                count = rs1.getInt("countTransId");
-            }
-            this.historyId = ++count;
-                                  
-           
-            String userId = "\'"+userIdInt+"\'";
-            String action = "\'"+input+"\'";
-            String officerId = "\'"+officerIdInt+"\'";
-        
-            
-             String temp ="INSERT INTO Transaction VALUES " //set ค่าให้กับ Database
-                    + "("+this.historyId+","
-                    +"'"+startDate+"','"
-                     +returnDate+"',"
-                      +itemId + ","
-                      +userId+","
-                      +action+"," 
-                      +officerId+")";
-             
-            st.executeUpdate(temp);
-                   
-          try {
-		if(connect != null){
-                    connect.close();
-		}
-		}catch (SQLException e){
-                    e.printStackTrace();
-		}                
-        }
-        
-        catch(ClassNotFoundException cfe){
-            System.out.println(cfe);
-        }
-        catch(Exception ex){
-            System.out.println(ex);
-        }
-        
-    }
-    
-    
     public String showActionUser(long id){ //user ใส่ไอดีตัวเองที่ต้องการรู้ประวัติการใช้งานของตัวเอง
         String output="";
         int statUser=0;
@@ -150,8 +96,25 @@ public class History {
         return output;
     }
     
-    public String statGreensociety(){//admin จะเห็นหน้าสถิติการใช้งานของ User แต่ล่ะคน เรียงลำดับการใช้งานมากไปน้อย
-        String output="";
+    public int statGreensocietyReturn(){//admin จะเห็นหน้าสถิติการใช้งานของ User แต่ล่ะคน เรียงลำดับการใช้งานมากไปน้อย
+        int statOfReturn=0;
+        String month;
+        String date;
+        java.util.Date now = new java.util.Date();
+        if((now.getMonth()+1)<10){
+            month = "0"+(now.getMonth()+1);
+        }else{
+            month = ""+now.getMonth()+1;
+        }
+        
+        if(now.getDate()<10){
+            date = "0"+ now.getDate();
+        }else{
+            date = ""+now.getDate();
+        }
+        
+        String adminDate = (now.getYear()+1900)+"-"+month+"-"+date;
+        
         try{
             ConnectDatabase cndb = new ConnectDatabase();
             Connection connect = ConnectDatabase.connectDb("jan", "jan042");
@@ -159,14 +122,13 @@ public class History {
         
             Statement st = connect.createStatement();
             
-            String temp5 = "SELECT userID,COUNT(userID) FROM Transaction GROUP BY userID ORDER BY COUNT(userID) DESC;";
+            String temp5 = "SELECT COUNT(transID) AS statReturn FROM `Transaction` WHERE dateTime LIKE \'" +adminDate +"%\' AND action LIKE 'Return'";
             ResultSet rs5 = st.executeQuery(temp5);
-            output+=("-------------------GREEN-SOCIETY---------------------\n");
+            System.out.println("adminDate: "+adminDate);
+            
             while(rs5.next()){
-                output+="userId: "+rs5.getInt("userID")+"     ";
-                output+="The stat of user: "+rs5.getInt("COUNT(userID)")+"\n";
+                statOfReturn = rs5.getInt("statReturn");
             }
-            output+=("----------------------------------------------------------");
             
             try {
 		if(connect != null){
@@ -182,7 +144,107 @@ public class History {
         catch(Exception ex){
             System.out.println(ex);
         }
-        return output;
+        return statOfReturn;
+    }
+    
+    public int statGreensocietyRepair(){//admin จะเห็นหน้าสถิติการใช้งานของ User แต่ล่ะคน เรียงลำดับการใช้งานมากไปน้อย
+        int statOfRepair=0;
+        String month;
+        String date;
+        java.util.Date now = new java.util.Date();
+        if((now.getMonth()+1)<10){
+            month = "0"+(now.getMonth()+1);
+        }else{
+            month = ""+now.getMonth()+1;
+        }
+        
+        if(now.getDate()<10){
+            date = "0"+ now.getDate();
+        }else{
+            date = ""+now.getDate();
+        }
+        
+        String adminDate = (now.getYear()+1900)+"-"+month+"-"+date;
+        
+        try{
+            ConnectDatabase cndb = new ConnectDatabase();
+            Connection connect = ConnectDatabase.connectDb("jan", "jan042");
+            Class.forName("com.mysql.jdbc.Driver");
+        
+            Statement st = connect.createStatement();
+            
+            String temp5 = "SELECT COUNT(transID) AS statRepair FROM `Transaction` WHERE dateTime LIKE \'" +adminDate +"%\' AND action LIKE 'Repair'";
+            ResultSet rs5 = st.executeQuery(temp5);
+            System.out.println("adminDate: "+adminDate);
+            
+            while(rs5.next()){
+                statOfRepair = rs5.getInt("statRepair");
+            }
+            
+            try {
+		if(connect != null){
+                    connect.close();
+		}
+		}catch (SQLException e){
+                    e.printStackTrace();
+		}      
+        }
+        catch(ClassNotFoundException cfe){
+            System.out.println(cfe);
+        }
+        catch(Exception ex){
+            System.out.println(ex);
+        }
+        return statOfRepair;
+    }
+    
+    public int statGreensocietyBorrow(){//admin จะเห็นหน้าสถิติการใช้งานของ User แต่ล่ะคน เรียงลำดับการใช้งานมากไปน้อย
+        int statOfBorrow=0;
+        String month;
+        String date;
+        java.util.Date now = new java.util.Date();
+        if((now.getMonth()+1)<10){
+            month = "0"+(now.getMonth()+1);
+        }else{
+            month = ""+now.getMonth()+1;
+        }
+        
+        if(now.getDate()<10){
+            date = "0"+ now.getDate();
+        }else{
+            date = ""+now.getDate();
+        }
+        
+        String adminDate = (now.getYear()+1900)+"-"+month+"-"+date;
+        try{
+            ConnectDatabase cndb = new ConnectDatabase();
+            Connection connect = ConnectDatabase.connectDb("jan", "jan042");
+            Class.forName("com.mysql.jdbc.Driver");
+        
+            Statement st = connect.createStatement();
+            
+            String temp5 = "SELECT COUNT(transID) AS statBorrow FROM `Transaction` WHERE dateTime LIKE \'" +adminDate +"%\' AND action LIKE 'Borrow'";
+            ResultSet rs5 = st.executeQuery(temp5);
+            
+            while(rs5.next()){
+                statOfBorrow = rs5.getInt("statBorrow");
+            }
+            
+            try {
+		if(connect != null){
+                    connect.close();
+		}
+		}catch (SQLException e){
+                    e.printStackTrace();
+		}      
+        }
+        catch(ClassNotFoundException cfe){
+            System.out.println(cfe);
+        }
+        catch(Exception ex){
+            System.out.println(ex);
+        }
+        return statOfBorrow;
     }
     
     public String showBorrowUser(long id){ //user ใส่ไอดีตัวเองที่ต้องการรู้ประวัติการใช้งานของตัวเอง ดึงข้อมูลเฉพาะวันที่ยืม
