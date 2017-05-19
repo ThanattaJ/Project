@@ -66,7 +66,6 @@ public class Repair{
                 String name = rs.getString("firstName");
                 String surname = rs.getString("lastName");
                 userID = rs.getInt("userID");
-                System.out.println("idConnectDBforListUserSentToRepair: "+userID);
                 format = idPrepair+"    |     Name: "+name+"    |   Surname: "+surname+"    |   ID: "+userID;
                 list.add(format);
             }
@@ -172,7 +171,6 @@ public class Repair{
     }
     
     public void connectDBFromAdminToUser(long itemId,int user){//กรอกรายละเอียดการซ่อมให้ user
-         System.out.println("itemId: "+itemId);
          try{
             Connection connect = Database.connectDb("jan", "jan042");
             Statement st = connect.createStatement(); 
@@ -183,7 +181,6 @@ public class Repair{
             while(rs.next()){
                 count = rs.getInt("countId");
             }
-             System.out.println("coundId: "+count);
             repairStateId = ++count;
             //------------------------------------------------------------------
             //เอาข้อมูลลง DB Repair_State
@@ -202,7 +199,6 @@ public class Repair{
                     + user+")";
             
             st.executeUpdate(temp2);
-            System.out.println(".insert to Repair_State calling By connectDBFromAdminToUser");
             //---------------------------------------------------------------------------------------
             if(connect != null){
                     connect.close();
@@ -325,7 +321,6 @@ public class Repair{
             String userId = "\'"+userID+"\'";
             String action = "\'Repair\'";
             String officerId = "\'"+200+"\'";
-            System.out.println("..insert into To Prepair_Desctiption calling by connectDBFomeUserToAdmin");
             
             String temp3 ="INSERT INTO Transaction VALUES " //set ค่าให้กับ Database
                     + "("+this.countTransId+","
@@ -338,7 +333,6 @@ public class Repair{
                       +officerId+")";
              
             st.executeUpdate(temp3);
-            System.out.println(".insert into To Transaction calling by connectDBFomeUserToAdmin");
             //------------------------------------------------------------------
             if(connect != null){
                     connect.close();
@@ -409,7 +403,6 @@ public class Repair{
                 detail+="Color: "+rs.getString("color")+"\n";
                 detail+="Why Repair: "+rs.getString("other");
                 int transID = rs.getInt("transID");
-                System.out.println("TransID from connectDBForRepairAdminDetail: "+transID);
             }
             
             //------------------------------------------------------------------
