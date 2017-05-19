@@ -43,7 +43,6 @@ public class Register {
             }
             
             for(int i=0;i<listEmail.size();i++){
-                System.out.println(listEmail.get(i));
                 if(listEmail.get(i).equals(email)==false){
                     check=true;
                 }else{
@@ -89,7 +88,6 @@ public class Register {
             }
             
             for(int i=0;i<listId.size();i++){
-                System.out.println(listId.get(i));
                 if(listId.get(i).equals(id)==false){
                     check=true;
                 }else{
@@ -149,13 +147,11 @@ public class Register {
             mdhash = md.digest();
             
             String hash = DatatypeConverter.printHexBinary(mdhash).toLowerCase();
-            System.out.println("Datatype Converter: "+hash);
             
             pass =new StringBuffer();
             for(int i=0;i<mdhash.length;i++){
                 pass.append(Integer.toString((mdhash[i] & 0xff)+0x100,16).substring(1));
             }
-            System.out.println("String Buffer toString: "+ pass.toString());
         }
         
         catch(NoSuchAlgorithmException e){

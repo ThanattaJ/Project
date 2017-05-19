@@ -877,7 +877,6 @@ public class GreenSociety extends javax.swing.JFrame {
 
             String idRepairState1 = dtNotSuccess.substring(0,1); // SubString เอา repairID
             int idRepairState = Integer.parseInt(idRepairState1);
-            System.out.println("idRepairState: "+idRepairState);
             String time = dtNotSuccess.substring(lengthTemp-23,lengthTemp);
             
             remaining[i]=new JLabel();
@@ -893,7 +892,6 @@ public class GreenSociety extends javax.swing.JFrame {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
                     jButtonInsertButtonInJPanelNotSuccess(evt,idRepairState);
-                    System.out.println("idRepairStateRepairNotSuc: "+idRepairState);
                 } catch (InterruptedException ex) {
                     System.out.println(ex);
                 }
@@ -924,7 +922,6 @@ public class GreenSociety extends javax.swing.JFrame {
             Date nowTime = new Date();
             Timestamp stopTime = new Timestamp(nowTime.getTime());
             transIDRepairAdmin = rpw.connectDBFormAdminSelectTransID(repairIDAdmin);
-            System.out.println("TransID,Done: "+transIDRepairAdmin);
             rpw.connectDBForAdminUpdateTime(transIDRepairAdmin, stopTime);
             rpw.connectDBForChangeToSuccessFormRepairState(idRepairState);
             repairingNotSuccess();
@@ -6912,30 +6909,23 @@ public class GreenSociety extends javax.swing.JFrame {
     }//GEN-LAST:event_historyMouseClicked
 
     private void jBtBackRepairUserSentToAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtBackRepairUserSentToAdminActionPerformed
-        // TODO add your handling code here:
         jPanelRepairUserSentToAdmin.setVisible(true);
         jPanelRepairUserFollowRepairing.setVisible(false);
     }//GEN-LAST:event_jBtBackRepairUserSentToAdminActionPerformed
 
     private void jTFWhatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTFWhatActionPerformed
-        // TODO add your handling code here:
         rpw.setWhyRepair(jTFWhat.getText());
     }//GEN-LAST:event_jTFWhatActionPerformed
 
     private void jTFbikeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTFbikeActionPerformed
-        // TODO add your handling code here:
         rpw.setBike(jTFbike.getText());
     }//GEN-LAST:event_jTFbikeActionPerformed
 
     private void jTFColorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTFColorActionPerformed
-        // TODO add your handling code here:
         rpw.setColor(jTFColor.getText());
     }//GEN-LAST:event_jTFColorActionPerformed
 
     private void jBtToFollowingRepairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtToFollowingRepairActionPerformed
-        //        java.util.Date utilDate = new java.util.Date();
-        //        Timestamp nowDate = new Timestamp(utilDate.getTime());
-        //--------------------------------------------
         if(jTFWhat.getText().equalsIgnoreCase("")){
             jLabelWarningUserInputWhyRepair.setText("Why Repair is empty!");
         }
@@ -7006,7 +6996,6 @@ public class GreenSociety extends javax.swing.JFrame {
     }//GEN-LAST:event_jBtBackRepairUserSentToAdminMouseExited
 
     private void jButtonFollowingRepairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFollowingRepairActionPerformed
-        // TODO add your handling code here:
         rpw.connectDBShowRepairForUserFollowing(User.getUserId());
         iconStatusFollowingRepairing();
         setDataReparing();
@@ -7015,8 +7004,6 @@ public class GreenSociety extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonFollowingRepairActionPerformed
 
     private void jBTNextToPanelNotSuccessActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBTNextToPanelNotSuccessActionPerformed
-        // TODO add your handling code here:
-        System.out.println("Repair15");
         revalidate();
             repaint();
         jPanelRepairingNotSuccess.setVisible(false);
@@ -7029,8 +7016,6 @@ public class GreenSociety extends javax.swing.JFrame {
     }//GEN-LAST:event_jBTNextToPanelNotSuccessActionPerformed
 
     private void jBTBackToRepairShowTimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBTBackToRepairShowTimeActionPerformed
-        // TODO add your handling code here:
-        System.out.println("Repair14");
         revalidate();
             repaint();
         jPanelShowRepair.setVisible(false);
@@ -7041,7 +7026,6 @@ public class GreenSociety extends javax.swing.JFrame {
     }//GEN-LAST:event_jBTBackToRepairShowTimeActionPerformed
 
     private void jBTnextToShowTimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBTnextToShowTimeActionPerformed
-        // TODO add your handling code here:
         String repairing;
         String asking;
         int hours;
@@ -7083,7 +7067,6 @@ public class GreenSociety extends javax.swing.JFrame {
     }//GEN-LAST:event_jBTnextToShowTimeActionPerformed
 
     private void jButtonBackAdmindetailUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBackAdmindetailUserActionPerformed
-        // TODO add your handling code here:
         jPanelShowRepair.setVisible(false);
         jPanelHeadBikeRepairForRepairForAdmin.setVisible(false);
         revalidate();
@@ -7094,7 +7077,6 @@ public class GreenSociety extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonBackAdmindetailUserActionPerformed
 
     private void jButtonBackToAdminUserDetailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBackToAdminUserDetailActionPerformed
-        // TODO add your handling code here:
         jPanelShowRepair.setVisible(false);
         jPanelHeadBikeRepairForRepairForAdmin.setVisible(false);
         revalidate();
@@ -7105,7 +7087,6 @@ public class GreenSociety extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonBackToAdminUserDetailActionPerformed
 
     private void jButtonToRepairAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonToRepairAdminActionPerformed
-        // TODO add your handling code here:
         listUserRepair();
         jButtonRepairForNextToPageNotsuccess.setVisible(false);
         jPanelRepairingNotSuccess.setVisible(false);
@@ -7118,7 +7099,6 @@ public class GreenSociety extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonToRepairAdminActionPerformed
 
     private void jButtonRefreshRepairNotSuccessActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRefreshRepairNotSuccessActionPerformed
-        // TODO add your handling code here:
         jPanelBikeRepairNotSuccess.removeAll();
         repairingNotSuccess();
         jPanelBikeRepairNotSuccess.revalidate();
@@ -7126,12 +7106,10 @@ public class GreenSociety extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonRefreshRepairNotSuccessActionPerformed
 
     private void jTAShowDetaiUserSentRepirlForAdminAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jTAShowDetaiUserSentRepirlForAdminAncestorAdded
-        // TODO add your handling code here:
         jTAShowDetaiUserSentRepirlForAdmin.setText(detailRepairAdmin);
     }//GEN-LAST:event_jTAShowDetaiUserSentRepirlForAdminAncestorAdded
 
     private void jBTbackToJPanelRepairAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBTbackToJPanelRepairAdminActionPerformed
-        //
         jPanelRepairingAdmin.setVisible(true);
         jButtonRepairForNextToPageNotsuccess.setVisible(true);
         jPanelRepairAdminDetailUser.setVisible(false);
@@ -7144,13 +7122,11 @@ public class GreenSociety extends javax.swing.JFrame {
     }//GEN-LAST:event_jBTbackToJPanelRepairAdminActionPerformed
 
     private void jBTnextTojPanelRepairingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBTnextTojPanelRepairingActionPerformed
-        // TODO add your handling code here:
         Object[] options = {"Yes","No"};
         int ans = JOptionPane.showOptionDialog(null, "Customer brought bicycle to Green Society", "Check Status",
             JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
             null, options, options[0]);
         int select = jComboBoxStatusBike.getSelectedIndex();
-        System.out.println("Select comboBox: "+select);
         if(ans==0 && select==1){
             jPanelRepairingAdmin.setVisible(false);
             jPanelRepairAdminDetailUser.setVisible(false);
@@ -7200,7 +7176,6 @@ public class GreenSociety extends javax.swing.JFrame {
     }//GEN-LAST:event_bikeRepairMouseClicked
 
     private void jButtonRepairForNextToPageNotsuccessActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRepairForNextToPageNotsuccessActionPerformed
-        // TODO add your handling code here:
         jButtonRepairForNextToPageNotsuccess.setVisible(false);
         jPanelRepairingAdmin.setVisible(false);
         jPanelRepairAdminDetailUser.setVisible(false);
