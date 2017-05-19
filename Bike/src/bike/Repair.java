@@ -12,9 +12,9 @@ import java.util.Date;
 
 public class Repair{
     private int num;
-    private String askingUser;
-    private String repairingUser;
-    private String statusUser;
+    private String askingUser="";
+    private String repairingUser="";
+    private String statusUser="";
     private String timerUser;
     private long peairId;
     private String problem;//ปัญหาของการซ่อมจักรยาน เช่น ยางแตก ช่างกรอก Asking
@@ -42,6 +42,8 @@ public class Repair{
     private Timestamp endTimeAdminNotSuccess ;
     private long transIDAdminNotSuccess ;
     private long repairStateAdminNotSuccess ;
+    private int userID;
+    private int itemId;
     
     public Repair() {
         
@@ -115,8 +117,9 @@ public class Repair{
                 int idPrepair = rs.getInt("id");
                 String name = rs.getString("firstName");
                 String surname = rs.getString("lastName");
-                int id = rs.getInt("userID");
-                format = idPrepair+"    |     Name: "+name+"    |   Surname: "+surname+"    |   ID: "+id;
+                userID = rs.getInt("userID");
+                System.out.println("idConnectDBforListUserSentToRepair: "+userID);
+                format = idPrepair+"    |     Name: "+name+"    |   Surname: "+surname+"    |   ID: "+userID;
                 list.add(format);
             }
             
@@ -181,7 +184,7 @@ public class Repair{
          try{
             Connection connect = Database.connectDb("jan", "jan042");
             Statement st = connect.createStatement(); 
-            String temp = "SELECT Repair_State.id,User.firstName,Repair_State.Repairing,Transaction.dateTime FROM Green_Society.User " +
+            String temp = "SELECT Repair_State.id,User.firstName,User.userID,Repair_State.Repairing,Transaction.dateTime,Repair_State.item_id FROM Green_Society.User " +
                             "JOIN Repair_State ON User.userID = Repair_State.userID " +
                             "INNER JOIN Prepair_Desctiption ON Repair_State.item_id=Prepair_Desctiption.id " +
                             "INNER JOIN Transaction ON Prepair_Desctiption.transID=Transaction.transID " +
@@ -190,8 +193,10 @@ public class Repair{
             while(rs.next()){
                 id = rs.getInt("id");
                 name=rs.getString("firstName");
+                userID = rs.getInt("UserID");
                 action=rs.getString("Repairing");
                 remaining=rs.getTimestamp("dateTime");
+                itemId = rs.getInt("item_id");
                 format=id+"   |   "+name+"   |   "+action+"       "+remaining;
                 notSuccess.add(format);
             }
@@ -206,6 +211,16 @@ public class Repair{
         }
          return notSuccess;
     }
+
+    public int getUserID() {
+        return userID;
+    }
+
+    public int getItemId() {
+        return itemId;
+    }
+    
+    
 
     public long getCountTransId() {
         return countTransId;
@@ -289,7 +304,7 @@ public class Repair{
         return t;
     }
     
-    public void connectDBFomeUserToAdmin(long userID){
+    public void connectDBFomeUserToAdmin(String asking,String band,String color,long userID){
         Timer t = new Timer();
         Timestamp startDate = new Timestamp(t.getBorrowTime().getTime());
         Timestamp returnDate = new Timestamp(t.getReturnTime().getTime());
@@ -316,9 +331,9 @@ public class Repair{
             //------------------------------------------------------------------
             //เอาข้อมูลลง DB prapair_Desctiption
             String sqlid = "\'"+this.peairId+"\'";
-            String brand = "\'"+bike+"\'";
+            String brand = "\'"+band+"\'";
             String sqlcolor = "\'"+color+"\'";
-            String sqlWhy = "\'"+whyRepair+"\'";
+            String sqlWhy = "\'"+asking+"\'";
             String sqlTransId = "\'"+countTransId+"\'";
             
             String temp2 ="INSERT INTO `Prepair_Desctiption` (`id`, `brand`, `color`, `other`, `transID`) "
@@ -373,9 +388,9 @@ public class Repair{
             ResultSet rs = st.executeQuery(temp);
             int count=0;
             while(rs.next()){
-                askingUser = rs.getString("Asking");
-                repairingUser = rs.getString("Repairing");
-                statusUser = rs.getString("Recieving");
+                askingUser += "- " + rs.getString("Asking")+"<br>";
+                repairingUser += "- "+rs.getString("Repairing") +"<br>";
+                statusUser += "- "+rs.getString("Recieving") + "<br>";
             }
             
             String temp2 = "SELECT dateTime,return_dateTime FROM `Transaction` WHERE transID = "+this.countTransId;
@@ -386,7 +401,13 @@ public class Repair{
                 endTime = rs2.getTimestamp("return_dateTime");
             }
             
-            timerUser = "<html>Start: "+startTime+"<br>Stop: "+endTime+"</html>";
+            if(startTime.equals(null)){
+                timerUser = "<html>Start: - </html>";
+            }else{
+                timerUser = "<html>Start: "+startTime+"</html>";
+            }
+            
+           
             //---------------------------------------------------------------------------------------
             if(connect != null){
                     connect.close();
@@ -398,7 +419,7 @@ public class Repair{
             System.out.println(ex);
         }
     }
-       public String connectDBForRepairAdminDetail(int clickDetailUser){ 
+       public String connectDBForRepairAdminDetail(long clickDetailUser){ 
         String detail="";
         try{
             Connection connect = Database.connectDb("jan", "jan042");

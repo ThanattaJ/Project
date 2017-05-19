@@ -133,6 +133,7 @@ public class GreenSociety extends javax.swing.JFrame {
         birthProfile1.setBorder(null);
         
         //scrollfield
+        sentRepairScroll.setBorder(null);
         jScrollPaneHistory.setBorder(null);
         jScrollPaneInTextAreaNewsDetail.setBorder(null);
         listNewsScroll.setBorder(null);
@@ -143,6 +144,8 @@ public class GreenSociety extends javax.swing.JFrame {
         insertDetailScroll.setBorder(null);
         insertSupportContentArea.setBorder(null);
         itemListScroll.setBorder(null);
+        jScrollPaneShowDetailUserSentToRepair.setBorder(null);
+        jScrollPaneBikeRepairingNotSuccess.setBorder(null);
         newsList.setBorder(null);
         resultScroll.setBorder(null);
         resultScroll1.setBorder(null);
@@ -809,18 +812,17 @@ public class GreenSociety extends javax.swing.JFrame {
 
     public void iconStatusFollowingRepairing(){
         if(rpw.getRepairingUser()!=null){
-            jLabelStatusRepairIcon.setIcon(new javax.swing.ImageIcon("/bike_gui/picture/repairUserStep2.png")); // NOI18N
-            jPanelRepairUserFollowRepairing.add(jLabelStatusRepairIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 240, 40));
+            System.out.println("เข้ายังวะ");
+            jLabelStatusRepairIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/repairUserStep2.png")));
         }else if(rpw.getStatusUser()!= null && rpw.getStatusUser().equalsIgnoreCase("Success")){
-            jLabelStatusRepairIcon.setIcon(new javax.swing.ImageIcon("/bike_gui/picture/repairUserStep3.png")); // NOI18N
-            jPanelRepairUserFollowRepairing.add(jLabelStatusRepairIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 240, 40));
+            jLabelStatusRepairIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/repairUserStep3.png")));
         }
     }
     
     public void setDataReparing(){
-        textAsking.setText(rpw.getAskingUser());
-        textRepair.setText(rpw.getRepairingUser());
-        textRecieving.setText(rpw.getStatusUser());
+        textAsking.setText("<html><body>"+rpw.getAskingUser()+"</html></body>");
+        textRepair.setText("<html><body>"+rpw.getRepairingUser()+"</html></body>");
+        textRecieving.setText("<html><body>"+rpw.getStatusUser()+"</html></body>");
         jLabelTime.setText(rpw.getTimerUser());
     }
     
@@ -861,18 +863,19 @@ public class GreenSociety extends javax.swing.JFrame {
             jp[i].add(remaining[i], new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 10, -1, -1));
             
             detailButton[i]=new JButton();
-            detailButton[i].setText("Detail");
+            detailButton[i].setText("Insert");
             detailButton[i].setFont(new java.awt.Font("Leelawadee", 0, 11)); // NOI18N
             detailButton[i].addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
                     jButtonDetailInJPanelNotSuccess(evt,idRepairState);
+                    System.out.println("idRepairState: "+idRepairState);
                 } catch (InterruptedException ex) {
                     System.out.println(ex);
                 }
             }
             });
-            jp[i].add(detailButton[i], new org.netbeans.lib.awtextra.AbsoluteConstraints(458, 11, -1, -1));
+            jp[i].add(detailButton[i], new org.netbeans.lib.awtextra.AbsoluteConstraints(458, 11, -1, 20));
             
             doneButton[i]=new JButton();
             doneButton[i].setText("Done");
@@ -882,13 +885,11 @@ public class GreenSociety extends javax.swing.JFrame {
                 jButtonDoneInJPanelNotSuccess(evt,idRepairState);
             }
             });
-            jp[i].add(doneButton[i], new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 10, -1, -1));
-
+            jp[i].add(doneButton[i], new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 10, -1, 20));
             jPanelBikeRepairNotSuccess.add(jp[i], new org.netbeans.lib.awtextra.AbsoluteConstraints(10, y, 670, 40));
             y+=50;
-            jScrollPaneBikeRepairing.setViewportView(jPanelBikeRepairNotSuccess);
-            jPanelRepairingNotSuccess.add(jScrollPaneBikeRepairing, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 690, 300));
         }
+            jScrollPaneBikeRepairingNotSuccess.setViewportView(jPanelBikeRepairNotSuccess);
     }
     
     private void jButtonDoneInJPanelNotSuccess(java.awt.event.ActionEvent evt,int idRepairState) {  
@@ -901,7 +902,6 @@ public class GreenSociety extends javax.swing.JFrame {
             repairingNotSuccess();
             repaint();
             jPanelRepairingNotSuccess.setVisible(true);
-            jPanelRepairingShowTime.setVisible(false);
             jPanelShowRepair.setVisible(false);
             jPanelHeadBikeRepairForRepairForAdmin.setVisible(false);
             jPanelRepairAdminDetailUser.setVisible(false);
@@ -913,6 +913,7 @@ public class GreenSociety extends javax.swing.JFrame {
     private void jButtonDetailInJPanelNotSuccess(java.awt.event.ActionEvent evt,int idRepairState) throws InterruptedException {
         String time;
         this.idRepairState = idRepairState;
+        System.out.println("idRepairState: "+idRepairState);
         rpw.repairDetailForNotSuccess(idRepairState);
         transIDRepairAdmin = rpw.getTransIDAdminNotSuccess();
         //--------------------------------
@@ -948,15 +949,13 @@ public class GreenSociety extends javax.swing.JFrame {
         System.out.println("minute: "+diffMinute);
         System.out.println("secound: "+diffSecound);
         
-        jTAShowTime.setText(rpw.getShowTime());
         
-        
-        jPanelRepairingShowTime.setVisible(true);
-        jPanelShowRepair.setVisible(false);
-        jPanelHeadBikeRepairForRepairForAdmin.setVisible(false);
-        jPanelRepairAdminDetailUser.setVisible(false);
-        jPanelRepairingAdmin.setVisible(false);
+        jButtonRepairForNextToPageNotsuccess.setVisible(false);
         jPanelRepairingNotSuccess.setVisible(false);
+        jPanelRepairingAdmin.setVisible(false);
+        jPanelRepairAdminDetailUser.setVisible(false);
+        jPanelRepairingSetRepair.setVisible(true);
+        jPanelShowRepair .setVisible(false);
     } 
     
     public void jBTStopTimeForNotSuccessActionPerformed(java.awt.event.ActionEvent evt,Timestamp startTime,Timestamp endTime){
@@ -1003,7 +1002,7 @@ public class GreenSociety extends javax.swing.JFrame {
         return increaseRepair;
     }
     
-   public void layerUser(){//JPanel jPanelRepairingAdmin
+   public void listUserRepair(){//JPanel jPanelRepairingAdmin
         ArrayList<String> list = rpw.connectDBforListUserSentToRepair();
         int num = list.size();
         JPanel[] jp = new JPanel[num];
@@ -1028,16 +1027,17 @@ public class GreenSociety extends javax.swing.JFrame {
             //----------------------------------------------------------------------------------------//
             String idPrepair1 = list.get(i).substring(0,1);
             int idPrepair2 = Integer.parseInt(idPrepair1);
+            System.out.println("idPrepair: "+idPrepair2);
             click[i] = new JButton();
             click[i].setText("Click");
             click[i].setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
             click[i].addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBTclickActionPerformed(evt,idPrepair2);
+                jBTRepairClickActionPerformed(evt,idPrepair2);
             }
             });
-            jp[i].add(click[i], new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 10, -1, -1));
-            jPNBackGround.add(jp[i], new org.netbeans.lib.awtextra.AbsoluteConstraints(10, y, 700, 40));
+            jp[i].add(click[i], new org.netbeans.lib.awtextra.AbsoluteConstraints(620,10, -1, 20));
+            jPNBackGround.add(jp[i], new org.netbeans.lib.awtextra.AbsoluteConstraints(20, y, 740, 40));
             y+=55;
             jScrollPaneShowDetailUserSentToRepair.setViewportView(jPNBackGround);
             
@@ -1045,14 +1045,13 @@ public class GreenSociety extends javax.swing.JFrame {
     }
 
     
-    private void jBTclickActionPerformed(java.awt.event.ActionEvent evt,int tem) {  //   click in  jPanelRepairingAdmin                                    
+    private void jBTRepairClickActionPerformed(java.awt.event.ActionEvent evt,int tem) {  //   click in  jPanelRepairingAdmin                                    
         // TODO add your handling code here:
         repairIDAdmin = tem; //เอามาจากที่ admin คลิกดูที่ user ส่งมา
         jPanelRepairAdminDetailUser.setVisible(true);
-        detailRepairAdmin = rpw.connectDBForRepairAdminDetail(tem);
+        detailRepairAdmin = rpw.connectDBForRepairAdminDetail(repairIDAdmin);
         jPanelRepairingAdmin.setVisible(false);
-        jPanelHeadBikeRepairForRepairForAdmin.setVisible(false);
-        jPanelRepairingShowTime.setVisible(false);
+        jButtonRepairForNextToPageNotsuccess.setVisible(false);
         jPanelShowRepair.setVisible(false);
         revalidate();
         repaint();
@@ -1066,8 +1065,6 @@ public class GreenSociety extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel3 = new javax.swing.JLabel();
-        textRepair = new javax.swing.JLabel();
         mainAdmin = new javax.swing.JPanel();
         barSearch = new javax.swing.JPanel();
         jSeparator2 = new javax.swing.JSeparator();
@@ -1100,7 +1097,19 @@ public class GreenSociety extends javax.swing.JFrame {
         signout = new javax.swing.JButton();
         barNoti = new javax.swing.JPanel();
         repairPage = new javax.swing.JPanel();
+        jButtonRepairForNextToPageNotsuccess = new javax.swing.JButton();
+        jPanelRepairingAdmin = new javax.swing.JPanel();
+        jScrollPaneShowDetailUserSentToRepair = new javax.swing.JScrollPane();
+        jPNBackGround = new javax.swing.JPanel();
+        refreshRepairAdmin = new javax.swing.JButton();
+        jPanelRepairingNotSuccess = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        jScrollPaneBikeRepairingNotSuccess = new javax.swing.JScrollPane();
+        jPanelBikeRepairNotSuccess = new javax.swing.JPanel();
+        jButtonRefreshRepairNotSuccess = new javax.swing.JButton();
+        jButtonToRepairAdmin = new javax.swing.JButton();
         jPanelRepairingSetRepair = new javax.swing.JPanel();
+        titleSetPloblem = new javax.swing.JLabel();
         jBTnextToShowTime = new javax.swing.JButton();
         jPanelSetDetailRepairForAdmin = new javax.swing.JPanel();
         jLabelProblem = new javax.swing.JLabel();
@@ -1109,54 +1118,23 @@ public class GreenSociety extends javax.swing.JFrame {
         jTFDetail = new javax.swing.JTextField();
         jSeparatorUnderDetail = new javax.swing.JSeparator();
         jLabelDetail = new javax.swing.JLabel();
-        jPanelSetTimeForAdmin = new javax.swing.JPanel();
-        jLabelIconTimeForAdmin = new javax.swing.JLabel();
-        jLabelSetTimeForAdmin = new javax.swing.JLabel();
-        jLabelSetHourForAdmin = new javax.swing.JLabel();
-        jCBoxHour = new javax.swing.JComboBox<>();
-        jLabelSetMinuteForAdmin = new javax.swing.JLabel();
-        jCBoxMinute = new javax.swing.JComboBox<>();
         jButtonBackAdmindetailUser = new javax.swing.JButton();
         jButtonBackToAdminUserDetail = new javax.swing.JButton();
-        jPanelHeadBikeRepairForRepairForAdmin = new javax.swing.JPanel();
-        jLabelBikeRepairingForRepairingAdmin = new javax.swing.JLabel();
-        jButtonRepairForNextToPageNotsuccess = new javax.swing.JButton();
-        jPanelRepairingAdmin = new javax.swing.JPanel();
-        jScrollPaneShowDetailUserSentToRepair = new javax.swing.JScrollPane();
-        jPNBackGround = new javax.swing.JPanel();
-        jPanelRepairingNotSuccess = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
-        jScrollPaneBikeRepairing = new javax.swing.JScrollPane();
-        jPanelBikeRepairNotSuccess = new javax.swing.JPanel();
-        jButtonBackFromRepairingNotSuccess = new javax.swing.JButton();
-        jButtonNextFormRepairingNotSuccess = new javax.swing.JButton();
-        jButtonRefreshRepairNotSuccess = new javax.swing.JButton();
-        jButtonToRepairAdmin = new javax.swing.JButton();
-        jPanelRepairAdminDetailUser = new javax.swing.JPanel();
-        jPanelShoeUserSentToAdminForRepair = new javax.swing.JPanel();
-        jLabelStatusBikeUserSentTOadmin = new javax.swing.JLabel();
-        jComboBoxStatusBike = new javax.swing.JComboBox<>();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jTAShowDetaiUserSentRepirlForAdmin = new javax.swing.JTextArea();
-        jBTbackToJPanelRepairAdmin = new javax.swing.JButton();
-        jBTnextTojPanelRepairing = new javax.swing.JButton();
         jPanelShowRepair = new javax.swing.JPanel();
         jScrollPaneShowDetail = new javax.swing.JScrollPane();
         jTAShowDetail = new javax.swing.JTextArea();
         jBTNextToPanelNotSuccess = new javax.swing.JButton();
         jBTBackToRepairShowTime = new javax.swing.JButton();
-        jPanelRepairingShowTime = new javax.swing.JPanel();
-        jPanelShowTimeForRepairShowTime = new javax.swing.JPanel();
-        jLabelIconTime = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTAShowTime = new javax.swing.JTextArea();
-        jBTStartTime = new javax.swing.JButton();
-        jBTStopTime = new javax.swing.JButton();
-        jButtonBackToRepairing = new javax.swing.JButton();
-        jButtonBackToRepairingFrowShowtime = new javax.swing.JButton();
-        jPanelHeadBikeRepairForRepairForAdmin1 = new javax.swing.JPanel();
-        jLabelBikeRepairingForRepairingAdmin1 = new javax.swing.JLabel();
-        jButtonRepairForNextToPageNotsuccess1 = new javax.swing.JButton();
+        jPanelHeadBikeRepairForRepairForAdmin = new javax.swing.JPanel();
+        jLabelBikeRepairingForRepairingAdmin = new javax.swing.JLabel();
+        jPanelRepairAdminDetailUser = new javax.swing.JPanel();
+        jPanelShoeUserSentToAdminForRepair = new javax.swing.JPanel();
+        jLabelStatusBikeUserSentTOadmin = new javax.swing.JLabel();
+        jComboBoxStatusBike = new javax.swing.JComboBox<>();
+        sentRepairScroll = new javax.swing.JScrollPane();
+        jTAShowDetaiUserSentRepirlForAdmin = new javax.swing.JTextArea();
+        jBTbackToJPanelRepairAdmin = new javax.swing.JButton();
+        jBTnextTojPanelRepairing = new javax.swing.JButton();
         sharingPage = new javax.swing.JPanel();
         menuSharing = new javax.swing.JPanel();
         menuAdd = new javax.swing.JButton();
@@ -1346,8 +1324,6 @@ public class GreenSociety extends javax.swing.JFrame {
         jLabelWarningUserInputWhyRepair = new javax.swing.JLabel();
         jLabelWarningUserInputModelBike = new javax.swing.JLabel();
         jBtToFollowingRepair = new javax.swing.JButton();
-        jButtonSentToRepair = new javax.swing.JButton();
-        titleSelectPageRepair = new javax.swing.JLabel();
         titlenextFollingRepairUser = new javax.swing.JLabel();
         jButtonFollowingRepair = new javax.swing.JButton();
         jPanelRepairUserFollowRepairing = new javax.swing.JPanel();
@@ -1364,6 +1340,7 @@ public class GreenSociety extends javax.swing.JFrame {
         jLabelIconBikeInRecieving = new javax.swing.JLabel();
         jPanelRepairing = new javax.swing.JPanel();
         jLabelRepairingText = new javax.swing.JLabel();
+        textRepair = new javax.swing.JLabel();
         jPnTimeDetail = new javax.swing.JPanel();
         jLabelTime = new javax.swing.JLabel();
         jPanelAsking = new javax.swing.JPanel();
@@ -1481,6 +1458,22 @@ public class GreenSociety extends javax.swing.JFrame {
         contactScroll1 = new javax.swing.JScrollPane();
         jTAContact1 = new javax.swing.JTextArea();
         titleContactSupport1 = new javax.swing.JLabel();
+        forgotPassPage = new javax.swing.JPanel();
+        inputForgot = new javax.swing.JPanel();
+        titleForgotPass = new javax.swing.JLabel();
+        s10 = new javax.swing.JSeparator();
+        titleEmail = new javax.swing.JLabel();
+        forgotEmail = new javax.swing.JTextField();
+        titleNewPass = new javax.swing.JLabel();
+        titleConPass = new javax.swing.JLabel();
+        jPasswordField1 = new javax.swing.JPasswordField();
+        jPasswordField2 = new javax.swing.JPasswordField();
+        star1 = new javax.swing.JLabel();
+        star2 = new javax.swing.JLabel();
+        star3 = new javax.swing.JLabel();
+        submitPass = new javax.swing.JButton();
+        backSignin = new javax.swing.JLabel();
+        Background1 = new javax.swing.JLabel();
         login = new javax.swing.JPanel();
         GreenSociety = new javax.swing.JLabel();
         iconEmail = new javax.swing.JLabel();
@@ -1499,22 +1492,6 @@ public class GreenSociety extends javax.swing.JFrame {
         forgotPass = new javax.swing.JLabel();
         titleSignup = new javax.swing.JLabel();
         Background = new javax.swing.JLabel();
-        forgotPassPage = new javax.swing.JPanel();
-        inputForgot = new javax.swing.JPanel();
-        titleForgotPass = new javax.swing.JLabel();
-        s10 = new javax.swing.JSeparator();
-        titleEmail = new javax.swing.JLabel();
-        forgotEmail = new javax.swing.JTextField();
-        titleNewPass = new javax.swing.JLabel();
-        titleConPass = new javax.swing.JLabel();
-        jPasswordField1 = new javax.swing.JPasswordField();
-        jPasswordField2 = new javax.swing.JPasswordField();
-        submitPass = new javax.swing.JLabel();
-        star1 = new javax.swing.JLabel();
-        star2 = new javax.swing.JLabel();
-        star3 = new javax.swing.JLabel();
-        backSignin = new javax.swing.JLabel();
-        Background1 = new javax.swing.JLabel();
         registerPage = new javax.swing.JPanel();
         backSigninRegis = new javax.swing.JLabel();
         jPanelSignUp = new javax.swing.JPanel();
@@ -1568,14 +1545,6 @@ public class GreenSociety extends javax.swing.JFrame {
         jDateChooserBirthDate = new com.toedter.calendar.JDateChooser();
         jFormatTextFieldForId = new javax.swing.JFormattedTextField();
         Backgroung2 = new javax.swing.JLabel();
-
-        jLabel3.setText("jLabel3");
-
-        textRepair.setBackground(new java.awt.Color(0, 0, 0));
-        textRepair.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
-        textRepair.setForeground(new java.awt.Color(51, 51, 51));
-        textRepair.setToolTipText("");
-        textRepair.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -1836,97 +1805,127 @@ public class GreenSociety extends javax.swing.JFrame {
         repairPage.setBackground(new java.awt.Color(25, 41, 65));
         repairPage.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jButtonRepairForNextToPageNotsuccess.setBackground(new java.awt.Color(0, 0, 0));
+        jButtonRepairForNextToPageNotsuccess.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
+        jButtonRepairForNextToPageNotsuccess.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonRepairForNextToPageNotsuccess.setText("RepiarForNotsuccess");
+        jButtonRepairForNextToPageNotsuccess.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRepairForNextToPageNotsuccessActionPerformed(evt);
+            }
+        });
+        repairPage.add(jButtonRepairForNextToPageNotsuccess, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 10, 160, 30));
+
+        jPanelRepairingAdmin.setBackground(new java.awt.Color(25, 41, 65));
+        jPanelRepairingAdmin.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPNBackGround.setBackground(new java.awt.Color(25, 41, 65));
+        jPNBackGround.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jScrollPaneShowDetailUserSentToRepair.setViewportView(jPNBackGround);
+
+        jPanelRepairingAdmin.add(jScrollPaneShowDetailUserSentToRepair, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 770, 370));
+
+        refreshRepairAdmin.setBackground(new java.awt.Color(51, 51, 51));
+        refreshRepairAdmin.setForeground(new java.awt.Color(19, 175, 248));
+        refreshRepairAdmin.setText("Refresh");
+        refreshRepairAdmin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                refreshRepairAdminActionPerformed(evt);
+            }
+        });
+        jPanelRepairingAdmin.add(refreshRepairAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
+
+        repairPage.add(jPanelRepairingAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 770, 420));
+
+        jPanelRepairingNotSuccess.setBackground(new java.awt.Color(25, 41, 65));
+        jPanelRepairingNotSuccess.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel4.setFont(new java.awt.Font("Leelawadee", 1, 16)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("Username | Action | Remaining");
+        jPanelRepairingNotSuccess.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, 270, 30));
+
+        jPanelBikeRepairNotSuccess.setBackground(new java.awt.Color(25, 41, 65));
+        jPanelBikeRepairNotSuccess.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jScrollPaneBikeRepairingNotSuccess.setViewportView(jPanelBikeRepairNotSuccess);
+
+        jPanelRepairingNotSuccess.add(jScrollPaneBikeRepairingNotSuccess, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 740, 290));
+
+        jButtonRefreshRepairNotSuccess.setFont(new java.awt.Font("Leelawadee", 0, 11)); // NOI18N
+        jButtonRefreshRepairNotSuccess.setText("Refresh");
+        jButtonRefreshRepairNotSuccess.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRefreshRepairNotSuccessActionPerformed(evt);
+            }
+        });
+        jPanelRepairingNotSuccess.add(jButtonRefreshRepairNotSuccess, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 30, -1, -1));
+
+        jButtonToRepairAdmin.setBackground(new java.awt.Color(102, 102, 102));
+        jButtonToRepairAdmin.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
+        jButtonToRepairAdmin.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonToRepairAdmin.setText("RepairAdmin");
+        jButtonToRepairAdmin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonToRepairAdminActionPerformed(evt);
+            }
+        });
+        jPanelRepairingNotSuccess.add(jButtonToRepairAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 30, 140, -1));
+
+        repairPage.add(jPanelRepairingNotSuccess, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 770, 370));
+
         jPanelRepairingSetRepair.setBackground(new java.awt.Color(25, 41, 65));
         jPanelRepairingSetRepair.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        titleSetPloblem.setBackground(new java.awt.Color(255, 255, 255));
+        titleSetPloblem.setFont(new java.awt.Font("Leelawadee", 0, 36)); // NOI18N
+        titleSetPloblem.setForeground(new java.awt.Color(255, 51, 51));
+        titleSetPloblem.setText("Set Problem");
+        jPanelRepairingSetRepair.add(titleSetPloblem, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 80, 210, 60));
+
         jBTnextToShowTime.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
-        jBTnextToShowTime.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/right arrow click.png"))); // NOI18N
+        jBTnextToShowTime.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/right arrow.png"))); // NOI18N
         jBTnextToShowTime.setContentAreaFilled(false);
         jBTnextToShowTime.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBTnextToShowTimeActionPerformed(evt);
             }
         });
-        jPanelRepairingSetRepair.add(jBTnextToShowTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 310, 90, 50));
+        jPanelRepairingSetRepair.add(jBTnextToShowTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 360, 80, 60));
 
-        jPanelSetDetailRepairForAdmin.setBackground(new java.awt.Color(190, 192, 184));
+        jPanelSetDetailRepairForAdmin.setBackground(new java.awt.Color(255, 255, 255));
         jPanelSetDetailRepairForAdmin.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabelProblem.setBackground(new java.awt.Color(0, 0, 0));
         jLabelProblem.setFont(new java.awt.Font("Leelawadee", 1, 14)); // NOI18N
         jLabelProblem.setForeground(new java.awt.Color(51, 51, 51));
-        jLabelProblem.setText("Problem");
+        jLabelProblem.setText("Problem :");
         jLabelProblem.setToolTipText("");
         jLabelProblem.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        jPanelSetDetailRepairForAdmin.add(jLabelProblem, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 60, 25));
+        jPanelSetDetailRepairForAdmin.add(jLabelProblem, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 45, 70, 30));
 
-        jTFProblem.setBackground(new java.awt.Color(190, 192, 184));
         jTFProblem.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
         jTFProblem.setBorder(null);
-        jPanelSetDetailRepairForAdmin.add(jTFProblem, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 0, 450, 31));
-        jPanelSetDetailRepairForAdmin.add(jSeparatorUnderProblem, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 30, 460, 20));
+        jPanelSetDetailRepairForAdmin.add(jTFProblem, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 40, 460, 30));
 
-        jTFDetail.setBackground(new java.awt.Color(190, 192, 184));
+        jSeparatorUnderProblem.setBackground(new java.awt.Color(0, 0, 0));
+        jPanelSetDetailRepairForAdmin.add(jSeparatorUnderProblem, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 70, 460, 20));
+
         jTFDetail.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
         jTFDetail.setBorder(null);
-        jPanelSetDetailRepairForAdmin.add(jTFDetail, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 40, 460, 28));
-        jPanelSetDetailRepairForAdmin.add(jSeparatorUnderDetail, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 70, 460, 23));
+        jPanelSetDetailRepairForAdmin.add(jTFDetail, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 100, 460, 28));
+
+        jSeparatorUnderDetail.setBackground(new java.awt.Color(0, 0, 0));
+        jPanelSetDetailRepairForAdmin.add(jSeparatorUnderDetail, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 130, 460, 23));
 
         jLabelDetail.setBackground(new java.awt.Color(0, 0, 0));
         jLabelDetail.setFont(new java.awt.Font("Leelawadee", 1, 14)); // NOI18N
         jLabelDetail.setForeground(new java.awt.Color(51, 51, 51));
-        jLabelDetail.setText("Detail");
+        jLabelDetail.setText(" Detail :");
         jLabelDetail.setToolTipText("");
         jLabelDetail.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        jPanelSetDetailRepairForAdmin.add(jLabelDetail, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 54, 70, 30));
+        jPanelSetDetailRepairForAdmin.add(jLabelDetail, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 60, 20));
 
-        jPanelRepairingSetRepair.add(jPanelSetDetailRepairForAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 60, 580, 110));
-
-        jPanelSetTimeForAdmin.setBackground(new java.awt.Color(56, 54, 54));
-        jPanelSetTimeForAdmin.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-        jPanelSetTimeForAdmin.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabelIconTimeForAdmin.setBackground(new java.awt.Color(0, 0, 0));
-        jLabelIconTimeForAdmin.setFont(new java.awt.Font("Leelawadee", 0, 18)); // NOI18N
-        jLabelIconTimeForAdmin.setForeground(new java.awt.Color(255, 255, 255));
-        jLabelIconTimeForAdmin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/alarm-clock.png"))); // NOI18N
-        jLabelIconTimeForAdmin.setToolTipText("");
-        jLabelIconTimeForAdmin.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        jPanelSetTimeForAdmin.add(jLabelIconTimeForAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 20, 100, 90));
-
-        jLabelSetTimeForAdmin.setBackground(new java.awt.Color(0, 0, 0));
-        jLabelSetTimeForAdmin.setFont(new java.awt.Font("Leelawadee", 0, 18)); // NOI18N
-        jLabelSetTimeForAdmin.setForeground(new java.awt.Color(255, 255, 255));
-        jLabelSetTimeForAdmin.setText("Set Time");
-        jLabelSetTimeForAdmin.setToolTipText("");
-        jLabelSetTimeForAdmin.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        jPanelSetTimeForAdmin.add(jLabelSetTimeForAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, 80, 30));
-
-        jLabelSetHourForAdmin.setBackground(new java.awt.Color(0, 0, 0));
-        jLabelSetHourForAdmin.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
-        jLabelSetHourForAdmin.setForeground(new java.awt.Color(255, 255, 255));
-        jLabelSetHourForAdmin.setText("Hours");
-        jLabelSetHourForAdmin.setToolTipText("");
-        jLabelSetHourForAdmin.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        jPanelSetTimeForAdmin.add(jLabelSetHourForAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 50, 50, 30));
-
-        jCBoxHour.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
-        jCBoxHour.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23" }));
-        jPanelSetTimeForAdmin.add(jCBoxHour, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 50, 50, -1));
-
-        jLabelSetMinuteForAdmin.setBackground(new java.awt.Color(0, 0, 0));
-        jLabelSetMinuteForAdmin.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
-        jLabelSetMinuteForAdmin.setForeground(new java.awt.Color(255, 255, 255));
-        jLabelSetMinuteForAdmin.setText("Minute");
-        jLabelSetMinuteForAdmin.setToolTipText("");
-        jLabelSetMinuteForAdmin.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        jPanelSetTimeForAdmin.add(jLabelSetMinuteForAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 50, 50, 30));
-
-        jCBoxMinute.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
-        jCBoxMinute.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59" }));
-        jPanelSetTimeForAdmin.add(jCBoxMinute, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 50, 50, -1));
-
-        jPanelRepairingSetRepair.add(jPanelSetTimeForAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 210, 580, 120));
+        jPanelRepairingSetRepair.add(jPanelSetDetailRepairForAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 130, 600, 180));
 
         jButtonBackAdmindetailUser.setContentAreaFilled(false);
         jButtonBackAdmindetailUser.addActionListener(new java.awt.event.ActionListener() {
@@ -1944,137 +1943,7 @@ public class GreenSociety extends javax.swing.JFrame {
         });
         jPanelRepairingSetRepair.add(jButtonBackToAdminUserDetail, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 370, 80, -1));
 
-        repairPage.add(jPanelRepairingSetRepair, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 770, 370));
-
-        jPanelHeadBikeRepairForRepairForAdmin.setBackground(new java.awt.Color(76, 81, 86));
-        jPanelHeadBikeRepairForRepairForAdmin.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabelBikeRepairingForRepairingAdmin.setFont(new java.awt.Font("Leelawadee", 0, 22)); // NOI18N
-        jLabelBikeRepairingForRepairingAdmin.setForeground(new java.awt.Color(255, 255, 255));
-        jLabelBikeRepairingForRepairingAdmin.setText("Bike Repairing");
-        jPanelHeadBikeRepairForRepairForAdmin.add(jLabelBikeRepairingForRepairingAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 180, 50));
-
-        jButtonRepairForNextToPageNotsuccess.setBackground(new java.awt.Color(0, 0, 0));
-        jButtonRepairForNextToPageNotsuccess.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
-        jButtonRepairForNextToPageNotsuccess.setForeground(new java.awt.Color(255, 255, 255));
-        jButtonRepairForNextToPageNotsuccess.setText("RepiarForNotsuccess");
-        jButtonRepairForNextToPageNotsuccess.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonRepairForNextToPageNotsuccessActionPerformed(evt);
-            }
-        });
-        jPanelHeadBikeRepairForRepairForAdmin.add(jButtonRepairForNextToPageNotsuccess, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 10, 160, -1));
-
-        repairPage.add(jPanelHeadBikeRepairForRepairForAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 770, 50));
-
-        jPanelRepairingAdmin.setBackground(new java.awt.Color(25, 41, 65));
-        jPanelRepairingAdmin.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jPNBackGround.setBackground(new java.awt.Color(25, 41, 65));
-        jPNBackGround.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jScrollPaneShowDetailUserSentToRepair.setViewportView(jPNBackGround);
-
-        jPanelRepairingAdmin.add(jScrollPaneShowDetailUserSentToRepair, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 770, 370));
-
-        repairPage.add(jPanelRepairingAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 770, 420));
-
-        jPanelRepairingNotSuccess.setBackground(new java.awt.Color(25, 41, 65));
-        jPanelRepairingNotSuccess.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel4.setFont(new java.awt.Font("Leelawadee", 1, 16)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Username | Action | Remaining");
-        jPanelRepairingNotSuccess.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 270, 30));
-
-        jPanelBikeRepairNotSuccess.setBackground(new java.awt.Color(25, 41, 65));
-        jPanelBikeRepairNotSuccess.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jScrollPaneBikeRepairing.setViewportView(jPanelBikeRepairNotSuccess);
-
-        jPanelRepairingNotSuccess.add(jScrollPaneBikeRepairing, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 690, 260));
-
-        jButtonBackFromRepairingNotSuccess.setContentAreaFilled(false);
-        jPanelRepairingNotSuccess.add(jButtonBackFromRepairingNotSuccess, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 370, -1, -1));
-
-        jButtonNextFormRepairingNotSuccess.setContentAreaFilled(false);
-        jPanelRepairingNotSuccess.add(jButtonNextFormRepairingNotSuccess, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 370, -1, -1));
-
-        jButtonRefreshRepairNotSuccess.setFont(new java.awt.Font("Leelawadee", 0, 11)); // NOI18N
-        jButtonRefreshRepairNotSuccess.setText("Refresh");
-        jButtonRefreshRepairNotSuccess.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonRefreshRepairNotSuccessActionPerformed(evt);
-            }
-        });
-        jPanelRepairingNotSuccess.add(jButtonRefreshRepairNotSuccess, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 60, -1, -1));
-
-        jButtonToRepairAdmin.setBackground(new java.awt.Color(102, 102, 102));
-        jButtonToRepairAdmin.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
-        jButtonToRepairAdmin.setForeground(new java.awt.Color(255, 255, 255));
-        jButtonToRepairAdmin.setText("RepairAdmin");
-        jButtonToRepairAdmin.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonToRepairAdminActionPerformed(evt);
-            }
-        });
-        jPanelRepairingNotSuccess.add(jButtonToRepairAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 60, 140, -1));
-
-        repairPage.add(jPanelRepairingNotSuccess, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 770, 370));
-
-        jPanelRepairAdminDetailUser.setBackground(new java.awt.Color(25, 41, 65));
-        jPanelRepairAdminDetailUser.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jPanelShoeUserSentToAdminForRepair.setBackground(new java.awt.Color(34, 34, 38));
-        jPanelShoeUserSentToAdminForRepair.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabelStatusBikeUserSentTOadmin.setFont(new java.awt.Font("Leelawadee", 0, 16)); // NOI18N
-        jLabelStatusBikeUserSentTOadmin.setForeground(new java.awt.Color(255, 255, 255));
-        jLabelStatusBikeUserSentTOadmin.setText("สมาชิกได้เอาจักรยานส่งมาให้แล้ว:");
-        jPanelShoeUserSentToAdminForRepair.add(jLabelStatusBikeUserSentTOadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 190, 210, 40));
-
-        jComboBoxStatusBike.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
-        jComboBoxStatusBike.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "No", "Yes" }));
-        jPanelShoeUserSentToAdminForRepair.add(jComboBoxStatusBike, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 190, 70, 30));
-
-        jTAShowDetaiUserSentRepirlForAdmin.setBackground(new java.awt.Color(54, 54, 56));
-        jTAShowDetaiUserSentRepirlForAdmin.setColumns(20);
-        jTAShowDetaiUserSentRepirlForAdmin.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
-        jTAShowDetaiUserSentRepirlForAdmin.setForeground(new java.awt.Color(255, 255, 255));
-        jTAShowDetaiUserSentRepirlForAdmin.setRows(5);
-        jTAShowDetaiUserSentRepirlForAdmin.setBorder(null);
-        jTAShowDetaiUserSentRepirlForAdmin.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-            }
-            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
-                jTAShowDetaiUserSentRepirlForAdminAncestorAdded(evt);
-            }
-            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
-            }
-        });
-        jScrollPane3.setViewportView(jTAShowDetaiUserSentRepirlForAdmin);
-
-        jPanelShoeUserSentToAdminForRepair.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 40, 530, 130));
-
-        jPanelRepairAdminDetailUser.add(jPanelShoeUserSentToAdminForRepair, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 90, 600, 250));
-
-        jBTbackToJPanelRepairAdmin.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
-        jBTbackToJPanelRepairAdmin.setContentAreaFilled(false);
-        jBTbackToJPanelRepairAdmin.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBTbackToJPanelRepairAdminActionPerformed(evt);
-            }
-        });
-        jPanelRepairAdminDetailUser.add(jBTbackToJPanelRepairAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 360, 90, 50));
-
-        jBTnextTojPanelRepairing.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
-        jBTnextTojPanelRepairing.setContentAreaFilled(false);
-        jBTnextTojPanelRepairing.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBTnextTojPanelRepairingActionPerformed(evt);
-            }
-        });
-        jPanelRepairAdminDetailUser.add(jBTnextTojPanelRepairing, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 360, 90, 50));
-
-        repairPage.add(jPanelRepairAdminDetailUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 770, 370));
+        repairPage.add(jPanelRepairingSetRepair, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 770, 420));
 
         jPanelShowRepair.setBackground(new java.awt.Color(25, 41, 65));
         jPanelShowRepair.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -2109,94 +1978,75 @@ public class GreenSociety extends javax.swing.JFrame {
 
         repairPage.add(jPanelShowRepair, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 770, 370));
 
-        jPanelRepairingShowTime.setBackground(new java.awt.Color(25, 41, 65));
-        jPanelRepairingShowTime.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanelHeadBikeRepairForRepairForAdmin.setBackground(new java.awt.Color(76, 81, 86));
+        jPanelHeadBikeRepairForRepairForAdmin.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanelShowTimeForRepairShowTime.setBackground(new java.awt.Color(62, 64, 57));
-        jPanelShowTimeForRepairShowTime.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-        jPanelShowTimeForRepairShowTime.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jLabelBikeRepairingForRepairingAdmin.setFont(new java.awt.Font("Leelawadee", 0, 22)); // NOI18N
+        jLabelBikeRepairingForRepairingAdmin.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelBikeRepairingForRepairingAdmin.setText("Bike Repairing");
+        jPanelHeadBikeRepairForRepairForAdmin.add(jLabelBikeRepairingForRepairingAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 180, 50));
 
-        jLabelIconTime.setBackground(new java.awt.Color(0, 0, 0));
-        jLabelIconTime.setFont(new java.awt.Font("Leelawadee", 0, 18)); // NOI18N
-        jLabelIconTime.setForeground(new java.awt.Color(255, 255, 255));
-        jLabelIconTime.setToolTipText("");
-        jLabelIconTime.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        jPanelShowTimeForRepairShowTime.add(jLabelIconTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 70, 70));
+        repairPage.add(jPanelHeadBikeRepairForRepairForAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 770, 50));
 
-        jTAShowTime.setBackground(new java.awt.Color(62, 64, 57));
-        jTAShowTime.setColumns(20);
-        jTAShowTime.setFont(new java.awt.Font("Leelawadee", 0, 18)); // NOI18N
-        jTAShowTime.setForeground(new java.awt.Color(255, 255, 255));
-        jTAShowTime.setRows(5);
-        jTAShowTime.setBorder(null);
-        jScrollPane1.setViewportView(jTAShowTime);
+        jPanelRepairAdminDetailUser.setBackground(new java.awt.Color(25, 41, 65));
+        jPanelRepairAdminDetailUser.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanelShowTimeForRepairShowTime.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 0, 480, 120));
+        jPanelShoeUserSentToAdminForRepair.setBackground(new java.awt.Color(34, 34, 38));
+        jPanelShoeUserSentToAdminForRepair.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanelRepairingShowTime.add(jPanelShowTimeForRepairShowTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 110, 580, 120));
+        jLabelStatusBikeUserSentTOadmin.setFont(new java.awt.Font("Leelawadee", 0, 16)); // NOI18N
+        jLabelStatusBikeUserSentTOadmin.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelStatusBikeUserSentTOadmin.setText("สมาชิกได้เอาจักรยานส่งมาให้แล้ว:");
+        jPanelShoeUserSentToAdminForRepair.add(jLabelStatusBikeUserSentTOadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 190, 210, 40));
 
-        jBTStartTime.setBackground(new java.awt.Color(25, 41, 65));
-        jBTStartTime.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
-        jBTStartTime.setForeground(new java.awt.Color(255, 255, 255));
-        jBTStartTime.setText("START");
-        jBTStartTime.setToolTipText("");
-        jBTStartTime.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBTStartTimeActionPerformed(evt);
+        jComboBoxStatusBike.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
+        jComboBoxStatusBike.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "No", "Yes" }));
+        jPanelShoeUserSentToAdminForRepair.add(jComboBoxStatusBike, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 190, 70, 30));
+
+        jTAShowDetaiUserSentRepirlForAdmin.setEditable(false);
+        jTAShowDetaiUserSentRepirlForAdmin.setBackground(new java.awt.Color(54, 54, 56));
+        jTAShowDetaiUserSentRepirlForAdmin.setColumns(20);
+        jTAShowDetaiUserSentRepirlForAdmin.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
+        jTAShowDetaiUserSentRepirlForAdmin.setForeground(new java.awt.Color(255, 255, 255));
+        jTAShowDetaiUserSentRepirlForAdmin.setLineWrap(true);
+        jTAShowDetaiUserSentRepirlForAdmin.setRows(5);
+        jTAShowDetaiUserSentRepirlForAdmin.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        jTAShowDetaiUserSentRepirlForAdmin.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                jTAShowDetaiUserSentRepirlForAdminAncestorAdded(evt);
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
             }
         });
-        jPanelRepairingShowTime.add(jBTStartTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 290, 110, 40));
+        sentRepairScroll.setViewportView(jTAShowDetaiUserSentRepirlForAdmin);
 
-        jBTStopTime.setBackground(new java.awt.Color(25, 41, 65));
-        jBTStopTime.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
-        jBTStopTime.setForeground(new java.awt.Color(255, 255, 255));
-        jBTStopTime.setText("STOP");
-        jBTStopTime.setToolTipText("");
-        jBTStopTime.addActionListener(new java.awt.event.ActionListener() {
+        jPanelShoeUserSentToAdminForRepair.add(sentRepairScroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 540, 130));
+
+        jPanelRepairAdminDetailUser.add(jPanelShoeUserSentToAdminForRepair, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 50, 600, 250));
+
+        jBTbackToJPanelRepairAdmin.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
+        jBTbackToJPanelRepairAdmin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/left arrow.png"))); // NOI18N
+        jBTbackToJPanelRepairAdmin.setContentAreaFilled(false);
+        jBTbackToJPanelRepairAdmin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBTStopTimeActionPerformed(evt);
+                jBTbackToJPanelRepairAdminActionPerformed(evt);
             }
         });
-        jPanelRepairingShowTime.add(jBTStopTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 290, 110, 40));
+        jPanelRepairAdminDetailUser.add(jBTbackToJPanelRepairAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 320, 70, 50));
 
-        jButtonBackToRepairing.setContentAreaFilled(false);
-        jButtonBackToRepairing.addActionListener(new java.awt.event.ActionListener() {
+        jBTnextTojPanelRepairing.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
+        jBTnextTojPanelRepairing.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/right arrow.png"))); // NOI18N
+        jBTnextTojPanelRepairing.setContentAreaFilled(false);
+        jBTnextTojPanelRepairing.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonBackToRepairingActionPerformed(evt);
+                jBTnextTojPanelRepairingActionPerformed(evt);
             }
         });
-        jPanelRepairingShowTime.add(jButtonBackToRepairing, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 370, -1, -1));
+        jPanelRepairAdminDetailUser.add(jBTnextTojPanelRepairing, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 320, 70, 50));
 
-        jButtonBackToRepairingFrowShowtime.setContentAreaFilled(false);
-        jButtonBackToRepairingFrowShowtime.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonBackToRepairingFrowShowtimeActionPerformed(evt);
-            }
-        });
-        jPanelRepairingShowTime.add(jButtonBackToRepairingFrowShowtime, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 370, -1, -1));
-
-        repairPage.add(jPanelRepairingShowTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 770, 370));
-
-        jPanelHeadBikeRepairForRepairForAdmin1.setBackground(new java.awt.Color(76, 81, 86));
-        jPanelHeadBikeRepairForRepairForAdmin1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabelBikeRepairingForRepairingAdmin1.setFont(new java.awt.Font("Leelawadee", 0, 22)); // NOI18N
-        jLabelBikeRepairingForRepairingAdmin1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabelBikeRepairingForRepairingAdmin1.setText("Bike Repairing");
-        jPanelHeadBikeRepairForRepairForAdmin1.add(jLabelBikeRepairingForRepairingAdmin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 180, 50));
-
-        jButtonRepairForNextToPageNotsuccess1.setBackground(new java.awt.Color(0, 0, 0));
-        jButtonRepairForNextToPageNotsuccess1.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
-        jButtonRepairForNextToPageNotsuccess1.setForeground(new java.awt.Color(255, 255, 255));
-        jButtonRepairForNextToPageNotsuccess1.setText("RepiarForNotsuccess");
-        jButtonRepairForNextToPageNotsuccess1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonRepairForNextToPageNotsuccess1ActionPerformed(evt);
-            }
-        });
-        jPanelHeadBikeRepairForRepairForAdmin1.add(jButtonRepairForNextToPageNotsuccess1, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 10, 160, -1));
-
-        repairPage.add(jPanelHeadBikeRepairForRepairForAdmin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 770, 50));
+        repairPage.add(jPanelRepairAdminDetailUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 770, 370));
 
         mainAdmin.add(repairPage, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 60, 770, 421));
 
@@ -3617,23 +3467,6 @@ public class GreenSociety extends javax.swing.JFrame {
         });
         jPanelRepairUserSentToAdmin.add(jBtToFollowingRepair, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 370, 60, 50));
 
-        jButtonSentToRepair.setBackground(new java.awt.Color(19, 175, 248));
-        jButtonSentToRepair.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
-        jButtonSentToRepair.setForeground(new java.awt.Color(255, 255, 255));
-        jButtonSentToRepair.setText("Sent to Repair");
-        jButtonSentToRepair.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonSentToRepairActionPerformed(evt);
-            }
-        });
-        jPanelRepairUserSentToAdmin.add(jButtonSentToRepair, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 130, 120, -1));
-
-        titleSelectPageRepair.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
-        titleSelectPageRepair.setForeground(new java.awt.Color(255, 255, 255));
-        titleSelectPageRepair.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        titleSelectPageRepair.setText("Select Page:");
-        jPanelRepairUserSentToAdmin.add(titleSelectPageRepair, new org.netbeans.lib.awtextra.AbsoluteConstraints(603, 90, 160, -1));
-
         titlenextFollingRepairUser.setFont(new java.awt.Font("Leelawadee", 0, 11)); // NOI18N
         titlenextFollingRepairUser.setForeground(new java.awt.Color(255, 255, 255));
         titlenextFollingRepairUser.setText("Send & Next to Following Repair.");
@@ -3648,7 +3481,7 @@ public class GreenSociety extends javax.swing.JFrame {
                 jButtonFollowingRepairActionPerformed(evt);
             }
         });
-        jPanelRepairUserSentToAdmin.add(jButtonFollowingRepair, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 170, 120, -1));
+        jPanelRepairUserSentToAdmin.add(jButtonFollowingRepair, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 60, 120, -1));
 
         repairPage1.add(jPanelRepairUserSentToAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 770, 420));
 
@@ -3718,7 +3551,7 @@ public class GreenSociety extends javax.swing.JFrame {
         jLabelRecieving.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         jPanelRepairUserFollowRepairing.add(jLabelRecieving, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 100, 60, 20));
 
-        jPanelRecieving.setBackground(new java.awt.Color(190, 192, 184));
+        jPanelRecieving.setBackground(new java.awt.Color(255, 255, 255));
         jPanelRecieving.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabelRecievingText.setBackground(new java.awt.Color(51, 51, 51));
@@ -3734,15 +3567,15 @@ public class GreenSociety extends javax.swing.JFrame {
         textRecieving.setForeground(new java.awt.Color(51, 102, 255));
         textRecieving.setToolTipText("");
         textRecieving.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        jPanelRecieving.add(textRecieving, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 47, 119, 30));
+        jPanelRecieving.add(textRecieving, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 37, 200, 80));
 
         jLabelIconBikeInRecieving.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelIconBikeInRecieving.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/bicycleRepair.png"))); // NOI18N
-        jPanelRecieving.add(jLabelIconBikeInRecieving, new org.netbeans.lib.awtextra.AbsoluteConstraints(162, 11, 80, 80));
+        jPanelRecieving.add(jLabelIconBikeInRecieving, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 20, 80, 80));
 
-        jPanelRepairUserFollowRepairing.add(jPanelRecieving, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 160, 260, 100));
+        jPanelRepairUserFollowRepairing.add(jPanelRecieving, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 130, 320, 120));
 
-        jPanelRepairing.setBackground(new java.awt.Color(190, 192, 184));
+        jPanelRepairing.setBackground(new java.awt.Color(255, 255, 255));
         jPanelRepairing.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabelRepairingText.setBackground(new java.awt.Color(0, 0, 0));
@@ -3753,17 +3586,20 @@ public class GreenSociety extends javax.swing.JFrame {
         jLabelRepairingText.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         jPanelRepairing.add(jLabelRepairingText, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 11, 70, 30));
 
-        jPanelRepairUserFollowRepairing.add(jPanelRepairing, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 160, 260, 100));
+        textRepair.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
+        jPanelRepairing.add(textRepair, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 260, 80));
 
-        jPnTimeDetail.setBackground(new java.awt.Color(190, 192, 184));
+        jPanelRepairUserFollowRepairing.add(jPanelRepairing, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 130, 310, 120));
+
+        jPnTimeDetail.setBackground(new java.awt.Color(255, 255, 255));
         jPnTimeDetail.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabelTime.setFont(new java.awt.Font("Leelawadee", 0, 11)); // NOI18N
-        jPnTimeDetail.add(jLabelTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 220, 80));
+        jPnTimeDetail.add(jLabelTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 270, 60));
 
-        jPanelRepairUserFollowRepairing.add(jPnTimeDetail, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 290, 260, 100));
+        jPanelRepairUserFollowRepairing.add(jPnTimeDetail, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 260, 310, 120));
 
-        jPanelAsking.setBackground(new java.awt.Color(190, 192, 184));
+        jPanelAsking.setBackground(new java.awt.Color(255, 255, 255));
         jPanelAsking.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabelAskingTextInJPanelAsking.setBackground(new java.awt.Color(0, 0, 0));
@@ -3779,9 +3615,9 @@ public class GreenSociety extends javax.swing.JFrame {
         textAsking.setForeground(new java.awt.Color(51, 51, 51));
         textAsking.setToolTipText("");
         textAsking.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        jPanelAsking.add(textAsking, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 47, 210, 30));
+        jPanelAsking.add(textAsking, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 37, 280, 60));
 
-        jPanelRepairUserFollowRepairing.add(jPanelAsking, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 290, 260, 100));
+        jPanelRepairUserFollowRepairing.add(jPanelAsking, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 260, 320, 120));
 
         jLabelStatusRepairIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/repairUserStep1.png"))); // NOI18N
         jPanelRepairUserFollowRepairing.add(jLabelStatusRepairIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 60, 240, 40));
@@ -4470,6 +4306,114 @@ public class GreenSociety extends javax.swing.JFrame {
 
         getContentPane().add(mainUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
+        forgotPassPage.setBackground(new java.awt.Color(255, 255, 255));
+        forgotPassPage.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        inputForgot.setBackground(new java.awt.Color(0, 0, 0));
+        inputForgot.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        titleForgotPass.setFont(new java.awt.Font("Leelawadee", 0, 24)); // NOI18N
+        titleForgotPass.setForeground(new java.awt.Color(255, 255, 255));
+        titleForgotPass.setText("Forgot Password");
+        inputForgot.add(titleForgotPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 199, 50));
+        inputForgot.add(s10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 480, -1));
+
+        titleEmail.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
+        titleEmail.setForeground(new java.awt.Color(114, 118, 120));
+        titleEmail.setText("Your Email");
+        inputForgot.add(titleEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 70, 80, 30));
+
+        forgotEmail.setBackground(new java.awt.Color(0, 0, 0));
+        forgotEmail.setFont(new java.awt.Font("Leelawadee", 0, 16)); // NOI18N
+        forgotEmail.setForeground(new java.awt.Color(153, 153, 153));
+        forgotEmail.setText("Email");
+        forgotEmail.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true));
+        forgotEmail.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                forgotEmailFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                forgotEmailFocusLost(evt);
+            }
+        });
+        inputForgot.add(forgotEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 100, 340, 30));
+
+        titleNewPass.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
+        titleNewPass.setForeground(new java.awt.Color(114, 118, 120));
+        titleNewPass.setText("New Password");
+        inputForgot.add(titleNewPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 140, 100, 30));
+
+        titleConPass.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
+        titleConPass.setForeground(new java.awt.Color(114, 118, 120));
+        titleConPass.setText("Confirm Password");
+        inputForgot.add(titleConPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 210, 120, 30));
+
+        jPasswordField1.setBackground(new java.awt.Color(0, 0, 0));
+        jPasswordField1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jPasswordField1.setForeground(new java.awt.Color(255, 255, 255));
+        jPasswordField1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true));
+        inputForgot.add(jPasswordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 170, 340, 30));
+
+        jPasswordField2.setBackground(new java.awt.Color(0, 0, 0));
+        jPasswordField2.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jPasswordField2.setForeground(new java.awt.Color(255, 255, 255));
+        jPasswordField2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true));
+        inputForgot.add(jPasswordField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 240, 340, 30));
+
+        star1.setBackground(new java.awt.Color(0, 0, 0));
+        star1.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
+        star1.setForeground(new java.awt.Color(19, 175, 248));
+        star1.setText("*");
+        inputForgot.add(star1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 70, 30, 20));
+
+        star2.setBackground(new java.awt.Color(0, 0, 0));
+        star2.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
+        star2.setForeground(new java.awt.Color(19, 175, 248));
+        star2.setText("*");
+        inputForgot.add(star2, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 140, 30, 20));
+
+        star3.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
+        star3.setForeground(new java.awt.Color(19, 175, 248));
+        star3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        star3.setText("*");
+        inputForgot.add(star3, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 210, 20, 20));
+
+        submitPass.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/submitPass.png"))); // NOI18N
+        submitPass.setContentAreaFilled(false);
+        submitPass.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                submitPassMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                submitPassMouseExited(evt);
+            }
+        });
+        submitPass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                submitPassActionPerformed(evt);
+            }
+        });
+        inputForgot.add(submitPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 290, 360, -1));
+
+        forgotPassPage.add(inputForgot, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 90, 520, 360));
+
+        backSignin.setFont(new java.awt.Font("Leelawadee UI", 0, 12)); // NOI18N
+        backSignin.setForeground(new java.awt.Color(255, 255, 255));
+        backSignin.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        backSignin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/backStepLogin.png"))); // NOI18N
+        backSignin.setText("   Back to Sign in");
+        backSignin.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                backSigninMouseClicked(evt);
+            }
+        });
+        forgotPassPage.add(backSignin, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 120, 40));
+
+        Background1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/background.jpg"))); // NOI18N
+        forgotPassPage.add(Background1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        getContentPane().add(forgotPassPage, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 980, 540));
+
         login.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         GreenSociety.setFont(new java.awt.Font("Leelawadee", 0, 48)); // NOI18N
@@ -4595,111 +4539,6 @@ public class GreenSociety extends javax.swing.JFrame {
         login.add(Background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         getContentPane().add(login, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
-
-        forgotPassPage.setBackground(new java.awt.Color(255, 255, 255));
-        forgotPassPage.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        inputForgot.setBackground(new java.awt.Color(0, 0, 0));
-        inputForgot.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        titleForgotPass.setFont(new java.awt.Font("Leelawadee", 0, 24)); // NOI18N
-        titleForgotPass.setForeground(new java.awt.Color(255, 255, 255));
-        titleForgotPass.setText("Forgot Password");
-        inputForgot.add(titleForgotPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 199, 50));
-        inputForgot.add(s10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 480, -1));
-
-        titleEmail.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
-        titleEmail.setForeground(new java.awt.Color(114, 118, 120));
-        titleEmail.setText("Your Email");
-        inputForgot.add(titleEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 70, 80, 30));
-
-        forgotEmail.setBackground(new java.awt.Color(0, 0, 0));
-        forgotEmail.setFont(new java.awt.Font("Leelawadee", 0, 16)); // NOI18N
-        forgotEmail.setForeground(new java.awt.Color(153, 153, 153));
-        forgotEmail.setText("Email");
-        forgotEmail.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true));
-        forgotEmail.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                forgotEmailFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                forgotEmailFocusLost(evt);
-            }
-        });
-        inputForgot.add(forgotEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 100, 340, 30));
-
-        titleNewPass.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
-        titleNewPass.setForeground(new java.awt.Color(114, 118, 120));
-        titleNewPass.setText("New Password");
-        inputForgot.add(titleNewPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 140, 100, 30));
-
-        titleConPass.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
-        titleConPass.setForeground(new java.awt.Color(114, 118, 120));
-        titleConPass.setText("Confirm Password");
-        inputForgot.add(titleConPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 210, 120, 30));
-
-        jPasswordField1.setBackground(new java.awt.Color(0, 0, 0));
-        jPasswordField1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jPasswordField1.setForeground(new java.awt.Color(255, 255, 255));
-        jPasswordField1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true));
-        inputForgot.add(jPasswordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 170, 340, 30));
-
-        jPasswordField2.setBackground(new java.awt.Color(0, 0, 0));
-        jPasswordField2.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jPasswordField2.setForeground(new java.awt.Color(255, 255, 255));
-        jPasswordField2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true));
-        inputForgot.add(jPasswordField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 240, 340, 30));
-
-        submitPass.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
-        submitPass.setForeground(new java.awt.Color(114, 118, 120));
-        submitPass.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        submitPass.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/submitPass.png"))); // NOI18N
-        submitPass.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                submitPassMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                submitPassMouseExited(evt);
-            }
-        });
-        inputForgot.add(submitPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 290, 360, 40));
-
-        star1.setBackground(new java.awt.Color(0, 0, 0));
-        star1.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
-        star1.setForeground(new java.awt.Color(19, 175, 248));
-        star1.setText("*");
-        inputForgot.add(star1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 70, 30, 20));
-
-        star2.setBackground(new java.awt.Color(0, 0, 0));
-        star2.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
-        star2.setForeground(new java.awt.Color(19, 175, 248));
-        star2.setText("*");
-        inputForgot.add(star2, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 140, 30, 20));
-
-        star3.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
-        star3.setForeground(new java.awt.Color(19, 175, 248));
-        star3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        star3.setText("*");
-        inputForgot.add(star3, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 210, 20, 20));
-
-        forgotPassPage.add(inputForgot, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 90, 520, 360));
-
-        backSignin.setFont(new java.awt.Font("Leelawadee UI", 0, 12)); // NOI18N
-        backSignin.setForeground(new java.awt.Color(255, 255, 255));
-        backSignin.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        backSignin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/backStepLogin.png"))); // NOI18N
-        backSignin.setText("   Back to Sign in");
-        backSignin.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                backSigninMouseClicked(evt);
-            }
-        });
-        forgotPassPage.add(backSignin, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 120, 40));
-
-        Background1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/background.jpg"))); // NOI18N
-        forgotPassPage.add(Background1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
-
-        getContentPane().add(forgotPassPage, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 980, 540));
 
         registerPage.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -6154,14 +5993,6 @@ public class GreenSociety extends javax.swing.JFrame {
         login.setVisible(false);
     }//GEN-LAST:event_forgotPassMouseClicked
 
-    private void submitPassMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_submitPassMouseEntered
-        submitPass.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/submitPassClick.png")));
-    }//GEN-LAST:event_submitPassMouseEntered
-
-    private void submitPassMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_submitPassMouseExited
-        submitPass.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/submitPass.png")));
-    }//GEN-LAST:event_submitPassMouseExited
-
     private void forgotEmailFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_forgotEmailFocusGained
         if (forgotEmail.getText().equals("Email")) {
             forgotEmail.setText("");
@@ -6948,6 +6779,7 @@ public class GreenSociety extends javax.swing.JFrame {
         bikeRepair.setForeground(new java.awt.Color(255, 255, 255));
         bikeSharing.setForeground(new java.awt.Color(255, 255, 255));
         timer.setForeground(new java.awt.Color(255, 255, 255));
+        history.setForeground(new java.awt.Color(255, 255, 255));
         support.setForeground(new java.awt.Color(255, 255, 255));
         profile.setForeground(new java.awt.Color(255, 255, 255));
         newsPage.setVisible(true);
@@ -6955,6 +6787,7 @@ public class GreenSociety extends javax.swing.JFrame {
         repairPage.setVisible(false);
         sharingPage.setVisible(false);
         timerPage.setVisible(false);
+        historyPage.setVisible(false);
         supportPage.setVisible(false);
         userProfilePage.setVisible(false);
         
@@ -7065,6 +6898,7 @@ public class GreenSociety extends javax.swing.JFrame {
         profile1.setForeground(new java.awt.Color(255, 255, 255));
         newsPage1.setVisible(true);
         cpPage1.setVisible(false);
+        repairPage1.setVisible(false);
         sharingScroll.setVisible(false);
         sharingStep3.setVisible(false);
         timePageT.setVisible(false);
@@ -7153,7 +6987,7 @@ public class GreenSociety extends javax.swing.JFrame {
             whyRepair = jTFWhat.getText();
             bike = jTFbike.getText();
             color = jTFColor.getText();
-            rpw.connectDBFomeUserToAdmin(User.getUserId());//return date ยังใส่ไม่ได้ต้องให้ช่างประเมินเวลาก่อน
+            rpw.connectDBFomeUserToAdmin(whyRepair,bike,color,User.getUserId());//return date ยังใส่ไม่ได้ต้องให้ช่างประเมินเวลาก่อน
             jPanelRepairUserFollowRepairing.setVisible(true);
             jPanelRepairUserSentToAdmin.setVisible(false);
             titlenextFollingRepairUser.setVisible(false);
@@ -7162,16 +6996,8 @@ public class GreenSociety extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jBtToFollowingRepairActionPerformed
 
-    private void jButtonSentToRepairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSentToRepairActionPerformed
-        // TODO add your handling code here:
-        jPanelRepairUserSentToAdmin.setVisible(true);
-        jPanelRepairUserFollowRepairing.setVisible(false);
-        titlenextFollingRepairUser.setVisible(false);
-        titleBackRepairUser.setVisible(false);
-    }//GEN-LAST:event_jButtonSentToRepairActionPerformed
-
     private void bikeRepair1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bikeRepair1MouseClicked
-        news.setForeground(new java.awt.Color(255, 255, 255));
+        news1.setForeground(new java.awt.Color(255, 255, 255));
         canCounter1.setForeground(new java.awt.Color(255, 255, 255));
         bikeSharing1.setForeground(new java.awt.Color(255, 255, 255));
         bikeRepair1.setForeground(new java.awt.Color(19, 175, 248));
@@ -7218,6 +7044,9 @@ public class GreenSociety extends javax.swing.JFrame {
 
     private void jButtonFollowingRepairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFollowingRepairActionPerformed
         // TODO add your handling code here:
+        rpw.connectDBShowRepairForUserFollowing(User.getUserId());
+        iconStatusFollowingRepairing();
+        setDataReparing();
         jPanelRepairUserSentToAdmin.setVisible(false);
         jPanelRepairUserFollowRepairing.setVisible(true);
     }//GEN-LAST:event_jButtonFollowingRepairActionPerformed
@@ -7229,7 +7058,6 @@ public class GreenSociety extends javax.swing.JFrame {
             repaint();
         jPanelRepairingNotSuccess.setVisible(false);
         repairingNotSuccess();
-        jPanelRepairingShowTime.setVisible(false);
         jPanelShowRepair.setVisible(false);
         jPanelHeadBikeRepairForRepairForAdmin.setVisible(false);
         jPanelRepairAdminDetailUser.setVisible(false);
@@ -7242,7 +7070,6 @@ public class GreenSociety extends javax.swing.JFrame {
         System.out.println("Repair14");
         revalidate();
             repaint();
-        jPanelRepairingShowTime.setVisible(false);
         jPanelShowRepair.setVisible(false);
         jPanelHeadBikeRepairForRepairForAdmin.setVisible(false);
         jPanelRepairAdminDetailUser.setVisible(false);
@@ -7264,33 +7091,38 @@ public class GreenSociety extends javax.swing.JFrame {
         rpw.setDetail(repairing);
         asking = jTFProblem.getText();
         rpw.setProblem(asking);
-        hours = jCBoxHour.getSelectedIndex();
-        rpw.setHours(hours);
-        minute = jCBoxMinute.getSelectedIndex();
-        rpw.setMinute(minute);
-
+        
         try {
             rpw.time();
         } catch (InterruptedException ex) {
             System.out.println(ex);
         }
-        Timestamp startDate = new Timestamp(rpw.startTimeToRepair().getTime());
-        Timestamp returnDate = new Timestamp(rpw.endTimeToRepair().getTime());
-        rpw.connectDBFromAdminToUser(repairIDAdmin,1);
+        Date nowTime = new Date();
+        Timestamp startDate = new Timestamp(nowTime.getTime());
+//        Timestamp returnDate = new Timestamp(rpw.endTimeToRepair().getTime());
+
+        rpw.connectDBFromAdminToUser(repairIDAdmin,rpw.getUserID());
+        System.out.println("UserID: "+rpw.getUserID());
+        rpw.connectDBForAdminUpdateTime(transIDRepairAdmin, startDate, startDate);
         if(jTFProblem.getText().equals("") || (jTFDetail.getText().equals(""))){
             JOptionPane.showMessageDialog(null,"ยังไม่ได้กรอกข้อความ","Warning Message",JOptionPane.WARNING_MESSAGE);
         }else{
             System.out.println("Repair13");
             String showTime = rpw.getShowTime();
-            revalidate();
-            repaint();
-            jPanelHeadBikeRepairForRepairForAdmin.setVisible(false);
-            jPanelRepairingShowTime.setVisible(true);
-            jPanelShowRepair.setVisible(false);
-            jPanelRepairAdminDetailUser.setVisible(false);
-            jPanelRepairingAdmin.setVisible(false);
-            jPanelRepairingNotSuccess.setVisible(false);
-            jTAShowTime.setText(showTime);
+            
+        rpw.connectDBForRepairAdmin();
+        listUserRepair();
+        jPanelHeadBikeRepairForRepairForAdmin.setVisible(true);
+        jButtonRepairForNextToPageNotsuccess.setVisible(false);
+        jPanelRepairingNotSuccess.setVisible(true);
+        jPanelRepairingAdmin.setVisible(false);
+        jPanelRepairAdminDetailUser.setVisible(false);
+        jPanelRepairingSetRepair.setVisible(false);
+        jPanelShowRepair .setVisible(false);
+        jScrollPaneBikeRepairingNotSuccess.setVisible(true);
+        repairingNotSuccess();
+        revalidate();
+        repaint();
         }
 
     }//GEN-LAST:event_jBTnextToShowTimeActionPerformed
@@ -7298,7 +7130,6 @@ public class GreenSociety extends javax.swing.JFrame {
     private void jButtonBackAdmindetailUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBackAdmindetailUserActionPerformed
         // TODO add your handling code here:
         System.out.println("Repair12");
-        jPanelRepairingShowTime.setVisible(false);
         jPanelShowRepair.setVisible(false);
         jPanelHeadBikeRepairForRepairForAdmin.setVisible(false);
         revalidate();
@@ -7311,7 +7142,6 @@ public class GreenSociety extends javax.swing.JFrame {
     private void jButtonBackToAdminUserDetailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBackToAdminUserDetailActionPerformed
         // TODO add your handling code here:
         System.out.println("Repai11");
-        jPanelRepairingShowTime.setVisible(false);
         jPanelShowRepair.setVisible(false);
         jPanelHeadBikeRepairForRepairForAdmin.setVisible(false);
         revalidate();
@@ -7324,15 +7154,15 @@ public class GreenSociety extends javax.swing.JFrame {
     private void jButtonToRepairAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonToRepairAdminActionPerformed
         // TODO add your handling code here:
         System.out.println("Repair10");
-        jPanelRepairingShowTime.setVisible(false);
-        jPanelShowRepair.setVisible(false);
-        jPanelHeadBikeRepairForRepairForAdmin.setVisible(false);
-        jPanelRepairAdminDetailUser.setVisible(false);
-        revalidate();
-        repaint();
-        layerUser();
-        jPanelRepairingAdmin.setVisible(false);
+        listUserRepair();
+        jButtonRepairForNextToPageNotsuccess.setVisible(false);
         jPanelRepairingNotSuccess.setVisible(false);
+        jPanelRepairingAdmin.setVisible(true);
+        jPanelRepairAdminDetailUser.setVisible(false);
+        jPanelRepairingSetRepair.setVisible(false);
+        jPanelShowRepair .setVisible(false);
+        jPanelRepairingAdmin.revalidate();
+        jPanelRepairingAdmin.repaint();
     }//GEN-LAST:event_jButtonToRepairAdminActionPerformed
 
     private void jButtonRefreshRepairNotSuccessActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRefreshRepairNotSuccessActionPerformed
@@ -7343,91 +7173,6 @@ public class GreenSociety extends javax.swing.JFrame {
         jPanelBikeRepairNotSuccess.repaint();
     }//GEN-LAST:event_jButtonRefreshRepairNotSuccessActionPerformed
 
-    private void jBTStartTimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBTStartTimeActionPerformed
-        System.out.println("Repair8");
-        myTimerRepairAdmin = rpw.getTime();
-
-        try {
-            myTimerRepairAdmin.start(this.rpw);
-            jBTStartTime.setEnabled(false);
-        } catch (InterruptedException ex) {
-            System.out.println(ex);
-        }
-        Timestamp start = new Timestamp (rpw.startTimeToRepair().getTime());
-        Timestamp stop = new Timestamp ( rpw.endTimeToRepair().getTime());
-        rpw.connectDBForAdminUpdateTime(rpw.getCountTransId(),start,stop);
-
-    }//GEN-LAST:event_jBTStartTimeActionPerformed
-
-    private void jBTStopTimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBTStopTimeActionPerformed
-        // TODO add your handling code here:
-        rpw.stopTime();
-        myTimerRepairAdmin.stop();
-        String timeDetail = rpw.getTimeDetail();
-        Timestamp start = new Timestamp (rpw.startTimeToRepair().getTime());
-        Timestamp stop = new Timestamp ( rpw.endTimeToRepair().getTime());
-
-        rpw.connectDBForAdminUpdateTime(transIDRepairAdmin,start,stop);
-        System.out.println("perpairID: "+repairIDAdmin);
-        rpw.connectDBForChangeToSuccessFromPerpair(repairIDAdmin);
-        rpw.connectDBForChangeToSuccess(idRepairState);
-        System.out.println("3)stopTime: "+myTimerRepairAdmin.getReturnTime());
-        rpw.timeDiffStop(stop);
-        String submit = "Problem: "+rpw.getProblem()+"\n"+"Detail: "+rpw.getDetail()+"\n";
-        submit+= "Start: "+rpw.startTimeToRepair()+"\n";
-        submit+="Stop: "+rpw.endTimeToRepair()+"\n";
-        //        submit+= rp.getShowTime();
-
-        JOptionPane.showMessageDialog(null,submit,"Success",JOptionPane.WARNING_MESSAGE);
-
-        if(rpw.isStatusThread()==false){//เมื่อมันยัง thread=false อยู่ให้ทีหน้าเดิม แต่ถ้า thread=true มันถึงจะเปลี่ยนหน้าได้
-            JOptionPane.showMessageDialog(null,"ยังไม่หน้าอื่นไม่ได้ เพราะว่ายังไม่ได้กด stop time","Warning Message",JOptionPane.WARNING_MESSAGE);
-        }else{
-            System.out.println("Repair7");
-            rpw.Status(true);//ให้ Attribute String ใน class Repair เก็บเป็น true return Success
-            revalidate();
-            repaint();
-            jPanelShowRepair.setVisible(false);
-            jTAShowDetail.setText(submit);//show รายละเอียดการซ่อม
-            jPanelRepairingShowTime.setVisible(false);
-            jPanelHeadBikeRepairForRepairForAdmin.setVisible(false);
-            jPanelRepairAdminDetailUser.setVisible(false);
-            jPanelRepairingAdmin.setVisible(false);
-            jPanelRepairingNotSuccess.setVisible(false);
-        }
-
-    }//GEN-LAST:event_jBTStopTimeActionPerformed
-
-    private void jButtonBackToRepairingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBackToRepairingActionPerformed
-        // TODO add your handling code here:
-        System.out.println("Repair6");
-        revalidate();
-        repaint();
-        jPanelRepairingShowTime.setVisible(false);
-        jPanelShowRepair.setVisible(false);
-        jPanelHeadBikeRepairForRepairForAdmin.setVisible(false);
-        jPanelRepairAdminDetailUser.setVisible(false);
-        jPanelRepairingAdmin.setVisible(false);
-        jPanelRepairingNotSuccess.setVisible(false);
-    }//GEN-LAST:event_jButtonBackToRepairingActionPerformed
-
-    private void jButtonBackToRepairingFrowShowtimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBackToRepairingFrowShowtimeActionPerformed
-        // TODO add your handling code here:
-        System.out.println("Repair5");
-        if(rpw.isStatusThread()==false){//เมื่อมันยัง thread=false อยู่ให้ทีหน้าเดิม แต่ถ้า thread=true มันถึงจะเปลี่ยนหน้าได้
-            JOptionPane.showMessageDialog(null,"ยังไปหน้าอื่นไม่ได้ เพราะว่ายังไม่ได้กด stop time","Warning Message",JOptionPane.WARNING_MESSAGE);
-        }else{
-            revalidate();
-            repaint();
-            jPanelRepairingShowTime.setVisible(false);
-            jPanelShowRepair.setVisible(false);
-            jPanelHeadBikeRepairForRepairForAdmin.setVisible(false);
-            jPanelRepairAdminDetailUser.setVisible(false);
-            jPanelRepairingAdmin.setVisible(false);
-            jPanelRepairingNotSuccess.setVisible(false);
-        }
-    }//GEN-LAST:event_jButtonBackToRepairingFrowShowtimeActionPerformed
-
     private void jTAShowDetaiUserSentRepirlForAdminAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jTAShowDetaiUserSentRepirlForAdminAncestorAdded
         // TODO add your handling code here:
         jTAShowDetaiUserSentRepirlForAdmin.setText(detailRepairAdmin);
@@ -7436,13 +7181,13 @@ public class GreenSociety extends javax.swing.JFrame {
     private void jBTbackToJPanelRepairAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBTbackToJPanelRepairAdminActionPerformed
         //
         System.out.println("Repair4");
-        jPanelRepairingShowTime.setVisible(false);
-        jPanelShowRepair.setVisible(false);
-        jPanelHeadBikeRepairForRepairForAdmin.setVisible(false);
+        jPanelRepairingAdmin.setVisible(true);
+        jButtonRepairForNextToPageNotsuccess.setVisible(true);
         jPanelRepairAdminDetailUser.setVisible(false);
-        
-        jPanelRepairingAdmin.setVisible(false);
+        jPanelRepairingSetRepair.setVisible(false);
+        jPanelShowRepair.setVisible(false);
         jPanelRepairingNotSuccess.setVisible(false);
+        listUserRepair();
         revalidate();
         repaint();
     }//GEN-LAST:event_jBTbackToJPanelRepairAdminActionPerformed
@@ -7457,13 +7202,12 @@ public class GreenSociety extends javax.swing.JFrame {
         int select = jComboBoxStatusBike.getSelectedIndex();
         System.out.println("Select comboBox: "+select);
         if(ans==0 && select==1){
-            jPanelRepairingShowTime.setVisible(false);
-            jPanelShowRepair.setVisible(false);
-            
-            jPanelHeadBikeRepairForRepairForAdmin.setVisible(false);
-            jPanelRepairAdminDetailUser.setVisible(false);
             jPanelRepairingAdmin.setVisible(false);
+            jPanelRepairAdminDetailUser.setVisible(false);
+            jPanelRepairingSetRepair.setVisible(true);
+            jPanelShowRepair.setVisible(false);
             jPanelRepairingNotSuccess.setVisible(false);
+            jButtonRepairForNextToPageNotsuccess.setVisible(false);
             revalidate();
             repaint();
         }else{
@@ -7492,40 +7236,75 @@ public class GreenSociety extends javax.swing.JFrame {
         supportPage.setVisible(false);
         userProfilePage.setVisible(false);
         
-//        rpw.connectDBForRepairAdmin();
-//        layerUser();
-        System.out.println("...1");
+        rpw.connectDBForRepairAdmin();
+        listUserRepair();
+        jPanelHeadBikeRepairForRepairForAdmin.setVisible(true);
+        jButtonRepairForNextToPageNotsuccess.setVisible(false);
+        jPanelRepairingNotSuccess.setVisible(true);
         jPanelRepairingAdmin.setVisible(false);
-        System.out.println("...2");
-        jPanelRepairingNotSuccess.setVisible(false);
-        System.out.println("...3");
-        jPanelHeadBikeRepairForRepairForAdmin.setVisible(false);
-        System.out.println("...4");
-        jPanelRepairingShowTime.setVisible(false);
-        System.out.println("...5");
-        jPanelShowRepair.setVisible(false);
         jPanelRepairAdminDetailUser.setVisible(false);
-//        revalidate();
-//        repaint();
+        jPanelRepairingSetRepair.setVisible(false);
+        jPanelShowRepair .setVisible(false);
+        repairingNotSuccess();
+        revalidate();
+        repaint();
     }//GEN-LAST:event_bikeRepairMouseClicked
-
-    private void jButtonRepairForNextToPageNotsuccess1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRepairForNextToPageNotsuccess1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonRepairForNextToPageNotsuccess1ActionPerformed
 
     private void jButtonRepairForNextToPageNotsuccessActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRepairForNextToPageNotsuccessActionPerformed
         // TODO add your handling code here:
         System.out.println("Repair2");
-        jPanelRepairingShowTime.setVisible(false);
-        jPanelShowRepair.setVisible(false);
-        jPanelHeadBikeRepairForRepairForAdmin.setVisible(false);
-        jPanelRepairAdminDetailUser.setVisible(false);
+        jButtonRepairForNextToPageNotsuccess.setVisible(false);
         jPanelRepairingAdmin.setVisible(false);
-        jPanelRepairingNotSuccess.setVisible(false);
+        jPanelRepairAdminDetailUser.setVisible(false);
+        jPanelRepairingSetRepair.setVisible(false);
+        jPanelShowRepair.setVisible(false);
+        jPanelRepairingNotSuccess.setVisible(true);
+        
         repairingNotSuccess();
         revalidate();
         repaint();
     }//GEN-LAST:event_jButtonRepairForNextToPageNotsuccessActionPerformed
+
+    private void submitPassMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_submitPassMouseEntered
+        submitPass.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/submitPassClick.png")));
+    }//GEN-LAST:event_submitPassMouseEntered
+
+    private void submitPassMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_submitPassMouseExited
+        submitPass.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/submitPass.png")));
+    }//GEN-LAST:event_submitPassMouseExited
+
+    private void submitPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitPassActionPerformed
+        String pass = new String(jPasswordField1.getPassword());
+        String pass2 = new String(jPasswordField1.getPassword());
+        if(pass.equals(pass2)){
+            ac.forgetPass(forgotEmail.getText(), pass);
+            login.setVisible(true);
+            forgotPassPage.setVisible(false);
+            System.out.println("aaaaa");
+            forgotEmail.setText("");
+            jPasswordField1.setText("");
+            jPasswordField1.setText("");
+        }else{
+            JOptionPane.showMessageDialog(null, "These passwords don't match. Try again?",
+                    "Check Password", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_submitPassActionPerformed
+
+    private void refreshRepairAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshRepairAdminActionPerformed
+        jPanelRepairingAdmin.removeAll();
+        listUserRepair();
+        refreshRepairAdmin.setBackground(new java.awt.Color(51, 51, 51));
+        refreshRepairAdmin.setForeground(new java.awt.Color(19, 175, 248));
+        refreshRepairAdmin.setText("Refresh");
+        refreshRepairAdmin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                refreshRepairAdminActionPerformed(evt);
+            }
+        });
+        jPanelRepairingAdmin.add(refreshRepairAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
+        jPanelRepairingAdmin.revalidate();
+        jPanelRepairingAdmin.repaint();
+    }//GEN-LAST:event_refreshRepairAdminActionPerformed
 
     /**
      * @param args the command line arguments
@@ -7697,30 +7476,20 @@ public class GreenSociety extends javax.swing.JFrame {
     private javax.swing.JTextField itemName;
     private javax.swing.JButton jBTBackToRepairShowTime;
     private javax.swing.JButton jBTNextToPanelNotSuccess;
-    private javax.swing.JButton jBTStartTime;
-    private javax.swing.JButton jBTStopTime;
     private javax.swing.JButton jBTbackToJPanelRepairAdmin;
     private javax.swing.JButton jBTnextToShowTime;
     private javax.swing.JButton jBTnextTojPanelRepairing;
     private javax.swing.JButton jBtBackRepairUserSentToAdmin;
     private javax.swing.JButton jBtToFollowingRepair;
     private javax.swing.JButton jButtonBackAdmindetailUser;
-    private javax.swing.JButton jButtonBackFromRepairingNotSuccess;
     private javax.swing.JButton jButtonBackToAdminUserDetail;
-    private javax.swing.JButton jButtonBackToRepairing;
-    private javax.swing.JButton jButtonBackToRepairingFrowShowtime;
     private javax.swing.JButton jButtonChooseFileForUpload;
     private javax.swing.JButton jButtonFollowingRepair;
     private javax.swing.JButton jButtonInsert;
-    private javax.swing.JButton jButtonNextFormRepairingNotSuccess;
     private javax.swing.JButton jButtonRefreshRepairNotSuccess;
     private javax.swing.JButton jButtonRepairForNextToPageNotsuccess;
-    private javax.swing.JButton jButtonRepairForNextToPageNotsuccess1;
-    private javax.swing.JButton jButtonSentToRepair;
     private javax.swing.JButton jButtonSignUp;
     private javax.swing.JButton jButtonToRepairAdmin;
-    private javax.swing.JComboBox<String> jCBoxHour;
-    private javax.swing.JComboBox<String> jCBoxMinute;
     private javax.swing.JComboBox<String> jComboBoxPosition;
     private javax.swing.JComboBox<String> jComboBoxStatusBike;
     private com.toedter.calendar.JDateChooser jDateChooserBirthDate;
@@ -7733,7 +7502,6 @@ public class GreenSociety extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel25;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
@@ -7741,7 +7509,6 @@ public class GreenSociety extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelAskingTextInJPanelAsking;
     private javax.swing.JLabel jLabelBikeRepairing;
     private javax.swing.JLabel jLabelBikeRepairingForRepairingAdmin;
-    private javax.swing.JLabel jLabelBikeRepairingForRepairingAdmin1;
     private javax.swing.JLabel jLabelBrandBike;
     private javax.swing.JLabel jLabelBrandBike1;
     private javax.swing.JLabel jLabelBrandBike2;
@@ -7750,8 +7517,6 @@ public class GreenSociety extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelHistoryText;
     private javax.swing.JLabel jLabelHistoryText2;
     private javax.swing.JLabel jLabelIconBikeInRecieving;
-    private javax.swing.JLabel jLabelIconTime;
-    private javax.swing.JLabel jLabelIconTimeForAdmin;
     private javax.swing.JLabel jLabelInsert;
     private javax.swing.JLabel jLabelNoticBirthDate;
     private javax.swing.JLabel jLabelNoticGender;
@@ -7768,9 +7533,6 @@ public class GreenSociety extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelRecievingText;
     private javax.swing.JLabel jLabelRepairing;
     private javax.swing.JLabel jLabelRepairingText;
-    private javax.swing.JLabel jLabelSetHourForAdmin;
-    private javax.swing.JLabel jLabelSetMinuteForAdmin;
-    private javax.swing.JLabel jLabelSetTimeForAdmin;
     private javax.swing.JLabel jLabelShowTopicAfterClick;
     private javax.swing.JLabel jLabelStarLN;
     private javax.swing.JLabel jLabelStatus;
@@ -7809,7 +7571,6 @@ public class GreenSociety extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelBackgroundInsertLabel;
     private javax.swing.JPanel jPanelBikeRepairNotSuccess;
     private javax.swing.JPanel jPanelHeadBikeRepairForRepairForAdmin;
-    private javax.swing.JPanel jPanelHeadBikeRepairForRepairForAdmin1;
     private javax.swing.JPanel jPanelHeadBikeRepairing;
     private javax.swing.JPanel jPanelHeadHistory;
     private javax.swing.JPanel jPanelHeadHistory2;
@@ -7823,14 +7584,11 @@ public class GreenSociety extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelRepairingAdmin;
     private javax.swing.JPanel jPanelRepairingNotSuccess;
     private javax.swing.JPanel jPanelRepairingSetRepair;
-    private javax.swing.JPanel jPanelRepairingShowTime;
     private javax.swing.JPanel jPanelSetDetailRepairForAdmin;
-    private javax.swing.JPanel jPanelSetTimeForAdmin;
     private javax.swing.JPanel jPanelShoeUserSentToAdminForRepair;
     private javax.swing.JPanel jPanelShowGraph;
     private javax.swing.JPanel jPanelShowNewsAfterClick;
     private javax.swing.JPanel jPanelShowRepair;
-    private javax.swing.JPanel jPanelShowTimeForRepairShowTime;
     private javax.swing.JPanel jPanelSignUp;
     private javax.swing.JPanel jPanelTableHistory;
     private javax.swing.JPasswordField jPasswordConfirmPassSignup;
@@ -7840,9 +7598,7 @@ public class GreenSociety extends javax.swing.JFrame {
     private javax.swing.JPanel jPnTimeDetail;
     private javax.swing.JRadioButton jRadioButtonGenderFemale;
     private javax.swing.JRadioButton jRadioButtonGenderMale;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPaneBikeRepairing;
+    private javax.swing.JScrollPane jScrollPaneBikeRepairingNotSuccess;
     private javax.swing.JScrollPane jScrollPaneHistory;
     private javax.swing.JScrollPane jScrollPaneInTextAreaNewsDetail;
     private javax.swing.JScrollPane jScrollPaneShowDetail;
@@ -7865,7 +7621,6 @@ public class GreenSociety extends javax.swing.JFrame {
     private javax.swing.JTextArea jTAContact1;
     private javax.swing.JTextArea jTAShowDetaiUserSentRepirlForAdmin;
     private javax.swing.JTextArea jTAShowDetail;
-    private javax.swing.JTextArea jTAShowTime;
     private javax.swing.JTextArea jTAShowyouSearch;
     private javax.swing.JTextArea jTAShowyouSearch1;
     private javax.swing.JTextField jTFColor;
@@ -7928,6 +7683,7 @@ public class GreenSociety extends javax.swing.JFrame {
     private javax.swing.JLabel profile1;
     private javax.swing.JRadioButton radioEquip;
     private javax.swing.JRadioButton radioType;
+    private javax.swing.JButton refreshRepairAdmin;
     private javax.swing.JPanel registerPage;
     private javax.swing.JPanel repairPage;
     private javax.swing.JPanel repairPage1;
@@ -7950,6 +7706,7 @@ public class GreenSociety extends javax.swing.JFrame {
     private javax.swing.JTextField search;
     private javax.swing.JTextField search1;
     private javax.swing.JPanel selectItemReturn;
+    private javax.swing.JScrollPane sentRepairScroll;
     private javax.swing.JPanel sharingPage;
     private javax.swing.JPanel sharingPageTab;
     private javax.swing.JScrollPane sharingScroll;
@@ -7969,7 +7726,7 @@ public class GreenSociety extends javax.swing.JFrame {
     private javax.swing.JButton submitBut;
     private javax.swing.JButton submitButSharing;
     private javax.swing.JButton submitButtonNews;
-    private javax.swing.JLabel submitPass;
+    private javax.swing.JButton submitPass;
     private javax.swing.JButton submitProfile;
     private javax.swing.JButton submitProfile1;
     private javax.swing.JButton submitSupport;
@@ -8039,7 +7796,7 @@ public class GreenSociety extends javax.swing.JFrame {
     private javax.swing.JLabel titleNews;
     private javax.swing.JLabel titleNow;
     private javax.swing.JLabel titleNow1;
-    private javax.swing.JLabel titleSelectPageRepair;
+    private javax.swing.JLabel titleSetPloblem;
     private javax.swing.JLabel titleSignout;
     private javax.swing.JLabel titleSignout1;
     private javax.swing.JLabel titleSignup;
