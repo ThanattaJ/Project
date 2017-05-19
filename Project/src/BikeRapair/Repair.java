@@ -431,11 +431,6 @@ public class Repair{
     public String getStatus() {
         return status;
     }
-    
-    public Repair(String problem, String detail) {
-        this.problem = problem;
-        this.detail = detail;
-    }
 
     public String getWhyRepair() {
         return whyRepair;
