@@ -49,59 +49,7 @@ public class Repair{
         
     }
     
-    public void timeDiffStop(Date stopTime){
-        Date current = new Date();
-        t = new Timer(stopTime,current);
-        t.differentTime();
-        showTime = t.showDetail();
-    }
-    
-    public ArrayList<Integer> connextDBforAdminCheakAddRepeir(){
-       ArrayList<Integer> prepair = new ArrayList<Integer>();
-       ArrayList<Integer> repair = new ArrayList<Integer>();       
-       ArrayList<Integer> diff = new ArrayList<Integer>();       
-        try{
-            Connection connect = Database.connectDb("jan", "jan042");
-            Statement st = connect.createStatement(); 
-            
-            String temp ="SELECT id FROM  Green_Society.`Prepair_Desctiption`";
-            ResultSet rs = st.executeQuery(temp);
-            while(rs.next()){
-                prepair.add(rs.getInt("id"));
-            }
-            
-            String temp2 = "SELECT item_id FROM `Repair_State`";
-            ResultSet rs2 = st.executeQuery(temp2);
-            while(rs2.next()){
-                repair.add(rs2.getInt("item_id"));
-            }
-            
-            for (int i = 0; i < prepair.size(); i++) {
-                boolean check = true;
-                for (int j = 0; j < repair.size(); j++) {
-                    if(prepair.get(i).equals(repair.get(j))){
-                        check = false;
-                        break;
-                    }
-                }
-                if(check){
-                        diff.add(prepair.get(i));
-                    }
-            }
-            
-            if(connect != null){
-                    connect.close();
-		}
-		}catch (SQLException e){
-                    e.printStackTrace();
-        }
-        catch(Exception ex){
-            System.out.println(ex);
-        }
-        return diff;
-    }
-    
-    public ArrayList<String> connectDBforListUserSentToRepair(){
+    public ArrayList<String> connectDBforListUserSentToRepair(){ //เอา prepairID,name,surname,userID เพื่อเอาไปใช้ใน listUserRepair
         ArrayList<String> list = new ArrayList<String>();
         String format="";
         try{
@@ -135,10 +83,9 @@ public class Repair{
         return list;
     }
     
-    public void connectDBForChangeToSuccessFromPerpair(long perpairID){
+    public void connectDBForChangeToSuccessFromPerpair(long perpairID){ //รับ perpairID เพื่อเปลี่ยนเป็น Repair_State.Recieving -> success
          try{
             Connection connect = Database.connectDb("jan", "jan042");
-//            System.out.println("...connectDBFomeUserToAdmin");
             Statement st = connect.createStatement(); 
             String temp = "UPDATE Repair_State JOIN Prepair_Desctiption ON Repair_State.item_id = Prepair_Desctiption.id "
                     + "SET Repair_State.Recieving = 'Success' WHERE Prepair_Desctiption.id = "+perpairID;
@@ -155,7 +102,7 @@ public class Repair{
         }
     }
 
-    public void connectDBForChangeToSuccess(long idRepairState){
+    public void connectDBForChangeToSuccessFormRepairState(long idRepairState){ //รับ repairID เพื่อเปลี่ยนเป็น Repair_State.Recieving -> success
          try{
             Connection connect = Database.connectDb("jan", "jan042");
             Statement st = connect.createStatement(); 
@@ -174,7 +121,7 @@ public class Repair{
         }
     }
     
-    public ArrayList<String> connectDBForCheckRepairNotSucceess(){
+    public ArrayList<String> connectDBForCheckRepairNotSucceess(){ //เอาไปใช้ในเพื่อดูว่าอันไหนที่ not success
         ArrayList<String> notSuccess = new ArrayList<String>();
         String name;
         String action;
@@ -219,14 +166,12 @@ public class Repair{
     public int getItemId() {
         return itemId;
     }
-    
-    
 
     public long getCountTransId() {
         return countTransId;
     }
     
-    public void connectDBFromAdminToUser(long itemId,int user){//เพื่อที่ User จะสามารถติดตามดารซ่อมของตัวเองได้ ใส่ itemId
+    public void connectDBFromAdminToUser(long itemId,int user){//กรอกรายละเอียดการซ่อมให้ user
          System.out.println("itemId: "+itemId);
          try{
             Connection connect = Database.connectDb("jan", "jan042");
@@ -270,6 +215,50 @@ public class Repair{
         }
     }
     
+    public int connectDBFormAdminSelectTransID(long repairID){
+        int transID=0;
+        try{
+            Connection connect = Database.connectDb("jan", "jan042");
+            Statement st = connect.createStatement(); 
+            //ดึงเอา id ที่มาที่สุดออกมา เพื่อให้มันสามารถ insert ลง table ให้ไม่ซ้ำกันได้
+            String temp = "SELECT transID FROM Prepair_Desctiption JOIN Repair_State ON Prepair_Desctiption.id = Repair_State.item_id WHERE Repair_State.item_id =  "+repairID;
+            ResultSet rs = st.executeQuery(temp);
+            
+            while(rs.next()){
+                transID = rs.getInt("transID");
+            }
+            
+            if(connect != null){
+                    connect.close();
+		}
+		}catch (SQLException e){
+                    e.printStackTrace();
+        }
+        catch(Exception ex){
+            System.out.println(ex);
+        }
+        return transID;
+    }
+    
+    public void connectDBForAdminUpdateTime(long transId,Timestamp endTime ){ //อัปเดตเฉพาะ returnDate ใน transaction
+        try{
+            Connection connect = Database.connectDb("jan", "jan042");
+            Statement st = connect.createStatement(); 
+            
+            String temp = "update `Transaction` set return_dateTime = '"+endTime+"' WHERE transID = "+transId;
+            st.executeUpdate(temp);
+            //---------------------------------------------------------------------------------------
+            if(connect != null){
+                    connect.close();
+		}
+		}catch (SQLException e){
+                    e.printStackTrace();
+        }
+        catch(Exception ex){
+            System.out.println(ex);
+        }
+    }
+    
     public void connectDBForAdminUpdateTime(long transId,Timestamp startTime,Timestamp endTime){
         try{
             Connection connect = Database.connectDb("jan", "jan042");
@@ -290,21 +279,8 @@ public class Repair{
             System.out.println(ex);
         }
     }
-    
-    public Timer time() throws InterruptedException{//set ค่า time ก่อน
-        Calendar time = Calendar.getInstance();
-        int realHour = time.get(Calendar.HOUR_OF_DAY)+hours;//เวลาเป็นชั่วโมงจริงของวันนี้บวกกับชั่วโมงที่ช่างซ่อมประเมินว่าจะซ่อมเสร็จ
-        int realMinute=time.get(Calendar.MINUTE)+minute; // เวลาเป็นนาทีของวันนี้บวกกับนาทีที่ช่างซ่อมประเมินว่าจะซ่อมเสร็จ
-        int realSecound=time.get(Calendar.SECOND)+secound;// เวลาเป็นวินาทีของวันนี้บวกกับวินาทีที่ช่างซ่อมประเมินว่าจะซ่อมเสร็จ
-        t = new Timer(time.get(Calendar.DATE),time.get(Calendar.MONTH)+1,time.get(Calendar.YEAR), 
-                realHour,realMinute,realSecound); //ส่งค่าผ่าน Constructor ไปให้ Class Timer กำหนดวัน เดือน ปี เป็นของวันที่ปัจจุบัน
-        t.differentTime();
-        timeDetail=t.showDetail();
-        showTime="Start: "+t.getBorrowTime()+"\nStop: "+t.getReturnTime()+"\n"+timeDetail;
-        return t;
-    }
-    
-    public void connectDBFomeUserToAdmin(String asking,String band,String color,long userID){
+        
+    public void connectDBFromUserToAdmin(String asking,String band,String color,long userID){ //รับจาก parameter จาก user เพื่อเก็บลง prepair_desctioption
         Timer t = new Timer();
         Timestamp startDate = new Timestamp(t.getBorrowTime().getTime());
         Timestamp returnDate = new Timestamp(t.getReturnTime().getTime());
@@ -406,8 +382,6 @@ public class Repair{
             }else{
                 timerUser = "<html>Start: "+startTime+"</html>";
             }
-            
-           
             //---------------------------------------------------------------------------------------
             if(connect != null){
                     connect.close();
@@ -419,7 +393,7 @@ public class Repair{
             System.out.println(ex);
         }
     }
-       public String connectDBForRepairAdminDetail(long clickDetailUser){ 
+       public String connectDBForRepairAdminDetail(long clickDetailUser){ //แสดงสิ่งที่ user ส่งมาซ่อม
         String detail="";
         try{
             Connection connect = Database.connectDb("jan", "jan042");
@@ -467,63 +441,6 @@ public class Repair{
         catch(Exception ex){
             System.out.println(ex);
         }
-    }
-    
-    public void repairDetailForNotSuccess(int repairState){
-        this.repairStateAdminNotSuccess  = repairState;
-        try{
-            Connection connect = Database.connectDb("jan", "jan042");
-            Class.forName("com.mysql.jdbc.Driver");
-
-            Statement st = connect.createStatement(); 
-            //ดึงเอา สิ่งที่ช่างจะซ่อมออกมา
-            String aboutRepair = "SELECT Asking,Repairing,Recieving,item_id FROM Repair_State where id= "+repairState;
-            ResultSet rs = st.executeQuery(aboutRepair);
-            
-            while(rs.next()){
-                askingAdminNotSuccess  = rs.getString("Asking");
-                repairingAdminNotSuccess  = rs.getString("Repairing");
-                statusAdminNotSuccess  = rs.getString("Recieving");
-                itemIDAdminNotSuccess  = rs.getInt("item_id");
-            }
-            //ดึงเอาเวลาที่ช่างเริ่มซ่อม กับซ่อมเสร็จออกมา
-            String timeForRepair = "SELECT dateTime,return_dateTime FROM Green_Society.Transaction JOIN Prepair_Desctiption "
-                    + "ON Transaction.transID = Prepair_Desctiption.transID WHERE Prepair_Desctiption.id = "+itemIDAdminNotSuccess ;
-            ResultSet rs2 = st.executeQuery(timeForRepair);
-            while(rs2.next()){
-                startTimeAdminNotSuccess  = rs2.getTimestamp("dateTime");
-                endTimeAdminNotSuccess  = rs2.getTimestamp("return_dateTime");
-            }
-            //---------------------------------------------------------------------------------------
-            
-            String transIdNumber = "SELECT transID FROM `Prepair_Desctiption` JOIN Repair_State ON Prepair_Desctiption.id = Repair_State.item_id WHERE Repair_State.item_id = "+itemIDAdminNotSuccess ;
-            ResultSet rs3 = st.executeQuery(transIdNumber);
-            
-            while(rs3.next()){
-                transIDAdminNotSuccess  = rs3.getInt("transID");
-            }
-            if(connect != null){
-                    connect.close();
-		}
-		}catch (SQLException e){
-                    e.printStackTrace();
-        }
-        
-        catch(ClassNotFoundException cfe){
-            System.out.println(cfe);
-        }
-        catch(Exception ex){
-            System.out.println(ex);
-        }
-    }
-    
-     public void startTime() throws InterruptedException{
-        t.start(this);
-    }
-    
-    public void stopTime(){
-        t.stop();
-        statusThread = true;
     }
 
     public Date startTimeToRepair(){

@@ -71,7 +71,7 @@ public class RepairingForAdmin extends javax.swing.JFrame {
     
     public void repairingNotSuccess(){
         int size = rp.connectDBForCheckRepairNotSucceess().size();
-        ArrayList<String> tem = rp.connectDBForCheckRepairNotSucceess();
+        ArrayList<String> notSuccess = rp.connectDBForCheckRepairNotSucceess();
 //        for (int i = 0; i < size; i++) {
 //            System.out.println("repairNotSuccess: \n"+tem.get(i));
 //        }
@@ -80,7 +80,7 @@ public class RepairingForAdmin extends javax.swing.JFrame {
         JLabel []remaining = new JLabel[size];
         JButton []detailButton = new JButton[size];
         JButton []doneButton = new JButton[size];
-        String temp;
+        String dtNotSuccess;
 
         int y=10;
         for(int i=0;i<size;i++){
@@ -88,9 +88,9 @@ public class RepairingForAdmin extends javax.swing.JFrame {
             jp[i].setBackground(new java.awt.Color(51, 51, 51));
             jp[i].setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
             
-            temp = tem.get(i);//String จาก ArrayList = Stringตัวหนึ่ง
-            int lengthTemp = temp.length();
-            String output = temp.substring(0,lengthTemp-23);
+            dtNotSuccess = notSuccess.get(i);//String จาก ArrayList = Stringตัวหนึ่ง
+            int lengthTemp = dtNotSuccess.length();
+            String output = dtNotSuccess.substring(0,lengthTemp-23);
             
             detail[i]=new JLabel();
             detail[i].setText(output);

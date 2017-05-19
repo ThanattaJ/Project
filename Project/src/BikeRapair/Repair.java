@@ -186,6 +186,25 @@ public class Repair{
         }
     }
     
+    public void connectDBForAdminUpdateTime(long transId,Timestamp endTime ){ //อัปเดตเฉพาะ returnDate ใน transaction
+        try{
+            Connection connect = ConnectDatabase.connectDb("jan", "jan042");
+            Statement st = connect.createStatement(); 
+            
+            String temp = "update `Transaction` set return_dateTime = '"+endTime+"' WHERE transID = "+transId;
+            st.executeUpdate(temp);
+            //---------------------------------------------------------------------------------------
+            if(connect != null){
+                    connect.close();
+		}
+		}catch (SQLException e){
+                    e.printStackTrace();
+        }
+        catch(Exception ex){
+            System.out.println(ex);
+        }
+    }
+    
     public ArrayList<String> connectDBForCheckRepairNotSucceess(){
         ArrayList<String> notSuccess = new ArrayList<String>();
         String name;
