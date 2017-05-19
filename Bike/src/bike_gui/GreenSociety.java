@@ -926,15 +926,15 @@ public class GreenSociety extends javax.swing.JFrame {
         
    public void listUserRepair(){//JPanel jPanelRepairingAdmin
         ArrayList<String> list = rpw.connectDBforListUserSentToRepair();
-        int num = list.size();
-        JPanel[] jp = new JPanel[num];
-        JLabel[] name = new JLabel[num];
-        JLabel[] surname = new JLabel[num];
-        JLabel[] id = new JLabel[num];
-        JLabel[] icon = new JLabel[num];
-        JButton[] click = new JButton[num];
+        int numList = list.size();
+        JPanel[] jp = new JPanel[numList];
+        JLabel[] name = new JLabel[numList];
+        JLabel[] surname = new JLabel[numList];
+        JLabel[] id = new JLabel[numList];
+        JLabel[] icon = new JLabel[numList];
+        JButton[] click = new JButton[numList];
         int y =20;
-        for (int i = 0; i < num; i++) {
+        for (int i = 0; i < numList; i++) {
             int tem1 =i;
             jp[i] = new JPanel();
             jp[i].setBackground(new Color(240,240,240));
