@@ -76,15 +76,14 @@ public class History {
             }
             this.historyId = ++count;
             
-             String temp ="INSERT INTO Transaction VALUES " //set ค่าให้กับ Database
+             String temp ="INSERT INTO Transaction('transID', 'dateTime', 'return_dateTime', 'itemID', 'amount', 'userID', 'action')  VALUES " //set ค่าให้กับ Database
                     + "("+this.historyId+",'"
                      +startDate+"','"
                      +returnDate+"','"
                       +itemId + "','"
                       +amount + "','"
                       +User.getUserId()+"','"
-                      +input+"','" 
-                      +officerID+"')";
+                      +input+"')";
              
             st.executeUpdate(temp);
                    

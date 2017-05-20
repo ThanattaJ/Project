@@ -1696,7 +1696,6 @@ public class GreenSociety extends javax.swing.JFrame {
         jPasswordSignUp.setBackground(new java.awt.Color(0, 0, 0));
         jPasswordSignUp.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jPasswordSignUp.setForeground(new java.awt.Color(102, 102, 102));
-        jPasswordSignUp.setText("Oldpassword");
         jPasswordSignUp.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         jPasswordSignUp.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -1711,7 +1710,6 @@ public class GreenSociety extends javax.swing.JFrame {
         jPasswordConfirmPassSignup.setBackground(new java.awt.Color(0, 0, 0));
         jPasswordConfirmPassSignup.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jPasswordConfirmPassSignup.setForeground(new java.awt.Color(102, 102, 102));
-        jPasswordConfirmPassSignup.setText("Newpassword");
         jPasswordConfirmPassSignup.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         jPasswordConfirmPassSignup.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -1857,7 +1855,7 @@ public class GreenSociety extends javax.swing.JFrame {
         jFormattedTelophone.setBackground(new java.awt.Color(0, 0, 0));
         jFormattedTelophone.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         jFormattedTelophone.setForeground(new java.awt.Color(102, 102, 102));
-        jFormattedTelophone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("##########"))));
+        jFormattedTelophone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("0000000000"))));
         jFormattedTelophone.setToolTipText("");
         jFormattedTelophone.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         jFormattedTelophone.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -6438,9 +6436,9 @@ public class GreenSociety extends javax.swing.JFrame {
         boolean checkTelNumber = jFormattedTelophone.getValue() != null;
         int lengthFmTel=0;
         if (checkTelNumber) {
-            telephone = jFormattedTelophone.getValue().toString();
+            telephone = "0"+jFormattedTelophone.getValue().toString();
             lengthFmTel = telephone.length();
-            if (lengthFmTel > 10 || lengthFmTel < 10) {
+            if (lengthFmTel!=10) {
                 jLabelNoticTel.setText("Error incorrect");
             }
         } else {
@@ -6458,8 +6456,8 @@ public class GreenSociety extends javax.swing.JFrame {
         }
 
 //        jPasswordSignUp-------------------------------------------------------
-        if (jPasswordSignUp.getText().equals("Oldpassword") == false
-                && jPasswordConfirmPassSignup.getText().equals("Newpassword") == false) {
+        if (jPasswordSignUp.getText().equals("") == false
+                && jPasswordConfirmPassSignup.getText().equals("") == false) {
             oldPass = jPasswordSignUp.getText();
             newPass = jPasswordConfirmPassSignup.getText();
             String password = password(oldPass, newPass);
@@ -6516,6 +6514,21 @@ public class GreenSociety extends javax.swing.JFrame {
     private void menuSignupMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuSignupMouseClicked
         registerPage.setVisible(true);
         jDateChooserBirthDate.getDateEditor().setEnabled(false);
+        jTfFirstName.setText("John");
+        jTfFirstName.setForeground(new Color(153, 153, 153, 150));
+        jTextFieldSurname.setText("Wick");
+        jTextFieldSurname.setForeground(new Color(153, 153, 153, 150));
+        jLbCongenitialDisease.setText("If you have");
+        jLbCongenitialDisease.setForeground(new Color(153, 153, 153, 150));
+        jTextFieldEmail.setText("example@gmail.com");
+        jTextFieldEmail.setForeground(new Color(153, 153, 153, 150));
+        jPasswordSignUp.setText("");
+        jPasswordConfirmPassSignup.setText("");
+        jFormattedTelophone.setText("");
+        jFormatTextFieldForId.setText("");
+        jComboBoxPosition.setSelectedIndex(0);
+        jDateChooserBirthDate.setCalendar(null);
+        jLabelPartPictureUserUpload.setText("No Select File");
         login.setVisible(false);
     }//GEN-LAST:event_menuSignupMouseClicked
 
