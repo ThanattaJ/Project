@@ -1024,7 +1024,6 @@ public class GreenSociety extends javax.swing.JFrame {
         jPanelSignUp = new javax.swing.JPanel();
         jLbSignUp = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        jTextFieldTelophone = new javax.swing.JTextField();
         jTfFirstName = new javax.swing.JTextField();
         jLbLastName = new javax.swing.JLabel();
         jLbDateOfBirth = new javax.swing.JLabel();
@@ -1071,6 +1070,7 @@ public class GreenSociety extends javax.swing.JFrame {
         jLabelNoticOldPass = new javax.swing.JLabel();
         jDateChooserBirthDate = new com.toedter.calendar.JDateChooser();
         jFormatTextFieldForId = new javax.swing.JFormattedTextField();
+        jFormattedTelophone = new javax.swing.JFormattedTextField();
         Backgroung2 = new javax.swing.JLabel();
         login = new javax.swing.JPanel();
         GreenSociety = new javax.swing.JLabel();
@@ -1528,22 +1528,6 @@ public class GreenSociety extends javax.swing.JFrame {
         jPanelSignUp.add(jLbSignUp, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 195, 40));
         jPanelSignUp.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 640, 10));
 
-        jTextFieldTelophone.setBackground(new java.awt.Color(0, 0, 0));
-        jTextFieldTelophone.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
-        jTextFieldTelophone.setForeground(new java.awt.Color(102, 102, 102));
-        jTextFieldTelophone.setText("090xxxxxxx");
-        jTextFieldTelophone.setToolTipText("");
-        jTextFieldTelophone.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
-        jTextFieldTelophone.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jTextFieldTelophoneFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jTextFieldTelophoneFocusLost(evt);
-            }
-        });
-        jPanelSignUp.add(jTextFieldTelophone, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 250, 240, 30));
-
         jTfFirstName.setBackground(new java.awt.Color(0, 0, 0));
         jTfFirstName.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
         jTfFirstName.setForeground(new java.awt.Color(102, 102, 102));
@@ -1674,14 +1658,14 @@ public class GreenSociety extends javax.swing.JFrame {
 
         jLbTelophone.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
         jLbTelophone.setForeground(new java.awt.Color(255, 255, 255));
-        jLbTelophone.setText("Telophone");
-        jPanelSignUp.add(jLbTelophone, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 230, 60, 20));
+        jLbTelophone.setText("Phone Number");
+        jPanelSignUp.add(jLbTelophone, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 230, 90, 20));
 
         jLbStarTelophone.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
         jLbStarTelophone.setForeground(new java.awt.Color(19, 175, 248));
         jLbStarTelophone.setText("*");
         jLbStarTelophone.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        jPanelSignUp.add(jLbStarTelophone, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 230, 30, 30));
+        jPanelSignUp.add(jLbStarTelophone, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 230, 30, 30));
 
         jTextFieldConDisease.setBackground(new java.awt.Color(0, 0, 0));
         jTextFieldConDisease.setForeground(new java.awt.Color(102, 102, 102));
@@ -1869,6 +1853,22 @@ public class GreenSociety extends javax.swing.JFrame {
             }
         });
         jPanelSignUp.add(jFormatTextFieldForId, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 190, 240, 30));
+
+        jFormattedTelophone.setBackground(new java.awt.Color(0, 0, 0));
+        jFormattedTelophone.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        jFormattedTelophone.setForeground(new java.awt.Color(102, 102, 102));
+        jFormattedTelophone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("##########"))));
+        jFormattedTelophone.setToolTipText("");
+        jFormattedTelophone.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        jFormattedTelophone.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jFormattedTelophoneFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jFormattedTelophoneFocusLost(evt);
+            }
+        });
+        jPanelSignUp.add(jFormattedTelophone, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 250, 240, 30));
 
         registerPage.add(jPanelSignUp, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 30, 680, 500));
 
@@ -6253,22 +6253,6 @@ public class GreenSociety extends javax.swing.JFrame {
         registerPage.setVisible(false);
     }//GEN-LAST:event_backSigninRegisMouseClicked
 
-    private void jTextFieldTelophoneFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldTelophoneFocusGained
-        if (jTextFieldTelophone.getText().equals("090xxxxxxx")) {
-            jTextFieldTelophone.setText("");
-            jTextFieldTelophone.setForeground(new java.awt.Color(255, 255, 255));
-        }
-        jTextFieldTelophone.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(19, 175, 248)));
-    }//GEN-LAST:event_jTextFieldTelophoneFocusGained
-
-    private void jTextFieldTelophoneFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldTelophoneFocusLost
-        if (jTextFieldTelophone.getText().equals("") || jTextFieldTelophone.getText().length() == 0) {
-            jTextFieldTelophone.setForeground(new Color(153, 153, 153, 150));
-            jTextFieldTelophone.setText("090xxxxxxx");
-        }
-        jTextFieldTelophone.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
-    }//GEN-LAST:event_jTextFieldTelophoneFocusLost
-
     private void jTfFirstNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTfFirstNameFocusGained
         if (jTfFirstName.getText().equals("John")) {
             jTfFirstName.setText("");
@@ -6451,12 +6435,19 @@ public class GreenSociety extends javax.swing.JFrame {
         }
 
 //        jTextFieldTelophone----------------------------------------------------------
-        boolean checkTelNumber = jTextFieldTelophone.getText().equals("090xxxxxxx") == false;
+        boolean checkTelNumber = jFormattedTelophone.getValue() != null;
+        int lengthFmTel=0;
         if (checkTelNumber) {
-            telephone = jTextFieldTelophone.getText();
+            telephone = jFormattedTelophone.getValue().toString();
+            lengthFmTel = telephone.length();
+            if (lengthFmTel > 10 || lengthFmTel < 10) {
+                jLabelNoticTel.setText("Error incorrect");
+            }
         } else {
             jLabelNoticTel.setText("Telophone number is empty!");
         }
+        
+        checkTelNumber = jFormattedTelophone.getValue() != null && lengthFmTel==10;
 
 //        jTextFieldEmail-------------------------------------------------------
         boolean checkEmailTextField = jTextFieldEmail.getText().equals("example@gmail.com") == false;
@@ -6524,6 +6515,7 @@ public class GreenSociety extends javax.swing.JFrame {
 
     private void menuSignupMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuSignupMouseClicked
         registerPage.setVisible(true);
+        jDateChooserBirthDate.getDateEditor().setEnabled(false);
         login.setVisible(false);
     }//GEN-LAST:event_menuSignupMouseClicked
 
@@ -7228,6 +7220,24 @@ public class GreenSociety extends javax.swing.JFrame {
         jPNBackGround.repaint();  
     }//GEN-LAST:event_refreshRepairAdminActionPerformed
 
+    private void jFormattedTelophoneFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jFormattedTelophoneFocusGained
+        // TODO add your handling code here:
+        if (jFormattedTelophone.getText().equals("090xxxxxxx")) {
+            jFormattedTelophone.setText("");
+            jFormattedTelophone.setForeground(new java.awt.Color(255, 255, 255));
+        }
+        jFormattedTelophone.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(19, 175, 248)));
+    }//GEN-LAST:event_jFormattedTelophoneFocusGained
+
+    private void jFormattedTelophoneFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jFormattedTelophoneFocusLost
+        // TODO add your handling code here:
+        if (jFormattedTelophone.getText().equals("") || jFormattedTelophone.getText().length() == 0) {
+            jFormattedTelophone.setForeground(new Color(153, 153, 153, 150));
+            jFormattedTelophone.setText("090xxxxxxx");
+        }
+        jFormattedTelophone.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+    }//GEN-LAST:event_jFormattedTelophoneFocusLost
+
     /**
      * @param args the command line arguments
      */
@@ -7417,6 +7427,7 @@ public class GreenSociety extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jComboBoxStatusBike;
     private com.toedter.calendar.JDateChooser jDateChooserBirthDate;
     private javax.swing.JFormattedTextField jFormatTextFieldForId;
+    private javax.swing.JFormattedTextField jFormattedTelophone;
     private javax.swing.JLabel jLBShowingResult;
     private javax.swing.JLabel jLBShowingResult1;
     private javax.swing.JLabel jLBWhatsearch;
@@ -7555,7 +7566,6 @@ public class GreenSociety extends javax.swing.JFrame {
     private javax.swing.JTextField jTextFieldConDisease;
     private javax.swing.JTextField jTextFieldEmail;
     private javax.swing.JTextField jTextFieldSurname;
-    private javax.swing.JTextField jTextFieldTelophone;
     private javax.swing.JTextField jTfFirstName;
     private javax.swing.JPanel layerAddItem;
     private javax.swing.JPanel listNewsPage;
