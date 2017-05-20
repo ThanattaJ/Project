@@ -7,8 +7,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 
 public class Repair{
     private int num;
@@ -307,17 +305,15 @@ public class Repair{
             //เอาข้อมูลลง transaction ด้วย 
             String userId = "\'"+userID+"\'";
             String action = "\'Repair\'";
-            String officerId = "\'"+200+"\'";
             
-            String temp3 ="INSERT INTO Transaction VALUES " //set ค่าให้กับ Database
+            String temp3 ="INSERT INTO Transaction('transID', 'dateTime', 'return_dateTime', 'itemID', 'amount', 'userID', 'action')  VALUES " //set ค่าให้กับ Database
                     + "("+this.countTransId+","
                     +"'"+startDate+"','"
                      +returnDate+"',"
                       +0+ ","
                       +0+" ,"
                       +userId+","
-                      +action+"," 
-                      +officerId+")";
+                      +action+")";
              
             st.executeUpdate(temp3);
             //------------------------------------------------------------------
