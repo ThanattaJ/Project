@@ -981,12 +981,16 @@ public class GreenSociety extends javax.swing.JFrame {
             //----------------------------------------------------------------------------------------//
             String idPrepair1 = list.get(i).substring(0,1);
             int idPrepair2 = Integer.parseInt(idPrepair1);
+            int lengthList = list.get(i).length();
+            String userIDPrepair1 = list.get(i).substring(lengthList-1,lengthList);
+            int userIDPrepair2 = Integer.parseInt(userIDPrepair1);
+            
             click[i] = new JButton();
             click[i].setText("Click");
             click[i].setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
             click[i].addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBTRepairClickActionPerformed(evt,idPrepair2,rpw.getUserID());
+                jBTRepairClickActionPerformed(evt,idPrepair2,userIDPrepair2);
             }
             });
             jp[i].add(click[i], new org.netbeans.lib.awtextra.AbsoluteConstraints(620,10, -1, 20));
@@ -7060,6 +7064,7 @@ public class GreenSociety extends javax.swing.JFrame {
         
         
         rpw.connectDBFromAdminToUser(repairIDAdmin,userIDRepairAdmin);
+        System.out.println("jBTnextToShowTimeActionPerformed: "+userIDRepairAdmin);
         rpw.connectDBForAdminUpdateTime(transIDRepairAdmin, startDate, startDate);
         if(jTFProblem.getText().equals("") || (jTFDetail.getText().equals(""))){
             JOptionPane.showMessageDialog(null,"ยังไม่ได้กรอกข้อความ","Warning Message",JOptionPane.WARNING_MESSAGE);
