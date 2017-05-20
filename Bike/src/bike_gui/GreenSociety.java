@@ -196,6 +196,8 @@ public class GreenSociety extends javax.swing.JFrame {
     public void setBorrowStep1() {
         int x = 50;
         int y = 50;
+        sh.setDataOfItem();
+        settingItem();
         JPanel sharingPage1 = new JPanel();
         sharingPage1.setBackground(new java.awt.Color(25, 41, 65));
         sharingPage1.setEnabled(false);
