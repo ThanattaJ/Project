@@ -6714,7 +6714,7 @@ public class GreenSociety extends javax.swing.JFrame {
         history1.setForeground(new java.awt.Color(19, 175, 248));
         support1.setForeground(new java.awt.Color(255, 255, 255));
         profile1.setForeground(new java.awt.Color(255, 255, 255));
-        news1.setVisible(false);
+        newsPage1.setVisible(false);
         cpPage1.setVisible(false);
         repairPage1.setVisible(false);
         sharingScroll.setVisible(false);

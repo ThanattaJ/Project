@@ -9,12 +9,12 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 
 public class Repair{
-    private int num;
+    private int countID;
     private String askingUser="";
     private String repairingUser="";
     private String statusUser="";
     private String timerUser;
-    private long peairId;
+    private long perpairId;
     private String problem;//ปัญหาของการซ่อมจักรยาน เช่น ยางแตก ช่างกรอก Asking
     private String detail;//รายละเอียด เช่น ต้องเปลี่ยนยาง ช่างกรอก Repairing
     private String bike="";//รับจาก GUI ให้ user กรอก
@@ -275,7 +275,7 @@ public class Repair{
             while(rs.next()){
                 count = rs.getInt("countId");
             }
-            peairId = ++count;
+            perpairId = ++count;
             //------------------------------------------------------------------
             //ดึง transId ว่ามีมากที่สุดเท่าไร เพื่อให้มัน กรอกลง DB ได้ และไม่ซ้ำกับ transID
             String temp1 = "SELECT MAX(transId) AS countTransId FROM Transaction ";
@@ -287,7 +287,7 @@ public class Repair{
             countTransId = ++countTrans;
             //------------------------------------------------------------------
             //เอาข้อมูลลง DB prapair_Desctiption
-            String sqlid = "\'"+this.peairId+"\'";
+            String sqlid = "\'"+this.perpairId+"\'";
             String brand = "\'"+band+"\'";
             String sqlcolor = "\'"+color+"\'";
             String sqlWhy = "\'"+asking+"\'";
@@ -411,7 +411,7 @@ public class Repair{
             ResultSet rs = st.executeQuery(temp);
 
             while(rs.next()){
-                this.num = rs.getInt("countId");
+                this.countID = rs.getInt("countId");
             }
         }   
         catch(Exception ex){
