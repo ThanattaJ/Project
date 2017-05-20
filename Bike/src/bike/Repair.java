@@ -19,29 +19,15 @@ public class Repair{
     private long peairId;
     private String problem;//ปัญหาของการซ่อมจักรยาน เช่น ยางแตก ช่างกรอก Asking
     private String detail;//รายละเอียด เช่น ต้องเปลี่ยนยาง ช่างกรอก Repairing
-    private Timer t;//เก็บเวลาที่จะต้องเสร็จ
-    private int hours;
-    private int minute;
-    private int secound;
-    private String timeDetail;//เวลาที่ช่างซ่อมจะซ่อมเสร็จ
-    private History historyRp = new History();
     private String bike="";//รับจาก GUI ให้ user กรอก
     private String whyRepair="";//ให้ user กรอกว่าทำไมถึงต้องส่งซ่อม
     private String color="";
     private long countTransId;
-    private Date time = new Date();
-    private String showTime="";
     private long repairStateId;
     private String status="";
-    private boolean statusThread = false;
     private String askingAdminNotSuccess ;
     private String repairingAdminNotSuccess ;
-    private String statusAdminNotSuccess ;
-    private int itemIDAdminNotSuccess ;
-    private Timestamp startTimeAdminNotSuccess ;
-    private Timestamp endTimeAdminNotSuccess ;
     private long transIDAdminNotSuccess ;
-    private long repairStateAdminNotSuccess ;
     private int userID;
     private int itemId;
     
@@ -55,7 +41,7 @@ public class Repair{
         try{
             Connection connect = Database.connectDb("jan", "jan042");
             Statement st = connect.createStatement(); 
-            String temp = "SELECT Prepair_Desctiption.id,User.firstName,User.lastName,User.userID FROM Green_Society.Prepair_Desctiption " +
+            String temp = "SELECT Prepair_Desctiption.id,User.firstName,User.lastName,Transaction.userID FROM Green_Society.Prepair_Desctiption " +
                             "JOIN Transaction ON Prepair_Desctiption.transID=Transaction.transID " +
                             "INNER JOIN User ON Transaction.userID=User.userID " +
                             "LEFT JOIN Green_Society.Repair_State ON Prepair_Desctiption.id = Repair_State.item_id " +
@@ -130,7 +116,7 @@ public class Repair{
          try{
             Connection connect = Database.connectDb("jan", "jan042");
             Statement st = connect.createStatement(); 
-            String temp = "SELECT Repair_State.id,User.firstName,User.userID,Repair_State.Repairing,Transaction.dateTime,Repair_State.item_id FROM Green_Society.User " +
+            String temp = "SELECT Repair_State.id,User.firstName,Repair_State.userID,Repair_State.Repairing,Transaction.dateTime,Repair_State.item_id FROM Green_Society.User " +
                             "JOIN Repair_State ON User.userID = Repair_State.userID " +
                             "INNER JOIN Prepair_Desctiption ON Repair_State.item_id=Prepair_Desctiption.id " +
                             "INNER JOIN Transaction ON Prepair_Desctiption.transID=Transaction.transID " +
@@ -139,7 +125,7 @@ public class Repair{
             while(rs.next()){
                 id = rs.getInt("id");
                 name=rs.getString("firstName");
-                userID = rs.getInt("UserID");
+                userID = rs.getInt("userID"); // userID ของคนที่ส่งซ่อมมา 
                 action=rs.getString("Repairing");
                 remaining=rs.getTimestamp("dateTime");
                 itemId = rs.getInt("item_id");
@@ -170,7 +156,7 @@ public class Repair{
         return countTransId;
     }
     
-    public void connectDBFromAdminToUser(long itemId,int user){//กรอกรายละเอียดการซ่อมให้ user
+    public void connectDBFromAdminToUser(long itemId,long user){//กรอกรายละเอียดการซ่อมให้ user
          try{
             Connection connect = Database.connectDb("jan", "jan042");
             Statement st = connect.createStatement(); 
@@ -189,6 +175,7 @@ public class Repair{
             String sulRepairing = "\'"+detail+"\'";
             String sqlRecieving = "\'"+Status(false)+"\'";
             String sqlItemId = "\'"+itemId+"\'";
+            
             
             String temp2 ="INSERT INTO Repair_State "
                     + "VALUES"+" ("+sqlid+","
@@ -216,7 +203,7 @@ public class Repair{
         try{
             Connection connect = Database.connectDb("jan", "jan042");
             Statement st = connect.createStatement(); 
-            //ดึงเอา id ที่มาที่สุดออกมา เพื่อให้มันสามารถ insert ลง table ให้ไม่ซ้ำกันได้
+            
             String temp = "SELECT transID FROM Prepair_Desctiption JOIN Repair_State ON Prepair_Desctiption.id = Repair_State.item_id WHERE Repair_State.item_id =  "+repairID;
             ResultSet rs = st.executeQuery(temp);
             
@@ -436,39 +423,6 @@ public class Repair{
         }
     }
 
-    public Date startTimeToRepair(){
-        Date startDate = t.getBorrowTime();
-        return startDate;
-    }
-    
-    public Date endTimeToRepair(){
-        Date endDate = t.getReturnTime();
-        return endDate;
-    }
-
-    public String getShowTime() {
-        return showTime;
-    }
-
-    public void setShowTime(String showTime) {
-        this.showTime = showTime;
-    }
-    
-   
-    public void setStatusThread(boolean statusThread) {
-        this.statusThread = statusThread;
-    }
-
-    public boolean isStatusThread() {
-        return statusThread;
-    }
-    
-    public void plusDay(int h,int m,int s){ //เมธอดคำนวณชั่วโมง นาที วินาที ไม่ให้มันเกินตามความเป็นจริง
-        hours+=h;
-        minute+=m;
-        secound+=s;
-    }
-    
     public String Status(boolean tem){ // รับมาจากปุ่มกด ถ้าเสร็จเป็น true ไม่เสร็จเป็น false
         if(tem==false){
             status="Not success!";
@@ -494,30 +448,6 @@ public class Repair{
         this.detail = detail;
     }
     
-    public int getHours() {
-        return hours;
-    }
-
-    public void setHours(int hours) {
-        this.hours = hours;
-    }
-
-    public int getMinute() {
-        return minute;
-    }
-
-    public void setMinute(int minute) {
-        this.minute = minute;
-    }
-
-    public int getSecound() {
-        return secound;
-    }
-
-    public void setSecound(int secound) {
-        this.secound = secound;
-    }
-
     public String getBike() {
         return bike;
     }
@@ -526,10 +456,6 @@ public class Repair{
         this.bike = bike;
     }
     
-    public Timer getTime() {
-        return t;
-    }
-
     public String getStatus() {
         return status;
     }
@@ -559,10 +485,6 @@ public class Repair{
         this.color = color;
     }
 
-    public String getTimeDetail() {
-        return timeDetail;
-    }
-    
     public long getRepairStateId() {
         return repairStateId;
     }
@@ -578,9 +500,6 @@ public class Repair{
     public String getStatusUser() {
         return statusUser;
     }
-    public long getRepairStateAdminNotSuccess() {
-        return repairStateAdminNotSuccess ;
-    }
 
     public long getTransIDAdminNotSuccess() {
         return transIDAdminNotSuccess ;
@@ -594,22 +513,6 @@ public class Repair{
         return repairingAdminNotSuccess ;
     }
 
-    public String getStatusAdminNotSuccess() {
-        return statusAdminNotSuccess ;
-    }
-
-    public int getItemIDAdminNotSuccess() {
-        return itemIDAdminNotSuccess ;
-    }
-
-    public Timestamp getStartTimeAdminNotSuccess() {
-        return startTimeAdminNotSuccess ;
-    }
-
-    public Timestamp getEndTimeAdminNotSuccess() {
-        return endTimeAdminNotSuccess ;
-    }
-    
     @Override
     public String toString() {
         return "Problem: " + problem 

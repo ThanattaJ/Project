@@ -51,14 +51,10 @@ public class RegisterGui extends javax.swing.JFrame {
         NumberFormatter formatter = new NumberFormatter(decimalFmt);
         formatter.setValueClass(Long.class);
         formatter.setAllowsInvalid(false);
-        // If you want the value to be committed on each keystroke instead of focus lost
+        
         formatter.setCommitsOnValidEdit(true);
         jFormatTextFieldForId = new JFormattedTextField(formatter);
-//        int valueId = (int)jFormatTextFieldForId.getValue();
-//        String temp = valueId+"";
-//        if(temp.length()>11){
-//        
-//        }
+
         jFormatTextFieldForId.setBackground(new java.awt.Color(0, 0, 0));
         jFormatTextFieldForId.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
         jFormatTextFieldForId.setForeground(new java.awt.Color(102, 102, 102));
