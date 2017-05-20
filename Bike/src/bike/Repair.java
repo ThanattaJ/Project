@@ -312,7 +312,7 @@ public class Repair{
             String userId = "\'"+userID+"\'";
             String action = "\'Repair\'";
             
-            String temp3 ="INSERT INTO Transaction('transID', 'dateTime', 'return_dateTime', 'itemID', 'amount', 'userID', 'action')  VALUES " //set ค่าให้กับ Database
+            String temp3 ="INSERT INTO Transaction(transID,dateTime,return_dateTime,itemID,amount,userID,action)  VALUES " //set ค่าให้กับ Database
                     + "("+this.countTransId+","
                     +"'"+startDate+"','"
                      +returnDate+"',"
@@ -352,7 +352,7 @@ public class Repair{
                 statusUser += "- "+rs.getString("Recieving") + "<br>";
             }
             
-            String temp2 = "SELECT dateTime,return_dateTime FROM `Transaction` WHERE transID = "+this.countTransId;
+            String temp2 = "SELECT dateTime FROM `Transaction` WHERE action LIKE 'Repair' AND userID =  "+userID;
             ResultSet rs2 = st.executeQuery(temp2);
             
             while(rs2.next()){
@@ -360,7 +360,19 @@ public class Repair{
                 endTime = rs2.getTimestamp("return_dateTime");
             }
             
-            if(startTime.equals(null)){
+            if(askingUser==null){
+                askingUser = "";
+            }
+            
+            if(repairingUser==null){
+                repairingUser = "";
+            }
+            
+            if(statusUser==null){
+                statusUser = "";
+            }
+            
+            if(startTime == null){
                 timerUser = "<html>Start: - </html>";
             }else{
                 timerUser = "<html>Start: "+startTime+"</html>";

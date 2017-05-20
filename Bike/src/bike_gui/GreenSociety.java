@@ -834,6 +834,12 @@ public class GreenSociety extends javax.swing.JFrame {
     }
 
     public void iconStatusFollowingRepairing(){
+        String subStatus="";
+        
+        if(rpw.getStatusUser()!= null){
+            subStatus = rpw.getStatusUser().substring(2,3);
+        }
+        
         if(rpw.getRepairingUser()!=null){
             circleMini1.setVisible(false);
             if(circleMini.isVisible() == true){
@@ -842,7 +848,9 @@ public class GreenSociety extends javax.swing.JFrame {
                 circleNoti.setVisible(false);
             }
             jLabelStatusRepairIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/repairUserStep2.png")));
-        }else if(rpw.getStatusUser()!= null && rpw.getStatusUser().equalsIgnoreCase("Success")){
+        }
+        
+        if(rpw.getStatusUser()!= null && subStatus.equalsIgnoreCase("S")){
             circleMini1.setVisible(true);
             circleNoti.setVisible(true);
             jLabelStatusRepairIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/repairUserStep3.png")));
@@ -850,6 +858,8 @@ public class GreenSociety extends javax.swing.JFrame {
     }
     
     public void setDataReparing(){
+        rpw.connectDBShowRepairForUserFollowing(User.getUserId());
+        iconStatusFollowingRepairing();
         textAsking.setText("<html><body>"+rpw.getAskingUser()+"</html></body>");
         textRepair.setText("<html><body>"+rpw.getRepairingUser()+"</html></body>");
         textRecieving.setText("<html><body>"+rpw.getStatusUser()+"</html></body>");
@@ -6947,6 +6957,10 @@ public class GreenSociety extends javax.swing.JFrame {
     }//GEN-LAST:event_historyMouseClicked
 
     private void jBtBackRepairUserSentToAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtBackRepairUserSentToAdminActionPerformed
+        textAsking.setText("");
+        textRecieving.setText("");
+        textRepair.setText("");
+        jLabelTime.setText("");
         jPanelRepairUserSentToAdmin.setVisible(true);
         jPanelRepairUserFollowRepairing.setVisible(false);
     }//GEN-LAST:event_jBtBackRepairUserSentToAdminActionPerformed
