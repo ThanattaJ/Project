@@ -107,13 +107,7 @@ public class Authenication {
             congenitialDisease = disease;
         }
         
-        if(pathImg.equalsIgnoreCase("default")){
-            newPath = "/bike_gui/userProfile/default.png";
-        }else{
-            String typeFile = pathImg.substring(pathImg.indexOf("."),pathImg.length());
-            newPath = "/src/bike_gui/userProfile/"+User.getUserId()+typeFile;
-            copyFileImg(pathImg,newPath);
-        }
+        
         try {
             con = Database.connectDb("ja", "jaja036");
             Statement s = con.createStatement();
@@ -125,8 +119,18 @@ public class Authenication {
             }
 
             id++;
+            
+            if(pathImg.equalsIgnoreCase("default")){
+            newPath = "/bike_gui/userProfile/default.png";
+            }else{
+            String typeFile = pathImg.substring(pathImg.indexOf("."),pathImg.length());
+            newPath = "/bike_gui/userProfile/"+id+typeFile;
+            copyFileImg(pathImg,newPath);
+            }
+            
             sql = "INSERT INTO User VALUES('" + id + "','" + firstName + "','" + lastName + "','" + gender
-                    + "','" + birthDate + "','" + congenitialDisease + "','" + email + "','" + tel + "','" + deptId + "','0','" + pass.toString() + "','"+newPath+"')";
+                    + "','" + birthDate + "','" + congenitialDisease + "','" + email + "','" + tel + "','" + deptId + "','0','" + pass.toString() + "','"
+                    +newPath+"')";
             s.executeUpdate(sql);
             if (position.equalsIgnoreCase("Technician") || position.equalsIgnoreCase("Officer")) {
                 insertOfficer(position, id);
