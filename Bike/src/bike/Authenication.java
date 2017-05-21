@@ -159,7 +159,7 @@ public class Authenication {
             }
 
             idOfficer++;
-            sql = "INSERT INTO User VALUES('" + idOfficer + "','" + idUser + "','" + position + "')";
+            sql = "INSERT INTO Officer VALUES('" + idOfficer + "','" + idUser + "','" + position + "')";
             s.executeUpdate(sql);
         } catch (SQLException ex) {
             ex.printStackTrace();
