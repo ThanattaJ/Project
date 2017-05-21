@@ -836,8 +836,14 @@ public class GreenSociety extends javax.swing.JFrame {
     public void iconStatusFollowingRepairing(){
         String subStatus="";
         
-        if(rpw.getStatusUser()!= null){
+        if(rpw.getStatusUser()!= null && rpw.getStatusUser().length()!=0){
             subStatus = rpw.getStatusUser().substring(2,3);
+        }else{
+            subStatus = "N";
+        }
+        
+        if(rpw.getStatusUser()!= null && rpw.getStatusUser().length()==0){
+            jLabelStatusRepairIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/repairUserStep1.png")));
         }
         
         if(rpw.getRepairingUser()!=null){
@@ -994,7 +1000,8 @@ public class GreenSociety extends javax.swing.JFrame {
             String idPrepair1 = list.get(i).substring(0,1);
             int idPrepair2 = Integer.parseInt(idPrepair1);
             int lengthList = list.get(i).length();
-            String userIDPrepair1 = list.get(i).substring(lengthList-1,lengthList);
+            int find1 = list.get(i).lastIndexOf(":");
+            String userIDPrepair1 = list.get(i).substring(find1+2,lengthList);
             int userIDPrepair2 = Integer.parseInt(userIDPrepair1);
             
             click[i] = new JButton();
@@ -4947,7 +4954,6 @@ public class GreenSociety extends javax.swing.JFrame {
                         }
                     }
                     setDataReparing();
-                    iconStatusFollowingRepairing();
                 } else if (User.getPositon().equalsIgnoreCase("Officer") || User.getPositon().equalsIgnoreCase("Technician")) {
                     setColorOfBarMenu();
                     login.setVisible(false);
