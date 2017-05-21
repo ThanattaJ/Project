@@ -1028,8 +1028,11 @@ public class GreenSociety extends javax.swing.JFrame {
     }  
     
     public void clearTextLabelFollowRepair(){
+        rpw.setAskingUser("");
         textAsking.setText("");
+        rpw.setStatusUser("");
         textRecieving.setText("");
+        rpw.setRepairingUser("");
         textRepair.setText("");
         jLabelTime.setText("");
     }
