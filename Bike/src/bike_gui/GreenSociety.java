@@ -6504,9 +6504,13 @@ public class GreenSociety extends javax.swing.JFrame {
         checkTelNumber = jFormattedTelophone.getValue() != null && lengthFmTel==10;
 
 //        jTextFieldEmail-------------------------------------------------------
-        boolean checkEmailTextField = jTextFieldEmail.getText().equals("example@gmail.com") == false;
+        int checkEmailIndex = jTextFieldEmail.getText().indexOf("@");
+        boolean checkEmailTextField = jTextFieldEmail.getText().equals("example@gmail.com") == false && checkEmailIndex!=-1;
+        
         if (checkEmailTextField) {
             email = jTextFieldEmail.getText();
+        }else if(checkEmailIndex==-1){
+            jLabelEmailNotCorrect.setText("Error incorrect!");
         } else {
             jLabelEmailNotCorrect.setText("Email is empty!");
         }
