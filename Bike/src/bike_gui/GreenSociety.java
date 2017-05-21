@@ -1026,6 +1026,13 @@ public class GreenSociety extends javax.swing.JFrame {
         revalidate();
         repaint();
     }  
+    
+    public void clearTextLabelFollowRepair(){
+        textAsking.setText("");
+        textRecieving.setText("");
+        textRepair.setText("");
+        jLabelTime.setText("");
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -4936,9 +4943,8 @@ public class GreenSociety extends javax.swing.JFrame {
                             circleNoti.setVisible(true);
                         }
                     }
-                    rpw.connectDBShowRepairForUserFollowing(User.getUserId());
-                    iconStatusFollowingRepairing();
                     setDataReparing();
+                    iconStatusFollowingRepairing();
                 } else if (User.getPositon().equalsIgnoreCase("Officer") || User.getPositon().equalsIgnoreCase("Technician")) {
                     setColorOfBarMenu();
                     login.setVisible(false);
@@ -6900,6 +6906,7 @@ public class GreenSociety extends javax.swing.JFrame {
         news1.setForeground(new java.awt.Color(19, 175, 248));
         canCounter1.setForeground(new java.awt.Color(255, 255, 255));
         bikeSharing1.setForeground(new java.awt.Color(255, 255, 255));
+        bikeRepair1.setForeground(new java.awt.Color(255, 255, 255));
         timer1.setForeground(new java.awt.Color(255, 255, 255));
         history1.setForeground(new java.awt.Color(255, 255, 255));
         support1.setForeground(new java.awt.Color(255, 255, 255));
@@ -6957,10 +6964,6 @@ public class GreenSociety extends javax.swing.JFrame {
     }//GEN-LAST:event_historyMouseClicked
 
     private void jBtBackRepairUserSentToAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtBackRepairUserSentToAdminActionPerformed
-        textAsking.setText("");
-        textRecieving.setText("");
-        textRepair.setText("");
-        jLabelTime.setText("");
         jPanelRepairUserSentToAdmin.setVisible(true);
         jPanelRepairUserFollowRepairing.setVisible(false);
     }//GEN-LAST:event_jBtBackRepairUserSentToAdminActionPerformed
@@ -6993,6 +6996,8 @@ public class GreenSociety extends javax.swing.JFrame {
             bike = jTFbike.getText();
             color = jTFColor.getText();
             rpw.connectDBFromUserToAdmin(whyRepair,bike,color,User.getUserId());//return date ยังใส่ไม่ได้ต้องให้ช่างประเมินเวลาก่อน
+            clearTextLabelFollowRepair();
+            setDataReparing();
             jPanelRepairUserFollowRepairing.setVisible(true);
             jPanelRepairUserSentToAdmin.setVisible(false);
             titlenextFollingRepairUser.setVisible(false);
@@ -7048,9 +7053,9 @@ public class GreenSociety extends javax.swing.JFrame {
     }//GEN-LAST:event_jBtBackRepairUserSentToAdminMouseExited
 
     private void jButtonFollowingRepairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFollowingRepairActionPerformed
-        rpw.connectDBShowRepairForUserFollowing(User.getUserId());
-        iconStatusFollowingRepairing();
+        clearTextLabelFollowRepair();
         setDataReparing();
+        iconStatusFollowingRepairing();
         jPanelRepairUserSentToAdmin.setVisible(false);
         jPanelRepairUserFollowRepairing.setVisible(true);
     }//GEN-LAST:event_jButtonFollowingRepairActionPerformed
@@ -7096,7 +7101,6 @@ public class GreenSociety extends javax.swing.JFrame {
         
         
         rpw.connectDBFromAdminToUser(repairIDAdmin,userIDRepairAdmin);
-        System.out.println("jBTnextToShowTimeActionPerformed: "+userIDRepairAdmin);
         rpw.connectDBForAdminUpdateTime(transIDRepairAdmin, startDate, startDate);
         if(jTFProblem.getText().equals("") || (jTFDetail.getText().equals(""))){
             JOptionPane.showMessageDialog(null,"ยังไม่ได้กรอกข้อความ","Warning Message",JOptionPane.WARNING_MESSAGE);
