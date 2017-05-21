@@ -152,7 +152,7 @@ public class Authenication {
             con = Database.connectDb("ja", "jaja036");
             Statement s = con.createStatement();
 
-            sql = "SELECT MAX(Officer) AS id FROM Officer";
+            sql = "SELECT MAX(officerID) AS id FROM Officer";
             ResultSet rs = s.executeQuery(sql);
             while (rs.next()) {
                 idOfficer = rs.getInt("id");
