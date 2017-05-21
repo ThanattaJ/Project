@@ -1087,6 +1087,60 @@ public class GreenSociety extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroupGender = new javax.swing.ButtonGroup();
+        registerPage = new javax.swing.JPanel();
+        backSigninRegis = new javax.swing.JLabel();
+        jPanelSignUp = new javax.swing.JPanel();
+        jLbSignUp = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        jTfFirstName = new javax.swing.JTextField();
+        jLbLastName = new javax.swing.JLabel();
+        jLbDateOfBirth = new javax.swing.JLabel();
+        jLabelStarLN = new javax.swing.JLabel();
+        jComboBoxPosition = new javax.swing.JComboBox<>();
+        jLbGender = new javax.swing.JLabel();
+        jLbPassWord = new javax.swing.JLabel();
+        jTextFieldSurname = new javax.swing.JTextField();
+        jLbFirstName = new javax.swing.JLabel();
+        jLbStarId = new javax.swing.JLabel();
+        jLbStarFirstName = new javax.swing.JLabel();
+        jLbStarGender = new javax.swing.JLabel();
+        jLbStarBirthDay = new javax.swing.JLabel();
+        jLbStarPassword = new javax.swing.JLabel();
+        jLbPosition = new javax.swing.JLabel();
+        jLbStarPosition = new javax.swing.JLabel();
+        jLbCongenitialDisease = new javax.swing.JLabel();
+        jTextFieldEmail = new javax.swing.JTextField();
+        jLbTelophone = new javax.swing.JLabel();
+        jLbStarTelophone = new javax.swing.JLabel();
+        jTextFieldConDisease = new javax.swing.JTextField();
+        jLbEmail = new javax.swing.JLabel();
+        jLbStarEmail = new javax.swing.JLabel();
+        jPasswordSignUp = new javax.swing.JPasswordField();
+        jPasswordConfirmPassSignup = new javax.swing.JPasswordField();
+        jLbConfirmPassWord = new javax.swing.JLabel();
+        jLbStarConfirmPass = new javax.swing.JLabel();
+        jButtonSignUp = new javax.swing.JButton();
+        jRadioButtonGenderFemale = new javax.swing.JRadioButton();
+        jRadioButtonGenderMale = new javax.swing.JRadioButton();
+        jLabelPictureProfileRegister = new javax.swing.JLabel();
+        jButtonChooseFileForUpload = new javax.swing.JButton();
+        jLabelPartPictureUserUpload = new javax.swing.JLabel();
+        jLbId = new javax.swing.JLabel();
+        jLabelEmailNotCorrect = new javax.swing.JLabel();
+        jLabelNoticSurname = new javax.swing.JLabel();
+        jLabelifLengthId = new javax.swing.JLabel();
+        jLabelNoticNewPass = new javax.swing.JLabel();
+        jLabelNoticName = new javax.swing.JLabel();
+        jLabelNoticGender = new javax.swing.JLabel();
+        jLabelNoticBirthDate = new javax.swing.JLabel();
+        jLabelNoticPosition = new javax.swing.JLabel();
+        jLabelNoticTel = new javax.swing.JLabel();
+        jLabelNoticOldPass = new javax.swing.JLabel();
+        jDateChooserBirthDate = new com.toedter.calendar.JDateChooser();
+        jFormatTextFieldForId = new javax.swing.JFormattedTextField();
+        jFormattedTelophone = new javax.swing.JFormattedTextField();
+        Backgroung2 = new javax.swing.JLabel();
         mainAdmin = new javax.swing.JPanel();
         barSearch = new javax.swing.JPanel();
         jSeparator2 = new javax.swing.JSeparator();
@@ -1294,59 +1348,6 @@ public class GreenSociety extends javax.swing.JFrame {
         pathImgProfile = new javax.swing.JLabel();
         submitProfile = new javax.swing.JButton();
         warningProfile = new javax.swing.JLabel();
-        registerPage = new javax.swing.JPanel();
-        backSigninRegis = new javax.swing.JLabel();
-        jPanelSignUp = new javax.swing.JPanel();
-        jLbSignUp = new javax.swing.JLabel();
-        jSeparator1 = new javax.swing.JSeparator();
-        jTfFirstName = new javax.swing.JTextField();
-        jLbLastName = new javax.swing.JLabel();
-        jLbDateOfBirth = new javax.swing.JLabel();
-        jLabelStarLN = new javax.swing.JLabel();
-        jComboBoxPosition = new javax.swing.JComboBox<>();
-        jLbGender = new javax.swing.JLabel();
-        jLbPassWord = new javax.swing.JLabel();
-        jTextFieldSurname = new javax.swing.JTextField();
-        jLbFirstName = new javax.swing.JLabel();
-        jLbStarId = new javax.swing.JLabel();
-        jLbStarFirstName = new javax.swing.JLabel();
-        jLbStarGender = new javax.swing.JLabel();
-        jLbStarBirthDay = new javax.swing.JLabel();
-        jLbStarPassword = new javax.swing.JLabel();
-        jLbPosition = new javax.swing.JLabel();
-        jLbStarPosition = new javax.swing.JLabel();
-        jLbCongenitialDisease = new javax.swing.JLabel();
-        jTextFieldEmail = new javax.swing.JTextField();
-        jLbTelophone = new javax.swing.JLabel();
-        jLbStarTelophone = new javax.swing.JLabel();
-        jTextFieldConDisease = new javax.swing.JTextField();
-        jLbEmail = new javax.swing.JLabel();
-        jLbStarEmail = new javax.swing.JLabel();
-        jPasswordSignUp = new javax.swing.JPasswordField();
-        jPasswordConfirmPassSignup = new javax.swing.JPasswordField();
-        jLbConfirmPassWord = new javax.swing.JLabel();
-        jLbStarConfirmPass = new javax.swing.JLabel();
-        jButtonSignUp = new javax.swing.JButton();
-        jRadioButtonGenderFemale = new javax.swing.JRadioButton();
-        jRadioButtonGenderMale = new javax.swing.JRadioButton();
-        jLabelPictureProfileRegister = new javax.swing.JLabel();
-        jButtonChooseFileForUpload = new javax.swing.JButton();
-        jLabelPartPictureUserUpload = new javax.swing.JLabel();
-        jLbId = new javax.swing.JLabel();
-        jLabelEmailNotCorrect = new javax.swing.JLabel();
-        jLabelNoticSurname = new javax.swing.JLabel();
-        jLabelifLengthId = new javax.swing.JLabel();
-        jLabelNoticNewPass = new javax.swing.JLabel();
-        jLabelNoticName = new javax.swing.JLabel();
-        jLabelNoticGender = new javax.swing.JLabel();
-        jLabelNoticBirthDate = new javax.swing.JLabel();
-        jLabelNoticPosition = new javax.swing.JLabel();
-        jLabelNoticTel = new javax.swing.JLabel();
-        jLabelNoticOldPass = new javax.swing.JLabel();
-        jDateChooserBirthDate = new com.toedter.calendar.JDateChooser();
-        jFormatTextFieldForId = new javax.swing.JFormattedTextField();
-        jFormattedTelophone = new javax.swing.JFormattedTextField();
-        Backgroung2 = new javax.swing.JLabel();
         login = new javax.swing.JPanel();
         GreenSociety = new javax.swing.JLabel();
         iconEmail = new javax.swing.JLabel();
@@ -1573,6 +1574,379 @@ public class GreenSociety extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        registerPage.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        backSigninRegis.setFont(new java.awt.Font("Leelawadee UI", 0, 12)); // NOI18N
+        backSigninRegis.setForeground(new java.awt.Color(255, 255, 255));
+        backSigninRegis.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        backSigninRegis.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/backStepLogin.png"))); // NOI18N
+        backSigninRegis.setText("   Back to Sign in");
+        backSigninRegis.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                backSigninRegisMouseClicked(evt);
+            }
+        });
+        registerPage.add(backSigninRegis, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 120, 30));
+
+        jPanelSignUp.setBackground(new java.awt.Color(0, 0, 0));
+        jPanelSignUp.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLbSignUp.setFont(new java.awt.Font("Leelawadee", 0, 24)); // NOI18N
+        jLbSignUp.setForeground(new java.awt.Color(255, 255, 255));
+        jLbSignUp.setText("SignUp");
+        jPanelSignUp.add(jLbSignUp, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 195, 40));
+        jPanelSignUp.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 640, 10));
+
+        jTfFirstName.setBackground(new java.awt.Color(0, 0, 0));
+        jTfFirstName.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
+        jTfFirstName.setForeground(new java.awt.Color(102, 102, 102));
+        jTfFirstName.setText("John");
+        jTfFirstName.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        jTfFirstName.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTfFirstNameFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTfFirstNameFocusLost(evt);
+            }
+        });
+        jPanelSignUp.add(jTfFirstName, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 70, 230, 30));
+
+        jLbLastName.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
+        jLbLastName.setForeground(new java.awt.Color(255, 255, 255));
+        jLbLastName.setText("LastName");
+        jPanelSignUp.add(jLbLastName, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 50, 60, 20));
+
+        jLbDateOfBirth.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
+        jLbDateOfBirth.setForeground(new java.awt.Color(255, 255, 255));
+        jLbDateOfBirth.setText("Date of Birth");
+        jPanelSignUp.add(jLbDateOfBirth, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 110, 70, 20));
+
+        jLabelStarLN.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
+        jLabelStarLN.setForeground(new java.awt.Color(19, 175, 248));
+        jLabelStarLN.setText("*");
+        jLabelStarLN.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jPanelSignUp.add(jLabelStarLN, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 50, 30, 30));
+
+        jComboBoxPosition.setBackground(new java.awt.Color(0, 0, 0));
+        jComboBoxPosition.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
+        jComboBoxPosition.setForeground(new java.awt.Color(255, 255, 255));
+        jComboBoxPosition.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "เลือก..", "นักศึกษา ", "อาจารย์และบุคลากร ", "ช่าง ", "เจ้าหน้าที่" }));
+        jPanelSignUp.add(jComboBoxPosition, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 190, 240, 30));
+
+        jLbGender.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
+        jLbGender.setForeground(new java.awt.Color(255, 255, 255));
+        jLbGender.setText("Gender");
+        jPanelSignUp.add(jLbGender, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 110, 40, 20));
+
+        jLbPassWord.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
+        jLbPassWord.setForeground(new java.awt.Color(255, 255, 255));
+        jLbPassWord.setText("Password");
+        jPanelSignUp.add(jLbPassWord, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 350, 50, 20));
+
+        jTextFieldSurname.setBackground(new java.awt.Color(0, 0, 0));
+        jTextFieldSurname.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
+        jTextFieldSurname.setForeground(new java.awt.Color(102, 102, 102));
+        jTextFieldSurname.setText("Wick");
+        jTextFieldSurname.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        jTextFieldSurname.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTextFieldSurnameFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextFieldSurnameFocusLost(evt);
+            }
+        });
+        jPanelSignUp.add(jTextFieldSurname, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 70, 240, 30));
+
+        jLbFirstName.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
+        jLbFirstName.setForeground(new java.awt.Color(255, 255, 255));
+        jLbFirstName.setText("FirstName");
+        jPanelSignUp.add(jLbFirstName, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 50, 60, 20));
+
+        jLbStarId.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
+        jLbStarId.setForeground(new java.awt.Color(19, 175, 248));
+        jLbStarId.setText("*");
+        jLbStarId.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jPanelSignUp.add(jLbStarId, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 170, 30, 30));
+
+        jLbStarFirstName.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
+        jLbStarFirstName.setForeground(new java.awt.Color(19, 175, 248));
+        jLbStarFirstName.setText("*");
+        jLbStarFirstName.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jPanelSignUp.add(jLbStarFirstName, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 50, 20, 20));
+
+        jLbStarGender.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
+        jLbStarGender.setForeground(new java.awt.Color(19, 175, 248));
+        jLbStarGender.setText("*");
+        jLbStarGender.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jPanelSignUp.add(jLbStarGender, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 110, 30, 20));
+
+        jLbStarBirthDay.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
+        jLbStarBirthDay.setForeground(new java.awt.Color(19, 175, 248));
+        jLbStarBirthDay.setText("*");
+        jLbStarBirthDay.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jPanelSignUp.add(jLbStarBirthDay, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 110, 30, 30));
+
+        jLbStarPassword.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
+        jLbStarPassword.setForeground(new java.awt.Color(19, 175, 248));
+        jLbStarPassword.setText("*");
+        jLbStarPassword.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jPanelSignUp.add(jLbStarPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 350, 30, 30));
+
+        jLbPosition.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
+        jLbPosition.setForeground(new java.awt.Color(255, 255, 255));
+        jLbPosition.setText("Position");
+        jPanelSignUp.add(jLbPosition, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 170, 50, 20));
+
+        jLbStarPosition.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
+        jLbStarPosition.setForeground(new java.awt.Color(19, 175, 248));
+        jLbStarPosition.setText("*");
+        jLbStarPosition.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jPanelSignUp.add(jLbStarPosition, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 170, 30, 30));
+
+        jLbCongenitialDisease.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
+        jLbCongenitialDisease.setForeground(new java.awt.Color(255, 255, 255));
+        jLbCongenitialDisease.setText("Congenitial Disease (โรคประจำตัว)");
+        jPanelSignUp.add(jLbCongenitialDisease, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 230, 200, 20));
+
+        jTextFieldEmail.setBackground(new java.awt.Color(0, 0, 0));
+        jTextFieldEmail.setFont(new java.awt.Font("Leelawadee", 0, 11)); // NOI18N
+        jTextFieldEmail.setForeground(new java.awt.Color(102, 102, 102));
+        jTextFieldEmail.setText("example@gmail.com");
+        jTextFieldEmail.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        jTextFieldEmail.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTextFieldEmailFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextFieldEmailFocusLost(evt);
+            }
+        });
+        jPanelSignUp.add(jTextFieldEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 310, 540, 30));
+
+        jLbTelophone.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
+        jLbTelophone.setForeground(new java.awt.Color(255, 255, 255));
+        jLbTelophone.setText("Phone Number");
+        jPanelSignUp.add(jLbTelophone, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 230, 90, 20));
+
+        jLbStarTelophone.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
+        jLbStarTelophone.setForeground(new java.awt.Color(19, 175, 248));
+        jLbStarTelophone.setText("*");
+        jLbStarTelophone.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jPanelSignUp.add(jLbStarTelophone, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 230, 30, 30));
+
+        jTextFieldConDisease.setBackground(new java.awt.Color(0, 0, 0));
+        jTextFieldConDisease.setForeground(new java.awt.Color(102, 102, 102));
+        jTextFieldConDisease.setText("If you have");
+        jTextFieldConDisease.setToolTipText("");
+        jTextFieldConDisease.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        jTextFieldConDisease.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTextFieldConDiseaseFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextFieldConDiseaseFocusLost(evt);
+            }
+        });
+        jPanelSignUp.add(jTextFieldConDisease, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 250, 240, 30));
+
+        jLbEmail.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
+        jLbEmail.setForeground(new java.awt.Color(255, 255, 255));
+        jLbEmail.setText("E-Mail");
+        jPanelSignUp.add(jLbEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 290, 40, 20));
+
+        jLbStarEmail.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
+        jLbStarEmail.setForeground(new java.awt.Color(19, 175, 248));
+        jLbStarEmail.setText("*");
+        jLbStarEmail.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jPanelSignUp.add(jLbStarEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 290, 30, 30));
+
+        jPasswordSignUp.setBackground(new java.awt.Color(0, 0, 0));
+        jPasswordSignUp.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jPasswordSignUp.setForeground(new java.awt.Color(102, 102, 102));
+        jPasswordSignUp.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        jPasswordSignUp.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jPasswordSignUpFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jPasswordSignUpFocusLost(evt);
+            }
+        });
+        jPanelSignUp.add(jPasswordSignUp, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 370, 240, 30));
+
+        jPasswordConfirmPassSignup.setBackground(new java.awt.Color(0, 0, 0));
+        jPasswordConfirmPassSignup.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jPasswordConfirmPassSignup.setForeground(new java.awt.Color(102, 102, 102));
+        jPasswordConfirmPassSignup.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        jPasswordConfirmPassSignup.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jPasswordConfirmPassSignupFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jPasswordConfirmPassSignupFocusLost(evt);
+            }
+        });
+        jPanelSignUp.add(jPasswordConfirmPassSignup, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 370, 240, 30));
+
+        jLbConfirmPassWord.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
+        jLbConfirmPassWord.setForeground(new java.awt.Color(255, 255, 255));
+        jLbConfirmPassWord.setText("Comfirm Password");
+        jPanelSignUp.add(jLbConfirmPassWord, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 350, 100, 20));
+
+        jLbStarConfirmPass.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
+        jLbStarConfirmPass.setForeground(new java.awt.Color(19, 175, 248));
+        jLbStarConfirmPass.setText("*");
+        jLbStarConfirmPass.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jPanelSignUp.add(jLbStarConfirmPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 350, 30, 30));
+
+        jButtonSignUp.setBackground(new java.awt.Color(0, 204, 255));
+        jButtonSignUp.setFont(new java.awt.Font("Leelawadee", 0, 11)); // NOI18N
+        jButtonSignUp.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonSignUp.setText("SIGN UP");
+        jButtonSignUp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSignUpActionPerformed(evt);
+            }
+        });
+        jPanelSignUp.add(jButtonSignUp, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 460, 100, 30));
+
+        jRadioButtonGenderFemale.setBackground(new java.awt.Color(0, 0, 0));
+        buttonGroupGender.add(jRadioButtonGenderFemale);
+        jRadioButtonGenderFemale.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
+        jRadioButtonGenderFemale.setForeground(new java.awt.Color(255, 255, 255));
+        jRadioButtonGenderFemale.setText("Female");
+        jRadioButtonGenderFemale.setDisplayedMnemonicIndex(0);
+        jRadioButtonGenderFemale.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jRadioButtonGenderFemaleFocusGained(evt);
+            }
+        });
+        jPanelSignUp.add(jRadioButtonGenderFemale, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 130, 70, -1));
+
+        jRadioButtonGenderMale.setBackground(new java.awt.Color(0, 0, 0));
+        buttonGroupGender.add(jRadioButtonGenderMale);
+        jRadioButtonGenderMale.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
+        jRadioButtonGenderMale.setForeground(new java.awt.Color(255, 255, 255));
+        jRadioButtonGenderMale.setText("Male");
+        jRadioButtonGenderMale.setDisplayedMnemonicIndex(1);
+        jRadioButtonGenderMale.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jRadioButtonGenderMaleFocusGained(evt);
+            }
+        });
+        jPanelSignUp.add(jRadioButtonGenderMale, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 130, -1, -1));
+
+        jLabelPictureProfileRegister.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
+        jLabelPictureProfileRegister.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelPictureProfileRegister.setText("Picture Profile: ");
+        jPanelSignUp.add(jLabelPictureProfileRegister, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 420, -1, 20));
+
+        jButtonChooseFileForUpload.setBackground(new java.awt.Color(13, 24, 35));
+        jButtonChooseFileForUpload.setFont(new java.awt.Font("Leelawadee", 0, 11)); // NOI18N
+        jButtonChooseFileForUpload.setForeground(new java.awt.Color(0, 204, 255));
+        jButtonChooseFileForUpload.setText("Choose File");
+        jButtonChooseFileForUpload.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonChooseFileForUploadActionPerformed(evt);
+            }
+        });
+        jPanelSignUp.add(jButtonChooseFileForUpload, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 420, 100, -1));
+
+        jLabelPartPictureUserUpload.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
+        jLabelPartPictureUserUpload.setForeground(new java.awt.Color(102, 102, 102));
+        jLabelPartPictureUserUpload.setText("Not Select File");
+        jLabelPartPictureUserUpload.setToolTipText("");
+        jPanelSignUp.add(jLabelPartPictureUserUpload, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 420, 160, 20));
+
+        jLbId.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
+        jLbId.setForeground(new java.awt.Color(255, 255, 255));
+        jLbId.setText("ID");
+        jPanelSignUp.add(jLbId, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 170, 20, 20));
+
+        jLabelEmailNotCorrect.setFont(new java.awt.Font("Leelawadee", 0, 11)); // NOI18N
+        jLabelEmailNotCorrect.setForeground(new java.awt.Color(255, 0, 0));
+        jPanelSignUp.add(jLabelEmailNotCorrect, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 290, 280, 20));
+
+        jLabelNoticSurname.setFont(new java.awt.Font("Leelawadee", 0, 11)); // NOI18N
+        jLabelNoticSurname.setForeground(new java.awt.Color(255, 0, 0));
+        jPanelSignUp.add(jLabelNoticSurname, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 50, 180, 20));
+
+        jLabelifLengthId.setFont(new java.awt.Font("Leelawadee", 0, 11)); // NOI18N
+        jLabelifLengthId.setForeground(new java.awt.Color(255, 0, 0));
+        jPanelSignUp.add(jLabelifLengthId, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 170, 220, 20));
+
+        jLabelNoticNewPass.setFont(new java.awt.Font("Leelawadee", 0, 11)); // NOI18N
+        jLabelNoticNewPass.setForeground(new java.awt.Color(255, 0, 0));
+        jPanelSignUp.add(jLabelNoticNewPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 350, 130, 20));
+
+        jLabelNoticName.setFont(new java.awt.Font("Leelawadee", 0, 11)); // NOI18N
+        jLabelNoticName.setForeground(new java.awt.Color(255, 0, 0));
+        jPanelSignUp.add(jLabelNoticName, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 50, 180, 20));
+
+        jLabelNoticGender.setFont(new java.awt.Font("Leelawadee", 0, 11)); // NOI18N
+        jLabelNoticGender.setForeground(new java.awt.Color(255, 0, 0));
+        jPanelSignUp.add(jLabelNoticGender, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 110, 180, 20));
+
+        jLabelNoticBirthDate.setFont(new java.awt.Font("Leelawadee", 0, 11)); // NOI18N
+        jLabelNoticBirthDate.setForeground(new java.awt.Color(255, 0, 0));
+        jPanelSignUp.add(jLabelNoticBirthDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 110, 160, 20));
+
+        jLabelNoticPosition.setFont(new java.awt.Font("Leelawadee", 0, 11)); // NOI18N
+        jLabelNoticPosition.setForeground(new java.awt.Color(255, 0, 0));
+        jPanelSignUp.add(jLabelNoticPosition, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 170, 180, 20));
+
+        jLabelNoticTel.setFont(new java.awt.Font("Leelawadee", 0, 11)); // NOI18N
+        jLabelNoticTel.setForeground(new java.awt.Color(255, 0, 0));
+        jPanelSignUp.add(jLabelNoticTel, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 230, 150, 20));
+
+        jLabelNoticOldPass.setFont(new java.awt.Font("Leelawadee", 0, 11)); // NOI18N
+        jLabelNoticOldPass.setForeground(new java.awt.Color(255, 0, 0));
+        jPanelSignUp.add(jLabelNoticOldPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 350, 180, 20));
+
+        jDateChooserBirthDate.setBackground(new java.awt.Color(0, 0, 0));
+        jDateChooserBirthDate.setForeground(new java.awt.Color(255, 255, 255));
+        jPanelSignUp.add(jDateChooserBirthDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 130, 240, 30));
+
+        jFormatTextFieldForId.setBackground(new java.awt.Color(0, 0, 0));
+        jFormatTextFieldForId.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true));
+        jFormatTextFieldForId.setForeground(new java.awt.Color(102, 102, 102));
+        jFormatTextFieldForId.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("###########"))));
+        jFormatTextFieldForId.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jFormatTextFieldForIdFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jFormatTextFieldForIdFocusLost(evt);
+            }
+        });
+        jPanelSignUp.add(jFormatTextFieldForId, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 190, 240, 30));
+
+        jFormattedTelophone.setBackground(new java.awt.Color(0, 0, 0));
+        jFormattedTelophone.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        jFormattedTelophone.setForeground(new java.awt.Color(102, 102, 102));
+        jFormattedTelophone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("0000000000"))));
+        jFormattedTelophone.setToolTipText("");
+        jFormattedTelophone.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        jFormattedTelophone.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jFormattedTelophoneFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jFormattedTelophoneFocusLost(evt);
+            }
+        });
+        jPanelSignUp.add(jFormattedTelophone, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 250, 240, 30));
+
+        registerPage.add(jPanelSignUp, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 30, 680, 500));
+
+        Backgroung2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/background.jpg"))); // NOI18N
+        Backgroung2.setText("jLabel1");
+        registerPage.add(Backgroung2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 980, 540));
+
+        getContentPane().add(registerPage, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 980, -1));
 
         mainAdmin.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -3123,377 +3497,6 @@ public class GreenSociety extends javax.swing.JFrame {
         mainAdmin.add(userProfilePage, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 60, 770, 420));
 
         getContentPane().add(mainAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
-
-        registerPage.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        backSigninRegis.setFont(new java.awt.Font("Leelawadee UI", 0, 12)); // NOI18N
-        backSigninRegis.setForeground(new java.awt.Color(255, 255, 255));
-        backSigninRegis.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        backSigninRegis.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/backStepLogin.png"))); // NOI18N
-        backSigninRegis.setText("   Back to Sign in");
-        backSigninRegis.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                backSigninRegisMouseClicked(evt);
-            }
-        });
-        registerPage.add(backSigninRegis, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 120, 30));
-
-        jPanelSignUp.setBackground(new java.awt.Color(0, 0, 0));
-        jPanelSignUp.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLbSignUp.setFont(new java.awt.Font("Leelawadee", 0, 24)); // NOI18N
-        jLbSignUp.setForeground(new java.awt.Color(255, 255, 255));
-        jLbSignUp.setText("SignUp");
-        jPanelSignUp.add(jLbSignUp, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 195, 40));
-        jPanelSignUp.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 640, 10));
-
-        jTfFirstName.setBackground(new java.awt.Color(0, 0, 0));
-        jTfFirstName.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
-        jTfFirstName.setForeground(new java.awt.Color(102, 102, 102));
-        jTfFirstName.setText("John");
-        jTfFirstName.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
-        jTfFirstName.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jTfFirstNameFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jTfFirstNameFocusLost(evt);
-            }
-        });
-        jPanelSignUp.add(jTfFirstName, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 70, 230, 30));
-
-        jLbLastName.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
-        jLbLastName.setForeground(new java.awt.Color(255, 255, 255));
-        jLbLastName.setText("LastName");
-        jPanelSignUp.add(jLbLastName, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 50, 60, 20));
-
-        jLbDateOfBirth.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
-        jLbDateOfBirth.setForeground(new java.awt.Color(255, 255, 255));
-        jLbDateOfBirth.setText("Date of Birth");
-        jPanelSignUp.add(jLbDateOfBirth, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 110, 70, 20));
-
-        jLabelStarLN.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
-        jLabelStarLN.setForeground(new java.awt.Color(19, 175, 248));
-        jLabelStarLN.setText("*");
-        jLabelStarLN.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        jPanelSignUp.add(jLabelStarLN, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 50, 30, 30));
-
-        jComboBoxPosition.setBackground(new java.awt.Color(0, 0, 0));
-        jComboBoxPosition.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
-        jComboBoxPosition.setForeground(new java.awt.Color(255, 255, 255));
-        jComboBoxPosition.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "เลือก..", "นักศึกษา ", "อาจารย์และบุคลากร ", "ช่าง ", "เจ้าหน้าที่" }));
-        jPanelSignUp.add(jComboBoxPosition, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 190, 240, 30));
-
-        jLbGender.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
-        jLbGender.setForeground(new java.awt.Color(255, 255, 255));
-        jLbGender.setText("Gender");
-        jPanelSignUp.add(jLbGender, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 110, 40, 20));
-
-        jLbPassWord.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
-        jLbPassWord.setForeground(new java.awt.Color(255, 255, 255));
-        jLbPassWord.setText("Password");
-        jPanelSignUp.add(jLbPassWord, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 350, 50, 20));
-
-        jTextFieldSurname.setBackground(new java.awt.Color(0, 0, 0));
-        jTextFieldSurname.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
-        jTextFieldSurname.setForeground(new java.awt.Color(102, 102, 102));
-        jTextFieldSurname.setText("Wick");
-        jTextFieldSurname.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
-        jTextFieldSurname.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jTextFieldSurnameFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jTextFieldSurnameFocusLost(evt);
-            }
-        });
-        jPanelSignUp.add(jTextFieldSurname, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 70, 240, 30));
-
-        jLbFirstName.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
-        jLbFirstName.setForeground(new java.awt.Color(255, 255, 255));
-        jLbFirstName.setText("FirstName");
-        jPanelSignUp.add(jLbFirstName, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 50, 60, 20));
-
-        jLbStarId.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
-        jLbStarId.setForeground(new java.awt.Color(19, 175, 248));
-        jLbStarId.setText("*");
-        jLbStarId.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        jPanelSignUp.add(jLbStarId, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 170, 30, 30));
-
-        jLbStarFirstName.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
-        jLbStarFirstName.setForeground(new java.awt.Color(19, 175, 248));
-        jLbStarFirstName.setText("*");
-        jLbStarFirstName.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        jPanelSignUp.add(jLbStarFirstName, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 50, 20, 20));
-
-        jLbStarGender.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
-        jLbStarGender.setForeground(new java.awt.Color(19, 175, 248));
-        jLbStarGender.setText("*");
-        jLbStarGender.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        jPanelSignUp.add(jLbStarGender, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 110, 30, 20));
-
-        jLbStarBirthDay.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
-        jLbStarBirthDay.setForeground(new java.awt.Color(19, 175, 248));
-        jLbStarBirthDay.setText("*");
-        jLbStarBirthDay.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        jPanelSignUp.add(jLbStarBirthDay, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 110, 30, 30));
-
-        jLbStarPassword.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
-        jLbStarPassword.setForeground(new java.awt.Color(19, 175, 248));
-        jLbStarPassword.setText("*");
-        jLbStarPassword.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        jPanelSignUp.add(jLbStarPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 350, 30, 30));
-
-        jLbPosition.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
-        jLbPosition.setForeground(new java.awt.Color(255, 255, 255));
-        jLbPosition.setText("Position");
-        jPanelSignUp.add(jLbPosition, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 170, 50, 20));
-
-        jLbStarPosition.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
-        jLbStarPosition.setForeground(new java.awt.Color(19, 175, 248));
-        jLbStarPosition.setText("*");
-        jLbStarPosition.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        jPanelSignUp.add(jLbStarPosition, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 170, 30, 30));
-
-        jLbCongenitialDisease.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
-        jLbCongenitialDisease.setForeground(new java.awt.Color(255, 255, 255));
-        jLbCongenitialDisease.setText("Congenitial Disease (โรคประจำตัว)");
-        jPanelSignUp.add(jLbCongenitialDisease, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 230, 200, 20));
-
-        jTextFieldEmail.setBackground(new java.awt.Color(0, 0, 0));
-        jTextFieldEmail.setFont(new java.awt.Font("Leelawadee", 0, 11)); // NOI18N
-        jTextFieldEmail.setForeground(new java.awt.Color(102, 102, 102));
-        jTextFieldEmail.setText("example@gmail.com");
-        jTextFieldEmail.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
-        jTextFieldEmail.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jTextFieldEmailFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jTextFieldEmailFocusLost(evt);
-            }
-        });
-        jPanelSignUp.add(jTextFieldEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 310, 540, 30));
-
-        jLbTelophone.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
-        jLbTelophone.setForeground(new java.awt.Color(255, 255, 255));
-        jLbTelophone.setText("Phone Number");
-        jPanelSignUp.add(jLbTelophone, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 230, 90, 20));
-
-        jLbStarTelophone.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
-        jLbStarTelophone.setForeground(new java.awt.Color(19, 175, 248));
-        jLbStarTelophone.setText("*");
-        jLbStarTelophone.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        jPanelSignUp.add(jLbStarTelophone, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 230, 30, 30));
-
-        jTextFieldConDisease.setBackground(new java.awt.Color(0, 0, 0));
-        jTextFieldConDisease.setForeground(new java.awt.Color(102, 102, 102));
-        jTextFieldConDisease.setText("If you have");
-        jTextFieldConDisease.setToolTipText("");
-        jTextFieldConDisease.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
-        jTextFieldConDisease.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jTextFieldConDiseaseFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jTextFieldConDiseaseFocusLost(evt);
-            }
-        });
-        jPanelSignUp.add(jTextFieldConDisease, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 250, 240, 30));
-
-        jLbEmail.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
-        jLbEmail.setForeground(new java.awt.Color(255, 255, 255));
-        jLbEmail.setText("E-Mail");
-        jPanelSignUp.add(jLbEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 290, 40, 20));
-
-        jLbStarEmail.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
-        jLbStarEmail.setForeground(new java.awt.Color(19, 175, 248));
-        jLbStarEmail.setText("*");
-        jLbStarEmail.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        jPanelSignUp.add(jLbStarEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 290, 30, 30));
-
-        jPasswordSignUp.setBackground(new java.awt.Color(0, 0, 0));
-        jPasswordSignUp.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jPasswordSignUp.setForeground(new java.awt.Color(102, 102, 102));
-        jPasswordSignUp.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
-        jPasswordSignUp.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jPasswordSignUpFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jPasswordSignUpFocusLost(evt);
-            }
-        });
-        jPanelSignUp.add(jPasswordSignUp, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 370, 240, 30));
-
-        jPasswordConfirmPassSignup.setBackground(new java.awt.Color(0, 0, 0));
-        jPasswordConfirmPassSignup.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jPasswordConfirmPassSignup.setForeground(new java.awt.Color(102, 102, 102));
-        jPasswordConfirmPassSignup.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
-        jPasswordConfirmPassSignup.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jPasswordConfirmPassSignupFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jPasswordConfirmPassSignupFocusLost(evt);
-            }
-        });
-        jPanelSignUp.add(jPasswordConfirmPassSignup, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 370, 240, 30));
-
-        jLbConfirmPassWord.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
-        jLbConfirmPassWord.setForeground(new java.awt.Color(255, 255, 255));
-        jLbConfirmPassWord.setText("Comfirm Password");
-        jPanelSignUp.add(jLbConfirmPassWord, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 350, 100, 20));
-
-        jLbStarConfirmPass.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
-        jLbStarConfirmPass.setForeground(new java.awt.Color(19, 175, 248));
-        jLbStarConfirmPass.setText("*");
-        jLbStarConfirmPass.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        jPanelSignUp.add(jLbStarConfirmPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 350, 30, 30));
-
-        jButtonSignUp.setBackground(new java.awt.Color(0, 204, 255));
-        jButtonSignUp.setFont(new java.awt.Font("Leelawadee", 0, 11)); // NOI18N
-        jButtonSignUp.setForeground(new java.awt.Color(255, 255, 255));
-        jButtonSignUp.setText("SIGN UP");
-        jButtonSignUp.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonSignUpActionPerformed(evt);
-            }
-        });
-        jPanelSignUp.add(jButtonSignUp, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 460, 100, 30));
-
-        jRadioButtonGenderFemale.setBackground(new java.awt.Color(0, 0, 0));
-        jRadioButtonGenderFemale.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
-        jRadioButtonGenderFemale.setForeground(new java.awt.Color(255, 255, 255));
-        jRadioButtonGenderFemale.setText("Female");
-        jRadioButtonGenderFemale.setDisplayedMnemonicIndex(0);
-        jRadioButtonGenderFemale.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jRadioButtonGenderFemaleFocusGained(evt);
-            }
-        });
-        jPanelSignUp.add(jRadioButtonGenderFemale, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 130, 70, -1));
-
-        jRadioButtonGenderMale.setBackground(new java.awt.Color(0, 0, 0));
-        jRadioButtonGenderMale.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
-        jRadioButtonGenderMale.setForeground(new java.awt.Color(255, 255, 255));
-        jRadioButtonGenderMale.setText("Male");
-        jRadioButtonGenderMale.setDisplayedMnemonicIndex(1);
-        jRadioButtonGenderMale.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jRadioButtonGenderMaleFocusGained(evt);
-            }
-        });
-        jPanelSignUp.add(jRadioButtonGenderMale, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 130, -1, -1));
-
-        jLabelPictureProfileRegister.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
-        jLabelPictureProfileRegister.setForeground(new java.awt.Color(255, 255, 255));
-        jLabelPictureProfileRegister.setText("Picture Profile: ");
-        jPanelSignUp.add(jLabelPictureProfileRegister, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 420, -1, 20));
-
-        jButtonChooseFileForUpload.setBackground(new java.awt.Color(13, 24, 35));
-        jButtonChooseFileForUpload.setFont(new java.awt.Font("Leelawadee", 0, 11)); // NOI18N
-        jButtonChooseFileForUpload.setForeground(new java.awt.Color(0, 204, 255));
-        jButtonChooseFileForUpload.setText("Choose File");
-        jButtonChooseFileForUpload.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonChooseFileForUploadActionPerformed(evt);
-            }
-        });
-        jPanelSignUp.add(jButtonChooseFileForUpload, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 420, 100, -1));
-
-        jLabelPartPictureUserUpload.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
-        jLabelPartPictureUserUpload.setForeground(new java.awt.Color(102, 102, 102));
-        jLabelPartPictureUserUpload.setText("Not Select File");
-        jLabelPartPictureUserUpload.setToolTipText("");
-        jPanelSignUp.add(jLabelPartPictureUserUpload, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 420, 160, 20));
-
-        jLbId.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
-        jLbId.setForeground(new java.awt.Color(255, 255, 255));
-        jLbId.setText("ID");
-        jPanelSignUp.add(jLbId, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 170, 20, 20));
-
-        jLabelEmailNotCorrect.setFont(new java.awt.Font("Leelawadee", 0, 11)); // NOI18N
-        jLabelEmailNotCorrect.setForeground(new java.awt.Color(255, 0, 0));
-        jPanelSignUp.add(jLabelEmailNotCorrect, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 290, 280, 20));
-
-        jLabelNoticSurname.setFont(new java.awt.Font("Leelawadee", 0, 11)); // NOI18N
-        jLabelNoticSurname.setForeground(new java.awt.Color(255, 0, 0));
-        jPanelSignUp.add(jLabelNoticSurname, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 50, 180, 20));
-
-        jLabelifLengthId.setFont(new java.awt.Font("Leelawadee", 0, 11)); // NOI18N
-        jLabelifLengthId.setForeground(new java.awt.Color(255, 0, 0));
-        jPanelSignUp.add(jLabelifLengthId, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 170, 220, 20));
-
-        jLabelNoticNewPass.setFont(new java.awt.Font("Leelawadee", 0, 11)); // NOI18N
-        jLabelNoticNewPass.setForeground(new java.awt.Color(255, 0, 0));
-        jPanelSignUp.add(jLabelNoticNewPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 350, 130, 20));
-
-        jLabelNoticName.setFont(new java.awt.Font("Leelawadee", 0, 11)); // NOI18N
-        jLabelNoticName.setForeground(new java.awt.Color(255, 0, 0));
-        jPanelSignUp.add(jLabelNoticName, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 50, 180, 20));
-
-        jLabelNoticGender.setFont(new java.awt.Font("Leelawadee", 0, 11)); // NOI18N
-        jLabelNoticGender.setForeground(new java.awt.Color(255, 0, 0));
-        jPanelSignUp.add(jLabelNoticGender, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 110, 180, 20));
-
-        jLabelNoticBirthDate.setFont(new java.awt.Font("Leelawadee", 0, 11)); // NOI18N
-        jLabelNoticBirthDate.setForeground(new java.awt.Color(255, 0, 0));
-        jPanelSignUp.add(jLabelNoticBirthDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 110, 160, 20));
-
-        jLabelNoticPosition.setFont(new java.awt.Font("Leelawadee", 0, 11)); // NOI18N
-        jLabelNoticPosition.setForeground(new java.awt.Color(255, 0, 0));
-        jPanelSignUp.add(jLabelNoticPosition, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 170, 180, 20));
-
-        jLabelNoticTel.setFont(new java.awt.Font("Leelawadee", 0, 11)); // NOI18N
-        jLabelNoticTel.setForeground(new java.awt.Color(255, 0, 0));
-        jPanelSignUp.add(jLabelNoticTel, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 230, 170, 20));
-
-        jLabelNoticOldPass.setFont(new java.awt.Font("Leelawadee", 0, 11)); // NOI18N
-        jLabelNoticOldPass.setForeground(new java.awt.Color(255, 0, 0));
-        jPanelSignUp.add(jLabelNoticOldPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 350, 180, 20));
-
-        jDateChooserBirthDate.setBackground(new java.awt.Color(0, 0, 0));
-        jDateChooserBirthDate.setForeground(new java.awt.Color(255, 255, 255));
-        jPanelSignUp.add(jDateChooserBirthDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 130, 240, 30));
-
-        jFormatTextFieldForId.setBackground(new java.awt.Color(0, 0, 0));
-        jFormatTextFieldForId.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true));
-        jFormatTextFieldForId.setForeground(new java.awt.Color(102, 102, 102));
-        jFormatTextFieldForId.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("###########"))));
-        jFormatTextFieldForId.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jFormatTextFieldForIdFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jFormatTextFieldForIdFocusLost(evt);
-            }
-        });
-        jPanelSignUp.add(jFormatTextFieldForId, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 190, 240, 30));
-
-        jFormattedTelophone.setBackground(new java.awt.Color(0, 0, 0));
-        jFormattedTelophone.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
-        jFormattedTelophone.setForeground(new java.awt.Color(102, 102, 102));
-        jFormattedTelophone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("0000000000"))));
-        jFormattedTelophone.setToolTipText("");
-        jFormattedTelophone.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        jFormattedTelophone.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jFormattedTelophoneFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jFormattedTelophoneFocusLost(evt);
-            }
-        });
-        jPanelSignUp.add(jFormattedTelophone, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 250, 240, 30));
-
-        registerPage.add(jPanelSignUp, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 30, 680, 500));
-
-        Backgroung2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/background.jpg"))); // NOI18N
-        Backgroung2.setText("jLabel1");
-        registerPage.add(Backgroung2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 980, 540));
-
-        getContentPane().add(registerPage, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 980, -1));
 
         login.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -6496,7 +6499,7 @@ public class GreenSociety extends javax.swing.JFrame {
         } else if (jComboBoxPosition.getSelectedIndex() == 3) {
             position = "Technician";
         } else if (jComboBoxPosition.getSelectedIndex() == 4) {
-            position = "Official";
+            position = "Officer";
         } else {
             jLabelNoticPosition.setText("Position is empty!");
         }
@@ -7450,6 +7453,7 @@ public class GreenSociety extends javax.swing.JFrame {
     private javax.swing.JPanel bodySupport;
     private javax.swing.JPanel bodySupport1;
     private javax.swing.JButton borrowBut;
+    private javax.swing.ButtonGroup buttonGroupGender;
     private javax.swing.JLabel canCounter;
     private javax.swing.JLabel canCounter1;
     private javax.swing.JButton cancleAdminBut;
