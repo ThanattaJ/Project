@@ -5200,7 +5200,9 @@ public class GreenSociety extends javax.swing.JFrame {
         userDetail.setVisible(false);
         selectItemReturn.setVisible(false);
         setUserBorrow();
-
+        
+        timewatch1.setVisible(false);
+        listUserBorrowing.setVisible(false);
         Date current = new java.util.Date();
         try {
             sh.timeAdmin(current);
