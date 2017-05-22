@@ -292,7 +292,7 @@ public class News {
             FileOutputStream fos = new FileOutputStream("src/"+targetFile);
             
             byte[] data = new byte[1024];
-            int numFile;
+            int numFile; 
             while((numFile=fis.read(data))!=-1){
                 fos.write(data, 0, numFile);
             }
