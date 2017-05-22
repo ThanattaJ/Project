@@ -315,6 +315,7 @@ public class GreenSociety extends javax.swing.JFrame {
 
         iconReturn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/ReturnBut.png"))); // NOI18N
         iconReturn.setContentAreaFilled(false);
+        iconReturn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         iconReturn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 returnActionPerformed(evt, id);
@@ -360,7 +361,6 @@ public class GreenSociety extends javax.swing.JFrame {
         returnDateBorrowing.setForeground(new java.awt.Color(102, 255, 102));
         returnDateBorrowing.setText("Return : 20/3/2017  18:00");
         returnDateBorrowing.setToolTipText("");
-        returnDateBorrowing.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         selectItemReturn.add(returnDateBorrowing, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 200, 200, 40));
 
         cancleReturn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/cancleMini.png"))); // NOI18N
@@ -421,6 +421,7 @@ public class GreenSociety extends javax.swing.JFrame {
 
         submitReturn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/submitMini.png"))); // NOI18N
         submitReturn.setContentAreaFilled(false);
+        submitReturn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         submitReturn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
 //                submitReturnActionPerformed(evt,id);
@@ -614,6 +615,7 @@ public class GreenSociety extends javax.swing.JFrame {
             viewButton[i].setContentAreaFilled(false);
             viewButton[i].setBackground(new Color(19, 175, 248));
             viewButton[i].setBorder(null);
+            viewButton[i].setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
             int num = i;
             viewButton[i].addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {   //กดแล้วทำงาน
