@@ -962,7 +962,8 @@ public class GreenSociety extends javax.swing.JFrame {
             detail[i].setForeground(new java.awt.Color(255, 255, 255));
             jp[i].add(detail[i], new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
 
-            String idRepairState1 = dtNotSuccess.substring(0,1); // SubString เอา repairID
+            int intIDrepair = dtNotSuccess.indexOf(" ");
+            String idRepairState1 = dtNotSuccess.substring(0,intIDrepair); // SubString เอา repairID
             int idRepairState = Integer.parseInt(idRepairState1);
             String time = dtNotSuccess.substring(lengthTemp-23,lengthTemp);
             
