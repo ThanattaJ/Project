@@ -29,8 +29,8 @@ public class History {
             Statement st = connect.createStatement(); 
             
             String temp = "SELECT dateTime,action,itemName,return_dateTime FROM Green_Society.Items "
-                    + "JOIN Transaction On Items.itemID = Transaction.itemID WHERE Transaction.action = 'Repair'"
-                    + " OR Transaction.action='Borrow' AND Transaction.userID= "+User.getUserId();
+                    + "RIGHT JOIN Transaction On Items.itemID = Transaction.itemID WHERE (Transaction.action = 'Repair'"
+                    + " OR Transaction.action='Borrow') AND Transaction.userID= "+User.getUserId();
             ResultSet rs = st.executeQuery(temp);
             
             while(rs.next()){
