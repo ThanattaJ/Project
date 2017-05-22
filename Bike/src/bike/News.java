@@ -289,7 +289,7 @@ public class News {
     public void copyFileImg(String sourceFile,String targetFile){
         try{
             FileInputStream fis = new FileInputStream(sourceFile);
-            FileOutputStream fos = new FileOutputStream(targetFile);
+            FileOutputStream fos = new FileOutputStream("src/"+targetFile);
             
             byte[] data = new byte[1024];
             int numFile;

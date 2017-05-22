@@ -550,7 +550,8 @@ public class GreenSociety extends javax.swing.JFrame {
             congenProfile1.setText(User.getCongenitialDisease());
             emailProfile1.setText(User.getEmail());
             telProfile1.setText(User.getTel());
-            imageProfile1.setIcon(new javax.swing.ImageIcon(getClass().getResource(User.getImgPath())));
+            imageProfile1.setIcon(new ImageIcon(new ImageIcon(getClass().getResource(User.getImgPath())).getImage().getScaledInstance(200, 170, Image.SCALE_DEFAULT)));
+            pic1.setIcon(new ImageIcon(new ImageIcon(getClass().getResource(User.getImgPath())).getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT)));
         } else if (User.getPositon().equalsIgnoreCase("Officer") || User.getPositon().equalsIgnoreCase("Technician")) {
             userID.setText(User.getUserId() + "");
             nameProfile.setText(User.getFirstName() + " " + User.getLastName());
@@ -560,7 +561,8 @@ public class GreenSociety extends javax.swing.JFrame {
             congenProfile.setText(User.getCongenitialDisease());
             emailProfile.setText(User.getEmail());
             telProfile.setText(User.getTel());
-            imageProfile.setIcon(new javax.swing.ImageIcon(getClass().getResource(User.getImgPath())));
+            imageProfile.setIcon(new ImageIcon(new ImageIcon(getClass().getResource(User.getImgPath())).getImage().getScaledInstance(200, 170, Image.SCALE_DEFAULT)));
+            pic.setIcon(new ImageIcon(new ImageIcon(getClass().getResource(User.getImgPath())).getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT)));
         }
     }
 
@@ -1119,6 +1121,31 @@ public class GreenSociety extends javax.swing.JFrame {
         iconProfile = new javax.swing.JLabel();
         signout = new javax.swing.JButton();
         barNoti = new javax.swing.JPanel();
+        userProfilePage = new javax.swing.JPanel();
+        editProfileBut = new javax.swing.JButton();
+        titleUserId = new javax.swing.JLabel();
+        userID = new javax.swing.JLabel();
+        imageProfile = new javax.swing.JLabel();
+        titleAbout = new javax.swing.JLabel();
+        titleNameProfile = new javax.swing.JLabel();
+        nameProfile = new javax.swing.JTextField();
+        titleGenderProfile = new javax.swing.JLabel();
+        genderProfile = new javax.swing.JTextField();
+        titlebBirthProfile = new javax.swing.JLabel();
+        birthProfile = new javax.swing.JFormattedTextField();
+        titleDepartProfile = new javax.swing.JLabel();
+        departProfile = new javax.swing.JLabel();
+        titleCongenProfile = new javax.swing.JLabel();
+        congenProfile = new javax.swing.JTextField();
+        titleContact = new javax.swing.JLabel();
+        titleEmailProfile = new javax.swing.JLabel();
+        emailProfile = new javax.swing.JTextField();
+        titleTelProfile = new javax.swing.JLabel();
+        telProfile = new javax.swing.JTextField();
+        chooseImgProfileBut = new javax.swing.JButton();
+        pathImgProfile = new javax.swing.JLabel();
+        submitProfile = new javax.swing.JButton();
+        warningProfile = new javax.swing.JLabel();
         newsPage = new javax.swing.JPanel();
         showNews = new javax.swing.JPanel();
         titletopicNews = new javax.swing.JLabel();
@@ -1270,31 +1297,6 @@ public class GreenSociety extends javax.swing.JFrame {
         barTitle = new javax.swing.JPanel();
         titleSupport = new javax.swing.JLabel();
         newManual = new javax.swing.JButton();
-        userProfilePage = new javax.swing.JPanel();
-        editProfileBut = new javax.swing.JButton();
-        titleUserId = new javax.swing.JLabel();
-        userID = new javax.swing.JLabel();
-        imageProfile = new javax.swing.JLabel();
-        titleAbout = new javax.swing.JLabel();
-        titleNameProfile = new javax.swing.JLabel();
-        nameProfile = new javax.swing.JTextField();
-        titleGenderProfile = new javax.swing.JLabel();
-        genderProfile = new javax.swing.JTextField();
-        titlebBirthProfile = new javax.swing.JLabel();
-        birthProfile = new javax.swing.JFormattedTextField();
-        titleDepartProfile = new javax.swing.JLabel();
-        departProfile = new javax.swing.JLabel();
-        titleCongenProfile = new javax.swing.JLabel();
-        congenProfile = new javax.swing.JTextField();
-        titleContact = new javax.swing.JLabel();
-        titleEmailProfile = new javax.swing.JLabel();
-        emailProfile = new javax.swing.JTextField();
-        titleTelProfile = new javax.swing.JLabel();
-        telProfile = new javax.swing.JTextField();
-        chooseImgProfileBut = new javax.swing.JButton();
-        pathImgProfile = new javax.swing.JLabel();
-        submitProfile = new javax.swing.JButton();
-        warningProfile = new javax.swing.JLabel();
         registerPage = new javax.swing.JPanel();
         backSigninRegis = new javax.swing.JLabel();
         jPanelSignUp = new javax.swing.JPanel();
@@ -1826,6 +1828,196 @@ public class GreenSociety extends javax.swing.JFrame {
         barNoti.setBackground(new java.awt.Color(13, 24, 35));
         barNoti.setLayout(null);
         mainAdmin.add(barNoti, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 480, 770, 60));
+
+        userProfilePage.setBackground(new java.awt.Color(25, 41, 65));
+        userProfilePage.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        editProfileBut.setBackground(new java.awt.Color(126, 192, 237));
+        editProfileBut.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
+        editProfileBut.setForeground(new java.awt.Color(255, 255, 255));
+        editProfileBut.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/editProfile.png"))); // NOI18N
+        editProfileBut.setContentAreaFilled(false);
+        editProfileBut.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                editProfileButMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                editProfileButMouseExited(evt);
+            }
+        });
+        editProfileBut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editProfileButActionPerformed(evt);
+            }
+        });
+        userProfilePage.add(editProfileBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 3, 110, 40));
+
+        titleUserId.setBackground(new java.awt.Color(55, 200, 255));
+        titleUserId.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
+        titleUserId.setForeground(new java.awt.Color(255, 255, 255));
+        titleUserId.setText("User ID :");
+        userProfilePage.add(titleUserId, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, 60, -1));
+
+        userID.setBackground(new java.awt.Color(55, 200, 255));
+        userID.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
+        userID.setForeground(new java.awt.Color(19, 175, 248));
+        userID.setText("1");
+        userID.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        userProfilePage.add(userID, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 20, 60, 20));
+        userProfilePage.add(imageProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, 200, 170));
+
+        titleAbout.setBackground(new java.awt.Color(13, 24, 35));
+        titleAbout.setFont(new java.awt.Font("Leelawadee", 0, 24)); // NOI18N
+        titleAbout.setForeground(new java.awt.Color(255, 255, 255));
+        titleAbout.setText("ABOUT");
+        userProfilePage.add(titleAbout, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 40, -1, -1));
+
+        titleNameProfile.setBackground(new java.awt.Color(55, 200, 255));
+        titleNameProfile.setFont(new java.awt.Font("Leelawadee", 0, 20)); // NOI18N
+        titleNameProfile.setForeground(new java.awt.Color(236, 233, 233));
+        titleNameProfile.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        titleNameProfile.setText("Name :");
+        userProfilePage.add(titleNameProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 90, 80, 20));
+
+        nameProfile.setEditable(false);
+        nameProfile.setBackground(new java.awt.Color(25, 41, 65));
+        nameProfile.setFont(new java.awt.Font("Leelawadee", 0, 20)); // NOI18N
+        nameProfile.setForeground(new java.awt.Color(19, 175, 248));
+        nameProfile.setText("Thanatta  Opatkajonyos");
+        userProfilePage.add(nameProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 80, 380, 40));
+
+        titleGenderProfile.setBackground(new java.awt.Color(55, 200, 255));
+        titleGenderProfile.setFont(new java.awt.Font("Leelawadee", 0, 20)); // NOI18N
+        titleGenderProfile.setForeground(new java.awt.Color(236, 233, 233));
+        titleGenderProfile.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        titleGenderProfile.setText("Gender :");
+        userProfilePage.add(titleGenderProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 140, 90, 20));
+
+        genderProfile.setEditable(false);
+        genderProfile.setBackground(new java.awt.Color(25, 41, 65));
+        genderProfile.setFont(new java.awt.Font("Leelawadee", 0, 20)); // NOI18N
+        genderProfile.setForeground(new java.awt.Color(19, 175, 248));
+        genderProfile.setText("F");
+        userProfilePage.add(genderProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 140, 70, 20));
+
+        titlebBirthProfile.setBackground(new java.awt.Color(55, 200, 255));
+        titlebBirthProfile.setFont(new java.awt.Font("Leelawadee", 0, 20)); // NOI18N
+        titlebBirthProfile.setForeground(new java.awt.Color(236, 233, 233));
+        titlebBirthProfile.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        titlebBirthProfile.setText("Birthday :");
+        userProfilePage.add(titlebBirthProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 130, 100, 40));
+
+        birthProfile.setEditable(false);
+        birthProfile.setBackground(new java.awt.Color(25, 41, 65));
+        birthProfile.setForeground(new java.awt.Color(19, 175, 248));
+        birthProfile.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("yyyy-M-d"))));
+        birthProfile.setToolTipText("yyy-mm-dd");
+        birthProfile.setFont(new java.awt.Font("Leelawadee", 0, 20)); // NOI18N
+        birthProfile.setName(""); // NOI18N
+        userProfilePage.add(birthProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 130, 220, 40));
+
+        titleDepartProfile.setBackground(new java.awt.Color(55, 200, 255));
+        titleDepartProfile.setFont(new java.awt.Font("Leelawadee", 0, 20)); // NOI18N
+        titleDepartProfile.setForeground(new java.awt.Color(236, 233, 233));
+        titleDepartProfile.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        titleDepartProfile.setText("Department :");
+        userProfilePage.add(titleDepartProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 180, 130, 40));
+
+        departProfile.setBackground(new java.awt.Color(55, 200, 255));
+        departProfile.setFont(new java.awt.Font("Leelawadee", 0, 20)); // NOI18N
+        departProfile.setForeground(new java.awt.Color(19, 175, 248));
+        departProfile.setText("School of Information Technology");
+        userProfilePage.add(departProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 180, 330, 40));
+
+        titleCongenProfile.setBackground(new java.awt.Color(55, 200, 255));
+        titleCongenProfile.setFont(new java.awt.Font("Leelawadee", 0, 20)); // NOI18N
+        titleCongenProfile.setForeground(new java.awt.Color(236, 233, 233));
+        titleCongenProfile.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        titleCongenProfile.setText("Congenitial Disease :");
+        userProfilePage.add(titleCongenProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 230, 210, 40));
+
+        congenProfile.setEditable(false);
+        congenProfile.setBackground(new java.awt.Color(25, 41, 65));
+        congenProfile.setFont(new java.awt.Font("Leelawadee", 0, 20)); // NOI18N
+        congenProfile.setForeground(new java.awt.Color(19, 175, 248));
+        congenProfile.setText("ภูมิแพ้");
+        congenProfile.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        userProfilePage.add(congenProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 230, 280, 40));
+
+        titleContact.setBackground(new java.awt.Color(13, 24, 35));
+        titleContact.setFont(new java.awt.Font("Leelawadee", 0, 24)); // NOI18N
+        titleContact.setForeground(new java.awt.Color(255, 255, 255));
+        titleContact.setText("Contact");
+        userProfilePage.add(titleContact, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 290, -1, 30));
+
+        titleEmailProfile.setBackground(new java.awt.Color(55, 200, 255));
+        titleEmailProfile.setFont(new java.awt.Font("Leelawadee", 0, 20)); // NOI18N
+        titleEmailProfile.setForeground(new java.awt.Color(236, 233, 233));
+        titleEmailProfile.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        titleEmailProfile.setText("Email :");
+        userProfilePage.add(titleEmailProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 340, 70, 20));
+
+        emailProfile.setEditable(false);
+        emailProfile.setBackground(new java.awt.Color(25, 41, 65));
+        emailProfile.setFont(new java.awt.Font("Leelawadee", 0, 20)); // NOI18N
+        emailProfile.setForeground(new java.awt.Color(19, 175, 248));
+        emailProfile.setText("thanatta.o@mail.kmutt.ac.th");
+        userProfilePage.add(emailProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 330, 380, 40));
+
+        titleTelProfile.setBackground(new java.awt.Color(55, 200, 255));
+        titleTelProfile.setFont(new java.awt.Font("Leelawadee", 0, 20)); // NOI18N
+        titleTelProfile.setForeground(new java.awt.Color(236, 233, 233));
+        titleTelProfile.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        titleTelProfile.setText("Telephone :");
+        userProfilePage.add(titleTelProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 370, 130, 40));
+
+        telProfile.setEditable(false);
+        telProfile.setBackground(new java.awt.Color(25, 41, 65));
+        telProfile.setFont(new java.awt.Font("Leelawadee", 0, 20)); // NOI18N
+        telProfile.setForeground(new java.awt.Color(19, 175, 248));
+        telProfile.setText("0900000000");
+        userProfilePage.add(telProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 380, 270, -1));
+
+        chooseImgProfileBut.setBackground(new java.awt.Color(126, 192, 237));
+        chooseImgProfileBut.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
+        chooseImgProfileBut.setForeground(new java.awt.Color(255, 255, 255));
+        chooseImgProfileBut.setText("Choose Profile");
+        chooseImgProfileBut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chooseImgProfileButActionPerformed(evt);
+            }
+        });
+        userProfilePage.add(chooseImgProfileBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 240, -1, -1));
+
+        pathImgProfile.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
+        pathImgProfile.setForeground(new java.awt.Color(255, 255, 255));
+        pathImgProfile.setText("No Select File.");
+        userProfilePage.add(pathImgProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 245, 80, -1));
+
+        submitProfile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/submitMini.png"))); // NOI18N
+        submitProfile.setContentAreaFilled(false);
+        submitProfile.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                submitProfileMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                submitProfileMouseExited(evt);
+            }
+        });
+        submitProfile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                submitProfileActionPerformed(evt);
+            }
+        });
+        userProfilePage.add(submitProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 370, 110, 50));
+
+        warningProfile.setBackground(new java.awt.Color(55, 200, 255));
+        warningProfile.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
+        warningProfile.setForeground(new java.awt.Color(255, 51, 51));
+        warningProfile.setText("Your name is incorrect");
+        userProfilePage.add(warningProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 380, 150, 30));
+
+        mainAdmin.add(userProfilePage, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 60, 770, 420));
 
         newsPage.setBackground(new java.awt.Color(25, 41, 65));
         newsPage.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -2932,196 +3124,6 @@ public class GreenSociety extends javax.swing.JFrame {
         supportPage.add(barTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 770, 50));
 
         mainAdmin.add(supportPage, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 60, 770, 420));
-
-        userProfilePage.setBackground(new java.awt.Color(25, 41, 65));
-        userProfilePage.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        editProfileBut.setBackground(new java.awt.Color(126, 192, 237));
-        editProfileBut.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
-        editProfileBut.setForeground(new java.awt.Color(255, 255, 255));
-        editProfileBut.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/editProfile.png"))); // NOI18N
-        editProfileBut.setContentAreaFilled(false);
-        editProfileBut.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                editProfileButMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                editProfileButMouseExited(evt);
-            }
-        });
-        editProfileBut.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                editProfileButActionPerformed(evt);
-            }
-        });
-        userProfilePage.add(editProfileBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 3, 110, 40));
-
-        titleUserId.setBackground(new java.awt.Color(55, 200, 255));
-        titleUserId.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
-        titleUserId.setForeground(new java.awt.Color(255, 255, 255));
-        titleUserId.setText("User ID :");
-        userProfilePage.add(titleUserId, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, 60, -1));
-
-        userID.setBackground(new java.awt.Color(55, 200, 255));
-        userID.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
-        userID.setForeground(new java.awt.Color(19, 175, 248));
-        userID.setText("1");
-        userID.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        userProfilePage.add(userID, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 20, 60, 20));
-        userProfilePage.add(imageProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, 200, 170));
-
-        titleAbout.setBackground(new java.awt.Color(13, 24, 35));
-        titleAbout.setFont(new java.awt.Font("Leelawadee", 0, 24)); // NOI18N
-        titleAbout.setForeground(new java.awt.Color(255, 255, 255));
-        titleAbout.setText("ABOUT");
-        userProfilePage.add(titleAbout, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 40, -1, -1));
-
-        titleNameProfile.setBackground(new java.awt.Color(55, 200, 255));
-        titleNameProfile.setFont(new java.awt.Font("Leelawadee", 0, 20)); // NOI18N
-        titleNameProfile.setForeground(new java.awt.Color(236, 233, 233));
-        titleNameProfile.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        titleNameProfile.setText("Name :");
-        userProfilePage.add(titleNameProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 90, 80, 20));
-
-        nameProfile.setEditable(false);
-        nameProfile.setBackground(new java.awt.Color(25, 41, 65));
-        nameProfile.setFont(new java.awt.Font("Leelawadee", 0, 20)); // NOI18N
-        nameProfile.setForeground(new java.awt.Color(19, 175, 248));
-        nameProfile.setText("Thanatta  Opatkajonyos");
-        userProfilePage.add(nameProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 80, 380, 40));
-
-        titleGenderProfile.setBackground(new java.awt.Color(55, 200, 255));
-        titleGenderProfile.setFont(new java.awt.Font("Leelawadee", 0, 20)); // NOI18N
-        titleGenderProfile.setForeground(new java.awt.Color(236, 233, 233));
-        titleGenderProfile.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        titleGenderProfile.setText("Gender :");
-        userProfilePage.add(titleGenderProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 140, 90, 20));
-
-        genderProfile.setEditable(false);
-        genderProfile.setBackground(new java.awt.Color(25, 41, 65));
-        genderProfile.setFont(new java.awt.Font("Leelawadee", 0, 20)); // NOI18N
-        genderProfile.setForeground(new java.awt.Color(19, 175, 248));
-        genderProfile.setText("F");
-        userProfilePage.add(genderProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 140, 70, 20));
-
-        titlebBirthProfile.setBackground(new java.awt.Color(55, 200, 255));
-        titlebBirthProfile.setFont(new java.awt.Font("Leelawadee", 0, 20)); // NOI18N
-        titlebBirthProfile.setForeground(new java.awt.Color(236, 233, 233));
-        titlebBirthProfile.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        titlebBirthProfile.setText("Birthday :");
-        userProfilePage.add(titlebBirthProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 130, 100, 40));
-
-        birthProfile.setEditable(false);
-        birthProfile.setBackground(new java.awt.Color(25, 41, 65));
-        birthProfile.setForeground(new java.awt.Color(19, 175, 248));
-        birthProfile.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("yyyy-M-d"))));
-        birthProfile.setToolTipText("yyy-mm-dd");
-        birthProfile.setFont(new java.awt.Font("Leelawadee", 0, 20)); // NOI18N
-        birthProfile.setName(""); // NOI18N
-        userProfilePage.add(birthProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 130, 220, 40));
-
-        titleDepartProfile.setBackground(new java.awt.Color(55, 200, 255));
-        titleDepartProfile.setFont(new java.awt.Font("Leelawadee", 0, 20)); // NOI18N
-        titleDepartProfile.setForeground(new java.awt.Color(236, 233, 233));
-        titleDepartProfile.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        titleDepartProfile.setText("Department :");
-        userProfilePage.add(titleDepartProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 180, 130, 40));
-
-        departProfile.setBackground(new java.awt.Color(55, 200, 255));
-        departProfile.setFont(new java.awt.Font("Leelawadee", 0, 20)); // NOI18N
-        departProfile.setForeground(new java.awt.Color(19, 175, 248));
-        departProfile.setText("School of Information Technology");
-        userProfilePage.add(departProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 180, 330, 40));
-
-        titleCongenProfile.setBackground(new java.awt.Color(55, 200, 255));
-        titleCongenProfile.setFont(new java.awt.Font("Leelawadee", 0, 20)); // NOI18N
-        titleCongenProfile.setForeground(new java.awt.Color(236, 233, 233));
-        titleCongenProfile.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        titleCongenProfile.setText("Congenitial Disease :");
-        userProfilePage.add(titleCongenProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 230, 210, 40));
-
-        congenProfile.setEditable(false);
-        congenProfile.setBackground(new java.awt.Color(25, 41, 65));
-        congenProfile.setFont(new java.awt.Font("Leelawadee", 0, 20)); // NOI18N
-        congenProfile.setForeground(new java.awt.Color(19, 175, 248));
-        congenProfile.setText("ภูมิแพ้");
-        congenProfile.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        userProfilePage.add(congenProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 230, 280, 40));
-
-        titleContact.setBackground(new java.awt.Color(13, 24, 35));
-        titleContact.setFont(new java.awt.Font("Leelawadee", 0, 24)); // NOI18N
-        titleContact.setForeground(new java.awt.Color(255, 255, 255));
-        titleContact.setText("Contact");
-        userProfilePage.add(titleContact, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 290, -1, 30));
-
-        titleEmailProfile.setBackground(new java.awt.Color(55, 200, 255));
-        titleEmailProfile.setFont(new java.awt.Font("Leelawadee", 0, 20)); // NOI18N
-        titleEmailProfile.setForeground(new java.awt.Color(236, 233, 233));
-        titleEmailProfile.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        titleEmailProfile.setText("Email :");
-        userProfilePage.add(titleEmailProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 340, 70, 20));
-
-        emailProfile.setEditable(false);
-        emailProfile.setBackground(new java.awt.Color(25, 41, 65));
-        emailProfile.setFont(new java.awt.Font("Leelawadee", 0, 20)); // NOI18N
-        emailProfile.setForeground(new java.awt.Color(19, 175, 248));
-        emailProfile.setText("thanatta.o@mail.kmutt.ac.th");
-        userProfilePage.add(emailProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 330, 380, 40));
-
-        titleTelProfile.setBackground(new java.awt.Color(55, 200, 255));
-        titleTelProfile.setFont(new java.awt.Font("Leelawadee", 0, 20)); // NOI18N
-        titleTelProfile.setForeground(new java.awt.Color(236, 233, 233));
-        titleTelProfile.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        titleTelProfile.setText("Telephone :");
-        userProfilePage.add(titleTelProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 370, 130, 40));
-
-        telProfile.setEditable(false);
-        telProfile.setBackground(new java.awt.Color(25, 41, 65));
-        telProfile.setFont(new java.awt.Font("Leelawadee", 0, 20)); // NOI18N
-        telProfile.setForeground(new java.awt.Color(19, 175, 248));
-        telProfile.setText("0900000000");
-        userProfilePage.add(telProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 380, 270, -1));
-
-        chooseImgProfileBut.setBackground(new java.awt.Color(126, 192, 237));
-        chooseImgProfileBut.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
-        chooseImgProfileBut.setForeground(new java.awt.Color(255, 255, 255));
-        chooseImgProfileBut.setText("Choose Profile");
-        chooseImgProfileBut.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chooseImgProfileButActionPerformed(evt);
-            }
-        });
-        userProfilePage.add(chooseImgProfileBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 240, -1, -1));
-
-        pathImgProfile.setFont(new java.awt.Font("Leelawadee", 0, 12)); // NOI18N
-        pathImgProfile.setForeground(new java.awt.Color(255, 255, 255));
-        pathImgProfile.setText("No Select File.");
-        userProfilePage.add(pathImgProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 245, 80, -1));
-
-        submitProfile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bike_gui/picture/submitMini.png"))); // NOI18N
-        submitProfile.setContentAreaFilled(false);
-        submitProfile.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                submitProfileMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                submitProfileMouseExited(evt);
-            }
-        });
-        submitProfile.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                submitProfileActionPerformed(evt);
-            }
-        });
-        userProfilePage.add(submitProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 370, 110, 50));
-
-        warningProfile.setBackground(new java.awt.Color(55, 200, 255));
-        warningProfile.setFont(new java.awt.Font("Leelawadee", 0, 14)); // NOI18N
-        warningProfile.setForeground(new java.awt.Color(255, 51, 51));
-        warningProfile.setText("Your name is incorrect");
-        userProfilePage.add(warningProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 380, 150, 30));
-
-        mainAdmin.add(userProfilePage, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 60, 770, 420));
 
         getContentPane().add(mainAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
