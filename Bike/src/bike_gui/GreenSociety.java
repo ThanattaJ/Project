@@ -5115,8 +5115,7 @@ public class GreenSociety extends javax.swing.JFrame {
                 timeLeftShow1.setText("Closed.");
             }else{
                 timeLeftShow1.setText(sh.getTimeDetail());
-            }
-            new Timer(1000, new ActionListener() {
+                new Timer(1000, new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     endTime1.setText("End:    " + current.getDate() + " / " + (current.getMonth() + 1) + " / " + (current.getYear() + 1900) + "  18 : 00");
@@ -5126,7 +5125,8 @@ public class GreenSociety extends javax.swing.JFrame {
                         timeLeftShow1.setText(sh.getTimeDetail());
                     }
                 }
-            }).start();
+                }).start();
+            }
         } catch (InterruptedException ex) {
             System.out.println(ex);
         }
@@ -5843,16 +5843,21 @@ public class GreenSociety extends javax.swing.JFrame {
                 timePageT.setVisible(true);
                 timewatch.setVisible(true);
                 itemListShow.setVisible(true);
-                endTime.setText("End:    " + current.getDate() + " / " + (current.getMonth() + 1) + " / " + (current.getYear() + 1900) + "  18 : 00");
-                timeLeftShow.setText(sh.getTimeDetail());
-                new Timer(1000, new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        endTime.setText("End:    " + current.getDate() + " / " + (current.getMonth() + 1) + " / " + (current.getYear() + 1900) + "  18 : 00");
-                        timeLeftShow.setText(sh.getTimeDetail());
-                    }
-                }).start();
-                listShow.setText("<html><body>" + sh.itemMustReturn() + "</body></html>");
+                try{
+                    sh.timeAdmin(current);
+                    endTime.setText("End:    " + current.getDate() + " / " + (current.getMonth() + 1) + " / " + (current.getYear() + 1900) + "  18 : 00");
+                    timeLeftShow.setText(sh.getTimeDetail());
+                    new Timer(1000, new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            endTime.setText("End:    " + current.getDate() + " / " + (current.getMonth() + 1) + " / " + (current.getYear() + 1900) + "  18 : 00");
+                            timeLeftShow.setText(sh.getTimeDetail());
+                        }
+                    }).start();
+                    listShow.setText("<html><body>" + sh.itemMustReturn() + "</body></html>");
+                }catch(InterruptedException ie){
+                    System.out.println(ie);
+                }
             }
         } else if (status == true) {
             circleMini.setVisible(false);
@@ -5993,6 +5998,10 @@ public class GreenSociety extends javax.swing.JFrame {
     private void backSigninMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backSigninMouseClicked
         login.setVisible(true);
         forgotPassPage.setVisible(false);
+        
+        email.setText("Email");
+        password.setText("");
+        showPass.setVisible(true);
     }//GEN-LAST:event_backSigninMouseClicked
 
     private void forgotPassMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_forgotPassMouseClicked
