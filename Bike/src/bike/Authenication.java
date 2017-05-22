@@ -121,11 +121,11 @@ public class Authenication {
             id++;
             
             if(pathImg.equalsIgnoreCase("default")){
-            newPath = "/bike_gui/userProfile/default.png";
+                newPath = "/bike_gui/userProfile/default.png";
             }else{
-            String typeFile = pathImg.substring(pathImg.indexOf("."),pathImg.length());
-            newPath = "/bike_gui/userProfile/"+id+typeFile;
-            copyFileImg(pathImg,newPath);
+                String typeFile = pathImg.substring(pathImg.length()-4,pathImg.length());
+                newPath = "/bike_gui/userProfile/"+id+typeFile;
+                copyFileImg(pathImg,newPath);
             }
             
             sql = "INSERT INTO User VALUES('" + id + "','" + firstName + "','" + lastName + "','" + gender
@@ -187,7 +187,7 @@ public class Authenication {
         String lastname = name.substring(i+1,name.length());
         
         if(!path.equalsIgnoreCase(User.getImgPath())){
-            String typeFile = path.substring(path.length(),path.length());
+            String typeFile = path.substring(path.length()-4,path.length());
             newPath = "/bike_gui/userProfile/"+User.getUserId()+typeFile;
             copyFileImg(path,newPath);
         }else{
